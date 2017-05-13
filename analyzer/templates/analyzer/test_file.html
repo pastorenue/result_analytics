@@ -1,0 +1,67 @@
+{% extends 'staff/dashboard.html' %}
+{% load staticfiles %}
+
+{% block extrahead%}
+  
+{% endblock %}
+
+{% block side_panel %}
+    
+{% endblock %}
+
+{% block breadcrumbs %}
+{% if user.is_staff %}<a href="{% url 'students:students_list' %}">All students &raquo;</a>{% endif %} {{ student }}'s CGPA Analysis
+{% endblock %}
+
+{% block menu %}
+    {% include "analyzer/attached.html" %}
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;"> {{ student }}'s CGPA Level Progress</h2>
+    </div>
+    <div class="row">
+        <div class="panel panel-danger" style="margin: 10px 20px 35px 35px;">
+            <div class="panel-heading">CGPA Analysis</div>
+            <div class="panel-body">
+                <div id="{{ chartID }}">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 8px; margin-right: 8px; box-shadow: 1px 2px 4px;">
+        <div class="col-md-6">
+           <h3>CURRENT FCGPA: <span style="color: #c14; border-bottom: 1px solid #1c4; border-top: 1px solid #1c4;"><strong>{{ fcgpa }}</strong></span></h3>
+        </div>
+        <div class="col-md-6">
+              <h4 style="font-weight: bold; text-align: center; ">{{ degree }}</h4>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    
+    <script>
+        var chart_id = {{ chartID|safe }}
+        var chart = {{ chart|safe }}
+        var xAxis = {{ xAxis|safe }}
+        var yAxis = {{ yAxis|safe }}
+        var series = {{ series|safe }}
+        var title = {{ title|safe }}
+    </script>
+    <script>
+      $(function () {
+    $(chart_id).highcharts({
+        chart: chart,
+        title: title,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        series: series
+    });
+});
+        
+    </script>
+{% endblock %}

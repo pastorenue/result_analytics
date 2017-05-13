@@ -1,0 +1,30 @@
+[
+    {
+        "pk": 1, 
+        "model": "announcements.announcement", 
+        "fields": {
+            "creator": [
+                "root"
+            ], 
+            "site_wide": true, 
+            "title": "Experience Evince HR 3.0", 
+            "creation_date": "2014-08-05T18:29:16.426", 
+            "content": "Join me in congratulating the business and IT team for the successful implementation of Evince HR and payroll suite, the latest version of the application with many intriguing features such as putting faces to employees everywhere, extended approval routing to line supervisors and business unit and so much more.", 
+            "members_only": true
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "announcements.announcement", 
+        "fields": {
+            "creator": [
+                "root"
+            ], 
+            "site_wide": true, 
+            "title": "2nd Half Appraisal", 
+            "creation_date": "2014-08-05T18:35:00.624", 
+            "content": "This is to announce the 2nd half appraisal for the year 2014. \r\nWe are all implored to agree our scorecards with our line managers by the end of next week, specifically 12th August. \r\nAll line managers are requested to have the appraisal scorecards in the tool by the end of day, 12th August.\r\nThank you for your usual compliance.", 
+            "members_only": true
+        }
+    }
+]

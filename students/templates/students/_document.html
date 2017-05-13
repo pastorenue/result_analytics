@@ -1,0 +1,14 @@
+<div class="item">
+    {% if document %}
+    <a class="delete-section pull-right" href="#">Delete</a>
+    {% endif %}
+    <h5>
+        <i class="glyphicon glyphicon-file"></i>
+        <a href="{{ document.attached_file.url }}" target="_blank">{{ document.name|title }}</a>
+    </h5>
+    {% if document.description %}
+    <div>
+        {{ document.description }}
+    </div>
+    {% endif %}
+</div>

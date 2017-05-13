@@ -1,0 +1,16 @@
+
+    <li><a href="{% url 'students:student_profile' student.id %}"><span class="glyphicon glyphicon-user"></span> View {{ student.first_name }}'s profile</a></li>
+    <li><a href="{% url 'results:personal_results' student.id %}"><span class="glyphicon glyphicon-file"></span> View result information</a></li>
+    <li><a href="{% url 'analyzer:all_results_plot' student_id=student.id %}"><span class="glyphicon glyphicon-th"></span> Comparative Analysis</a></li>
+    <li><a href="{% url 'analyzer:prediction' student_id=student.id %}"><span class="glyphicon glyphicon-stats"></span> Start Performance Forecast for {{ student }}</a></li>
+    <li><a href="{% url 'analyzer:cgpa_by_level' student_id=student.pk %}"><span class="glyphicon glyphicon-tent"></span> {{ student.first_name }} CGPA Level BreakDown</a></li>
+    <li><a href="{% url 'results:all_results' student_id=student.pk %}"><span class="glyphicon glyphicon-list-alt"></span> View Performance History</a></li>
+    <li><a href=""><span class="glyphicon glyphicon-list-alt"></span> Result Details Overview</a></li>
+    {% if not user.is_staff %}
+        <li><a href=""><span class="glyphicon glyphicon-list-alt"></span> Check OUtstandind Dues</a></li>
+        <li><a href=""><span class="glyphicon glyphicon-list-alt"></span> All Dues Paid</a></li>
+    <li><a href=""><span class="glyphicon glyphicon-list-alt"></span> View Clearance Update...</a></li>
+    {% endif %}
+    {% if user.is_superuser %}
+        <li><a href=""><span class="glyphicon glyphicon-ban-circle"></span> Start clearance process for {{ student }}</a></li>
+    {% endif %}

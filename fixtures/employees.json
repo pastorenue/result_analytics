@@ -1,0 +1,1000 @@
+[
+    {
+        "pk": 2, 
+        "model": "employees.employeetype", 
+        "fields": {
+            "name": "Contract"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "employees.employeetype", 
+        "fields": {
+            "name": "IT"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "employees.employeetype", 
+        "fields": {
+            "name": "NYSC"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "employees.employeetype", 
+        "fields": {
+            "name": "Permanent"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "A.R.M LIFE PLC"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "African Alliance Insurance Company Ltd"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "AIICO Insurance PLC"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Alliance & General Insurance Company Ltd"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Alliance & General Insurance Life Assurance"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Anchor Insurance Company Ltd"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Capital Express Assurance Limited"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Consolidated Hallmark Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Continental Reinsurance Company Plc"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Cornerstone Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Custodian & Allied Insurance Limited"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Custodian Life Assurance Limited"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Equity Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "FBN Life Assurance Limited"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Fin Insurance Company Limited"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Gold Link Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Great Nigeria Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Guinea Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Industrial & General Insurance Company Plc"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "International Energy Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Investment & Allied Assurance Company Plc"
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "KBL Insurance Limited"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "LASACO Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "LASACO Life Assurance Company Ltd"
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Law Union & Rock Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 26, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Leadway Assurance Company Limited"
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Linkage Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 28, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Mansard Insurance plc"
+        }
+    }, 
+    {
+        "pk": 29, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Mutual Benefits Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 30, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Mutual Benefits Life Assurance Ltd"
+        }
+    }, 
+    {
+        "pk": 31, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "NEM Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 32, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "NICON Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 33, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Niger Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 34, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Nigeria Reinsurance Corporation"
+        }
+    }, 
+    {
+        "pk": 35, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Nigerian Agricultural Insurance Corporation"
+        }
+    }, 
+    {
+        "pk": 36, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "NSIA Insurance Ltd"
+        }
+    }, 
+    {
+        "pk": 37, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Oasis Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 38, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Old Mutual Nigeria General Insurance Company Ltd"
+        }
+    }, 
+    {
+        "pk": 39, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Old Mutual Nigeria Life Assurance Company Limited"
+        }
+    }, 
+    {
+        "pk": 40, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Prestige Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 41, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Regency Alliance Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 42, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Royal Excahange Prudential Life Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 43, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Royal Exchange General Insurance Company Ltd"
+        }
+    }, 
+    {
+        "pk": 44, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Sovereign Trust Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 45, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Spring Life Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 46, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "STACO Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 47, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Standard Alliance Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 48, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Standard Alliance Life Assurance Ltd"
+        }
+    }, 
+    {
+        "pk": 49, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Sterling Assurance Nigeria Ltd"
+        }
+    }, 
+    {
+        "pk": 50, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "UBA Metropolitan Life Insurance Ltd"
+        }
+    }, 
+    {
+        "pk": 51, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "UNIC Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 52, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Union Assurance Company Ltd."
+        }
+    }, 
+    {
+        "pk": 53, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Unitrust Insurance Company Limited"
+        }
+    }, 
+    {
+        "pk": 54, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Unity Kapital Assurance Plc"
+        }
+    }, 
+    {
+        "pk": 55, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Universal Insurance Plc"
+        }
+    }, 
+    {
+        "pk": 56, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "WAPIC Insurance Plc."
+        }
+    }, 
+    {
+        "pk": 57, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "WAPIC Life Assurance Ltd"
+        }
+    }, 
+    {
+        "pk": 58, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Zenith General Insurance Compnay"
+        }
+    }, 
+    {
+        "pk": 59, 
+        "model": "employees.insurancecompany", 
+        "fields": {
+            "name": "Zenith Life Assurance Company Limited"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Access Bank"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Afribank"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Bank PHB"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Cash"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "CitiBank"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Diamond Bank"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "EcoBank"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Equatorial Trust Bank"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Fidelity Bank"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "FinBank"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "First Bank of Nigeria"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "First City Monument Bank"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "GTBank"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Intercontinental Bank"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Oceanic Bank"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Skye Bank"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Spring Bank"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Stanbic IBTC Bank Nigeria Limited"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Standard Chartered Bank"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Sterling Bank"
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Union Bank of Nigeria"
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "United Bank for Africa"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Unity Bank Plc."
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Wema Bank"
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "employees.bank", 
+        "fields": {
+            "name": "Zenith Bank"
+        }
+    },
+     {
+        "pk": 1, 
+        "model": "employees.pensioncustodian", 
+        "fields": {
+            "website": "http://www.diamondpfc.com/", 
+            "name": "Diamond Pension Fund Custodian Limited", 
+            "contact": "", 
+            "account_number": "", 
+            "address": "Chinedu Osundu Ekeocha MD\r\nNo. 1A, Tiamiyu Savage Street\r\nVictoria Island,\r\nLagos\r\n+234 7034111256-MD\r\n+234 - 1 - 2713680\r\n+234 - 1 - 4613652\r\n+234 - 1 - 4613754\r\n+234 - 1 - 4613799\r\n+234 - 1 - 4613753", 
+            "sort_code": "", 
+            "email": "info@diamondpfc.com", 
+            "bank": [
+                "Diamond Bank"
+            ]
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "employees.pensioncustodian", 
+        "fields": {
+            "website": "http://www.firstpensioncustodian.com/", 
+            "name": "First Pension Custodian Nigeria Limited", 
+            "contact": "", 
+            "account_number": "", 
+            "address": "Akinwumi Fanimokun MD\r\nNo. 124 Awolowo Road\r\nIkoyi\r\nLagos\r\n+234 8022901979-MD\r\n+234 - 1 - 2692896\r\n+234 - 1 - 2713019\r\n+234 - 1 - 2713217\r\n+234 - 1 - 2662721", 
+            "sort_code": "", 
+            "email": "info@firstcustodiannigeria.com", 
+            "bank": [
+                "First Bank of Nigeria"
+            ]
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "employees.pensioncustodian", 
+        "fields": {
+            "website": "http://www.ubapensions.com/", 
+            "name": "UBA Pensions Custodian Limited", 
+            "contact": "", 
+            "account_number": "", 
+            "address": "Mrs. Oluwatomi Soyode MD\r\nPlot 22b, Idowu Taylor Street\r\nVictoria Island\r\nLagos\r\n+234 - 8038077700-MD\r\n+234 - 1 - 2702630\r\n+234 - 1 - 2718000-4\r\n+234 - 1 - 2718009\r\n\r\nAbuja Liaison Office\r\n2nd Floor, UBA House\r\n18, Adetokunbo Ademola Crescent\r\nWuse II\r\nAbuja\r\n+234 - 8190538105\r\n+234 - 8023618859", 
+            "sort_code": "", 
+            "email": "info@ubapensions.com", 
+            "bank": [
+                "United Bank for Africa"
+            ]
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "employees.pensioncustodian", 
+        "fields": {
+            "website": "http://www.zenithcustodian.com/", 
+            "name": "Zenith Pensions Custodian Limited", 
+            "contact": "Mrs. Nkem Oni-Egboma MD", 
+            "account_number": "", 
+            "address": "No. 1, Samuel Manuwa Street\r\nOff Bishop Aboyade Cole Street\r\nVictoria Island\r\nLagos\r\n+234 - 8023164118-MD\r\n+234 - 1 - 2712793\r\n+234 - 1 - 2712794\r\n+234 - 1 - 2712795\r\n ", 
+            "sort_code": "", 
+            "email": "enquiries@zenithcustodian.com", 
+            "bank": [
+                "Zenith Bank"
+            ]
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.aiicopension.com/", 
+            "name": "AIICO Pension Managers Limited", 
+            "custodian": 2, 
+            "email": "elonge@aiicopension.com", 
+            "contact": "Mr. Eguarekhide Longe MD", 
+            "account_number": "", 
+            "address": "Plot 2, Oba Akran Avenue\r\nIkeja\r\nLagos\r\n+234 8157306868-MD\r\n+234 1 2624667\r\n+234 1 2625003\r\n+234 1 2624174 (Fax)\r\n", 
+            "sort_code": "", 
+            "account_name": "AIICO Pension Managers Limited"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.aptpensions.com/", 
+            "name": "APT Pension Fund Managers Limited", 
+            "custodian": 2, 
+            "email": "gummia@aptpensions.com", 
+            "contact": "Dr. Al-Mujtaba Abubakar Gummi MD", 
+            "account_number": "", 
+            "address": "Plot 266 Cadastral AO\r\nCentral Business District\r\nGarki\r\nAbuja\r\n+234 8033146939-MD\r\n+234 8077090000\r\n+234 9 4614400-29\r\n+234 9 2340096 (Fax)\r\n", 
+            "sort_code": "", 
+            "account_name": "APT Pension Fund Managers Limited"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.armpension.com/", 
+            "name": "ARM Pension Managers Limited", 
+            "custodian": 3, 
+            "email": "info@armpension.com", 
+            "contact": "Mr. Abubakar Sadiq Mohammed MD", 
+            "account_number": "1005385538", 
+            "address": "No. 5, Mekunwen Road\r\nOff Oyinkan Drive\r\nIkoyi\r\nLagos\r\n+234 8034021705-MD\r\n+234 1 2715005\r\n+234 1 2692097\r\n+234 1 7737432\r\n+234 1 2715061\r\n/", 
+            "sort_code": "033153665", 
+            "account_name": "UPCL/ARM Pension RSA Contribution Account (UBA Pen"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.crusaderpensions.com/", 
+            "name": "CrusaderSterling Pensions Limited", 
+            "custodian": 2, 
+            "email": "info@crusaderpensions.com", 
+            "contact": "Mr. Adeniyi Falade MD", 
+            "account_number": "4682030001953", 
+            "address": "No. 41, Keffi Street\r\nSouth West Ikoyi, Lagos\r\n+234 8058004953-MD\r\n+234 1 271 3800-4\r\n+234 1 271 3813\r\n", 
+            "sort_code": "", 
+            "account_name": "FPCNL-RE-CPL Contribution"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.fidelitypensionmanagers.com/", 
+            "name": "Fidelity Pension Managers", 
+            "custodian": 2, 
+            "email": "info@fidelitypensionmanagers.com", 
+            "contact": "Mrs. Amaka Andy-Azike MD", 
+            "account_number": "2008709035", 
+            "address": "2 Adeyemo Alakija Street\r\nVictoria Island\r\nLagos\r\n+234 803 325 7523 - MD\r\n+234 1 4626963\r\n+234 9 4626968/69\r\n+234 9 6720547\r\n+234 1 4626966 (Fax)\r\n+234 9 5239434 (Fax)\r\n", 
+            "sort_code": "11154686", 
+            "account_name": "FCNL-REFIDELITY PML CONTRIBUTION"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.firstguaranteepension.com/", 
+            "name": "First Guarantee Pension Limited", 
+            "custodian": 2, 
+            "email": "info@firstguaranteepension.com", 
+            "contact": "Mr. Chima Jude Akalezi MD (Interim Management Comm", 
+            "account_number": "", 
+            "address": "Irorun Plaza ,\r\nNo. 65, Kudirat Abiola Way,\r\nOregun, Ikeja\r\nLagos\r\n+234 8033279973 -MD\r\n+234 1 2715500\r\n+234 1 274175-9\r\n+234 1 2610366\r\n+234 1 2613413\r\n", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.fugpensions.com/", 
+            "name": "Future Unity Glanvils Pensions Limited", 
+            "custodian": 2, 
+            "email": "info@fugpensions.com", 
+            "contact": "Mr. Usman B. Suleiman MD", 
+            "account_number": "", 
+            "address": "26 Commercial Avenue\r\nYaba\r\nLagos\r\n+234 8033435906-MD\r\n+234 1 4627060\r\n+234 1 4627067\r\n+234 1 4627087 (Fax)\r\n", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.gtbampensions.com/", 
+            "name": "GTB-AM Pensions Limited", 
+            "custodian": 1, 
+            "email": "enquiries@gtbampensions.com", 
+            "contact": "Charles Sanni - MD", 
+            "account_number": "0005741189", 
+            "address": "Plot 871, Tafawa Balewa Way\r\nOpposite NICON Luxury Hotel\r\nGarki Area 11\r\nAbuja\r\n+234 8023147609-MD\r\n+234 9 2914381\r\n+234 9 7802508\r\nE-mail: charles.sanni@gtbampensions.com MD\r\n", 
+            "sort_code": "063150252", 
+            "account_name": "DPFC/GTB-AM Pensions Ltd"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.ieianchorpensions.com/", 
+            "name": "IEI-Anchor Pension Managers Limited", 
+            "custodian": null, 
+            "email": "info@anchorpension.com", 
+            "contact": "Solomn Okoli MD", 
+            "account_number": "", 
+            "address": "Plot 51A, Oro Ago Street\r\nGarki II\r\nAbuja\r\n+234 8087184223 MD\r\n+234 9 3146526\r\n+234 9 4618900 - 9\r\n+234 9 3145171(Fax)\r\nE-mail: solomonokoli@ieianchorpensions.com\r\n", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.igipfm.com/", 
+            "name": "IGI Pension Fund Managers Limited", 
+            "custodian": 3, 
+            "email": "", 
+            "contact": "Stannis Uchenna Ezeobi MD", 
+            "account_number": "", 
+            "address": "No. 4, Adeola Odeku Street\r\nVictoria Island\r\nLagos\r\n+234 8084995466-MD\r\n+234 1 6213043 - 47\r\n ", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.pensure-nigeria.com/", 
+            "name": "Leadway Pensure PFA Limited", 
+            "custodian": 3, 
+            "email": "info@leadway-pensure.com", 
+            "contact": "Mrs. Aderonke Adedeji MD", 
+            "account_number": "", 
+            "address": "121/123 Funsho Williams Avenue\r\nSurulere\r\nLagos\r\n+234 8066438653-MD\r\n+234 1 2800850\r\n+234 1 2800900\r\n", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.legacypension.com/", 
+            "name": "Legacy Pension Managers Limited", 
+            "custodian": 3, 
+            "email": "info@legacypension.com", 
+            "contact": "Mr. Misbahu Yola MD", 
+            "account_number": "", 
+            "address": "39, Ademola Adetokunbo Crescent\r\nWuse II, Abuja\r\n+234 8022235807-MD\r\n+234 9 4613501-3\r\n+234 9 6738002\r\n", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.nlpcpfa.com/", 
+            "name": "NLPC Pension Fund Administrators Limited", 
+            "custodian": 2, 
+            "email": "info@nlpcpfa.com", 
+            "contact": "Mr. Adewale O. Kolawole MD", 
+            "account_number": "2006895606", 
+            "address": "Location: 312A,\r\nIkorodu Road, Anthony\r\nLagos\r\n+234 8034027008-MD\r\n+234 1 2793580 - 2\r\n+234 1 7610812\r\n+234 1 2793583 (Fax)\r\n", 
+            "sort_code": "11154686", 
+            "account_name": "FPCNL/NLPC PFA LTD (Cont Acct)"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.oakpensions.com/", 
+            "name": "OAK Pensions Limited", 
+            "custodian": null, 
+            "email": "info@oakpensions.com", 
+            "contact": "Mr. Samuel Inyang Ag. MD", 
+            "account_number": "", 
+            "address": "266 Muritala Mohammed Way\r\nYaba\r\nLagos\r\n+234 8033094625 - Ag. MD\r\n+234 1 4616680\r\n+234 1 4614704-5\r\n+234 1 2627490-1\r\n+234 1 2627492 (Fax)\r\n", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "", 
+            "name": "Penman Pensions Limited", 
+            "custodian": 3, 
+            "email": "", 
+            "contact": "Mr. Peter E. Udo MD", 
+            "account_number": "1006236149", 
+            "address": "", 
+            "sort_code": "033151939", 
+            "account_name": "UBA Pensions Custodian Ltd/Penman Pensions Ltd"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.pensionsalliance.com/", 
+            "name": "Pensions Alliance Limited", 
+            "custodian": 3, 
+            "email": "info@pensionsalliance.com", 
+            "contact": "Mr. Emenike Dave Uduanu MD", 
+            "account_number": "", 
+            "address": "9th Floor, UBA Building\r\n57 Marina\r\nLagos\r\n+234 08034039191-MD\r\n+234 1 2667710\r\n+234 1 2667177\r\n+234 1 2662002\r\n", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.premiumpension.com/", 
+            "name": "Premium Pension Limited", 
+            "custodian": 2, 
+            "email": "info@premiumpension.com", 
+            "contact": "Mr. Wilson Ideva MD", 
+            "account_number": "2006857970", 
+            "address": "No. 4, Agwu Street\r\nOff Faskari Crescent\r\nArea 3\r\nGarki - Abuja\r\n+234 08073399874 - MD\r\n+234 07029128221\r\n+234 9 4615707-9\r\n+234 9 4615700\r\nEmail: wilsonideva@premiumpension.com - MD\r\n", 
+            "sort_code": "011154686", 
+            "account_name": "FCNL-PPL-RE-CONTRIBUTION"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.sigmapensions.com/", 
+            "name": "Sigma Pensions Limited", 
+            "custodian": 3, 
+            "email": "info@sigmapensions.com", 
+            "contact": "Mr. Umaru H. Modibbo MD", 
+            "account_number": "1005385507", 
+            "address": "No. 29 Durban Street\r\nOff Adetokunbo Ademola Crescent\r\nWuse II \u2013 Abuja\r\n+234 8033164996-MD\r\n+234 9 5237787\r\n+234 9 5237816\r\n+234 9 5237787\r\n", 
+            "sort_code": "033153665", 
+            "account_name": "UBA Pensions Custodians/Sigma Pensions\u2011contributio"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "http://www.ibtcpension.com/", 
+            "name": "Stanbic IBTC Pension Managers Limited", 
+            "custodian": 4, 
+            "email": "pensionmanagers@ibtcpension.com", 
+            "contact": "Dr. Ademola Sogunle MD", 
+            "account_number": "1010885522", 
+            "address": "Plot 1678, Olakunle Bakare Close\r\nVictoria Island\r\nLagos\r\n+234 8034020097- MD\r\n+234 1 2716000\r\n+234 1 2716021/2\r\n", 
+            "sort_code": "", 
+            "account_name": "Stanbic IBTC Pension Managers Limited"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "employees.pensionadministrator", 
+        "fields": {
+            "website": "", 
+            "name": "Trustfund Pensions Plc", 
+            "custodian": 4, 
+            "email": "", 
+            "contact": "Helen Da-Souza (MD)", 
+            "account_number": "", 
+            "address": "", 
+            "sort_code": "", 
+            "account_name": ""
+        }
+    }, 
+    {
+        "pk": 1,
+        "model": "auth.user",
+        "fields": {
+            "username": "root",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2014-12-04T21:11:58.981",
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$10000$mODpV2HgQLSq$e/deO0RVqEurS0OmRzmgYJZXjh/q/lx5MCSXaVVBPb8=",
+            "email": "root@host.local",
+            "date_joined": "2014-12-04T21:11:58.981"
+        }
+    }
+]

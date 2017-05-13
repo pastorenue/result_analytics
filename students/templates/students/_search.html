@@ -1,0 +1,57 @@
+{% extends 'staff/dashboard.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+    <div style="margin-bottom: 30px;">
+        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;">SEARCH RESULT LIST</h2>
+    </div>
+    <div class=''>
+        {% block heading %}{% endblock %}
+        {% if students %}
+        <table class='table table-condensed table-hover'>
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 6%">&nbsp;</th>
+                    <th>Reg Number</th>
+                    <th>Full Name</th>
+                    <th>Department</th>
+                    <th>Level</th>
+                    <th style='width: 6%; text-align: center;'>Status</th>
+                    <th style='width: 8%;'></th>
+                    <th scope="col" style="width: 6%">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr class="{% ifchanged student.last_name|first %} section-group{% endifchanged %}">
+                   <td style="font-size: 1.4em; padding-top: 0px;"><strong>
+                    {% ifchanged %}{{ student.last_name|first|upper }}{% endifchanged %}</strong>
+                    </td>
+                    <td>{{ student.reg_number }}</td>
+                    <td>{{ student.full_name }}</td>
+                    <td>{{ student.department }}</td>
+                    <td>{{ student.level }}</td>
+                    <td style="text-align: center;">{{ student.user_status }}</td>
+                    <td>
+                        <div class='dropdown'>
+                            <label class='dropdown-toggle' data-toggle='dropdown' style="cursor: pointer;">
+                                <span class='glyphicon glyphicon-menu-hamburger'></span></label>
+                            <ul class='dropdown-menu' role="menu" style="left: -180px; border-top: 3px solid #0d8363; background-color: #edf0ef;">
+                                <li><a href="{% url 'students:student_profile' student.id %}"><span class="glyphicon glyphicon-user"></span> View {{ student.first_name }}'s profile</a></li>
+                                <li><a href="{% url 'results:personal_results' student_id=student.id %}"><span class="glyphicon glyphicon-file"></span> View result information</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a href="{% url 'analyzer:cgpa_analysis' student_id=student.pk %}"><span class="glyphicon glyphicon-tent"></span> {{ student }}'s CGPA Analysis</a></li>
+                                <li><a href=""><span class="glyphicon glyphicon-list-alt"></span> View Performance History</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a href=""><span class="glyphicon glyphicon-ban-circle"></span> Start expulsion process for {{ student }}</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+{% endblock %}

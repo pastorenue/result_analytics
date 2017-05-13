@@ -1,0 +1,10 @@
+{{ object.staff_id_number }}
+{% if object.title %}{{ object.get_title_display }} {% endif %}{{ object.full_name }}
+{{ object.position }}
+{{ object.unit }}
+{{ object.location }}
+{{ object.address }}
+{{ object.phone }}
+{{ object.permanent_address }}
+{{ object.passport_number }}
+{{ object.get_status_display }}

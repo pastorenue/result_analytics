@@ -1,0 +1,22 @@
+{% extends 'staff/dashboard.html' %}
+
+{% load staticfiles %}
+{% load form_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h2 style="margin-top: 0px; border-radius: 2px; padding: 3px; border-bottom: 2px solid #c14;">
+       Enter New Results...
+    </h2>
+<div style=" padding: 10px;">
+    <form method="post" action="">{% csrf_token %}
+        <div class="">
+            {{ form|crispy }}
+        </div>
+        <div class="" style="padding: 10px;">
+            <button class="btn btn-primary" type="submit" id="save">Process and Add Another</button>
+            <button class="btn btn-primary" type="button" id="save_and_add">Cancel</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

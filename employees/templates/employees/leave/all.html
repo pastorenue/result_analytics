@@ -1,0 +1,73 @@
+{% extends "employees/employees.html" %}
+{% load leave_tags payroll_tags search_tags %}
+
+{% block title %}
+{% ifequal employee.user user %}My Leave Information{% else %}Leave Information for {{ employee.full_name }}{% endifequal %}
+{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'employees_list' %}">All employees</a> &raquo;
+<a href="{{ employee.get_absolute_url }}">{{ employee.full_name }}</a> &raquo; Leave information
+{% endblock %}
+
+{% block content %}
+<h2>
+    {% ifequal employee.user user %}My Leave Information{% else %}Leave Information for {{ employee.full_name }}{% endifequal %}
+</h2>
+{% show_leave_days employee %}
+<table class="show-current-row" style="width: 100%">
+    <thead>
+        <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Period</th>
+            <th scope="col">Relieved by</th>
+            <th scope="col">Date applied</th>
+            <th scope="col">Status</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leave in leave_list %}
+        <tr class="{% cycle 'odd' 'even' as rowcolors %}">
+            <td>{{ leave.leave_policy }}</td>
+            <td>{% display_period leave.start_date leave.end_date %}</td>
+            <td>
+                <a href="{{ leave.relief.get_absolute_url }}">{{ leave.relief.full_name }}</a>
+            </td>
+            <td>{{ leave.application_date|date:"jS M Y" }}</td>
+            <td>{{ leave.get_status_display }}</td>
+            <td style="text-align: center">
+                <div class="has-tip">
+                    {% with status=leave.get_status_display %}
+                    {% if leave.remarks or status == 'Approved' %}
+                    <a href="#detail_{{ leave.pk }}" class="show-tip" data-tip-position="bottom center" data-tip-offset-y="5">detail</a>
+                    <div id="detail_{{ leave.pk }}" class="tip-content">
+                        {% if leave.remarks %}
+                        <strong>Remarks</strong>
+                        {{ leave.remarks|linebreaks }}
+                        {% endif %}
+                        <form method="post" class="no-frame no-margin" action="{% url 'leave_change_status'  id=leave.pk %}">
+                            <div>
+                                {% csrf_token %}
+                                <button class="btn-danger" type="submit" name="status" value="cancelled">Cancel Leave</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No leave information to display.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% paginate %}
+<a href="{% url 'employees_new_leave' employee_id=employee.pk %}">
+    <i class="fa fa-fw fa-plus-circle"></i>
+    Apply for Leave
+</a>
+{% endblock %}

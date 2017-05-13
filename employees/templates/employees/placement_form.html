@@ -1,0 +1,40 @@
+{% extends "employees/employees.html" %}
+{% load form_tags %}
+
+{% block title %}
+New Placement
+{% endblock %}
+
+{% block extrahead %}{{ form.media }}{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'employees_list' %}">All employees</a> &raquo;
+<a href="{{ employee.get_absolute_url }}">{{ employee.full_name }}</a> &raquo; Transfer 
+{% endblock %}
+
+{% block content %}
+<h2>Transfer {{ employee.full_name|capfirst }}</h2>
+
+{% form_errors form %}
+
+<div class="box right" style="width:30%;">
+    <h4>Current Placement</h4>
+    <dl>
+        <dt>Position</dt><dd>{{ employee.position }}</dd>
+        <dt>Unit</dt><dd>{{ employee.unit }}</dd>
+        <dt>Location</dt><dd>{{ employee.location }}</dd>
+        <dt>Grade level</dt><dd>{{ employee.grade_level }}</dd>
+    </dl>
+</div>
+
+<form method='post' action=''>
+    <fieldset>
+        <ul>
+            {% render_form form %}
+            <li>
+                <input type="submit" value=" Submit " />
+            </li>
+        </ul>
+    </fieldset>
+</form>
+{% endblock %}

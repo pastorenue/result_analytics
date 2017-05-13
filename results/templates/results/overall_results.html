@@ -1,0 +1,240 @@
+{% extends 'staff/dashboard.html' %}
+
+{% block breadcrumbs %}
+    <a href="{% url 'students:students_list' %}"> All students</a>&raquo; {{ student }}'s result detail
+{% endblock %}
+{% block menu %}
+    {% include "analyzer/attached.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-6">{{ student }}</div>
+	<div class="col-md-6"></div>
+</div>
+<div class="row clearfix" style="margin-left: 10px;">
+	<h3>Overall Results</h3>
+</div>
+
+<div id="exTab2" class="row clearfix" style="margin-left: 10px;">
+<ul class="nav nav-tabs">
+	{% if levels %}
+	{% for level in levels %}
+	<li>
+		<a href="#{{ level}}" data-toggle="tab">{{ level }} Level</a>
+	</li>
+	{% endfor %}
+	{% endif %}
+		</ul>
+			<div class="tab-content "style="padding-right:10px;"><div class="tab-pane active" id="100">
+
+					<h4 style="margin-bottom: 20px; font-size: 1.2em; color: #53b6d0;">100 Level Result Aggregate</h4>
+					<table class='table table-condensed main-page'>
+						<thead>
+							<tr>
+								<th>Reg Number</th>
+								<th>Course</th>
+								<th>Semester</th>
+								<th>Level</th>
+								<th style='width: 5%;'>Score</th>
+								<th style='width: 5%;'>Grade</th>
+								<th scope="col" style="width: 7%">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for result in lvl100 %}
+							<a href=""><tr class="" style="cursor: pointer;">
+								<td>{{ result.student.reg_number }}</td>
+								<td>{{ result.course }}</td>
+								<td>{{ result.semester }}</td>
+								<td>{{ result.level }}</td>
+								<td>{{ result.score }}</td>
+								<td>{{ result.grade }}</td>
+								<td><button class="btn btn-primary btn-sm">Edit</button> </td>
+							</tr></a>
+							{% empty %}
+							<tr>
+								<td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane" id="200">
+					<h4 style="margin-bottom: 20px; font-size: 1.2em; color: #53b6d0;">200 Level Result Aggregate</h4>
+					<table class='table table-condensed main-page'>
+						<thead>
+							<tr>
+								<th>Reg Number</th>
+								<th>Course</th>
+								<th>Semester</th>
+								<th>Level</th>
+								<th style='width: 5%;'>Score</th>
+								<th style='width: 5%;'>Grade</th>
+								<th scope="col" style="width: 7%">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for result in lvl200 %}
+							<a href=""><tr class="" style="cursor: pointer;">
+								<td>{{ result.student.reg_number }}</td>
+								<td>{{ result.course }}</td>
+								<td>{{ result.semester }}</td>
+								<td>{{ result.level }}</td>
+								<td>{{ result.score }}</td>
+								<td>{{ result.grade }}</td>
+								<td><button class="btn btn-primary btn-sm">Edit</button> </td>
+							</tr></a>
+							{% empty %}
+							<tr>
+								<td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+        		<div class="tab-pane" id="300">
+					<h4 style="margin-bottom: 20px; font-size: 1.2em; color: #53b6d0;">300 Level Result Aggregate</h4>
+					<table class='table table-condensed main-page'>
+						<thead>
+							<tr>
+								<th>Reg Number</th>
+								<th>Course</th>
+								<th>Semester</th>
+								<th>Level</th>
+								<th style='width: 5%;'>Score</th>
+								<th style='width: 5%;'>Grade</th>
+								<th scope="col" style="width: 7%">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for result in lvl300 %}
+							<a href=""><tr class="" style="cursor: pointer;">
+								<td>{{ result.student.reg_number }}</td>
+								<td>{{ result.course }}</td>
+								<td>{{ result.semester }}</td>
+								<td>{{ result.level }}</td>
+								<td>{{ result.score }}</td>
+								<td>{{ result.grade }}</td>
+								<td><button class="btn btn-primary btn-sm">Edit</button> </td>
+							</tr></a>
+							{% empty %}
+							<tr>
+								<td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane" id="400">
+					<h4 style="margin-bottom: 20px; font-size: 1.2em; color: #53b6d0;">400 Level Result Aggregate</h4>
+					<table class='table table-condensed main-page'>
+						<thead>
+							<tr>
+								<th>Reg Number</th>
+								<th>Course</th>
+								<th>Semester</th>
+								<th>Level</th>
+								<th style='width: 5%;'>Score</th>
+								<th style='width: 5%;'>Grade</th>
+								<th scope="col" style="width: 7%">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for result in lvl400 %}
+							<a href=""><tr class="" style="cursor: pointer;">
+								<td>{{ result.student.reg_number }}</td>
+								<td>{{ result.course }}</td>
+								<td>{{ result.semester }}</td>
+								<td>{{ result.level }}</td>
+								<td>{{ result.score }}</td>
+								<td>{{ result.grade }}</td>
+								<td><button class="btn btn-primary btn-sm">Edit</button> </td>
+							</tr></a>
+							{% empty %}
+							<tr>
+								<td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane" id="500">
+					<h4 style="margin-bottom: 20px; font-size: 1.2em; color: #53b6d0;">500 Level Result Aggregate</h4>
+					<table class='table table-condensed main-page'>
+						<thead>
+							<tr>
+								<th>Reg Number</th>
+								<th>Course</th>
+								<th>Semester</th>
+								<th>Level</th>
+								<th style='width: 5%;'>Score</th>
+								<th style='width: 5%;'>Grade</th>
+								<th scope="col" style="width: 7%">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for result in lvl500 %}
+							<a href=""><tr class="" style="cursor: pointer;">
+								<td>{{ result.student.reg_number }}</td>
+								<td>{{ result.course }}</td>
+								<td>{{ result.semester }}</td>
+								<td>{{ result.level }}</td>
+								<td>{{ result.score }}</td>
+								<td>{{ result.grade }}</td>
+								<td><button class="btn btn-primary btn-sm">Edit</button> </td>
+							</tr></a>
+							{% empty %}
+							<tr>
+								<td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane" id="600">
+					<h4 style="margin-bottom: 20px; font-size: 1.2em; color: #53b6d0;">600 Level Result Aggregate</h4>
+					<table class='table table-condensed main-page'>
+						<thead>
+							<tr>
+								<th>Reg Number</th>
+								<th>Course</th>
+								<th>Semester</th>
+								<th>Level</th>
+								<th style='width: 5%;'>Score</th>
+								<th style='width: 5%;'>Grade</th>
+								<th scope="col" style="width: 7%">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for result in lvl600 %}
+							<a href=""><tr class="" style="cursor: pointer;">
+								<td>{{ result.student.reg_number }}</td>
+								<td>{{ result.course }}</td>
+								<td>{{ result.semester }}</td>
+								<td>{{ result.level }}</td>
+								<td>{{ result.score }}</td>
+								<td>{{ result.grade }}</td>
+								<td><button class="btn btn-primary btn-sm">Edit</button> </td>
+							</tr></a>
+							{% empty %}
+							<tr>
+								<td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+</div>
+<div class="container"><h2>STAT</h2></div>
+<div id="exTab3" class="container">
+
+</div>
+{% endblock %}
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

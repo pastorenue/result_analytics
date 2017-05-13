@@ -1,0 +1,59 @@
+<button class="accordion">Academics</button>
+<div class="panel-filter">
+  <form action="" style="margin-bottom: 10px;">{% csrf_token %}
+    <div class="form-group" style="margin-top: 10px;">
+      <label class="" for="level">Level: </label>
+      <select class="form-control input-sm">
+        <optgroup>
+          <option value="100">Level 100</option>
+          <option value="200">Level 200</option>
+          <option value="300">Level 300</option>
+          <option value="400">Level 400</option>
+          <option value="500">Level 500</option>
+          <option value="600">Level 600</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="" for="semester">Semester: </label>
+      <select class="form-control input-sm" id="semester">
+        <optgroup>
+          <option value="1">First Semester</option>
+          <option value="2">Second Semester</option>
+        </optgroup>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm btn-block">Filter</button>
+  </form>
+</div>
+
+<button class="accordion">Search</button>
+<div class="panel-filter">
+  <form method='get' action="">{% csrf_token %}
+    <div class="form-group" style="margin-top: 15px;">
+      <label class="" for="search">Search: </label>
+      <input class="form-control input-sm" type="text" id="search" placeholder="Search For Student..."/>
+      <button class="btn btn-success btn-block btn-sm" type="submit" style="margin-top: 10px;">Search</button>
+    </div>
+  </form>
+  <p>Search by students name or reg_number</p>
+</div>
+
+<button class="accordion">Result Pane</button>
+<div class="panel-filter">
+  <p>Lorem ipsum...</p>
+</div>
+
+{% block extrajs %}
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function(){
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
+}
+  </script>
+{% endblock %}

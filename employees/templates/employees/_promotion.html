@@ -1,0 +1,13 @@
+{% extends "employees/_inline.html" %}
+{% load humanize %}
+{% block content %}
+<div class="item">
+    <h5>
+        <span class="right">{{ promotion.effective|date:"jS M Y" }}</span>
+        <span>{{ promotion.new_position }}</span>
+    </h5>
+    <div>
+        {{ promotion.new_level }} (&#x20a6;{{ promotion.new_basic|floatformat:2|intcomma }})
+    </div>
+</div>
+{% endblock %}

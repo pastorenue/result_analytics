@@ -1,0 +1,164 @@
+{% extends 'staff/dashboard.html' %}
+{% load staticfiles %}
+
+{% block extrahead%}
+  
+{% endblock %}
+
+{% block breadcrumbs %}
+    <a href="{% url 'analyzer:all_analysis' %}">Analytics &raquo;</a>
+{% endblock %}
+{% block content %}
+    <div>
+        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4; margin-top: 2px;"><i class="icon-tasks"></i> Analytics Panel</h2>
+    </div>
+    <div class="row" style='margin-left: 0px; margin-bottom: 10px;'>
+        <div class="col-md-2 info">
+            <h4>All Students</h4>
+            <div style="font-size: 1.5em;">
+                 {{ students.count }}
+            </div>
+        </div>
+        <div class="col-md-2 info">
+            <h4>Active Student </h4>
+            <div style="font-size: 1.5em;">
+                 {{ total }}
+            </div>
+        </div>
+        <div class="col-md-2 info">
+            <h4>On Suspension</h4>
+            <div style="font-size: 1.5em;">
+                {{ suspension }}
+            </div>
+        </div>
+        <div class="col-md-2 info">
+            <h4>Graduated</h4>
+            <div style="font-size: 1.5em;">
+                 {{ graduated }}
+            </div>
+        </div>
+        <div class="col-md-2 info">
+            <h4>Males</h4>
+            <div style="font-size: 1.5em;">
+                {{ males }}
+            </div>
+        </div>
+        <div class="col-md-2 info">
+            <h4>Females</h4>
+            <div style="font-size: 2em;">
+                {{ females }}
+            </div>
+        </div>
+    </div>
+    <div class="row" style=''>
+        <div class="col-md-12">
+            <div class="panel panel-info analytics">
+                <div class="panel-heading">Active Students' GPAs </div>
+                <div class="panel-body">
+                     <div id="all_gpa">
+                         
+                     </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="row" style=''>
+        <div class="col-md-12">
+            <div class="panel panel-success analytics">
+                <div class="panel-heading">Graduate Students' GPAs </div>
+                <div class="panel-body">
+                     <div id="g_charts">
+                         
+                     </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="row" style="margin-left: 2px;">
+        <div class="col-md-4" style="padding-left: 0px; padding-right: 0px;">
+            <div class="panel panel-info analytics" style="margin-left: 0px;">
+                <div class="panel-heading">Yearly Performance</div>
+                <div class="panel-body">
+                    <div id='chart_avg' style="background: #fff; ">
+        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default analytics">
+                <div class="panel-heading">Course Average Performance</div>
+                <div class="panel-body">
+                     <div id='c_chart'>
+                        
+                     </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    
+    <script>
+        var cgpa_chart = {{ cgpa_chart|safe }}
+        var cgpa_xAxis = {{ cgpa_xAxis|safe }}
+        var cgpa_yAxis = {{ cgpa_yAxis|safe }}
+        var cgpa_series = {{ cgpa_series|safe }}
+        var cgpa_title = {{ cgpa_title|safe }}
+        var chart = {{ chart|safe }}
+        var xAxis = {{ xAxis|safe }}
+        var yAxis = {{ yAxis|safe }}
+        var series = {{ series|safe }}
+        var title = {{ title|safe }}
+        var c_chart = {{ c_chart|safe }}
+        var c_xAxis = {{ c_xAxis|safe }}
+        var c_yAxis = {{ c_yAxis|safe }}
+        var c_series = {{ c_series|safe }}
+        var c_title = {{ c_title|safe }}
+        var g_chart = {{ g_chart|safe }}
+        var g_xAxis = {{ g_xAxis|safe }}
+        var g_yAxis = {{ g_yAxis|safe }}
+        var g_series = {{ g_series|safe }}
+        var g_title = {{ g_title|safe }}
+    </script>
+    <script>
+      $(function () {
+    $('#all_gpa').highcharts({
+        chart: cgpa_chart,
+        title: cgpa_title,
+        xAxis: cgpa_xAxis,
+        yAxis: cgpa_yAxis,
+        series: cgpa_series
+    });
+    
+    $('#chart_avg').highcharts({
+        chart: chart,
+        title: title,
+        subtitle: {text: "From 2015 to 2016"},
+        xAxis: xAxis,
+        yAxis: yAxis,
+        series: series
+    });
+    $('#c_chart').highcharts({
+        chart: c_chart,
+        title: c_title,
+        xAxis: c_xAxis,
+        yAxis: c_yAxis,
+        series: c_series
+    });
+    
+    $('#g_charts').highcharts({
+        chart: g_chart,
+        title: g_title,
+        subtitle: {text: "Graduate Students' records "},
+        xAxis: g_xAxis,
+        yAxis: g_yAxis,
+        series: g_series
+    });
+});
+        
+    </script>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'staff/dashboard.html' %}
+{% load staticfiles %}
+
+{% block extrahead%}
+  
+{% endblock %}
+
+{% block side_panel %}
+    
+{% endblock %}
+
+{% block breadcrumbs %}
+{% if user.is_staff %}<a href="{% url 'students:students_list' %}">All students &raquo;</a>{% endif %} {{ student }}'s Analysis
+{% endblock %}
+
+{% block menu %}
+    {% include "analyzer/attached.html" %}
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;"> {{ student }}'s Analysis Breakdown</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default" style="margin-left: 20px; width: 98%;">
+                <div class="panel-heading">Current Level Result Performance</div>
+                <div class="panel-body">
+                    <div id="{{ chartID|safe }}">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-success" style="width: 98%;">
+                <div class="panel-heading">Overall Result Performance of Previous Levels</div>
+                <div class="panel-body">
+                    <div id="chart">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-danger" style="margin: 10px 20px 35px 35px;">
+            <div class="panel-heading">Average Aggregate Analysis</div>
+            <div class="panel-body">
+                <div id="overall-chart">
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    
+    <script>
+        var chart_id = {{ chartID|safe }}
+        var chart = {{ chart|safe }}
+        var xAxis = {{ xAxis|safe }}
+        var yAxis = {{ yAxis|safe }}
+        var series = {{ series|safe }}
+        var title = {{ title|safe }}
+        var o_chart = {{ o_chart|safe }}
+        var o_xAxis = {{ o_xAxis|safe }}
+        var o_yAxis = {{ o_yAxis|safe }}
+        var o_series = {{ o_series|safe }}
+        var o_title = {{ o_title|safe }}
+        var v_chart = {{ v_chart|safe }}
+        var v_xAxis = {{ v_xAxis|safe }}
+        var v_yAxis = {{ v_yAxis|safe }}
+        var v_series = {{ v_series|safe }}
+        var v_title = {{ v_title|safe }}
+    </script>
+    <script>
+      $(function () {
+    $('#overall-chart').highcharts({
+        chart: v_chart,
+        title: v_title,
+        xAxis: v_xAxis,
+        yAxis: v_yAxis,
+        series: v_series
+    });
+    
+    $('#chart').highcharts({
+        chart: o_chart,
+        title: o_title,
+        xAxis: o_xAxis,
+        tooltip: {
+            valueSuffix: '%',
+        },
+        yAxis: o_yAxis,
+        series: o_series
+    });
+    
+    $(chart_id).highcharts({
+        chart: chart,
+        title: title,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        series: series
+    });
+});
+        
+    </script>
+{% endblock %}

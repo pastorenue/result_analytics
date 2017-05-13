@@ -1,0 +1,27 @@
+{% load careers_tags %}
+{% get_training_stats_for_employee employee as stats %}
+<div class="group" style="margin-left: 5px">
+    <div class="big" title="{{ stats.total_completed }} hours completed">
+        <i class="fa fa-fw fa-check"></i>
+        {{ stats.total_completed }}
+    </div>
+    <div class="big" title="{{ stats.total_in_progress }} hours in progress">
+        <i class="fa fa-fw fa-clock-o"></i>
+        {{ stats.total_in_progress }}
+    </div>
+</div>
+{% for entry in employee.training.all %}
+<div class="item">
+    <h5>
+        {{ entry.course }}
+    </h5>
+    <div>
+        {% if is_own_profile and not entry.is_completed %}
+        {% if entry.in_progress %}<a href="{% url careers_training_complete id=entry.pk %}" class="section-button right">Completed</a>{% endif %}
+        {% if entry.course.is_online and not entry.is_awaiting_approval %}<a href="{{ entry.course.location }}" class="section-button right external">Resume</a>{% endif %}
+        {% endif %}
+        <a href="{{ entry.course.get_absolute_url }}" class="section-button right">View</a>
+        <span>{{ entry.course.level }}, {{ entry.get_status_display }}</span>
+    </div>
+</div>
+{% endfor %}

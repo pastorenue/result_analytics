@@ -1,0 +1,513 @@
+[
+	{
+        "pk": 1, 
+        "model": "organization.location", 
+        "fields": {
+            "name": "Head Office", 
+            "address": ""
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "organization.unittype", 
+        "fields": {
+            "name": "Branch"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "organization.unittype", 
+        "fields": {
+            "name": "Company"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "organization.unittype", 
+        "fields": {
+            "name": "Department"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "organization.unittype", 
+        "fields": {
+            "name": "Directorate"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "organization.unittype", 
+        "fields": {
+            "name": "Division"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "organization.unittype", 
+        "fields": {
+            "name": "Subsidiary"
+        }
+    }, 
+	{
+        "pk": 1, 
+        "model": "organization.unit", 
+        "fields": {
+            "head_count": null, 
+            "type": 2, 
+            "name": "Corporate HQ", 
+            "parent": null, 
+            "location": 1
+        }
+    }, 
+	{
+        "pk": 2, 
+        "model": "organization.unit", 
+        "fields": {
+            "head_count": 100, 
+            "type": 2, 
+            "name": "Business Development", 
+            "parent": 1, 
+            "location": 1
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "organization.unit", 
+        "fields": {
+            "head_count": 5, 
+            "type": 2, 
+            "name": "Human Resources", 
+            "parent": 1, 
+            "location": 1
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "organization.position", 
+        "fields": {
+            "description": "Chief Executive", 
+            "reports_to": null, 
+            "is_head": true, 
+            "name": "CEO"
+        }
+    }, 
+	{
+        "pk": 2, 
+        "model": "organization.position", 
+        "fields": {
+            "description": "", 
+            "reports_to": 1, 
+            "is_head": false, 
+            "name": "Employee"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "organization.position", 
+        "fields": {
+            "description": "", 
+            "reports_to": 1, 
+            "is_head": true, 
+            "name": "HR Manager"
+        }
+    }, 
+	{
+        "pk": 1, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 1, 
+            "name": "Level 1", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 2, 
+            "name": "Level 2", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 3, 
+            "name": "Level 3", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 4, 
+            "name": "Level 4", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 5, 
+            "name": "Level 5", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 6, 
+            "name": "Level 6", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 7, 
+            "name": "Level 7", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 8, 
+            "name": "Level 8", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 9, 
+            "name": "Level 9", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 10, 
+            "name": "Level 10", 
+            "basic": "0"
+        }
+    }, 
+	{
+        "pk": 11, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 11, 
+            "name": "Level 11", 
+            "basic": "0"
+        }
+    }, 
+	{
+        "pk": 12, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 12, 
+            "name": "Level 12", 
+            "basic": "0"
+        }
+    }, 
+	{
+        "pk": 13, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 13, 
+            "name": "Level 13", 
+            "basic": "0"
+        }
+    }, 
+	{
+        "pk": 14, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 14, 
+            "name": "Level 14", 
+            "basic": "0"
+        }
+    }, 
+	{
+        "pk": 15, 
+        "model": "organization.gradelevel", 
+        "fields": {
+            "placement": 15, 
+            "name": "Level 15", 
+            "basic": "0"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "organization.corporateaccount", 
+        "fields": {
+            "is_default": true, 
+            "is_active": true, 
+            "account_number": "0000000000", 
+            "bank": [
+                "GTBank"
+            ]
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "organization.corporateaccount", 
+        "fields": {
+            "is_default": false, 
+            "is_active": true, 
+            "account_number": "0000000000", 
+            "bank": [
+                "Zenith Bank"
+            ]
+        }
+    },
+    {
+        "pk": 1,
+        "model": "dynamicgroups.group",
+        "fields": {
+            "date_created": "2012-01-16T00:26:55.230",
+            "created_by": [
+                "root"
+            ],
+            "name": "All Employees",
+            "ctype": [
+                "employees",
+                "employee"
+            ],
+            "criteria": "[]"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "dynamicgroups.group",
+        "fields": {
+            "date_created": "2012-01-29T19:41:47.567",
+            "created_by": [
+                "root"
+            ],
+            "name": "HR",
+            "ctype": [
+                "employees",
+                "employee"
+            ],
+            "criteria": "[{\"value\": \"Human Resources; \", \"key\": \"unit\"}]"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "dynamicgroups.group",
+        "fields": {
+            "date_created": "2012-01-16T02:34:37.662",
+            "created_by": [
+                "root"
+            ],
+            "name": "Junior Staff",
+            "ctype": [
+                "employees",
+                "employee"
+            ],
+            "criteria": "[{\"value\": \"Level 10; Level 9; Level 8; \", \"key\": \"grade_level\"}]"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "dynamicgroups.group",
+        "fields": {
+            "date_created": "2012-01-30T06:55:59.836",
+            "created_by": [
+                "root"
+            ],
+            "name": "Management",
+            "ctype": [
+                "employees",
+                "employee"
+            ],
+            "criteria": "[{\"value\": \"CEO; \", \"key\": \"position\"}]"
+        }
+    },
+	{
+        "pk": 1, 
+        "model": "extendmodels.text", 
+        "fields": {
+            "max_length": 150
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "extendmodels.boolean", 
+        "fields": {}
+    }, 
+    
+    {
+        "pk": 3, 
+        "model": "extendmodels.date", 
+        "fields": {}
+    }, 
+    {
+        "pk": 1, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2010-12-25T01:21:24", 
+            "name": "Christmas"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2011-02-01T01:21:49", 
+            "name": "New Year"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2010-12-26T01:23:09", 
+            "name": "Boxing Day"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2011-02-15T01:23:38", 
+            "name": "Eid El Mouloud"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2011-04-22T01:24:07", 
+            "name": "Good Friday"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2011-04-25T01:24:27", 
+            "name": "Easter Monday"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2011-05-01T01:24:49", 
+            "name": "Worker's Day"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2011-08-31T01:25:28", 
+            "name": "Eid al-Fitr"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2011-10-01T01:25:56", 
+            "name": "Independence Day"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "holidays.holiday", 
+        "fields": {
+            "date": "2010-11-06T01:26:20", 
+            "name": "Eid al-Kabir"
+        }
+    }, 
+    {
+        "pk": 1,
+        "model": "leave.leavetype",
+        "fields": {
+            "name": "Study Leave"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "leave.leavetype",
+        "fields": {
+            "name": "Annual Leave"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "leave.leavetype",
+        "fields": {
+            "name": "Sick Leave"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "leave.leavetype",
+        "fields": {
+            "name": "Personal Days"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "leave.leavepolicy",
+        "fields": {
+            "leave_type": 1,
+            "group": 1,
+            "max_carry_over": 90,
+            "num_days": 90.0
+        }
+    },
+    {
+        "pk": 2,
+        "model": "leave.leavepolicy",
+        "fields": {
+            "leave_type": 2,
+            "group": 1,
+            "max_carry_over": 5,
+            "num_days": 10.0
+        }
+    },
+    {
+        "pk": 3,
+        "model": "leave.leavepolicy",
+        "fields": {
+            "leave_type": 3,
+            "group": 1,
+            "max_carry_over": 0,
+            "num_days": 5.0
+        }
+    },
+    {
+        "pk": 4,
+        "model": "leave.leavepolicy",
+        "fields": {
+            "leave_type": 4,
+            "group": 1,
+            "max_carry_over": 0,
+            "num_days": 5.0
+        }
+    },
+	{
+        "pk": 1, 
+        "model": "loan.loantype", 
+        "fields": {
+            "interest_rate": "10", 
+            "name": "REGULAR", 
+            "description": "Regular Loan"
+        }
+    }
+]

@@ -1,0 +1,37 @@
+{% extends "employees/_inline.html" %}
+{% load thumbnail %}
+{% block content %}
+<div class="basicprofile vcard">
+    {% if is_own_profile or perms.can_manage_employees %}
+    <div class="actions group">
+        <a class="edit-section right" href="{% url 'employees_basicprofile_edit' employee_id=employee.pk %}">Edit</a>
+    </div>
+    {% endif %}
+    <img class="photo" src="{% if employee.photo %}{% thumbnail employee.photo 125x125 autocrop crop  %}{% else %}{{ STATIC_URL }}images/aang.png{% endif %}" />
+    <div class="n">
+        {% if employee.title %}<span class="honorific-prefix">{{ employee.get_title_display }}</span> {% endif %}
+        <span class="given-name">{{ employee.first_name }}</span>
+        {% if employee.middle_name %}<span class="additional-name">{{ employee.middle_name }}</span>{% endif %}
+        <span class="family-name">{{ employee.last_name }}</span>
+    </div>
+    <div>
+        Born on {% if is_own_profile or perms.can_manage_employees %}{{ employee.birth_date|date:"jS F Y" }}{% else %}{{ employee.birth_date|date:"jS F" }}{% endif %}
+    </div>
+    <div class="org">
+        Currently {{ employee.position }},
+        <span class="organization-unit">{{ employee.unit }}</span>
+    </div>
+    {% if employee.email %}
+    <div class="email">
+        <i class="fa fa-fw fa-envelope"></i>
+        <span class="value">{{ employee.email|urlize }}</span>
+    </div>
+    {% endif %}
+    {% if employee.phone %}
+    <div class="tel">
+        <i class="fa fa-fw fa-phone"></i>
+        <span class="value">{{ employee.phone }}</span>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<div class="basicprofile vcard">
+   
+   <img class="photo img-circle" src="{% static 'images/avatar.png' %}" />
+    <div class="n">
+        <span class="given-name">{{ student.first_name }}</span>
+        {% if student.middle_name %}<span class="additional-name">{{ student.middle_name }}</span>{% endif %}
+        <span class="family-name">{{ student.last_name }}</span>
+    </div>
+    <div>
+        Student of {{ student.department }}
+    </div>
+    <div class="org">
+        {% if student.user_status == 'G' %}{{ student.first_name }} has Graduated
+     {% elif student.user_status == 'S' %}{{ student.first_name }} is on Suspension
+  {% else %}Currently in {{ student.level }}
+        <span class="organization-unit"> Level</span>
+     {% endif %}
+    </div>
+    {% if student.email %}
+    <div class="email">
+        <i class="fa fa-fw fa-envelope"></i>
+        <span class="value">{{ student.email|urlize }}</span>
+    </div>
+    {% endif %}
+    {% if student.phone %}
+    <div class="tel">
+        <i class="fa fa-fw fa-phone"></i>
+        <span class="value">{{ student.phone }}</span>
+    </div>
+    {% endif %}
+    
+    {% if is_own_profile or user.is_staff %}
+    <div class="">
+        <a class="edit-section" href="#">Edit</a>
+    </div> {% endif %}
+</div>

@@ -1,0 +1,66 @@
+{% extends "staff/dashboard.html" %}
+
+{% block title %}{% if is_own_profile %}My{% else %}{{ student.first_name }}'s{% endif %} Profile{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'students:students_list' %}">{% if user.is_staff %}All students &raquo;{% endif %}</a> {{ student.full_name }}
+{% endblock %}000
+
+{% block menu %}
+    {% include "analyzer/attached.html" %}
+{% endblock %}
+
+{% block content %}
+    <h2 style="margin-top: 0px; border-radius: 2px; padding: 5px; background: #1A7269; color: #fff;">
+        {% if not user.is_staff %}My{% else %}{{ student.last_name }}'s{% endif %} Profile
+    </h2>
+    <div>
+        {% include "students/_basic_profile.html" %}
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="section" style="margin-left: 15px;">
+               <h4>Academic Information</h4>
+           </div>
+           
+           <div id="personal" class="section left" style="margin-left: 15px;">
+               <h4>Personal Information</h4>
+               {% include "students/_personalinformation.html" %}
+           </div>
+        
+            <div class="section" id="personal" style="margin-left: 15px;">
+                <h4>Scholarship Information</h4>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="section" id="personal">
+                <h4>Bank Information</h4>
+            </div> 
+            <div class="section" id="company">
+                <h4>Documents Information</h4>
+                {% for document in documents %}
+                {% include "students/_document.html" %}
+                {% endfor %}
+                <a class="" style="margin-top: 10px;" href="#">Upload</a>
+            </div>
+            
+            <div class="section" id="personal">
+                <h4>Result Summary</h4>
+            </div>
+            
+            <div class="section" id="personal">
+                <h4>Current Level</h4>
+            </div>
+            <div class="section" id="personal">
+                <h4>Projects Information</h4>
+                {% if is_own_profile %}<a class="" style="margin-top: 10px;" href="#">Add New Project</a>{% endif %}
+            </div> 
+        </div>
+    </div>
+    
+    <div class="profile-sections">
+        
+        
+  </div>
+
+{% endblock %}

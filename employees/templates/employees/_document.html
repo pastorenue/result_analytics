@@ -1,0 +1,17 @@
+{% extends "employees/_inline.html" %}
+{% block content %}
+<div class="item">
+    {% if document.pk %}
+    <a class="delete-section right" href="{% url employees_document_delete id=document.pk %}">Delete</a>
+    {% endif %}
+    <h5>
+        <i class="fa fa-fw fa-file-o"></i>
+        <a href="{{ document.file.url }}" target="_blank">{{ document|title }}</a>
+    </h5>
+    {% if document.description %}
+    <div>
+        {{ document.description }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

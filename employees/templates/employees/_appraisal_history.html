@@ -1,0 +1,48 @@
+{% load appraisal_tags %}
+<script type="text/javascript">
+<!--
+$(function() {
+    var previousPoint = null,
+        plotData = [],
+        plotOptions = {
+            legend: { show: true, backgroundOpacity: 0.4 },
+            series: { lines: { show: true }, points: { show: true } },
+            grid: { hoverable: true },
+            xaxis: { mode: 'time', timeformat: "%m/%y" },
+            yaxis: { min: 0, max: 100 }
+        },
+        showTooltip = function(x, y, contents) {
+            var $o = $('#id_chart_tooltip').html(contents)
+            $o.css({left: x + 15, top: y - $o.outerHeight(true)/2}).fadeIn('fast');
+        },
+        formatDate = function(ts) {
+            var d = new Date(ts);
+            var monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return monthnames[d.getMonth()] + ' ' + d.getDate() + ' ' + d.getFullYear();
+        };
+
+    plotData.push({
+        data: [{% for a in appraisals %}{% if a.published %}[{{ a.period.end_date|jstimestamp }}, {{ a.percent_score|floatformat:0 }}]{% if not forloop.last %}, {% endif %}{% endif %}{% endfor %}],
+        hoverable: true
+    });
+
+    var $chart = $('#appraisals .chart')
+    $.plot($chart, plotData, plotOptions);
+    $('<div id="id_chart_tooltip" class="tip-content tooltip arrow-left"></div>').appendTo('body')
+    $chart.bind("plothover", function(event, pos, item) {
+        if (item) {
+            if (previousPoint != item.datapoint) {
+                previousPoint = item.datapoint;
+                var x = item.datapoint[0],
+                    y = item.datapoint[1]; //.toFixed(2);
+                showTooltip(item.pageX, item.pageY, y + "% (" + formatDate(x) + ")");
+            }
+        } else {
+            $("#id_chart_tooltip").fadeOut('fast');
+            previousPoint = null;
+        }
+    });
+});
+//-->
+</script>
+<div class="chart"></div>

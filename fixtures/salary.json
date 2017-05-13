@@ -1,0 +1,186 @@
+[
+    {
+        "pk": 1, 
+        "model": "salary.paytype", 
+        "fields": {
+            "duration": 0, 
+            "frequency": 1, 
+            "name": "Monthly Salary"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "salary.payitem", 
+        "fields": {
+            "category": 0, 
+            "pay_type": 1, 
+            "name": "UTILITY", 
+            "account_number": "", 
+            "taxable": true, 
+            "tax_item": ""
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "salary.payitem", 
+        "fields": {
+            "category": 0, 
+            "pay_type": 1, 
+            "name": "LEAVE", 
+            "account_number": "", 
+            "taxable": true, 
+            "tax_item": ""
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "salary.payitem", 
+        "fields": {
+            "category": 0, 
+            "pay_type": 1, 
+            "name": "MEAL", 
+            "account_number": "", 
+            "taxable": true, 
+            "tax_item": ""
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "salary.payitem", 
+        "fields": {
+            "category": 0, 
+            "pay_type": 1, 
+            "name": "TRANSPORTATION", 
+            "account_number": "", 
+            "taxable": true, 
+            "tax_item": "Transportation"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "salary.payitem", 
+        "fields": {
+            "category": 0, 
+            "pay_type": 1, 
+            "name": "ENTERTAINMENT", 
+            "account_number": "", 
+            "taxable": true, 
+            "tax_item": ""
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "salary.payitem", 
+        "fields": {
+            "category": 0, 
+            "pay_type": 1, 
+            "name": "HOUSING", 
+            "account_number": "", 
+            "taxable": true, 
+            "tax_item": "Housing"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "salary.payitem", 
+        "fields": {
+            "category": 0, 
+            "pay_type": 1, 
+            "name": "BASIC", 
+            "account_number": "", 
+            "taxable": true, 
+            "tax_item": "Basic"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "salary.paytemplate", 
+        "fields": {
+            "name": "Generic Basic-Based"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "salary.paytemplate", 
+        "fields": {
+            "name": "Generic"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "salary.payformula", 
+        "fields": {
+            "payitem": 1, 
+            "formula": "BASICPAY/12", 
+            "paytemplate": 1, 
+            "can_prorate": false, 
+            "can_override": false
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "salary.payformula", 
+        "fields": {
+            "payitem": 3, 
+            "formula": "6000/12", 
+            "paytemplate": 1, 
+            "can_prorate": false, 
+            "can_override": false
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "salary.payformula", 
+        "fields": {
+            "payitem": 2, 
+            "formula": "150000/12", 
+            "paytemplate": 1, 
+            "can_prorate": false, 
+            "can_override": false
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "salary.payformula", 
+        "fields": {
+            "payitem": 7, 
+            "formula": "0.1*BASIC", 
+            "paytemplate": 1, 
+            "can_prorate": false, 
+            "can_override": false
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "salary.payformula", 
+        "fields": {
+            "payitem": 5, 
+            "formula": "5000/12", 
+            "paytemplate": 1, 
+            "can_prorate": false, 
+            "can_override": false
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "salary.payformula", 
+        "fields": {
+            "payitem": 4, 
+            "formula": "20000/12", 
+            "paytemplate": 1, 
+            "can_prorate": false, 
+            "can_override": false
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "salary.payformula", 
+        "fields": {
+            "payitem": 6, 
+            "formula": "10000/12", 
+            "paytemplate": 1, 
+            "can_prorate": false, 
+            "can_override": false
+        }
+    }
+]

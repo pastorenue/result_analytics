@@ -1,0 +1,98 @@
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <th scope="row" style="width:35%">Sex</th>
+            <td>{{ student.get_sex_display }}</td>
+        </tr>
+        {% if student.blood_group %}
+        <tr>
+            <th scope="row">Blood group</th>
+            <td>{{ student.blood_group }}</td>
+        </tr>
+        {% endif %}
+        {% if student.genotype %}
+        <tr>
+            <th scope="row">Genotype</th>
+            <td>{{ student.genotype }}</td>
+        </tr>
+        {% endif %}
+        {% if student.marital_status %}
+        <tr>
+            <th scope="row">Marital status</th>
+            <td>{{ student.get_marital_status_display }}</td>
+        </tr>
+        {% endif %}
+        {% if student.address %}
+        <tr>
+            <th scope="row">Address</th>
+            <td>{{ student.address|linebreaks }}</td>
+        </tr>
+        {% endif %}
+        {% if student.permanent_address %}
+        <tr>
+            <th scope="row">Permanent address</th>
+            <td>{{ student.permanent_address|linebreaks }}</td>
+        </tr>
+        {% endif %}
+        {% if student.state_of_residence %}
+        <tr>
+            <th scope="row">State of residence</th>
+            <td>{{ student.state_of_residence }}</td>
+        </tr>
+        {% endif %}
+        {% if student.state_of_origin %}
+        <tr>
+            <th scope="row">State of origin</th>
+            <td>{{ student.state_of_origin }}</td>
+        </tr>
+        {% endif %}
+        {% if student.lga %}
+        <tr>
+            <th scope="row">LGA</th>
+            <td>{{ student.lga }}</td>
+        </tr>
+        {% endif %}
+        {% if student.country %}
+        <tr>
+            <th scope="row">Country</th>
+            <td>{{ student.country }}</td>
+        </tr>
+        {% endif %}
+        {% if student.passport_number %}
+        <tr>
+            <th scope="row">Passport number</th>
+            <td>{{ student.passport_number }}</td>
+        </tr>
+        {% endif %}
+        {% if student.national_id_number %}
+        <tr>
+            <th scope="row">National ID number</th>
+            <td>{{ student.national_id_number }}</td>
+        </tr>
+        {% endif %}
+        {% if student.religion %}
+        <tr>
+            <th scope="row">Religion</th>
+            <td>{{ student.get_religion_display }}</td>
+        </tr>
+        {% endif %}
+        {% if student.maiden_name %}
+        <tr>
+            <th scope="row">Maiden name</th>
+            <td>{{ student.maiden_name }}</td>
+        </tr>
+        {% endif %}
+        {% if student.mothers_maiden_name %}
+        <tr>
+            <th scope="row">Mother's maiden name</th>
+            <td>{{ student.mothers_maiden_name }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="2">
+                <a class="edit-section" href="#">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,45 @@
+{% extends 'staff/dashboard.html' %}
+{% load staticfiles %}
+
+{% block extrahead%}
+  
+{% endblock %}
+
+{% block side_panel %}
+    
+{% endblock %}
+
+{% block breadcrumbs %}
+{% if user.is_staff %}<a href="">All students &raquo;</a>{% endif %} {{ student }}'s CGPA Analysis
+{% endblock %}
+
+{% block menu %}
+    {% if not students %}
+        {% include "analyzer/attached.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h4 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;">Analyzing 200 Level (CSC)...</h4>
+        
+    </div>
+    <div class="row" style="margin: 0px;">
+        <div class="col-md-2" style="padding-right: 8px;">
+            
+        </div>
+        <div class="col-md-9" style="">
+            
+        </div>
+    </div>
+    <div class="row">
+       <div style="margin: 10px 20px 35px 35px; background-color: #123acb;">         
+               
+           </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    
+{% endblock %}

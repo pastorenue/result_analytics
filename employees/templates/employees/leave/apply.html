@@ -1,0 +1,27 @@
+{% extends "employees/employees.html" %}
+{% load form_tags %}
+
+{% block breadcrumbs %}
+<a href="{% url 'employees_list' %}">All employees</a> &raquo;
+<a href="{{ employee.get_absolute_url }}">{{ employee.full_name }}</a> &raquo;
+<a href="{% url 'employees_leave_history' employee_id=employee.id %}">Leave information</a> &raquo; Apply for leave
+{% endblock %}
+
+{% block title %}Apply for Leave{% endblock %}
+
+{% block extrahead %}{{ form.media }}{% endblock %}
+
+{% block content %}
+<h2>Apply for Leave</h2>
+{% form_errors form %}
+<form method='post' action=''>
+    <fieldset>
+        <ul>
+            {% render_form form %}
+            <li>
+                <input type='submit' value='Submit' />
+            </li>
+        </ul>
+    </fieldset>
+</form>
+{% endblock %}

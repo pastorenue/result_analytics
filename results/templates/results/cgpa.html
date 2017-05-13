@@ -1,0 +1,42 @@
+{% extends 'staff/dashboard.html' %}
+
+{% block title%}
+CGPA
+{% endblock %}
+{% block breadcrumbs %}
+<a style="text-decoration: none; color: #c16;" href="#">Student's CGPA</a>&raquo;
+{% endblock %}
+
+{% block content %}
+<div class='container-fluid'>
+    <h1 style='font-family: Sansation Light;'>Current CGPA</h1>
+    <div>
+        <h4>{{ message }}</h4>
+    </div>
+    <div>
+       {% if cgpa %}
+       <h1>{{ cgpa.student }}'s CGPA </h1>
+       <table class='table table-striped'>
+        <thead>
+            <caption>Your Student ID is :{{ cgpa.student.id }}</caption>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Full Name:</th>
+                <td>{{ cgpa.student }}</td>
+            </tr>
+            <tr>
+                <th>Department:</th>
+                <td>{{ cgpa.student.department }}</td>
+            </tr>
+            <tr>
+                <th>Current CGPA:</th>
+                <td>{{ cgpa.cgpa|floatformat:'2' }}</td>
+            </tr>
+        </tbody>
+       </table>
+       {% endif %}
+    </div>
+    {{ data }}
+</div>
+{% endblock %}

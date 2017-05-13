@@ -1,0 +1,47 @@
+{% extends "staff/dashboard.html" %}
+
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}
+Import Result &raquo;
+{% endblock %}
+
+{% block content %}
+    <h3 style="margin-top: 0px; border-radius: 5px; padding: 5px; color: #111; border-bottom: 2px solid #c15;">
+        <i class="fa fa-database" aria-hidden="true"></i> Data Import...
+    </h3>
+    <div>
+        <h4>Instructions</h4>
+        <p>
+          To properly import your data, the <b>CSV</b> file must follow
+          this order and format:
+          <ol>
+          <li>Registration Number</li>
+          <li>Course Code(if no matching course in our system,
+          'No course' will be assigned)</li>
+          <li>Score</li>
+          <li>Level</li>
+          <li>Semester</li>
+          <li>Session</li>
+          </ol>
+          You can also download this template as a guide:
+            <a href="{% static 'samples/csv_import_template.csv' %}">csv_import_template.csv</a>
+        </p>
+        <p>
+           <span style="font-size: 1.1em; font-weight: 600; color: #c19;">Note:</span> You have to make sure all your upload files are in your documents folder
+        </p>
+        <div style="margin-bottom: 30px; padding: 40px;">
+            <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-group">
+                    {% crispy form %}
+                    <div style="margin-top: 20px; width: 40%;">
+                        <button class="btn btn-primary btn-sm btn-block" type="submit">Import</button>
+                    </div>
+                </div>
+                
+                
+            </form>
+        </div>
+    </div>
+{% endblock %}

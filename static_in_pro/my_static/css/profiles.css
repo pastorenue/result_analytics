@@ -1,0 +1,217 @@
+
+.profile-sections {
+    margin: 10px auto;
+    width: 100%;
+}
+
+div.group{
+    width: 45%;
+    float: left;
+}
+div.upper-group{
+    width: 100s%;
+}
+div.section {
+    margin: 0 6px 6px 0;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.6);
+    color: #777;
+    border: 1px solid #ddd;
+    /*border-top: 5px solid #009999;*/
+    box-shadow: 0 3px 4px #ddd;
+    border-radius: 5px;
+    font-size: 0.98em;
+    line-height: 1.2em;
+    width: 100%;
+}
+div.section-right {
+    margin: 0 16px 16px 0;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.6);
+    color: #777;
+    border: 1px solid #ddd;
+    /*border-top: 5px solid #009999;*/
+    box-shadow: 0 3px 4px #ddd;
+    border-radius: 5px;
+    font-size: 0.98em;
+    line-height: 1.2em;
+    width: 460px;
+}
+    .section.appraisals .chart {
+        margin: 0 10px 15px 10px;
+        height: 240px;
+    }
+    #id_chart_tooltip {
+        display: none;
+        position: absolute;
+        opacity: 0.9;
+    }
+    .section .actions {
+        padding: 0 10px 8px 10px;
+    }
+    .section .big {
+        display: inline;
+        float: left;
+        clear: none;
+        margin: 0 0 20px 15px;
+        padding: 0 15px;
+        background-color: #fff;
+        border: 1px solid #d9d9d9;
+        border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(0,0,0,.05);
+        font-size: 1.55em;
+        line-height: 1.8em;
+        cursor: default;
+    }
+    .section div > a.add-section,
+    .section div > a.edit-section,
+    .section div > a.delete-section,
+    .section div > a.section-button {
+        margin-left: 10px;
+    }
+    /*.section .show-help { display: none }*/
+    .section h4,
+    .section h5,
+    .section h6 {
+        margin: 10px 0 25px 0;
+        padding: 0 20px;
+        font-size: 1.3em;
+        color: #444;
+    }
+    .section h5 {
+        margin: 0 0 10px 0;
+        padding: 0;
+        font-size: 1em;
+    }
+    .section h6 {
+        margin: 0 0 8px 0;
+        padding: 0;
+        font-size: 0.9em;
+    }
+    .section .active {
+        color: #269b26;
+        cursor: default;
+    }
+        .section h5 a,
+        .section h6 a { color: #444 }
+    .section table {
+        margin: auto;
+        border: none;
+        width: 97%;
+    }
+        .section th,
+        .section td {
+            border: none;
+            background: transparent;
+            line-height: 1.4em;
+            font-weight: normal;
+            vertical-align: top;
+        }
+        .section th {
+            color: #066;
+        }
+    .section .legend table {
+        margin: 0;
+        border: none;
+        width: auto;
+    }
+    .section .legend td {
+        padding: 0 5px;
+        vertical-align: middle;
+        border: none;
+    }
+    .section div.item {
+        margin: 0 20px 15px 20px;
+        border-bottom: 1px dotted #ddd;
+        padding-bottom: 15px;
+    }
+    .section address {
+        font-style: normal;
+    }
+        
+    /* Skills: */
+    
+    ul.skills {
+        margin: 10px 0 0 0;
+        padding: 0 20px;
+        list-style: none;
+    }
+    .skills li {
+        display: block;
+        margin: 0 0 15px 0;
+    }
+    .skills .skill-level {
+        float: right;
+        clear: right;
+        letter-spacing: -2px;
+        cursor: default;
+        color: #888;
+    }
+        .skills .skill-level .fa-fw { width: 0.95em }
+    .skills .skill {
+        padding: 4px 14px;
+        background-color: #ECECEC;
+        color: #555;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff;
+        cursor: default;
+    }
+    .skill-details strong {
+        font: normal 13px/15px "Lucida Grande", "Lucida Sans Unicode", Tahoma, sans-serif;
+    }
+.basicprofile {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 3px;
+}
+.vcard {
+    margin-bottom: 10px;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #c14;
+}
+.vcard .photo {
+    margin: 20px 0 0 0;
+    border-radius: 50%;
+    border: none;
+    height: 125px;
+    width: 125px;
+}
+.vcard .n {
+    margin: 8px 0 0px 0;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;
+    font-size: 1.3em;
+    color: #c44;
+}
+
+/* Inline forms */
+
+.add-target, .edit-target { display: none }
+.item.form-target {
+    margin: 0 10px 15px 10px;
+    padding-bottom: 10px;
+}
+.form-target form {
+    margin: 15px 0 10px 0;
+    border: none;
+    font-size: 0.9em;
+}
+.form-target fieldset {
+    padding: 0;
+}
+.form-target textarea {
+    height: 60px;
+    width: 100%;
+}
+.form-target input[type=submit],
+.form-target input[type=button],
+.form-target button {
+    margin-right: 1px;
+}
+
+/* File upload stuff */
+
+.file-upload { margin: 4px 0 }
+.file-upload br { display: none }
+.file-upload a { display: block; margin-bottom: 4px }
+.clearable-file-input { display: none }

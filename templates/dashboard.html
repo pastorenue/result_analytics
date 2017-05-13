@@ -1,0 +1,129 @@
+{% extends 'user_base.html' %}
+
+{% block title%}Home-Dashboard{% endblock %}
+{% load staticfiles %}
+{% block content %}
+
+  <div class="col-sm-9" style="margin-left: 40px;">
+    <div class="row">
+      <div class="col-md-9" style="padding-left: 0;">
+        <div class="row">
+          <div class="col-sm-6" style="padding-left: 15px;">
+            <div class="alert">
+              <div class="panel-heading" style="padding-top: 0; padding-left: 5px; padding-right: 0;">
+                <h5>Notification</h5>
+              </div>
+             
+              <div class="cost-main-panel">
+                  Notifications here...
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="alert">
+              <div class="panel-heading"  style="padding-top: 0; padding-left: 5px;">
+                <h5>Alerts</h5>
+              </div>
+              
+              <div class="cost-main-panel">
+                 Alerts Here...
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row  alert-charts">
+          <div class="alert">
+            <div class="panel-heading">
+              <h5>Activity Log</h5>
+            </div>
+            <div class="cost-main-panel" id="container">
+               Activities Logging panel 
+            </div>
+          </div>
+          <div class="alert">
+            <div class="panel-heading panel-heading-no-title">
+              <h5>Photo Chart</h5>
+            </div>
+               <div class="cost-main-panel">
+                Chart Here...
+               </div>
+          </div>
+          <div class="alert">
+            <div class="panel-heading panel-heading-no-title">
+              <h5>Cash Flow</h5>
+            </div>
+               <div class="cost-main-panel">
+                Chart Here...
+               </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3" style="">
+        <div class="row outer-div">
+              <div class="panel-heading panel-heading-no-title"></div>
+                <div class="total-div">
+                  <span class="total-pix"></span>
+                  <div>
+                    <span class="photo">photos</span>
+                  </div>
+              </div>
+          </div>
+        <div class="row" style="padding-top: 20px; padding-left: 10px;" >
+          <div class="col-sm-6 outer-div" style="margin-right: 8px;">
+                <div class="panel-heading panel-heading-no-title"></div>
+                  <div class="total-div">
+                    <span class=""></span>
+                    <span class="total-pix"></span>
+                    <div>
+                      <span class="photo">Albums</span>
+                    </div>
+                </div>
+            </div>
+          <div class="col-sm-5 outer-div" style="margin-left: 8px;">
+                <div class="panel-heading panel-heading-no-title"></div>
+                  <div class="total-div">
+                    <span class=""></span>
+                    <span class="total-pix"></span>
+                    <div>
+                      <span class="photo">Followers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row outer-div" style="margin-top: 20px;">
+              <div class="panel-heading panel-heading-no-title"></div>
+                <div class="total-div">
+                  <span class=""></span>
+                  <span class="total-pix"><span><strike>N</strike></span> 0.00</span>
+                  <div>
+                    <span class="photo">Total Cash</span>
+                  </div>
+              </div>
+          </div>
+        <div class="row" style="padding-top: 20px; padding-left: 10px;" >
+          <div class="col-sm-6 outer-div" style="margin-right: 8px;">
+                <div class="panel-heading panel-heading-no-title"></div>
+                  <div class="total-div">
+                    <span class=""></span>
+                    <span class="total-pix"><span><strike>N</strike></span> 0.00</span>
+                    <div>
+                      <span class="other">Last Purchase</span>
+                    </div>
+                </div>
+            </div>
+          <div class="col-sm-5 outer-div" style="margin-left: 8px;">
+                <div class="panel-heading panel-heading-no-title"></div>
+                  <div class="total-div">
+                    <span class=""></span>
+                    <span class="total-pix">#</span>
+                    <div>
+                      <span class="other">User ID</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>   
+{% endblock %}
+		  

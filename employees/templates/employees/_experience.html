@@ -1,0 +1,22 @@
+{% extends "employees/_inline.html" %}
+{% block content %}
+<div class="item">
+    {% if experience.pk %}
+        {% if is_own_profile or user.is_superuser %}
+        <a class="delete-section right" href="{% url employees_experience_delete id=experience.pk %}">Delete</a>
+        <a class="edit-section right" href="{% url employees_experience_edit employee_id=employee.pk id=experience.pk %}">Edit</a>
+        {% endif %}
+    {% endif %}
+    <h5>
+        {{ experience.organization }}
+    </h5>
+    <div>
+        {{ experience.position }} ({{ experience.start_date|date:"F Y" }} to {{ experience.end_date|date:"F Y" }})
+    </div>
+    {% if experience.remarks %}
+    <div>
+        {{ experience.remarks }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

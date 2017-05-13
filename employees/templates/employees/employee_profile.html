@@ -1,0 +1,237 @@
+{% extends "employees/employees.html" %}
+{% load changerequest_tags extendmodels_tags %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profiles.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tokeninput.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/masonry.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.metadata.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.chainedSelect.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/inline-edit.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/skills-init.js"></script>
+{% if employee.appraisals.count %}
+<!--[if IE]><script type="text/javascript" src="{{ STATIC_URL }}js/excanvas.min.js"></script><![endif]-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.time.min.js"></script>
+{% endif %}
+<script type="text/javascript">
+    // Set preload URL for the chainedSelect plugin:
+    $.fn.chainedSelect.defaults.preloadUrl = '{{ STATIC_URL }}images/spinner2.gif';
+    $(function() {
+        window.msnry = new Masonry($('.profile-sections')[0], {
+            itemSelector: '.section'
+        })
+        msnry.bindResize()
+    });
+</script>
+{% endblock %}
+
+{% block title %}{% if is_own_profile %}My{% else %}{{ employee.user.first_name }}'s{% endif %} Profile{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'employees_list' %}">All employees</a> &raquo; {{ employee.full_name }}
+{% endblock %}
+
+{% block content %}
+{% get_custom_fields employee as user_defined_fields %}
+
+{% get_pending_changes as pending_changes %}
+{% if is_own_profile and pending_changes %}
+<div class="message info">
+    You have made <a href="{% url 'changerequest_my_changes' slug='pending' %}">changes to your profile</a>. These changes will only be visible to you, until they have been approved.
+</div>
+{% endif %}
+
+<h2>
+    {% if is_own_profile %}My{% else %}{{ employee.user.first_name }}'s{% endif %} Profile
+</h2>
+
+<div class="profile-sections">
+    {% get_changes_for employee as employee %}
+    <div id="summary" class="section left">
+        {% include "employees/_basicprofile.html" %}
+    </div>
+
+    {% comment %}
+    <!-- This might still be useful as a TOC -->
+    <ul class="editable tabs">
+        <li><a href="#company">Company</a></li>
+        <li><a href="#personal">Personal</a></li>
+        <li><a href="#kin">Next Of Kin</a></li>
+        <li><a href="#dependents">Dependents</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#placements">Placements</a></li>
+        <li><a href="#documents">Documents</a></li>
+        <li><a href="#insurance">Insurance</a></li>
+        {% if user_defined_fields %}<li><a href="#extra_info">Additional Info</a></li>{% endif %}
+    </ul>
+    {% endcomment %}
+    
+    <div id="company" class="section company left">
+        <h4>Company Information</h4>
+        {% include "employees/_companyinformation.html" %}
+    </div>
+    
+    <div id="personal" class="section personal left">
+        <h4>Personal Information</h4>
+        {% include "employees/_personalinformation.html" %}
+    </div>
+    
+    <div id="kin" class="section kin left">
+        <h4>Next Of Kin</h4>
+        {% get_changes_for employee.next_of_kin.all as nextofkin_set %}
+        {% for nextofkin in nextofkin_set %}
+        {% include "employees/_nextofkin.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_nextofkin_add' employee_id=employee.pk %}">Add</a>
+        </div>
+    </div>
+    
+    <div id="dependents" class="section dependents left">
+        <h4>Dependents</h4>
+        {% get_changes_for employee.dependents.all as dependent_set %}
+        {% for dependent in dependent_set %}
+        {% include "employees/_dependent.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_dependent_add' employee_id=employee.pk %}">Add</a>
+        </div>
+    </div>
+    
+    <div id="education" class="section education left">
+        <h4>Education</h4>
+        {% get_changes_for employee.institutions.all as education_set %}
+        {% for education in education_set %}
+        {% include "employees/_education.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_education_add' employee_id=employee.pk %}">Add</a>
+        </div>
+    </div>
+    
+    <div id="experience" class="section experience left">
+        <h4>Professional Experience</h4>
+        {% get_changes_for employee.experience.all as experience_set %}
+        {% for experience in experience_set %}
+        {% include "employees/_experience.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_experience_add' employee_id=employee.pk %}">Add</a>
+        </div>
+    </div>
+    
+    <div id="skills" class="section skills left">
+        <h4>{% if is_own_profile %}My {% endif %}Skills</h4>
+        {% get_changes_for employee.skills.all as skills_set %}
+        {% include "employees/_skills.html" %}
+        <div class="actions">
+            <a class="section-button" href="{% url 'employees_skills_manage' employee_id=employee.pk %}">Update skills</a>
+        </div>
+    </div>
+    
+    {% comment %}
+    <div id="certifications" class="section certifications left">
+        <h4>{% if is_own_profile %}My {% endif %}Certifications</h4>
+        {% get_changes_for employee.certifications.all as certification_set %}
+        {% for certification in certification_set %}
+        {% include "employees/_certification.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_certification_add' employee_id=employee.pk %}">Add</a>
+        </div>
+    </div>
+    {% endcomment %}
+    
+    <div id="documents" class="section documents left">
+        <h4>Documents</h4>
+        {% get_changes_for employee.documents.all as documents_set %}
+        {% for document in documents_set %}
+        {% include "employees/_document.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_document_add' employee_id=employee.pk %}">Upload</a>
+        </div>
+    </div>
+    
+    <div id="insurance" class="section insurance left">
+        <h4>Life Insurance Policies</h4>
+        {% get_changes_for employee.insurance_policies.all as insurance_set %}
+        {% for lifeinsurance in insurance_set %}
+        {% include "employees/_lifeinsurance.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_lifeinsurance_add' employee_id=employee.pk %}">Add</a>
+        </div>
+    </div>
+    
+    {% if user_defined_fields %}
+    <div id="extra_fields" class="section extra_fields left">
+        <h4>Additional Information</h4>
+        {% include "employees/_userfields.html" %}
+    </div>
+    {% endif %}
+    
+    <div id="training" class="section training left">
+        <h4>{% if is_own_profile %}My {% endif %}Training</h4>
+        {% include "employees/_training.html" %}
+        {% if is_own_profile %}
+        <div class="actions">
+            <a class="section-button" href="{% url 'careers_find_training' %}">Find training</a>
+        </div>
+        {% endif %}
+    </div>
+    
+    {% with appraisals=employee.appraisals.all %}
+    {% if appraisals %}
+    <div id="appraisals" class="section appraisals left">
+        <h4>Appraisal History</h4>
+        {% include "employees/_appraisal_history.html" %}
+        <div class="actions">
+            <a class="section-button" href="{% url 'employees_appraisal_history' employee_id=employee.pk %}">See full history</a>
+        </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+    
+    {% with placements=employee.placements.all %}
+    <div id="placements" class="section placements left">
+        <h4>Placements</h4>
+        {% for placement in placements %}
+        {% include "employees/_placement.html" %}
+        {% endfor %}
+    </div>
+    {% endwith %}
+    
+    {% with promotions=employee.promotions.approved %}
+    {% if promotions %}
+    <div id="promotions" class="section promotions left">
+        <h4>Promotions</h4>
+        {% for promotion in promotions %}
+        {% include "employees/_promotion.html" %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% with incidences=employee.employee_incidences.all %}
+    <div id="experience" class="section experience left">
+        <h4>Incidences</h4>
+        {% for incidence in incidences %}
+        {% include "employees/_incidence.html" %}
+        {% endfor %}
+        <div class="actions">
+            <a class="add-section" href="{% url 'employees_incidence_add' employee_id=employee.pk %}">Add</a>
+        </div>
+    </div>
+    {% endwith %}
+
+</div>
+{% endblock %}

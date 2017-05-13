@@ -1,0 +1,45 @@
+THINGS TO BE FIXED AND COMPLETED
+
+Check for the ZeroError exception and fix it
+Fix the the duplicate records when the cgpa is refreshed
+check how to select the semester and session dynamically to filter the cgpa to e generated
+
+Start working on the Dashboard and the interface
+IMPORTANT: Setup all the forms for the input portion of the project
+study the loan, salary and claims payment module in OXUSHR for ideas to fix similar problem in the project
+
+fix the filter for the students i.e when a paarticular level and department is selected, it should process the result of only the students in that class
+do the above for the lecturers too. that is only administrative staff have access to all students' record else restrict the staff to only students they teach
+Work on the ajax end of the project. using STRIPE interface as a template
+
+learn how to generate datasets for the machine algorithm to use
+study highcharts to start the major part of the project
+
+study how to automatically change the level of the students {An idea could be to check if there is a first and second semester result for
+his current level, if yes increase the level by one in the next school calender year and same with the sesion}
+
+
+
+Check for existence of data from the imported csv in the database  {Use the student reg_number, course, semester and session
+ unless the student is carrying it over}
+ Work on the Result details of each result entered
+ Make comparison between two students results and generate a decision
+ Set the interface and functionality of the activity section
+. it should contain basic analysis tools for the data
+Try create a model that should take in some features from the results database and give a label
+Finish the work on those panels by the right an what details it should return
+
+the students menu for assignment, forum, projects and recommendations
+implement a workflow for the clearance process and generate pdf for each stage for the student
+notification and announcements
+work on the students perfomance data, advice and questions for the student
+
+the settings should be a modal box to set things like:
+block notifications
+
+work on the students analytics page by filtering the main analytics to the student's ID
+same for the profile for both students and staff
+implement one page sign up with javascript
+
+change the login form to be more User Attractive
+change the banners for the bomepage

@@ -1,0 +1,22 @@
+{% extends "employees/_inline.html" %}
+{% block content %}
+<div class="item">
+    {% if education.pk %}
+        {% if is_own_profile or user.is_superuser %}
+        <a class="delete-section right" href="{% url employees_education_delete id=education.pk %}">Delete</a>
+        <a class="edit-section right" href="{% url employees_education_edit employee_id=employee.pk id=education.pk %}">Edit</a>
+        {% endif %}
+    {% endif %}
+    <h5>
+        {{ education.name|title }} ({{ education.start_date|date:"Y" }} to {{ education.end_date|date:"Y" }})
+    </h5>
+    <div>
+        {{ education.degree }} in {{ education.course_studied|title }} ({{ education.grade_obtained }})
+    </div>
+    {% if education.remarks %}
+    <div>
+        {{ education.remarks }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

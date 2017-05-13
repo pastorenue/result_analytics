@@ -1,0 +1,115 @@
+{% extends 'staff/dashboard.html' %}
+{% load staticfiles %}
+
+{% block extrahead%}
+  
+{% endblock %}
+
+{% block side_panel %}
+    
+{% endblock %}
+
+{% block breadcrumbs %}
+{% if user.is_staff %}<a href="{% url 'students:students_list' %}">All students &raquo;</a>{% endif %} {{ student }}'s CGPA Analysis
+{% endblock %}
+
+{% block menu %}
+    {% include "analyzer/attached.html" %}
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;">Prediction Panel: <span style="color: #000; font-size: 0.8em;">({{ student.reg_number }})</span><span><button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-predict">Enter your variables</button></span></h2>
+        
+    </div>
+    <div class="row" style="margin: 0px;">
+        <div class="col-md-6" style="padding-right: 0px; padding-left: 8px;">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Current Performance</div>
+                <div class="panel-body">
+                    <div id="container">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding-right: 8px;">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Virtual Adviser...</div>
+                <div class="panel-body">
+                    <div id="" style="height: 300px;">
+                        <div class='inner-predict'>
+                           <h5>For the Details Provided...</h5> 
+                        </div>
+                        <div class='inner-predict'>
+                             <h5>For The Prediction Obtained...</h5> 
+                        </div>
+                        <div class='inner-predict'>
+                             <h5>There is a sharp drop in your performances. </h5> 
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-predict" tabindex="-1" role="dialog" style="top: 20%;"><!--export excel modal window-->
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header modal-header-success">
+              <button class="close" data-dismiss="modal" style="font-size: 1.6em;">&times;</button>
+              <h4 class="modal-title" style="font-size: 1.5em; font-weight: bold;">Select Your Variables</h4>
+            </div>
+            <div class="modal-body">
+              <form method='post' action=''>{% csrf_token %}
+                <div class="form-group">
+                    <label for='number_of_predictions'>Choose Prediction</label>
+                    <select class='form-control form-control-sm' id='prediction_type' name='prediction_type'>
+                        <option>CGPA Prediction</option>
+                        <option>Score Prediction</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for='number_of_predictions'>Number of Predictions</label>
+                    <input class="form-control form-control-sm" type="text" id='number_of_predictions' name='number_of_predictions' placeholder="Enter number of past Records to use">
+                </div>
+                <div class="form-group">
+                    <label for='unit'>Next Total Units</label>
+                    <div class='input-group'>
+                        <input class="form-control form-control-sm" type="text" id='unit' name='unit' placeholder="Next Credit Unit">
+                        <div class='input-group-addon'>.00</div>
+                    </div>
+                </div>
+                <button class="btn btn-success btn-block" type="submit">Predict...</button>
+              </form>
+              <p><small  class="text-muted">Disclaimer: The Predictions are for advisory purposes</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    
+    <script>
+        var chart_id = {{ chartID|safe }}
+        var chart = {{ chart|safe }}
+        var xAxis = {{ xAxis|safe }}
+        var yAxis = {{ yAxis|safe }}
+        var series = {{ series|safe }}
+        var title = {{ title|safe }}
+    </script>
+    <script>
+      $(function () {
+        $("#container").highcharts({
+            chart: chart,
+            title: title,
+            xAxis: xAxis,
+            yAxis: yAxis,
+            series: series
+        });
+});
+        
+    </script>
+{% endblock %}

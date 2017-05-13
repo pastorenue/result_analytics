@@ -1,0 +1,100 @@
+{% extends "employees/_inline.html" %}
+{% block content %}
+<table>
+    <tbody>
+        <tr>
+            <th scope="row" style="width:35%">Sex</th>
+            <td>{{ employee.get_sex_display }}</td>
+        </tr>
+        {% if employee.blood_group %}
+        <tr>
+            <th scope="row">Blood group</th>
+            <td>{{ employee.blood_group }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.genotype %}
+        <tr>
+            <th scope="row">Genotype</th>
+            <td>{{ employee.genotype }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.marital_status %}
+        <tr>
+            <th scope="row">Marital status</th>
+            <td>{{ employee.get_marital_status_display }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.address %}
+        <tr>
+            <th scope="row">Address</th>
+            <td>{{ employee.address|linebreaks }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.permanent_address %}
+        <tr>
+            <th scope="row">Permanent address</th>
+            <td>{{ employee.permanent_address|linebreaks }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.state_of_residence %}
+        <tr>
+            <th scope="row">State of residence</th>
+            <td>{{ employee.state_of_residence }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.state_of_origin %}
+        <tr>
+            <th scope="row">State of origin</th>
+            <td>{{ employee.state_of_origin }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.lga %}
+        <tr>
+            <th scope="row">LGA</th>
+            <td>{{ employee.lga }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.country %}
+        <tr>
+            <th scope="row">Country</th>
+            <td>{{ employee.country }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.passport_number %}
+        <tr>
+            <th scope="row">Passport number</th>
+            <td>{{ employee.passport_number }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.national_id_number %}
+        <tr>
+            <th scope="row">National ID number</th>
+            <td>{{ employee.national_id_number }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.religion %}
+        <tr>
+            <th scope="row">Religion</th>
+            <td>{{ employee.get_religion_display }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.maiden_name %}
+        <tr>
+            <th scope="row">Maiden name</th>
+            <td>{{ employee.maiden_name }}</td>
+        </tr>
+        {% endif %}
+        {% if employee.mothers_maiden_name %}
+        <tr>
+            <th scope="row">Mother's maiden name</th>
+            <td>{{ employee.mothers_maiden_name }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="2">
+                <a class="edit-section" href="{% url 'employees_personalinfo_edit' employee_id=employee.pk %}">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

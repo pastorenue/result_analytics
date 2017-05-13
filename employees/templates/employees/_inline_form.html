@@ -1,0 +1,16 @@
+{% load form_tags %}
+<div class="item form-target">
+    {% form_errors form %}
+    <form id="id_form" method="post" action="{{ request.path }}"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+        <fieldset>
+            <ul>
+                {% render_form form %}
+                <li>
+                    {% if form.is_multipart %}<input type="hidden" name="X-Requested-With" value="ScriptedIFrame" />{% endif %}
+                    <input type="submit" value="Save" />
+                    <input type="button" value="Cancel" class="cancel-btn" />
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+</div>
