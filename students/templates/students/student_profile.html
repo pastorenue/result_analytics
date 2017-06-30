@@ -1,6 +1,6 @@
 {% extends "staff/dashboard.html" %}
 
-{% block title %}{% if is_own_profile %}My{% else %}{{ student.first_name }}'s{% endif %} Profile{% endblock %}
+{% block title %}Result Analytics: {% if is_own_profile %}My{% else %}{{ student.first_name }}'s{% endif %} Profile{% endblock %}
 
 {% block breadcrumbs %}
 <a href="{% url 'students:students_list' %}">{% if user.is_staff %}All students &raquo;{% endif %}</a> {{ student.full_name }}
