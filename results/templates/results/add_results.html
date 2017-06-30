@@ -5,18 +5,121 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <h2 style="margin-top: 0px; border-radius: 2px; padding: 3px; border-bottom: 2px solid #c14;">
+    <h2 style="margin-top: 0px; border-radius: 2px; padding: 3px; border-bottom: 2px solid rgba(0,0,0,0.1);">
        Enter New Results...
     </h2>
-<div style=" padding: 10px;">
-    <form method="post" action="">{% csrf_token %}
-        <div class="">
-            {{ form|crispy }}
+<div class="" style="width: 60%; margin-top: 20px;">
+    <form id="from-submit" class="form-horizontal" method="post" >{% csrf_token %}
+        <div id="div_id_username" class="form-group required">
+            <label for="id_username" class="control-label col-md-4  requiredField"> Reg Number:<span class="asteriskField">*</span> </label>
+            <div class="controls col-md-8">
+                <input required="true" class="input-md  textinput textInput form-control" id="id_reg_number" maxlength="30" name="reg_number" placeholder="Enter a reg number" style="margin-bottom: 10px" type="text" />
+            </div>
         </div>
-        <div class="" style="padding: 10px;">
-            <button class="btn btn-primary" type="submit" id="save">Process and Add Another</button>
-            <button class="btn btn-primary" type="button" id="save_and_add">Cancel</button>
+        <div id="div_id_email" class="form-group required">
+            <label for="id_course" class="control-label col-md-4  requiredField"> Course Code:<span class="asteriskField">*</span> </label>
+            <div class="controls col-md-8 ">
+                <input required="true" class="input-md textinput form-control" id="id_course" name="course" placeholder="Course code" maxlength="7" style="margin-bottom: 10px" type="text" />
+            </div>     
         </div>
+        <div id="div_id_password1" class="form-group required">
+            <label for="id_level" class="control-label col-md-4  requiredField">Level:<span class="asteriskField">*</span> </label>
+            <div class="controls col-md-8 "> 
+                <select required="true" id="id_level" name="level" class="select form-control" style="margin-bottom: 10px;">
+                    <optgroup>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="300">300</option>
+                        <option value="400">400</option>
+                        <option value="500">500</option>
+                        <option value="600">600</option>
+                    </optgroup>
+                </select>
+                
+            </div>
+        </div>
+        <div id="div_id_number" class="form-group required">
+             <label for="id_score" class="control-label col-md-4  requiredField"> Score:<span class="asteriskField">*</span> </label>
+             <div class="controls col-md-8 ">
+                 <input required="true" class="input-md textInput form-control form-control-success" id="id_score" name="score" placeholder="provide a score" min="0" max="100" style="margin-bottom: 10px;" type="number" />
+            </div> 
+        </div> 
+        <div id="div_id_location" class="form-group required">
+            <label for="id_semester" class="control-label col-md-4  requiredField"> Semester:<span class="asteriskField">*</span> </label>
+            <div class="controls col-md-8 ">
+                <select required="true" id="id_semester" name="semester" class="select form-control" style="margin-bottom: 10px;">
+                    <option value="1">First Semester</option>
+                    <option value="2">Second Semester</option>
+                </select>
+            </div> 
+        </div>
+        <div id="div_id_email" class="form-group required">
+            <label for="id_session" class="control-label col-md-4  requiredField"> Session:<span class="asteriskField">*</span> </label>
+            <div class="controls col-md-8 ">
+                <input required="true" class="input-md textinput form-control" id="id_session" name="session" placeholder="Current Session" maxlength="10" style="margin-bottom: 10px" type="text" />
+            </div>     
+        </div>
+        <div class="form-group">
+            <div class="controls col-md-offset-4 col-md-8 ">
+                <div id="div_id_terms" class="checkbox required">
+                    <label for="id_confirm" class=" requiredField">
+                         <input required="true" class="input-ms checkboxinput" id="id_confirm" name="confirm" style="margin-bottom: 10px" type="checkbox" />
+                         Confirm that all fields are correctly filled
+                    </label>
+                </div>      
+            </div>
+        </div> 
+        <div class="form-group"> 
+            <div class="aab controls col-md-4 "></div>
+            <div class="controls col-md-8 ">
+                <input type="submit" name="Signup" value="Save" class="btn btn-primary btn btn-info" id="id_submit" />
+            </div>
+        </div> 
+            
     </form>
-</div>
+            </div>
 {% endblock %}
+
+ {% block extrajs %}
+ <script>
+    var btn_submit = document.getElementById("id_submit");
+    var chkbox_confirm = document.getElementById("id_confirm");
+    btn_submit.disabled = true;
+    console.log(chkbox_confirm.checked);
+
+    chkbox_confirm.addEventListener('click', function() {
+        if(chkbox_confirm.checked)
+            btn_submit.disabled = false;
+        else
+            btn_submit.disabled = true;
+    });
+    $(document).on('submit', '#frm-submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/results/add_results/',
+            data: {
+                student: $('#id_student').val(),
+                course: $('#id_course').val(),
+                score: $('#id_score').val(),
+                level: $('#id_level').val(),
+                semester: $('#id_semester').val(),
+                session: $('#id_session').val(),
+                csrfmiddlewaretoken: {{ csrf_token }}
+                },
+            success: function(response){
+                update_messages(data.messages);
+            }
+        });
+        e.preventDefault();
+    });
+
+    function update_messages(messages){
+        $("#notification").html("");
+        $.each(messages, function (i, m) {
+                $("#notification").append("<div class='alert alert-"+m.tags+"''>"+m.message+"</div>");
+            });
+    }
+ </script>
+    
+{% endblock %}  

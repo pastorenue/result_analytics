@@ -4,22 +4,47 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
 from .models import Student
-from institutions.models import Department
+from institutions.models import Department, Faculty
 from results.models import Result
 from students.models import Student
 from result_analytics.utils.excel import ExcelReport
+from django.db.models import Q
+
 
 class StudentListView(ListView):
     model = Student
-    queryset = Student.objects.all().order_by('last_name', 'first_name')
     template_name = 'students/_list_students.html'
     context_object_name = "students"
+
+    def get_queryset(self):
+        queryset = Student.objects.all()
+
+        department = self.request.GET.get("department", "all")
+        faculty = self.request.GET.get("faculty", "all")
+        student = self.request.GET.get("student", "")
+        level = self.request.GET.get("level", "all")
+        status = self.request.GET.get("status", "status")
+
+        if department != "all":
+            queryset = queryset.filter(department__name=department)
+        if faculty != "all":
+            queryset = queryset.filter(faculty__name=faculty)
+        if student != "":
+            queryset = queryset.filter(Q(reg_number__icontains=student) | Q(last_name__icontains=student) | Q(first_name__icontains=student))
+        if level != "all":
+            queryset = queryset.filter(level=level)
+        if status != "status":
+            queryset = queryset.filter(user_status=status)
+        
+        return queryset
+
     
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(StudentListView, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        context['department_list'] = Department.objects.all().order_by('name')
+        context["departments"] = Department.objects.all()
+        context["faculties"] = Faculty.objects.all()
+
         return context
 
 @login_required

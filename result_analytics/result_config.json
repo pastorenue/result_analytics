@@ -1,0 +1,5 @@
+{
+    "SECRET_KEY" : "$o0j8rj*2wv(5_ia8gxz3w^2+q0uj+vqp@2um)wdfgt7#2*zxm",
+    "DATABASE_URL" : "postgres://user:pwd@localhost:5432/mysitedb",
+    "DEBUG" : "True"
+}

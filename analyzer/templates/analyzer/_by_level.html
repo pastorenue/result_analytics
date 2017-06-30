@@ -1,4 +1,4 @@
-{% extends 'staff/dashboard.html' %}
+{% extends'students/student_profile.html' %}
 {% load staticfiles %}
 
 {% block extrahead%}
@@ -13,11 +13,7 @@
 {% if user.is_staff %}<a href="{% url 'students:students_list' %}">All students &raquo;</a>{% endif %} {{ student }}'s CGPA Analysis
 {% endblock %}
 
-{% block menu %}
-    {% include "analyzer/attached.html" %}
-{% endblock %} 
-
-{% block content %}
+{% block inner_content %}
     <div>
         <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;"> {{ student }}'s CGPA Details</h2>
     </div>

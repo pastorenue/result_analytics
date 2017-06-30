@@ -7,6 +7,7 @@ from institutions.models import *
 from django.conf import settings
 from django.db.models import signals
 from django.utils.timezone import now
+from river.models.fields.state import StateField
 
 
 (SINGLE, MARRIED, WIDOWED, DIVORCED) = range(1, 5)
@@ -94,7 +95,7 @@ class Student(models.Model):
     )
 
     user = models.OneToOneField(User, related_name='student')
-    photo = models.ImageField(upload_to='students/photos/%Y/%m/', blank=True)
+    photo = models.ImageField(upload_to='uploads', blank=True)
     last_name = models.CharField(verbose_name=_(u'Surname'), max_length=50, null=True)
     first_name = models.CharField(verbose_name=_(u'First name'), max_length=50, null=True)
     middle_name = models.CharField(verbose_name=_(u'Middle name'), max_length=50, blank=True)
@@ -118,7 +119,8 @@ class Student(models.Model):
     blood_group = models.CharField(max_length=2, choices=BLOOD_GROUP_CHOICES, blank=True)
     genotype = models.CharField(max_length=2, choices=GENOTYPE_CHOICES, blank=True)
     national_id_number = models.CharField(verbose_name=_(u"National ID Number"), max_length=50, blank=True)
-    year_of_graduation = models.PositiveIntegerField()
+    year_of_admission = models.DateField()
+    course_duration = models.PositiveIntegerField()
     religion = models.PositiveIntegerField(choices=RELIGION_CHOICES, blank=True, null=True)
     permanent_address = models.TextField(blank=True)
     state_of_residence = models.ForeignKey('states.State', null=True,blank=True, related_name='students_residence')
@@ -127,21 +129,22 @@ class Student(models.Model):
     lga = models.ForeignKey('states.LGA', verbose_name=_(u'LGA'), related_name='students', blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    clearance_status = StateField(editable=False, default=None)
     objects = StudentManager()
 
 
     class Meta:
         verbose_name = _(u'Student')
         verbose_name_plural = _(u'Students')
-        ordering = ('user__first_name', 'user__last_name',)
+        ordering = ('last_name',)
         
         
 
     def __str__(self):
-        names = [self.first_name]
+        names = [self.last_name]
         if self.middle_name:
             names.append(self.middle_name)
-        names.append(self.last_name)
+        names.append(self.first_name)
         return u' '.join(names)
 
 
@@ -157,19 +160,24 @@ class Student(models.Model):
     @property
     def is_student(self):
         return True
+
+    @property
+    def year_of_graduation(self):
+        return (self.year_of_admission.year + self.course_duration)
     
     @models.permalink
     def get_absolute_url(self):
-        return ('student_profile', (), {'student_id': self.pk})
+        return ('students:student_profile', (), {'student_id': self.pk})
+
 
 class Document(models.Model):
     """Represents electronic documents that form part of a student's record."""
 
     students = models.ForeignKey(Student)
-    attached_file = models.FileField(upload_to='students/docs/%Y/%m/%d/')
+    attached_file = models.FileField(upload_to='uploads/docs/%Y/%m/%d/')
     name = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(_(u'Description'), blank=True)
-    created_at = models.DateTimeField(default=now)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _(u'Attached Document')

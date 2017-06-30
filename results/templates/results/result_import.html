@@ -11,37 +11,74 @@ Import Result &raquo;
     <h3 style="margin-top: 0px; border-radius: 5px; padding: 5px; color: #111; border-bottom: 2px solid #c15;">
         <i class="fa fa-database" aria-hidden="true"></i> Data Import...
     </h3>
-    <div>
-        <h4>Instructions</h4>
-        <p>
-          To properly import your data, the <b>CSV</b> file must follow
-          this order and format:
-          <ol>
-          <li>Registration Number</li>
-          <li>Course Code(if no matching course in our system,
-          'No course' will be assigned)</li>
-          <li>Score</li>
-          <li>Level</li>
-          <li>Semester</li>
-          <li>Session</li>
-          </ol>
-          You can also download this template as a guide:
-            <a href="{% static 'samples/csv_import_template.csv' %}">csv_import_template.csv</a>
-        </p>
-        <p>
-           <span style="font-size: 1.1em; font-weight: 600; color: #c19;">Note:</span> You have to make sure all your upload files are in your documents folder
-        </p>
-        <div style="margin-bottom: 30px; padding: 40px;">
-            <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+    <div class="row">
+      <div class="col-md-6">
+          <h4>Instructions</h4>
+          <p>
+            To properly import your data, the <b>CSV</b> file must follow
+            this order and format:
+            <ol>
+            <li>Registration Number</li>
+            <li>Course Code(if no matching course in our system,
+            'No course' will be assigned)</li>
+            <li>Score</li>
+            <li>Level</li>
+            <li>Semester</li>
+            <li>Session</li>
+            </ol>
+            You can also download this template as a guide:
+              <a href="{% static 'samples/csv_import_template.csv' %}">csv_import_template.csv</a>
+          </p>
+          <p>
+             <span style="font-size: 1.1em; font-weight: 600; color: #c19;">Note:</span> You have to make sure all your upload files are in your documents folder
+          </p>
+        </div>
+
+        <div class="col-md-6" style="margin-bottom: 30px; padding: 40px;">
+            <form method="post" action="{% url "results:upload_csv" %}" enctype="multipart/form-data">{% csrf_token %}
                 <div class="form-group">
-                    {% crispy form %}
-                    <div style="margin-top: 20px; width: 40%;">
-                        <button class="btn btn-primary btn-sm btn-block" type="submit">Import</button>
-                    </div>
-                </div>
-                
-                
+                  {{ form }}
+                  <div style="margin-top: 20px; width: 40%;">
+                      <button id="import" disabled="disabled" class="btn btn-primary btn-sm btn-block" type="submit">Import</button>
+                  </div>
+                </div>              
             </form>
         </div>
     </div>
+    <div class="row" style="margin: 5px;">
+      <div id="import_container">
+      </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+  <script>
+    $('#id_file').change(function() {
+      var file = document.getElementById('id_file').files[0];
+      var reader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = function(reader) {
+        var data = reader.target.result.split(/\r?\n|\n/);
+        var table_data = '<table class="table table-bordered table-striped">';
+        for (var count=0; count<data.length; count++) {
+          var cell_data = data[count].split(',');
+          table_data+='<tr>';
+          for (var cell_count=0; cell_count<cell_data.length; cell_count++) {
+            if (count === 0) {
+              table_data += '<th style="text-align: center;">'+cell_data[cell_count]+'</th>';
+            } else {
+              table_data += '<td style="text-align: center;">'+cell_data[cell_count]+'</td>';
+            }
+          }
+          table_data += '</tr>';
+        }
+        table_data += '</table>';
+        console.log(table_data);
+        var output = document.getElementById('import_container');
+        output.innerHTML = '<h3>PREVIEW DATA</h3>';
+        output.innerHTML += table_data;
+        document.getElementById('import').disabled = false;
+      }
+    });
+  </script>
 {% endblock %}

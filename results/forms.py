@@ -3,13 +3,27 @@ from .models import Result, CGPA
 from .fields import RestrictedFileField
 
 class BatchResultForm(forms.ModelForm):
+    def __int__(self, *args, **kwargs):
+        super(BatchResultForm, self).__init__(*args, **kwargs)
+        self.fields['semester'].widget.attrs = {'placeholder' : _(u'Full name'), 'class': 'form-control', 'style': 'height: 19px;'}
+        self.fields['course'].widget.attrs = {'placeholder' : _(u'Email'), 'class': 'form-control'}
+        self.fields['session'].widget.attrs = {'placeholder' : _(u'Subject'), 'class': 'form-control'}
+        self.fields['course_load'].widget.attrs = {'placeholder' : _(u'Phone'), 'class': 'form-control'}
+        self.fields['level'].widget.attrs = {'placeholder' : _(u'Message'), 'class': 'form-control', 'rows': '10'}
+        self.fields['credit_load'].widget.attrs = {'placeholder' : _(u'Message'), 'class': 'form-control', 'rows': '10'}
 
     class Meta:
         model = Result
         exclude = ('semester', 'course', 'date_created', 'session', 'level', 'course_load', 'credit_load')
         
 class ResultForm(forms.ModelForm):
-    
+    def __int__(self, *args, **kwargs):
+        super(BatchResultForm, self).__init__(*args, **kwargs)
+        self.fields['student'].widget.attrs = {'placeholder' : _(u'Full name'), 'class': 'form-control', 'style': 'height: 19px;'}
+        self.fields['course'].widget.attrs = {'placeholder' : _(u'Email'), 'class': 'form-control'}
+        self.fields['session'].widget.attrs = {'placeholder' : _(u'Subject'), 'class': 'form-control'}
+        self.fields['level'].widget.attrs = {'placeholder' : _(u'Message'), 'class': 'form-control', 'rows': '10'}
+       
     class Meta:
         model = Result
         exclude = ('date_created', 'course_load', 'credit_load')

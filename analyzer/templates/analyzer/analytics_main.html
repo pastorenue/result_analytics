@@ -13,30 +13,34 @@
         <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4; margin-top: 2px;"><i class="icon-tasks"></i> Analytics Panel</h2>
     </div>
     <div class="row" style='margin-left: 0px; margin-bottom: 10px;'>
+        <a href="{% url 'students:students_list' %}" class="menu-anchor">
         <div class="col-md-2 info">
             <h4>All Students</h4>
             <div style="font-size: 1.5em;">
-                 {{ students.count }}
+                 {{ all_students.count }}
             </div>
-        </div>
+        </div></a>
+        <a href="{% url 'students:students_list' %}?status=A" class="menu-anchor">
         <div class="col-md-2 info">
             <h4>Active Student </h4>
             <div style="font-size: 1.5em;">
                  {{ total }}
             </div>
-        </div>
+        </div></a>
+        <a href="{% url 'students:students_list' %}?status=S" class="menu-anchor">
         <div class="col-md-2 info">
             <h4>On Suspension</h4>
             <div style="font-size: 1.5em;">
                 {{ suspension }}
             </div>
-        </div>
+        </div></a>
+        <a href="{% url 'students:students_list' %}?status=G" class="menu-anchor">
         <div class="col-md-2 info">
             <h4>Graduated</h4>
             <div style="font-size: 1.5em;">
                  {{ graduated }}
             </div>
-        </div>
+        </div></a>  
         <div class="col-md-2 info">
             <h4>Males</h4>
             <div style="font-size: 1.5em;">

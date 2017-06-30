@@ -5,7 +5,7 @@ from django.db.models import *
 
 def home_context(request):
     
-    students = Student.objects.all()
+    all_students = Student.objects.all()
     departments = Department.objects.all()
     lecturers = Lecturer.objects.all ()
     all_results = Result.objects.all()
@@ -21,7 +21,7 @@ def home_context(request):
         'lecturers': lecturers,
         'avg_performance': avg_performance,
         'ranking': ranking,
-        'students': students,
+        'all_students': all_students,
         'all_results': all_results,
         'count': count,
     }

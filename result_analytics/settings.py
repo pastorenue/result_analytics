@@ -12,13 +12,12 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-PROJECT_BASE = os.path.abspath(os.path.join(PROJECT_DIR,'..'))
+
 
 FIXTURE_DIRS = (
-    os.path.join(PROJECT_BASE, 'fixtures'),
+    os.path.join(BASE_DIR, 'fixtures'),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -53,6 +52,7 @@ INSTALLED_APPS = (
     'results',
     'notification',
     'crispy_forms',
+    'river',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -71,7 +71,7 @@ ROOT_URLCONF = 'result_analytics.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_BASE, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,14 +130,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_in_pro', 'static_root')
-STATICFILES_DIRS = (
-   os.path.join(BASE_DIR, 'static_in_pro', 'my_static'),
-)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static_in_pro', 'uploads')
-MEDIA_URL ='/media/'
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 

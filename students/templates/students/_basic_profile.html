@@ -1,11 +1,20 @@
 {% load staticfiles %}
+{% load thumbnail %}
 <div class="basicprofile vcard">
    
+   {%if student.photo %}
+   {% thumbnail student.photo "100x100" crop="top" as im %}
+   <img class="photo img-circle" src="{{ im.url}}" />
+   {% endthumbnail %}
+   {% else %}
    <img class="photo img-circle" src="{% static 'images/avatar.png' %}" />
+   {% endif %}
     <div class="n">
+        <a href="{{ student.get_absolute_url }}">
         <span class="given-name">{{ student.first_name }}</span>
         {% if student.middle_name %}<span class="additional-name">{{ student.middle_name }}</span>{% endif %}
         <span class="family-name">{{ student.last_name }}</span>
+        </a>
     </div>
     <div>
         Student of {{ student.department }}

@@ -1,0 +1,1002 @@
+<html>
+    <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    <title>User Profile{% block title %} | Home{% endblock %}</title>
+    <meta content="Photobox, Amazing Photos, Sell your photos online, Images, Local, Nigeria Photos" name="keywords">
+    <meta content="Download amazing local photos of different categories." name="description">
+    
+    <!-- Set the viewport width to device width for mobile -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">    
+    
+    
+    <!-- Fav and touch icons -->
+    <link href="http://vendroid.venmond.com/img/ico/apple-touch-icon-144-precomposed.png" sizes="144x144" rel="apple-touch-icon-precomposed">
+    <link href="http://vendroid.venmond.com/img/ico/apple-touch-icon-114-precomposed.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+    <link href="http://vendroid.venmond.com/img/ico/apple-touch-icon-72-precomposed.png" sizes="72x72" rel="apple-touch-icon-precomposed">
+    <link href="http://vendroid.venmond.com/img/ico/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon-precomposed">
+    <link href="http://vendroid.venmond.com/img/ico/favicon.png" rel="shortcut icon">
+    <!--loading staticfiles-->
+    {% load staticfiles %}
+    
+    <!-- CSS -->
+       
+    <!-- Bootstrap & FontAwesome & Entypo CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/font-entypo.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-timepicker.min.css' %}"/>
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap-timepicker.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/isotope.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/jquery.tagsinput.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/jquery.pnotify.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-switch.css' %}"/>
+    
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.custom.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/fonts.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/prettify.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'css/daterangepicker-bs3.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/colorpicker.css' %}"/>
+    
+	<!-- Specific CSS -->
+	    
+     
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/theme.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/theme-responsive.min.css' %}"/>
+
+        
+    <!-- Responsive CSS -->
+        	 
+ 
+    <!-- for specific page in style css -->
+        
+    <!-- for specific page responsive in style css -->
+        
+    
+    <!-- Custom CSS -->
+   
+    <!-- Head SCRIPTS -->
+   
+</head>    
+
+<body data-smooth-scrolling="1" data-active="pages " class="full-layout  nav-right-hide nav-right-start-hide  nav-top-fixed      responsive    clearfix breakpoint-975" id="pages">     
+<div class="vd_body">
+<!-- Header Start -->
+  <header id="header" class="header-1">
+      <div class="vd_top-menu-wrapper">
+        <div class="container ">
+          <div class="vd_top-nav vd_nav-width  ">
+          <div class="vd_panel-header">
+          	<div class="logo">
+            	<a href="http://vendroid.venmond.com/index.php"><h4>photobox</h4></a>
+            </div>
+            <!-- logo -->
+            <div data-step="1" data-intro="&lt;strong&gt;Minimize Left Navigation&lt;/strong&gt;&lt;br/&gt;Toggle navigation size to medium or small size. You can set both button or one button only. See full option at documentation." class="vd_panel-menu  hidden-sm hidden-xs">
+            		                	<span data-action="nav-left-medium" data-original-title="Medium Nav Toggle" data-placement="bottom" data-toggle="tooltip" class="nav-medium-button menu">
+	                    <i class="fa fa-bars"></i>
+                    </span>
+                                		                    
+                	<span data-action="nav-left-small" data-original-title="Small Nav Toggle" data-placement="bottom" data-toggle="tooltip" class="nav-small-button menu">
+	                    <i class="fa fa-ellipsis-v"></i>
+                    </span> 
+                                       
+            </div>
+            <div class="vd_panel-menu left-pos visible-sm visible-xs">
+                                 
+                        <span data-action="toggle-navbar-left" class="menu">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </span>  
+                            
+                              
+            </div>
+            <div class="vd_panel-menu visible-sm visible-xs">
+                	<span data-action="submenu" class="menu visible-xs">
+	                    <i class="fa fa-bars"></i>
+                    </span>        
+                          
+                        <span data-action="toggle-navbar-right" class="menu visible-sm visible-xs">
+                            <i class="fa fa-comments"></i>
+                        </span>                   
+                   	 
+            </div>                                     
+            <!-- vd_panel-menu -->
+          </div>
+          <!-- vd_panel-header -->
+            
+          </div>    
+          <div class="vd_container">
+          	<div class="row">
+            	<div class="col-sm-5 col-xs-12">
+            		
+<div class="vd_menu-search">
+  <form action="http://vendroid.venmond.com/pages-user-profile.php#" method="post" id="search-box">
+    <input type="text" placeholder="Search" class="vd_menu-search-text width-60" name="search">
+    <div class="vd_menu-search-category"> <span data-action="click-trigger"> <span class="separator"></span> <span class="text">Search By</span> <span class="icon"> <i class="fa fa-caret-down"></i></span> </span>
+      <div style="display: none;" data-action="click-target" class="vd_mega-menu-content width-xs-2 center-xs-2 right-sm">
+        <div class="child-menu">
+          <div class="content-list content-menu content">
+            <ul class="list-wrapper">
+              <li>
+                <label>
+                  <input type="checkbox" value="all-files">
+                  <span>All Files</span></label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="photos">
+                  <span>Photos</span></label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="illustrations">
+                  <span>Albums</span></label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+                </div>
+                <div class="col-sm-7 col-xs-12">
+              		<div class="vd_mega-menu-wrapper">
+                    	<div class="vd_mega-menu pull-right">
+            				<ul class="mega-ul">  
+     
+    <li class="profile mega-li" id="top-menu-profile"> 
+        <a data-action="click-trigger" class="mega-link" href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+            <span class="mega-image">
+                <img alt="example image" src="{{ profile.photo.url }}">               
+            </span>
+            <span class="mega-name">
+                {{ profile }} <i class="fa fa-caret-down fa-fw"></i> 
+            </span>
+        </a> 
+      <div style="display: none;" data-action="click-target" class="vd_mega-menu-content  width-xs-2  left-xs left-sm">
+        <div class="child-menu"> 
+        	<div class="content-list content-menu">
+                <ul class="list-wrapper pd-lr-10">
+                    <li> <a href="#"> <div class="menu-text">Edit Profile</div> </a> </li>
+                    <li> <a href="#"> <div class="menu-text">Notifications<div class="menu-badge"><div class="badge vd_bg-red">1</div></div></div> </a> </li>
+                    <li> <a href="#">  <div class="menu-text">Messages</div><div class="menu-badge"><div class="badge vd_bg-red">10</div></div> </a>  </li>
+                    <li class="line"></li>
+					<li> <a href="##"> <div class="menu-icon"><i class=" fa fa-tasks"></i></div> <div class="menu-text"> Tasks</div><div class="menu-badge"><div class="badge vd_bg-red">5</div></div> </a> </li> 
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> <div class="menu-icon"><i class=" fa fa-sign-out"></i></div>  <div class="menu-text">Sign Out</div> </a> </li>
+                    <li class="line"></li>                
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> <div class="menu-icon"><i class=" fa fa-question-circle"></i></div> <div class="menu-text">Help</div> </a> </li>
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> <div class="menu-icon"><i class=" glyphicon glyphicon-bullhorn"></i></div> <div class="menu-text">Report a Problem</div> </a> </li>              
+                </ul>
+            </div> 
+        </div> 
+      </div>     
+	</li>               
+	</ul>
+<!-- Head menu search form ends -->                         
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- container --> 
+      </div>
+      <!-- vd_primary-menu-wrapper --> 
+
+  </header>
+  <!-- Header Ends --> 
+<div class="content">
+  <div class="container">
+    <div class="vd_navbar vd_nav-width vd_navbar-tabs-menu vd_navbar-left  ">
+	<div class="navbar-tabs-menu clearfix">
+			<span data-action="expand-navbar-tabs-menu" class="expand-menu">
+            	<span class="menu-icon menu-icon-left">
+            		<i class="fa fa-ellipsis-h"></i>
+                    <span class="badge vd_bg-red">
+                        20
+                    </span>                    
+                </span>
+            	<span class="menu-icon menu-icon-right">
+            		<i class="fa fa-ellipsis-h"></i>
+                    <span class="badge vd_bg-red">
+                        20
+                    </span>                    
+                </span>                
+            </span>
+            <div class="menu-container">
+            	<div class="vd_mega-menu-wrapper">
+                	<div data-step="3" data-intro="&lt;strong&gt;Tabs Menu&lt;/strong&gt;&lt;br/&gt;Can be placed for dropdown menu, tabs, or user profile. Responsive for medium and small size navigation." class="vd_mega-menu">
+<ul class="mega-ul">
+    <li class="one-icon mega-li" id="home"> 
+      <a data-action="click-trigger" href="javascript:void(0);" class="mega-link  vd_bg-blue">
+            <span class="mega-icon">
+                <i class="fa fa-cloud"></i>
+            </span>
+            <span class="badge vd_bg-red">
+                10
+            </span>
+      </a>
+      <div style="display: none;" data-action="click-target" class="vd_mega-menu-content width-xs-3 width-sm-5 width-md-6   right-xs ">
+        <div class="child-menu">  
+           <div class="title"> 
+           	   Server Status
+               <div class="vd_panel-menu">
+                     <span class="menu" data-placement="bottom" data-toggle="tooltip" data-original-title="Find Server">
+                        <i class="fa fa-search"></i>
+                    </span>                 
+                     <span class="menu" data-placement="bottom" data-toggle="tooltip" data-original-title="Message Setting">
+                        <i class="fa fa-cog"></i>
+                    </span>                                                                              
+                </div>
+           </div>                 
+		   <div class="content-grid column-md-3 column-sm-2 column-xs-1 height-xs-auto height-sm-4">	
+           <div style="overflow: hidden;" class="mCustomScrollbar _mCS_4" data-rel="scroll"><div style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 400px;" id="mCSB_4" class="mCustomScrollBox mCS-light"><div style="position: relative; top: 0px;" class="mCSB_container mCS_no_scrollbar"><div style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 400px;" id="mCSB_4" class="mCustomScrollBox mCS-light"><div style="position: relative; top: 0px;" class="mCSB_container mCS_no_scrollbar">
+               <ul class="list-wrapper">
+                    <li><a>
+           		            <div class="menu-icon">
+                				<i class="fa fa-cloud"></i>
+           				    </div>
+                            <div class="menu-text"> Venmond.com
+                            	<div class="menu-info">
+                                    <span class="menu-date vd_bg-green badge">Online</span>
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">Disk Usage</span>
+                                        <span class="value pull-right vd_black">4.35/140 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-info" style="width:15%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                     
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">BW Usage</span>
+                                        <span class="value pull-right vd_black">1600/2500 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar  progress-bar-warning" style="width:65%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                                                                                               
+                                    <span class="menu-action">
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reboot Server" class="menu-action-icon vd_green vd_bd-green">
+                                            <i class="fa fa-refresh"></i>
+                                        </span> 
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Stop Server" class="menu-action-icon vd_red vd_bd-red">
+                                            <i class="fa fa-stop"></i>
+                                        </span>
+                                    </span>                                
+                            	</div>
+                            </div> 
+                    </a></li>
+                    <li> <a>
+           		            <div class="menu-icon">
+                				<i class="fa fa-cloud"></i>
+           				    </div>
+                            <div class="menu-text"> Venmond.com
+                            	<div class="menu-info">
+                                    <span class="menu-date vd_bg-grey badge">Offline</span>
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">Disk Usage</span>
+                                        <span class="value pull-right vd_black">4.35/140 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-info" style="width:15%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                     
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">BW Usage</span>
+                                        <span class="value pull-right vd_black">1600/2500 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar  progress-bar-warning" style="width:65%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                                                                                               
+                                    <span class="menu-action">
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reboot Server" class="menu-action-icon vd_green vd_bd-green">
+                                            <i class="fa fa-refresh"></i>
+                                        </span> 
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Stop Server" class="menu-action-icon vd_red vd_bd-red">
+                                            <i class="fa fa-stop"></i>
+                                        </span>
+                                    </span>                                
+                            	</div>
+                            </div> 
+                    </a></li>
+                    <li> <a>
+           		            <div class="menu-icon">
+                				<i class="fa fa-cloud"></i>
+           				    </div>
+                            <div class="menu-text"> Venmond.com
+                            	<div class="menu-info">
+                                    <span class="menu-date vd_bg-grey badge">Offline</span>
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">Disk Usage</span>
+                                        <span class="value pull-right vd_black">4.35/140 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-info" style="width:15%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                     
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">BW Usage</span>
+                                        <span class="value pull-right vd_black">1600/2500 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar  progress-bar-warning" style="width:65%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                                                                                               
+                                    <span class="menu-action">
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reboot Server" class="menu-action-icon vd_green vd_bd-green">
+                                            <i class="fa fa-refresh"></i>
+                                        </span> 
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Stop Server" class="menu-action-icon vd_red vd_bd-red">
+                                            <i class="fa fa-stop"></i>
+                                        </span>
+                                    </span>                                
+                            	</div>
+                            </div> 
+                    </a></li>
+                    <li><a> 
+           		            <div class="menu-icon">
+                				<i class="fa fa-cloud"></i>
+           				    </div>
+                            <div class="menu-text"> Venmond.com
+                            	<div class="menu-info">
+                                    <span class="menu-date vd_bg-grey badge">Offline</span>
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">Disk Usage</span>
+                                        <span class="value pull-right vd_black">4.35/140 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-info" style="width:15%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                     
+                                    <div class="menu-status  text-left">
+                                    	<span class="text">BW Usage</span>
+                                        <span class="value pull-right vd_black">1600/2500 GB</span>
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="progress">
+                                            <div class="progress-bar  progress-bar-warning" style="width:65%"> 
+                                            </div>
+                                        </div>                                                   
+                                    </div>                                                                                                               
+                                    <span class="menu-action">
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Reboot Server" class="menu-action-icon vd_green vd_bd-green">
+                                            <i class="fa fa-refresh"></i>
+                                        </span> 
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Stop Server" class="menu-action-icon vd_red vd_bd-red">
+                                            <i class="fa fa-stop"></i>
+                                        </span>
+                                    </span>                                
+                            	</div>
+                            </div> 
+                    </a></li>                                                                                                                         
+                    
+               </ul>
+               </div><div style="position: absolute; display: none;" class="mCSB_scrollTools"><div class="mCSB_draggerContainer"><div oncontextmenu="return false;" style="position: absolute; top: 0px;" class="mCSB_dragger"><div style="position:relative;" class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div><div style="position: absolute; display: none;" class="mCSB_scrollTools"><div class="mCSB_draggerContainer"><div oncontextmenu="return false;" style="position: absolute; top: 0px;" class="mCSB_dragger"><div style="position:relative;" class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div> <!-- data-rel="scroll" -->                                                                    
+           </div>                              
+        </div> <!-- child-menu -->                      
+      </div>   <!-- vd_mega-menu-content --> 
+    </li>
+    <li class="one-icon mega-li" id="tabs-menu-tasks"> 
+        <a data-action="click-trigger" href="javascript:void(0);" class="mega-link  vd_bg-green">
+            <span class="mega-icon">
+                <i class="fa fa-tasks"></i>
+            </span>
+            <span class="badge vd_bg-red">
+                8
+            </span>
+        </a>
+      <div style="display: none;" data-action="click-target" class="vd_mega-menu-content width-xs-3 width-sm-4 width-md-5 right-xs">
+        <div class="child-menu">  
+           <div class="title"> 
+           	   You have 8 pending tasks
+               <div class="vd_panel-menu">
+                     <span class="menu" data-placement="bottom" data-toggle="tooltip" data-original-title="Task Setting">
+                        <i class="fa fa-cog"></i>
+                    </span>                                                                              
+                </div>
+           </div>                 
+		   <div class="content-list content-image">	
+           <div style="overflow: hidden;" class="mCustomScrollbar _mCS_5" data-rel="scroll"><div style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 400px;" id="mCSB_5" class="mCustomScrollBox mCS-light"><div style="position: relative; top: 0px;" class="mCSB_container mCS_no_scrollbar"><div style="position: relative; height: 100%; overflow: hidden; max-width: 100%; max-height: 400px;" id="mCSB_5" class="mCustomScrollBox mCS-light"><div style="position: relative; top: 0px;" class="mCSB_container mCS_no_scrollbar">
+               <ul class="list-wrapper pd-lr-10">
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                    		<div class="menu-icon vd_blue"><i class="fa fa-bolt"></i></div> 
+                            <div class="menu-text"> Electricity Problem
+                            	<div class="menu-info">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-info" style="width:85%"> 
+                                        	85%
+                                        </div>
+                                    </div>                                                                                                    
+                            	</div>
+                            </div> 
+                    </a> </li>
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                    		<div class="menu-icon vd_yellow"><i class="fa fa-code"></i></div>  
+                            <div class="menu-text">  Finish coding jquery plugin
+                            	<div class="menu-info">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-danger" style="width:20%"> 
+                                        	20%
+                                        </div>
+                                    </div>                                                                                                    
+                            	</div>                           
+                            </div> 
+                    </a> </li>    
+                    <li> <a> 
+                    		<div class="menu-icon"><img src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-3.jpg" alt="example image"></div> 
+                            <div class="menu-text"> Client: Zoe Project
+                            	<div class="menu-info">
+                                    <span class="menu-date">Make a call</span>                                                                         
+                                    <span class="menu-action">
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Call" class="menu-action-icon">
+                                            <i class="fa fa-phone"></i>
+                                        </span>                                                                            
+                                    </span>                                
+                            	</div>                                                     
+                            </div> 
+                    </a> </li>                                     
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                    		<div class="menu-icon"><i class=" fa fa-magic"></i></div>  
+                            <div class="menu-text">  Final error check on new templates
+                            	<div class="menu-info">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-success" style="width:95%"> 
+                                        	95%
+                                        </div>
+                                    </div>                                                                                                    
+                            	</div>                           
+                            </div> 
+                    </a> </li> 
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                    		<div class="menu-icon vd_green"><i class=" fa fa-camera"></i></div>  
+                            <div class="menu-text">  Update product image
+                            	<div class="menu-info">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-warning" style="width:50%"> 
+                                        	50%
+                                        </div>
+                                    </div>                                                                                                    
+                            	</div>                           
+                            </div> 
+                    </a> </li>
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                    		<div class="menu-icon vd_blue"><i class="fa fa-bolt"></i></div> 
+                            <div class="menu-text"> Electricity Problem
+                            	<div class="menu-info">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-info" style="width:85%"> 
+                                        	85%
+                                        </div>
+                                    </div>                                                                                                    
+                            	</div>
+                            </div> 
+                    </a> </li>
+                    <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                    		<div class="menu-icon vd_yellow"><i class=" fa fa-code"></i></div>  
+                            <div class="menu-text">  Finish coding jquery plugin
+                            	<div class="menu-info">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-danger" style="width:20%"> 
+                                        	20%
+                                        </div>
+                                    </div>                                                                                                    
+                            	</div>                           
+                            </div> 
+                    </a> </li>    
+                    <li> <a> 
+                    		<div class="menu-icon"><img src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-3.jpg" alt="example image"></div> 
+                            <div class="menu-text"> Client: Zoe Project
+                            	<div class="menu-info">
+                                    <span class="menu-date">Make a call</span>                                                                         
+                                    <span class="menu-action">
+                                        <span data-placement="bottom" data-toggle="tooltip" data-original-title="Call" class="menu-action-icon">
+                                            <i class="fa fa-phone"></i>
+                                        </span>                                                                            
+                                    </span>                                
+                            	</div>                                                     
+                            </div> 
+                    </a> </li>                                     
+                                                                                                                       
+                    
+               </ul>
+               </div><div style="position: absolute; display: none;" class="mCSB_scrollTools"><div class="mCSB_draggerContainer"><div oncontextmenu="return false;" style="position: absolute; top: 0px;" class="mCSB_dragger"><div style="position:relative;" class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div><div style="position: absolute; display: none;" class="mCSB_scrollTools"><div class="mCSB_draggerContainer"><div oncontextmenu="return false;" style="position: absolute; top: 0px;" class="mCSB_dragger"><div style="position:relative;" class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>                                                                     
+           </div>                              
+        </div> <!-- child-menu -->                      
+      </div>   <!-- vd_mega-menu-content --> 
+    </li>  
+    <li class="one-icon mega-li" id="test-2"> 
+        <a data-action="click-trigger" href="javascript:void(0);" class="mega-link vd_bg-yellow">
+            <span class="mega-icon">
+                <i class="fa fa-pencil"></i>
+            </span>
+        </a>     
+         <div style="display: none;" data-action="click-target" class="vd_mega-menu-content width-xs-3 width-sm-4 width-md-5 center-xs-3 right-sm pd-0">
+            <div class="child-menu">  
+
+                	<textarea placeholder="What are you doing?" rows="3" class="no-bd"></textarea>
+                    <div class="vd_textarea-menu vd_bg-yellow vd_bd-yellow">
+                    	<ul class="nav nav-pills ">
+                        <li class="one-icon">
+                            <a href="javascript:void(0);" data-toggle="tab-post">
+                                <span class="menu-icon">
+                                    <i class="fa fa-user fa-fw"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="one-icon">
+                            <a href="javascript:void(0);" data-toggle="tab-post">
+                                <span class="menu-icon">
+                                    <i class="fa fa-camera fa-fw"></i>
+                                </span>
+                            </a>
+                        </li>   
+                        <li class="one-icon">
+                            <a href="javascript:void(0);" data-toggle="tab-post">
+                                <span class="menu-icon">
+                                    <i class="fa fa-smile-o fa-fw"></i>
+                                </span>
+                            </a>
+                        </li>  
+                        <li class="pull-right">
+                            <a style="border-left:1px solid rgba(255,255,255,.3)" href="javascript:void(0);" data-toggle="tab-post">
+                                <span class="menu-icon">
+                                    <i class="fa fa-check fa-fw"></i>
+                                </span>                             
+                                <span class="menu-text">
+                                	Post
+                                </span>                              
+                            </a>
+                        </li>  
+                                                                    
+                        </ul>
+
+                </div>
+                                          
+            </div> <!-- child-menu -->                      
+          </div>   <!-- vd_mega-menu-content -->                               
+         
+    </li>  
+    <li class="one-icon mega-li" id="test"> 
+        <a data-action="click-trigger" href="javascript:void(0);" class="mega-link vd_bg-red">
+            <span class="mega-icon">
+                <i class="fa fa-plus"></i>
+            </span>
+        </a>
+        <div style="display: none;" data-action="click-target" class="vd_mega-menu-content  width-xs-2  center-xs-2">
+                <div class="child-menu"> 
+                    <div class="content-list content-menu">
+                        <ul class="list-wrapper pd-lr-10">
+                            <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> <span class="menu-icon"><i class=" fa fa-user"></i></span> <span class="menu-text">Write Article</span> </a> </li>
+                            <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> <span class="menu-icon"><i class=" fa fa-trophy"></i></span> <span class="menu-text">Write News</span> </a> </li>
+                            <li> <a href="http://vendroid.venmond.com/pages-user-profile.php#"> <span class="menu-icon"><i class=" fa fa-flask"></i></span> <span class="menu-text">Add Product</span> </a>  </li>
+                                       
+                        </ul>
+                    </div> 
+                </div> 
+           </div>   <!-- vd_mega-menu-content  -->      
+    </li>      
+</ul>                        	
+                    </div>                
+                </div>
+            </div>                                                   
+    </div>
+	<div class="navbar-menu clearfix">
+        <div class="vd_panel-menu hidden-xs">
+                       
+        </div>
+    	<h3 style="text-align: center;" class="menu-title hide-nav-medium hide-nav-small">HOME</h3>
+        <div class="vd_menu">
+        	 <ul>
+    <li>
+    	<a data-action="click-trigger" href="javascript:void(0);">
+        	<span class="menu-icon"><i class="fa fa-dashboard"></i></span> 
+            <span class="menu-text">Dashboard</span>  
+            <span class="menu-badge"><span class="glyphicon glyphicon-home"></span></span></span>
+       	</a>
+     	<div style="display: none;" data-action="click-target" class="child-menu">
+            <ul>
+                <li>
+                    <a href="http://vendroid.venmond.com/index.php">
+                        <span class="menu-text">Main Dashboard</span>  
+                    </a>
+                </li>              
+                <li>
+                    <a href="http://vendroid.venmond.com/index-ecommerce.php">
+                        <span class="menu-text">Statistics Dashboard</span>  
+                    </a>
+                </li>                                                                                         
+            </ul>   
+      	</div>
+    </li>  
+ 	<li>
+    	<a href="#">
+        	<span class="menu-icon"><i class="fa fa-envelope"></i></span> 
+            <span class="menu-text">Email</span>  
+            <span class="menu-badge"><span class="badge vd_bg-red">78</span></span>
+       	</a> 
+    </li>       
+    <li>
+    	<a  href="{% url 'photos:photos_create_album' %}">
+        	<span class="menu-icon entypo-icon"><i class="icon-bookmark"> </i></span> 
+            <span class="menu-text">Create Albums</span>  
+       	</a>
+    </li>               
+    <li>
+    	<a href="{% url 'photos:photos_new_photo' %}">
+            <span class="menu-icon"><i class="fa fa-sitemap"> </i></span>
+            <span class="menu-text">Upload Photos</span> 
+        </a>
+    </li>
+    <li>
+    	<a href="#">
+        	<span class="menu-icon"><i class="fa fa-code"></i></span> 
+            <span class="menu-text">Comments</span>  
+            <span class="menu-badge"><span class="badge vd_bg-yellow">5</span></span>
+       	</a>
+    </li>     
+    <li>
+    	<a data-action="click-trigger" href="javascript:void(0);">
+        	<span class="menu-icon"><i class="fa fa-picture-o"></i></span> 
+            <span class="menu-text">Gallery</span>  
+            <span class="menu-badge"><span class="badge vd_bg-black-30"></span></span>
+       	</a>
+     	<div style="display: none;" data-action="click-target" class="child-menu">
+            <ul>   
+                <li>
+                    <a href="#">
+                        <span class="menu-text">View Photos</span>
+						<span class="menu-badge"><span class="badge vd_bg-red">290</span></span>
+                    </a>
+                </li>      
+                <li>
+                    <a href="{% url 'photos:photos_albums' %}">
+                        <span class="menu-text">View Album</span>  
+                        <span class="menu-badge"><span class="badge vd_bg-red">{{ album.object_list.count }}</span></span>                           
+                    </a>
+                </li>                                    
+            </ul>   
+      	</div>
+    </li>         
+    <li>
+    	<a href="http://themeforest.net/item/vendroid-super-flexible-multipurpose-admin-theme/7717536?ref=Venmond">
+        	<span class="menu-icon"><i class="fa fa-shopping-cart"></i></span> 
+            <span class="menu-text">New Information</span>  
+            <span class="menu-badge"><span class="badge vd_bg-red">1</span></span>
+       	</a>
+    </li>   
+                 
+</ul>
+<!-- Head menu search form ends -->         </div>             
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+    <div class="vd_menu vd_navbar-bottom-widget">
+        <ul>
+            <li>
+                <a href="{% url 'photobox_home' %}">
+                    <span class="menu-icon"><i class="fa fa-sign-out"></i></span>          
+                    <span class="menu-text">Logout</span>             
+                </a>
+                
+            </li>
+        </ul>
+    </div>     
+</div>    <div class="vd_navbar vd_nav-width vd_navbar-chat vd_bg-black-80 vd_navbar-right   ">
+	<div class="navbar-tabs-menu clearfix">
+			<span data-action="expand-navbar-tabs-menu" class="expand-menu">
+            	<span class="menu-icon menu-icon-left">
+            		<i class="fa fa-ellipsis-h"></i>
+                    <span class="badge vd_bg-red">
+                        20
+                    </span>                    
+                </span>
+            	<span class="menu-icon menu-icon-right">
+            		<i class="fa fa-ellipsis-h"></i>
+                    <span class="badge vd_bg-red">
+                        20
+                    </span>                    
+                </span>                
+            </span>  
+            <div class="menu-container">               
+        		 <div class="navbar-search-wrapper">
+    <div class="navbar-search vd_bg-black-30">
+        <span class="append-icon"><i class="fa fa-search"></i></span>
+        <input type="text" name="search" class="vd_menu-search-text no-bg no-bd vd_white width-70" placeholder="Search">
+        <div class="pull-right search-config">                                
+            <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown"><span class="prepend-icon vd_grey"><i class="fa fa-cog"></i></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="http://vendroid.venmond.com/pages-user-profile.php#">Action</a></li>
+                <li><a href="http://vendroid.venmond.com/pages-user-profile.php#">Another action</a></li>
+                <li><a href="http://vendroid.venmond.com/pages-user-profile.php#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="http://vendroid.venmond.com/pages-user-profile.php#">Separated link</a></li>
+              </ul>                                    
+        </div>
+    </div>
+</div>  
+            </div>        
+                                                 
+    </div>
+	<div class="navbar-menu clearfix">
+    	<div class="content-list content-image content-chat">
+            <ul class="list-wrapper no-bd-btm pd-lr-10">
+                <li class="group-heading vd_bg-black-20">FAVORITE</li>
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar.jpg"></div> 
+                            <div class="menu-text">Jessylin
+                                <div class="menu-info">
+                                    <span class="menu-date">Administrator </span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="badge status vd_bg-green">&nbsp;</span></div> 
+                    </a>
+                </li>
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-2.jpg"></div> 
+                            <div class="menu-text">Rodney Mc.Cardo
+                                <div class="menu-info">
+                                    <span class="menu-date">Designer </span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="badge status vd_bg-grey">&nbsp;</span></div> 
+                    </a>
+                </li>
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-3.jpg"></div> 
+                            <div class="menu-text">Theresia Minoque
+                                <div class="menu-info">
+                                    <span class="menu-date">Engineering </span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="badge status vd_bg-green">&nbsp;</span></div> 
+                    </a>
+                </li>
+                <li class="group-heading vd_bg-black-20">FRIENDS</li>                                                                                                                                 
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-4.jpg"></div> 
+                            <div class="menu-text">Greg Grog
+                                <div class="menu-info">
+                                    <span class="menu-date">Developer </span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="badge status vd_bg-grey">&nbsp;</span></div> 
+                    </a>
+                </li> 
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-5.jpg"></div> 
+                            <div class="menu-text">Stefanie Imburgh
+                                <div class="menu-info">
+                                    <span class="menu-date">Dancer</span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="vd_grey font-sm"><i class="fa fa-mobile"></i></span></div> 
+                    </a>
+                </li> 
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-6.jpg"></div> 
+                            <div class="menu-text">Matt Demon
+                                <div class="menu-info">
+                                    <span class="menu-date">Musician </span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="vd_grey font-sm"><i class="fa fa-mobile"></i></span></div> 
+                    </a>
+                </li>
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-7.jpg"></div> 
+                            <div class="menu-text">Jeniffer Anastasia
+                                <div class="menu-info">
+                                    <span class="menu-date">Senior Developer </span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="badge status vd_bg-green">&nbsp;</span></div> 
+                    </a>
+                </li>                    
+                <li>  
+                    <a href="http://vendroid.venmond.com/pages-user-profile.php#"> 
+                            <div class="menu-icon"><img alt="example image" src="./User Profile Pages HTML Template - Responsive Multipurpose Admin Templates _ Vendroid_files/avatar-8.jpg"></div> 
+                            <div class="menu-text">Daniel Dreamon
+                                <div class="menu-info">
+                                    <span class="menu-date">Sales Executive </span>                                                         
+                                </div>
+                            </div>
+                            <div class="menu-badge"><span class="badge status vd_bg-green">&nbsp;</span></div> 
+                    </a>
+                </li> 
+
+            </ul>
+        </div>
+
+            
+    </div>
+    <div class="navbar-spacing clearfix">
+    </div>
+</div>    
+    <!-- Middle Content Start -->
+    
+    <div style="min-height: 1059px;" class="vd_content-wrapper">
+      <div style="min-height: 1059px;" class="vd_container">
+        <div class="vd_content clearfix">
+          <div class="vd_head-section clearfix">
+            <div class="vd_panel-header">
+              <ul class="breadcrumb">
+                <li><a href="http://vendroid.venmond.com/index.php">Home</a> </li>
+                <li><a href="http://vendroid.venmond.com/pages-custom-product.php">{% block breadcrumb1 %}Account{% endblock %}</a> </li>
+                <li class="active">{% block breadcrumb2 %}User Profile{% endblock %}</li>
+              </ul>
+              <div data-position="left" data-step="5" data-intro="&lt;strong&gt;Expand Control&lt;/strong&gt;&lt;br/&gt;To expand content page horizontally, vertically, or Both. If you just need one button just simply remove the other button code." class="vd_panel-menu hidden-sm hidden-xs">
+    <div class="remove-navbar-button menu" data-placement="bottom" data-toggle="tooltip" data-original-title="Remove Navigation Bar Toggle" data-action="remove-navbar"> <i class="fa fa-arrows-h"></i> </div>
+      <div class="remove-header-button menu" data-placement="bottom" data-toggle="tooltip" data-original-title="Remove Top Menu Toggle" data-action="remove-header"> <i class="fa fa-arrows-v"></i> </div>
+      <div class="fullscreen-button menu" data-placement="bottom" data-toggle="tooltip" data-original-title="Remove Navigation Bar and Top Menu Toggle" data-action="fullscreen"> <i class="glyphicon glyphicon-fullscreen"></i> </div>
+      
+</div>
+ 
+            </div>
+          </div>
+          <div class="vd_title-section clearfix">
+            <div class="vd_panel-header no-subtitle">
+              <h1>{% block header %}User Profile {% endblock %}</h1>
+            </div>
+          </div>
+		  {% block content %}
+          
+		  
+         {% endblock %}
+        </div>
+        <!-- .vd_content --> 
+      </div>
+      <!-- .vd_container --> 
+    </div>
+    <!-- .vd_content-wrapper --> 
+    
+    <!-- Middle Content End --> 
+    
+  </div>
+  <!-- .container --> 
+</div>
+<!-- .content -->
+
+<!-- Footer Start -->
+   <div class="footer" style="width: 100%; background-color: #000; padding: 60px 0 20px 0;">
+		<div class="container">
+			<div class="row" style="text-align: center; font-family: helvetica;">
+				<img src="{% static 'images/cart-with-bell.png' %}">
+				<p style="padding-bottom: 40px; font-size: 20px;">Online proofing and sales tools for professional photographers.</p>
+				<div style="border-top-color: #474646; border-top: 1px solid; padding: 20px 0 20px 0; ">
+				</div>
+				<div class="col-md-5">
+					<p style="float: left;">&copy; 2016 CSC 471 (Group 1) · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+				</div>
+				<div class="col-md-7">
+					<ul style="list-style-type: none; float: right;">
+						<li class="footer-nav"><a href="">HOME</a></li>
+						<li class="footer-nav"><a href="#about">ABOUT</a></li>
+						<li class="footer-nav"><a>PLANS</a></li>
+						<li class="footer-nav"><a>SUPPORT</a></li>
+						<li class="footer-nav"><a>FAQs</a></li>
+						<li class="footer-nav"><a>BLOG</a></li>
+						<li class="footer-nav"><a href="#contact">CONTACT US</a></li>
+					</ul>
+				</div>
+				<div>
+
+				</div>
+			</div>
+			<div class="row" style="padding-bottom: 40px;"></div>
+		</div>
+
+    </div>
+<!-- .vd_body END  -->
+<a class="vd_back-top" data-action="backtop" href="http://vendroid.venmond.com/pages-user-profile.php#" id="back-top"> <i class="fa  fa-angle-up"> </i> </a>
+
+<!--
+<a class="back-top" href="#" id="back-top"> <i class="icon-chevron-up icon-white"> </i> </a> -->
+
+<!-- Javascript =============================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="{% static 'js/jquery.js' %}" type="text/javascript"></script> 
+
+<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script> 
+<script src="{% static 'js/jquery-ui.custom.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.ui.touch-punch.min.js' %}" type="text/javascript"></script>
+
+<script src="{% static 'js/caroufredsel.js' %}" type="text/javascript"></script> 
+<script src="{% static 'js/plugins.js' %}" type="text/javascript"></script>
+
+<script src="{% static 'js/breakpoints.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.prettyPhoto.js' %}" type="text/javascript"></script> 
+
+<script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.tagsinput.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap-switch.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.blockUI.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.pnotify.min.js' %}" type="text/javascript"></script>
+
+<script src="{% static 'js/theme.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/custom.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/modernizr.js' %}" type="text/javascript"></script>
+ 
+<!-- Specific Page Scripts Put Here -->
+<script src="{% static 'js/isotope.pkgd.min.js' %}" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	"use strict";
+		
+  // init Isotope
+  var $container = $('.isotope').isotope({
+    itemSelector: '.gallery-item',
+    layoutMode: 'fitRows'
+  });
+  
+
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	  $container.isotope('layout');
+	});
+
+  // bind filter button click
+  $('#filters').on( 'click', 'a', function() {
+    var filterValue = $( this ).attr('data-filter');
+	$('#filters li').removeClass('active');
+	$(this).parent().addClass('active');	
+    $container.isotope({ filter: filterValue });
+  });
+
+	
+});
+</script>
+<!-- Specific Page Scripts END -->
+
+
+
+
+<!-- Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information. -->
+
+<script>
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-43329142-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+</body></html>

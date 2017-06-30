@@ -3,13 +3,14 @@
 
 from django.conf.urls import include, patterns, url
 from django.contrib import admin
-from django.conf.urls import static
+from django.conf.urls.static import static
 from django.conf import settings
 from result_analytics.views import index, home, register_user, register_success
+from django.views.static import serve
 
 urlpatterns = [ 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^courses/', include('courses.urls')),
+    url(r'^courses/', include('courses.urls', namespace='courses')),
     url(r'^students/', include('students.urls', namespace='students')),
     url(r'^$', index, name='user_index'),
     url(r'^results/', include('results.urls', namespace='results')),
@@ -36,5 +37,7 @@ urlpatterns+=patterns('',
         url(r'^successful/$', register_success, name="result_success"),
          url(r'^signup/$', register_user, name="result_signup"),
 )
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

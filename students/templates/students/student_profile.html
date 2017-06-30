@@ -11,9 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2 style="margin-top: 0px; border-radius: 2px; padding: 5px; background: #1A7269; color: #fff;">
-        {% if not user.is_staff %}My{% else %}{{ student.last_name }}'s{% endif %} Profile
-    </h2>
+    {% block inner_content %}
     <div>
         {% include "students/_basic_profile.html" %}
     </div>
@@ -63,4 +61,5 @@
         
   </div>
 
+    {% endblock inner_content %}
 {% endblock %}

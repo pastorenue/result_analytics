@@ -10,6 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import *
 import logging
 import os
+import csv
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
@@ -17,33 +18,56 @@ from django.contrib import messages
 from .utils import Computation, import_result_from_csv
 from result_analytics.utils.excel import ExcelReport
 from .models import Result, CGPA
+from courses.models import Course
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from institutions.models import Department
+
 
 logger = logging.getLogger(__name__)
 
 def add_result(request):
+    data = {}
     if request.method == 'POST':
-        form = ResultForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            num_exist = Result.objects.filter(student=form.cleaned_data['student'], level=form.cleaned_data['level'], course=form.cleaned_data['course'], semester=form.cleaned_data['semester']).count()
-            if num_exist>0:
-                messages.error(request, _(u'This result is already in the database!'))
-            else:
-                result = Result(**data)
-                result.save()
-                form = ResultForm()
-                messages.success(request, _(u'The Results have been successfully entered!'))
+        reg_number = request.POST.get("reg_number")
+        course_code = request.POST.get("course")
+        level = request.POST.get("level")
+        score = request.POST.get("score")
+        semester = request.POST.get("semester")
+        session = request.POST.get("session")
+
+        student = Student.objects.get(reg_number=reg_number)
+        course = Course.objects.get(course_code=str(course_code).upper())
+
+        result_data = {
+            "student": student,
+            "course": course,
+            "level": level,
+            "score": float(score),
+            "semester": semester,
+            "session": session,
+        }
+        num_exist = Result.objects.filter(student=student, level=level, course=course, semester=semester).count()
+        if num_exist>0:
+            messages.error(request, _(u'This result is already in the database!'))
+        else:
+            result = Result(**result_data)
+            result.save()
+            messages.success(request, _(u'The result was entered successfully!'))
+        django_message = []
+        for message in messages.get_messages(request):
+            django_message.append(message.message)
+        data['messages'] = django_message
     else:
-        form = ResultForm()
-    return TemplateResponse(request, 'results/add_results.html', {'form': form})
+       pass
+    return TemplateResponse(request, 'results/add_results.html', {'data': data})
 # Create your views here.
 
 def result_list(request):
     template_name = 'results/_results.html'
     
     results = Result.objects.all().order_by('-date_created')
-    paginator = Paginator(results, 15)
+    paginator = Paginator(results, 30)
     page = request.GET.get('page')
     try:
         results = paginator.page(page)
@@ -106,21 +130,12 @@ def overall_result(request, student_id):
 
 
 def import_data(request):
-    if request.method == 'POST':
-        form = ResultImportForm(request.POST, request.FILES)
-        if form.is_valid():
-            param_file = request.FILES['file']
-            import_result_from_csv(open(os.path.expanduser('~/Desktop/Results_Uploads/%s' % param_file)))
-            return render_to_response('results/result_import.html', {'form': form}, context_instance=RequestContext(request),)
-            return HttpResponseRedirect(reverse('main_analysis_page'))
-    else:
-        form = ResultImportForm()
-        if os.path.exists(os.path.expanduser('~/Desktop/Results_Uploads')):
-            pass
-        else:
-            os.mkdir(os.path.expanduser("~/Desktop/Results_Uploads"))
+    form = ResultImportForm()
     return render_to_response('results/result_import.html',{'form': form}, context_instance=RequestContext(request),)
 
+
+def import_student(request):
+    pass
 
 def export_excel(request):
     results = (("%s %s" %(e.student.first_name, e.student.last_name), e.level, e.course.name, e.score,e.credit_load, e.course_load, e.grade.caption)
@@ -132,3 +147,27 @@ def export_excel(request):
     report.write(response)
     return response
     
+def upload_csv(request):
+    if request.method == 'GET':
+        return render(request, 'results/_results.html', {})
+    try:
+        csv_file = request.FILES["file"]
+        print(csv_file)
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request,'File is not CSV type')
+            return HttpResponseRedirect(reverse("results:result_import"))
+
+        # If the file is too large
+        if csv_file.multiple_chunks():
+            messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
+            return HttpResponseRedirect(reverse("results:result_import"))
+
+        # else continue
+        response = import_result_from_csv(csv_file)
+        if response > 0:
+            messages.success(request, "Your records were successfully imported.\r\n Total Records: %s" % (response))
+        else:
+            messages.info(request, "It appears you do not have any new records to import.\r\n Total Records: %s" % (response))
+    except Exception as e:
+        messages.error(request, e)
+    return HttpResponseRedirect(reverse("results:students_results"))   

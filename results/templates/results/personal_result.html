@@ -1,10 +1,10 @@
-{% extends 'staff/dashboard.html' %}
+{% extends 'students/student_profile.html' %}
 
 {% block breadcrumbs %}
     <a href="{% url 'students:students_list' %}"> All students</a>&raquo; {{ student }}'s result detail
 {% endblock %}
 
-{% block content %}
+{% block inner_content %}
     <div style="margin-bottom: 30px;">
         <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;">{{ student}}'s Result Details</h2>
     </div>
@@ -23,13 +23,11 @@
                 <th scope="col" style="width: 6%; text-align: center;">&nbsp;
                     <div class="dropdown"><span class='caret dropdown-toggle' data-toggle='dropdown' style="cursor: pointer;"></span>
                         <ul class='dropdown-menu' role="menu" style="left: -120px; border-top: 2px solid #0d8363; background-color: #edf0ef;">
-                            <li><a href="">All</a></li>
+                            <li style="text-align: center; font-size: 16px;"><strong>Filter</strong></li>
                             <li class="divider"></li>
-                            <li><a href="">Regular</a></li>
-                            <li><a href="">Diploma</a></li>
-                            <li class="divider"></li>
-                            <li><a href="">Post Graduates</a></li>
-                            <li><a href="">Other Programs</a></li>
+                            <li><a href="">Level</a></li>
+                            <li><a href="">Course</a></li>
+                            <li><a href="">Grade</a></li>
                         </ul>
                     </div>
                 </th>

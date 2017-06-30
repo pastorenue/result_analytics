@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+from django.contrib.auth.models import User
 class Institution(models.Model):
     name = models.CharField(max_length=250, blank=True, null=True)
     location = models.CharField(max_length=150, blank=True, null=True)
@@ -32,7 +32,7 @@ class Department(models.Model):
     name = models.CharField(max_length=200, null=True)
 
     class Meta:
-        ordering = ('faculty', 'name')
+        ordering = ('name',)
         verbose_name = _(u'Department')
         verbose_name_plural = _(u'Departments')
 
@@ -68,7 +68,7 @@ class Lecturer(models.Model):
     ('Prof', 'Prof'),
     ('Prof', 'Mallam'),
 )
-
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=5, choices=LECTURER_TITLE, null=True, blank=True)
     name = models.CharField(max_length=250, null=True)
     department = models.ForeignKey(Department, null=True)
