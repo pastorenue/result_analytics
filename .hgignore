@@ -438,3 +438,5 @@ static_in_pro/static_root/js/watermark.jquery.js
 static_in_pro/static_root/js/watermark.jquery.min.js
 static_in_pro/static_root/js/watermark.js
 static_in_pro/static_root/js/watermark.min.js
+result_analytics/settings.py
+/db.sqlite3
