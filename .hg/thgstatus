@@ -1,5 +1,11 @@
+m
+manalyzer/templates/analyzer
+mresult_analytics
+mresult_analytics/__pycache__
 rresult_analytics/static/css
 rresult_analytics/static/demos
 rresult_analytics/static/demos/img
 rresult_analytics/static/images
 rresult_analytics/static/svg
+mresult_analytics/templates
+mstudents/templates/students
