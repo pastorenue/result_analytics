@@ -1,4 +1,4 @@
-{% extends 'staff/dashboard.html' %}
+{% extends 'dashboard.html' %}
 
 {% block title %}Results{% endblock %}
 {% block breadcrumbs %}
@@ -6,10 +6,10 @@
 {% endblock %}
 {% block content %}
     <div style="margin-bottom: 30px;">
-        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;">RESULT LIST</h2>
+       <h3 class="page-header head-color">Result List</h3>
     </div>
 <div class='container-fluid '>
-    <table class='table table-condensed table-hover main-page'>
+    <table class='table table-condensed table-hover'>
         <thead>
             <tr>
                 <th>&nbsp;</th>
@@ -19,32 +19,19 @@
                 <th scope="col" style="width: 7%;">Level</th>
                 <th scope="col" style="width: 10%;">Score</th>
                 <th scope="col" style="width: 10%;">Grade</th>
-                <th scope="col" style="text-align: center;">&nbsp;
-                    <div class="dropdown">Filter <span class='caret dropdown-toggle' data-toggle='dropdown' style="cursor: pointer;"></span> 
-                        <ul class='dropdown-menu' role="menu" style="left: -58px; border-top: 2px solid #0d8363; background-color: #edf0ef;">
-                            <li><a href="">All</a></li>
-                            <li class="divider"></li>
-                            <li><a href="">Regular</a></li>
-                            <li><a href="">Diploma</a></li>
-                            <li><a href="">Post Graduates</a></li>
-                            <li><a href="">Other Programs</a></li>
-                        </ul>
-                    </div>
-                </th>
             </tr>
         </thead>
         <tbody>
         {% if results %}
             {% for result in results %}
             <tr class="" style="cursor: pointer;">
-                <td></td>
+                <td>{{forloop.counter}}</td>
                 <td>{{ result.student.reg_number }}</td>
                 <td>{{ result.course }}</td>
                 <td>{{ result.semester }}</td>
                 <td>{{ result.level }}</td>
                 <td>{{ result.score }}</td>
                 <td>{{ result.grade }}</td>
-                <td></td>
             </tr>
             {% endfor %}
         {% else %}

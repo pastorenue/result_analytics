@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<div id="tabs" class="tabs">
+  <nav>
+    <ul>
+      <li><a href="#section-1">Friends</a></li>
+      <li><a href="#section-2">Following</a></li>
+      <li><a href="#section-3">Followers</a></li>
+      <li><a href="#section-4"><span class="badge">{{requests.count}}</span> Pending Requests</a></li>
+    </ul>
+  </nav>
+  <div class="content panel panel-default">
+    <section id="section-1" class="">
+        {% include 'collaborations/_friend_list.html' %}
+    </section>
+    <section id="section-2">
+      {% include 'collaborations/_following_list.html' %}
+    </section>
+    <section id="section-3">
+      {% include 'collaborations/_follower_list.html' %}
+    </section>
+    <section id="section-4">
+      {% include 'collaborations/_pending_request.html' %}
+    </section>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+
+{% load staticfiles %}
+
+  <div class="modal-dialog" style="padding: 10px;">
+    <!-- Modal content-->
+    <div class="modal-content">
+    <form id="frm_submit" method="post" action="{% url 'new_project' %}" enctype="multipart/form-data">{% csrf_token %}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title"><strong>New Project</strong></h3>
+      </div>
+      <div class="modal-body">
+         <div class="form-group">
+           <label for="id_name">Project Name <span><small class="text-muted">[Make it as short as possible]</small></span>:</label>
+           <input type="text" class="form-control text-input" id="id_name" name="name" placeholder="">
+         </div>
+         <div class="form-group">
+           <label for="id_desc">Description</label>
+           <textarea name="" id="id_desc" name="desc" rows="4" class="form-control"></textarea>
+         </div>
+         <div class="form-group">
+           <label for="id_category">Category</label>
+           <input type="text" id="id_category" name="category" rows="4" class="form-control">
+         </div>
+         <div class="form-group">
+            <label for="id_tag">Add a Tag:</label>
+           <input type="text" class="form-control" id="id_tag" name="tag" placeholder="tag other projects">
+         </div>
+          <label for="id_file">Upload Project File</label>
+         <input id="id_file" type="file" name="file" value="Upload Porject File">
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+            <button class="btn custom-btn btn-sm" type="submit">Create</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>

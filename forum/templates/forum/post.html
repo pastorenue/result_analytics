@@ -1,0 +1,91 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+{% block breadcrumbs %}<a href="{% url 'forum' request.user.student.slug %}">Study Forum</a> &raquo; <a href="#">{{ post.title}}</a>{% endblock %}
+
+{% block content %}
+<div class="row clearfix" style="margin-left: 10px; margin-bottom: 20px;">
+	<h3 class="page-header">Study Forum</h3>
+	<span>{% include 'forum/search.html' %}</span>
+</div>
+<div class="panel panel-default">
+	<div class="sub-panel">
+		<h4 style="padding: 0 4px;">Join The Discussion</h4>
+	</div>
+	<div class="sub-panel add-padding">
+		<div class="post">
+			<h4>{% if post.post_type == 'I' %}<i class="icons icons-sm icons-comment"></i>{% else %}<i class="icons icons-sm icons-question-mark"></i>{% endif %} {{post.title}}</h4>
+			<small>{{post.created}}</small>
+			<p>{{post.question_or_idea}}</p>
+			<form action="{% url 'response' post.id %}" method="POST" style="text-align: left !important;">{% csrf_token %} 
+				<div class="form-group">
+					<label for="response">Leave a Response:</label>
+					<textarea id="id_comment" name="comment" class="form-control"></textarea>
+					<input type="text" value="{{post.id}}" name="post_id" hidden="hidden">
+				</div>
+				<div class="form-group">
+					<button class="btn btn-sm custom-btn" type="submit">Respond</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="sub-panel scroll" style="height: 400px; overflow-y: auto;">
+		<h5 style="text-align: right; padding: 5px 10px; color: #2c3e50; background: #ecf0f1;">{{post.response_set.count }}{%if post.response_set.count <= 1 %} Response{% else %} Responses{% endif %}</h5>
+		{% for response in post.response_set.all %}
+		<article class="own-response">
+			{% if response.user.student.photo %}
+			{% thumbnail response.user.student.photo "30x30" crop="center" as im %}
+			<img src="{{ im.url }}" class="img-circle" width="{{ im.width }}" height="{{ im.height }}"> 
+			{% endthumbnail %}
+			{% else %}
+			<img src="{% static 'images/avatar.png' %}" class="img-circle" style="">
+			{% endif %}
+			{% if response.user == request.user %}
+			<p style="color: #27ae60; font-weight: 600;"><i class="icons icons-sm icons-single-comment"></i> {{response.comment}}</p><br>
+			<div style="border-bottom: 1px solid rgba(0,0,0,0.04); margin-bottom: 4px;">
+				<small> <span style="color: #2c3e50; font-weight: 600;">Your Post</span> {{response.date_created|timesince}} ago</small>
+			</div>
+			{% else %}
+			<p><i class="icons icons-sm icons-single-comment"></i> {{response.comment}}</p><br>
+			<div style="border-bottom: 1px solid rgba(0,0,0,0.04); margin-bottom: 4px;">
+				<small>Posted {{response.date_created|timesince}} ago by <span style="color: #2c3e50; font-weight: 600;">{{response.user.last_name}}</span> </small>
+			</div>
+			{% endif %}
+			<div class="reply-block">
+				{% for reply in response.reply_set.all %}
+				<div class="reply">
+					<p>{{reply.comment}}</p>
+					(<small class="text-muted">posted {{reply.date_created|timesince}} ago by {{reply.user.last_name}}</small>)
+				</div>
+				{% endfor %}
+			</div>
+			<form action="{% url 'reply' post.id response.id %}" method="POST">{% csrf_token %}
+				<div class="form-group">
+					<label for="id_reply">Add a Comment</label>
+					<textarea id="id_reply" name="reply" class="form-control"></textarea>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-sm custom-btn" type="submit">Submit</button>
+				</div>
+			</form>
+		</article>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+{% block side %}
+<div class="panel panel-default">
+	<div class="sub-panel" style="margin-bottom: 0px;">
+		<h4 style="font-weight: 600; letter-spacing: 2px;"><i class="icons icons-sm icons-category"></i> CATEGORIES </h4>
+	</div>
+	<div class="sub-panel scroll" style="height: 100%; overflow-y: auto; padding-top: 2px;">
+		{% include 'forum/categories.html' %}
+	</div>
+</div>
+
+{% endblock %}
+{% block extrajs %}
+    <script>tinymce.init({ selector:'textarea' });</script>
+{% endblock %}  

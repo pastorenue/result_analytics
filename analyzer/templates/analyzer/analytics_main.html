@@ -1,4 +1,4 @@
-{% extends 'staff/dashboard.html' %}
+{% extends 'dashboard.html' %}
 {% load staticfiles %}
 
 {% block extrahead%}
@@ -9,8 +9,8 @@
     <a href="{% url 'analyzer:all_analysis' %}">Analytics &raquo;</a>
 {% endblock %}
 {% block content %}
-    <div>
-        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4; margin-top: 2px;"><i class="icon-tasks"></i> Analytics Panel</h2>
+    <div class="row clearfix" style="margin-left: 10px; margin-bottom: 20px;">
+        <h3 class="page-header">Analytics Dashboard</h3>
     </div>
     <div class="row" style='margin-left: 0px; margin-bottom: 10px;'>
         <a href="{% url 'students:students_list' %}" class="menu-anchor">
@@ -141,7 +141,6 @@
     $('#chart_avg').highcharts({
         chart: chart,
         title: title,
-        subtitle: {text: "From 2015 to 2016"},
         xAxis: xAxis,
         yAxis: yAxis,
         series: series

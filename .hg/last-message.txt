@@ -1,1 +1,1 @@
-added states fixture
+Implemented notifications and following. Also added chat to admin

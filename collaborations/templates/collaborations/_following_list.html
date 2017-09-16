@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<div style="margin-bottom: 5px">
+ <h3 style="border-bottom: 2px solid rgba(0,0,0,0.04); font-weight: 600;">Following</h3>
+</div>
+{% if follows %}
+{% for follow in follows %}
+<div class="friend">
+{% if follow.student.image %}
+<img src="{{ follow.user.student.image.url}}" alt="avatar">
+{% else %}
+<img src="{% static 'images/avatar.png' %}" alt="avatar">
+{% endif %}
+<div>
+  <h4>{{ follow.student }}</h4>
+  <p>{{follow.student.department}}</p>
+  <p>{{follow.student.institution}}</p>
+</div>
+<span><button class="btn btn-sm"><i class="icons icons-sm icons-chat"></i> Interact Now</button> <label for=""><i class="icons icons-sm icons-ellipse"></i> </label> </span>
+</div>
+{% endfor %}
+{% else %}
+<div class="add-padding center-block" style="text-align: center;">
+	<h4>You're Not Following Anyone Yet. Start following now in the <a href="{% url 'collaborate:friend-zone' %}"><span style="color: #12c; font-weight: 600;">Friend Zone</span></a></h4>
+</div>
+{% endif %}

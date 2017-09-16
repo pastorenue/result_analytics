@@ -1,0 +1,52 @@
+{% load staticfiles %}
+{% load thumbnail %}
+
+<div class="row">
+  <div class="menu">
+    <ul>
+      {% if request.user.is_staff %}
+      <li><a href="{% url 'staff_account' %}"><i class="icons icons-sm icons-user"></i> Account</a></li>
+      {% else %}
+      <li><a href="{% url 'students:student_account' request.user.student.slug %}"><i class="icons icons-sm icons-user"></i> Account</a></li>
+      {% endif %}
+      <li id='userEdit'>{% if user.is_superuser %}<a href="{% url 'analyzer:all_analysis' %}">{% elif request.use.is_staff or request.user.lecturer %}<a href="{% url 'staff_analytics' %}">{% else %}<a href="{% url 'students:student_analytics' %}">{% endif %}<i class="icons icons-sm icons-bar-chart"></i> Analytics</a></li>
+      {% if user.is_superuser %}
+      <li><a href="{% url 'students:mapper' %}" data-toggle="popover" title="You can generate mappers"><i class="icons icons-sm icons-lock"></i> Generate Reg-Map</a></li>
+      <li><label class="dropdown" style="">
+              <a href="#" data-toggle="dropdown"><span>Create New</span><b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu" style="background-color: #fff; color: #21a380; border-top: 2px solid  #34495e; top: 24px;">
+                    <li><a href="#modal-department" data-toggle="modal"> Department...</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#modal-faculty" data-toggle="modal"> Faculty...</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#modal-course" data-toggle="modal"> Course...</a></li>
+              </ul>
+          </label></li>
+        {% endif %}
+        {% if user.is_staff %}
+      <li><a href=""><i class="icons -cons-sm icons-file"></i> Create Report</a></li>
+      <li><a href="{% url 'results:result_import' %}"><i class="icons icons-sm icons-download"></i> Import Scores (CSV)</a></li>
+      <li>
+        <label class="dropdown" style="">
+              <a href="#" data-toggle="dropdown"><span>Export Excel...</span><b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu" style="font-size: 14px; background-color: #fff; color: #21a380; border-top: 2px solid #34495e; top: 24px;">
+                    <li><a href="{% url 'students:export_excel' %}"><i class="icons icons-sm icons-group"></i> Students...</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'results:export_excel' %}"><i class="icons icons-sm icons-table"></i> Results...</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'analyzer:export_excel' %}"><i class="icons icons-sm icons-history"></i> Performance History...</a></li>
+                    <li class="divider"></li>
+                    <li><a href=""><i class="icons icons-sm icons-area-chart"></i> Analysis...</a></li>
+              </ul>
+          </label>
+      </li>
+      {% endif %}
+      {% if not user.is_staff %}
+      <li><a href="{% url 'assignment:all_assignments' %}"><i class="icons icons-sm icons-book"></i> Assignments</a></li>
+      <li><a href="{% url 'my_projects' %}"><i class="icons icons-sm icons-file-archive"></i> Projects</a></li>
+      <li><a href="{% url 'forum' request.user.student.slug %}"><i class="icons icons-sm icons-chat"></i> Study Forum</a></li>
+      <li><a href="{% url 'collaborate:collaboration_index' %}"><i class="icons icons-sm icons-heart"></i> Collaborate</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

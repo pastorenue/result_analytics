@@ -1,0 +1,6 @@
+/static/
+media/
+.hg/
+acadlytics.sqlite3
+*.orig
+*.pyc

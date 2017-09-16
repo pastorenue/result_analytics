@@ -1,0 +1,63 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %} CGPA Analysis
+{% endblock %}
+
+{% block menu %}
+    {% include "analyzer/attached.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="row clearfix" style="margin-left: 10px; margin-bottom: 20px;">
+        <h3 class="page-header">{{ student.reg_number }} - CGPA Progress Level</h3>
+    </div>
+    <div class="row">
+        <div class="panel panel-danger" style="margin: 10px 20px 35px 35px;">
+            <div class="panel-heading">CGPA Analysis</div>
+            <div class="panel-body">
+                <div id="{{ chartID }}">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="border-radius: 4px; margin-left: 8px; margin-right: 8px; box-shadow: 1px 1px 8px rgba(0,0,0,0.06);">
+        <div class="col-md-6">
+           <h3>Current FCGPA: <span style="color: #34495e;"><strong>{{ fcgpa }}</strong></span></h3>
+        </div>
+        <div class="col-md-6">
+              <h4 style="font-weight: bold; text-align: center; margin: 25px auto;">{{ degree }}</h4>
+        </div>
+        <div class="col-sm-12">
+            {% if student_is_new and request.user.student %}
+            <p>"We believe every student starts on thesame plane upon admission. This is the reason we start your <strong>CGPA from 5.0</strong> rather than the usual 0.0. We are optimistic about your progress and are hear to give you the right attitude. You can maintain this grades with the right collaboration and hardwork. We wish all the luck using this platform" -<strong>The Acadlytics Team</strong></p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    
+    <script>
+        var chart_id = {{ chartID|safe }}
+        var chart = {{ chart|safe }}
+        var xAxis = {{ xAxis|safe }}
+        var yAxis = {{ yAxis|safe }}
+        var series = {{ series|safe }}
+        var title = {{ title|safe }}
+    </script>
+    <script>
+      $(function () {
+    $(chart_id).highcharts({
+        chart: chart,
+        title: title,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        series: series
+    });
+});
+        
+    </script>
+{% endblock %}

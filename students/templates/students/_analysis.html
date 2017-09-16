@@ -1,0 +1,224 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+{% load record_filters %}
+{% load social_share %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Analytics
+       <span>
+            <label class="dropdown pull-right">
+                <a href="#" data-toggle="dropdown" style="text-decoration: none; color: #bbc;">
+             <span><i class="icons icons-sm icons-share" style="margin-left: 5px; color: #2ecc71;"></i></span></a>
+                <ul class="dropdown-menu" role="menu" style="font-size: 13px; background-color: #edf0ef; border-top: 2px solid #0d8363; top: 20px; padding: 8px; color: #000;">
+                    <li><i class="icons icons-sm icons-facebook"></i>{% post_to_facebook '/' %}</li>
+                    <li class="divider"></li>
+                    <li><i class="icons icons-sm icons-twitter"></i>{% post_to_twitter object_or_url  %}</li>
+                    <li class="divider"></li>
+                    <li><i class="icons icons-sm icons-gplus"></i>{% post_to_gplus ''  %}</li>
+                </ul>
+            </label>
+        </span>
+    </h3>
+   
+</div>
+<!--Analytics-->
+<div class="col-md-12">
+    <div class="panel panel-warning main-analytics">
+        <div class="sub-panel">
+            <p>All Results <span>
+                <select name="level" id="level_select" class="form-control input-sm" style="width: 40%; float: right; height: 25px;">
+                    <option value="100">100 Level</option>
+                    <option value="200">200 Level</option>
+                    <option value="300">300 Level</option>
+                    <option value="400">400 Level</option>
+                    <option value="500">500 Level</option>
+                    <option value="600">600 Level</option>
+                </select>
+            </span></p>
+        </div>
+        <div id="results_container" class="panel-body" style="padding: 15px;"></div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="panel panel-default main-analytics">
+        <div class="sub-panel">
+            <p>Ranking Table</p>
+        </div>
+        <div id="courses" class="panel-body">  
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th style="width: 30%;">Name</th>
+                        <th>Department</th>
+                        <th>Reg Number</th>
+                        <th style="width: 15%;">Current CGPA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if trending_performances %}
+                  {% for record in trending_performances %}
+                  <tr style="{% if record|get_dict_values:'user' == request.user %} background: #92c7b9; color: #fff;{% endif %}">
+                    <td>{{ forloop.counter }}</td>
+                    <td><span>
+                    {% if not record|get_dict_values:"img" == 'None' %}
+                    {% thumbnail record|get_dict_values:"img" "25x25" crop="center" as im %}
+                     <img src="{{im.url}}" alt="" width="{{im.width}}" height="{{im.height}}" class="img-circle">
+                     {% endthumbnail %}
+                     {% else %}
+                     <img src="{% static 'images/avatar.png' %}" alt="" width="25" height="25" class="img-circle">
+                     {% endif %}
+                     </span> {{record|get_dict_values:"name"}}</td>
+                    <td>{{record|get_dict_values:"department"}}</td>
+                    <td>{{record|get_dict_values:"reg_number"}}</td>
+                    <td>{{record|get_dict_values:"cgpa"}}</td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                      <td style="text-align: center;" colspan="5">No Rankings Yet</td>
+                  </tr>
+                  {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+	
+{% block side%}
+	<div class="main-widget" id="id_exam">
+        <span onclick="closeParent(this);" style="float: right;"><i class="icons icons-sm icons-close"></i></span>
+        <div class="widget-icons" style="background: #68829e;">
+            <i class="icons icons-book"></i>
+        </div>
+        <div style="margin: auto;">
+            <h3 class="counter">{{exam_no}}</h3> 
+            <h5>Exams Written</h5>
+        </div>  
+    </div>
+    <div class="main-widget" id="id_cgpa">
+        <span onclick="closeParent(this);" style="float: right;"><i class="icons icons-sm icons-close"></i></span>
+        <div class="widget-icons" style="background: #30426a;">
+            <i class="icons icons-tasks"></i>
+        </div>
+        <div style="margin: auto;">
+            <h3>{{fcgpa}}</h3> 
+            <h5>Current CGPA</h5>
+        </div>  
+    </div>
+    <div class="main-widget" id="id_high_score">
+        <span onclick="closeParent(this);" style="float: right;"><i class="icons icons-sm icons-close"></i></span>
+        <div class="widget-icons" style="background: #23ae89;">
+            <i class="icons icons-table"></i>
+        </div>
+        <div style="margin: auto;">
+            <h3 class="counter">{{high_score}}</h3> 
+            <h5>Best Score</h5>
+        </div>  
+    </div>
+    <div class="main-widget" id="id_avg">
+        <span onclick="closeParent(this);" style="float: right;"><i class="icons icons-sm icons-close"></i></span>
+        <div class="widget-icons" style="background: #c12e44;">
+            <i class="icons icons-line-chart"></i>
+        </div>
+        <div style="margin: auto;">
+            <h3>{{ avg_score}}</h3> 
+            <h5>Average Score</h5>
+        </div>  
+    </div>
+    <div class="main-widget" id="id_rank">
+        <span style="float: right;">
+        <i class="icons icons-sm icons-close" onclick="closeParent(this);"></i></span>
+        <div class="widget-icons" style="background: #07575b;">
+            <i class="icons icons-sitemap"></i>
+        </div>
+        <div style="margin: auto;">
+            <h3 class="counter">{{student_rank}}</h3> 
+            <h5>Current Ranking</h5>
+        </div>  
+    </div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+
+<script>
+    $('#course_select').select2();
+
+    function closeParent(element) {
+        var id = $(element).closest("div").attr("id");
+        $("#"+id).hide('fade');
+    }
+</script>
+<script>
+    //Initialize select with filter
+	var jsonUrl = '{% url 'students:student_chart_json' %}'
+	var resultChartOptions = {
+        credits: {
+            enabled: false
+        },
+        chart: {
+            renderTo: 'results_container',
+            type: 'pie',
+            height: 250,
+            showInLegend: false,
+            dataLabels: {
+                enabled: false,
+            }
+        },
+        legend: {enabled: true},
+        title: {text: "Performance By Course"},
+        xAxis: {},
+        plotOptions: {
+        series: {
+            allowPointSelect: true
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                var sliceIndex = this.point.index;
+                var sliceName = this.series.chart.axes[0].categories[sliceIndex];
+                  return '<b>Course Code: '+ sliceName +', Score= '+ this.y + '</b>';
+            },
+            valueSuffix: ' %',
+            shared: true
+        },
+        series: [],
+    };
+
+	function loadResultData(path){
+        $.getJSON(path,
+            function(data) {
+                resultChartOptions.xAxis.categories = data['course'];
+                resultChartOptions.subtitle = {text: $('#level_select option:selected').html() + " Results",};
+                resultChartOptions.series[0] = ({"name": 'Score', "data": [{"name": data['course'], "y": data['score']}]});
+                var charts = new Highcharts.Chart(resultChartOptions);
+        });
+    }
+
+    $('#level_select').change(function(e){
+        e.preventDefault();
+        var level = $('#level_select').val();
+        var path = jsonUrl + '?level=' + level;
+        loadResultData(path);
+    });
+
+    loadResultData(jsonUrl  + '?level='+ $('#level_select').val());    
+    
+    $('.counter').each(function () {
+      var $this = $(this);
+      $({ Counter: 0 }).animate({ Counter: $this.text() }, {
+        duration: 2000,
+        easing: 'swing',
+        step: function () {
+          $this.text(Math.ceil(this.Counter));
+        }
+      });
+    });
+</script>
+{% endblock %}

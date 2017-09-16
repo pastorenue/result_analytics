@@ -1,0 +1,54 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Collaboration Pane</h3>
+</div>
+
+<div class="col-md-12 center-block">
+    {% include 'collaborations/_tab_collaborate.html' %}
+    <div id="follow_add"><a href="{% url 'collaborate:friend-zone' %}"><i class="icons icons-sm icons-plus"></i></a></div>
+</div>
+{% endblock %}
+	
+{% block side%}
+<div class="panel panel-default" style="min-height: 200px; margin-top: 5px; padding: 2px 5px;">
+    <section style="text-align: center; margin-top: 10px; 0">
+        <div style="width: 90px; height: 90px; border-radius: 50%; margin: auto; border: 2px solid #34495e;">
+            <h2 class="counter" style="">{{request.user.following.count}}</h2>
+            <div style="position: relative; bottom: -10px; background-color: #fff;">
+                <h4 style="font-weight: 600; color: #34495e;">Following</h4>
+            </div>
+        </div>
+    </section>
+    <section style="text-align: center; margin: 10px 0;">
+        <div style="width: 90px; height: 90px; border-radius: 50%; margin: auto; border: 2px solid  #16a085;">
+            <h2 class="counter" style="">{{request.user.followers.count}}</h2>
+            <div style="position: relative; bottom: -10px; background-color: #fff;">
+                <h4 style="font-weight: 600; color:  #16a085;">Followers</h4>
+            </div>
+        </div>
+    </section>
+  </div>
+	{% include 'collaborations/_aside_collaborate.html' %}
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'js/cbpFWTabs.js' %}"></script>
+<script>
+    new CBPFWTabs( document.getElementById( 'tabs' ) );
+
+     $('.counter').each(function () {
+      var $this = $(this);
+      $({ Counter: 0 }).animate({ Counter: $this.text() }, {
+        duration: 1000,
+        easing: 'swing',
+        step: function () {
+          $this.text(Math.ceil(this.Counter));
+        }
+      });
+    });
+</script>
+{% endblock %}

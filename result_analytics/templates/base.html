@@ -1,286 +1,202 @@
 <!DOCTYPE html>
 <html>
   <head>
-	  <meta charset="utf-8">
-	  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-	  <meta content="width=device-width, initial-scale=1" name="viewport">
-	  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	  <meta content="Photobox, Amazing Photos, Sell your photos online, Images, Local, Nigeria Photos" name="keywords">
-	  <meta content="Download amazing local photos of different categories." name="description">
-	  <link href="../../favicon.ico" rel="icon">
-  
-	  <title>Result Analytics | {% block title%}{% endblock %}</title>
-	  {% load staticfiles %}
-	  {% load crispy_forms_tags %}
-		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-		<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
-		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-		<link rel="stylesheet" href="{% static 'css/bootstrap-responsive.css' %}"/>
-		<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
-		<link rel="stylesheet" href="{% static 'css/carousel.css' %}">
-		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="description" content="Students- Collaboration Platform (Acadalytics">
+
+        <title>Result Analytics | Login</title>
+        {% load staticfiles notifications_tags %}
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/bootstrap-timepicker.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/carousel.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/jquery-ui.custom.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/analytics-icons.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/profiles.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/pace-theme-flash.css' %}"/>
+        <style>
+            input[type="text"]:focus, input[type="password"]:focus {
+                box-shadow: none !important;
+                text-align: center;
+                border: none !important;
+                border-bottom: 1px solid #34495e !important;
+                
+            }
+        </style>
+        
   </head>
   <body>
-	<style>
-        @font-face {
-            font-family: ProximaNova;
-            src: url("{% static 'fonts/ProximaNova.ttf' %}");
-        }
-	</style>
-	  <div class="navbar-wrapper" style="font-size: 17px;">
-		<div class="container">
-  
-		  <nav class="navbar navbar-fixed-top" style="height: 30px; background-color: #fff; font-family: Sansation Light;">
-			<div class="container">
-			  <div class="navbar-header">
-				<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-				  <span class="sr-only">Toggle navigation</span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				</button>
-				<a href="{% url 'user_index' %}"><img src="{% static 'images/pro_logo.png' %}" width='160px' height='40px'></a>
-			  </div>
-			  <div class="navbar-collapse collapse" id="navbar">
-				<ul class="nav navbar-nav" style="margin-top: 2px;">
-				  <li class=""><a href="#">Demo</a></li>
-				  <li><a href="/#features" class="smoothScroll">Features</a></li>
-					<li><a href="/#team" class="smoothScroll">Meet the Team</a></li>
-				  <li><a href="/#about" class="smoothScroll">Blog</a></li>
-				  <li><a href="/#contact">Gallery</a></li>
-				  <li><a href="#">Documentation</a></li>
-				</ul>
-				<div class="col-sm-1"></div>
-				<ul style="padding-right: 40px;" class="nav navbar-nav navbar-right"> <!-- Right nav -->
-				  <li><a href="{% url 'result_login' %}" role="button" data-toggle="modal">Sign in</a></li>
-				</ul>
-			  </div>
-			  <div class="row clearfix" style="padding-bottom: 1px;">
-				
-			  </div>
-			</div>
-		  </nav>
-		</div>
-	  </div>
-	  <div class="row clearfix" style="height: 50px;">
-	  </div>
-	  {% block content %}
-	  <!-- Carousel
-	  ================================================== -->
-	  <div data-ride="carousel" class="row carousel slide" id="myCarousel">
-		<!-- Indicators -->
-		<ol class="carousel-indicators">
-		  <li class="active" data-slide-to="0" data-target="#myCarousel"></li>
-		  <li data-slide-to="1" data-target="#myCarousel" class=""></li>
-		  <li data-slide-to="2" data-target="#myCarousel" class=""></li>
-		  <li data-slide-to="3" data-target="#myCarousel" class=""></li>
-		  <li data-slide-to="4" data-target="#myCarousel" class=""></li>
-		</ol>
-		<div role="listbox" class="carousel-inner" style="height: 700px;">
-		  <div class="item active">
-			<img alt="First slide" src="{% static 'images/banner_2.png' %}" class="first-slide" style="height: auto;">
-			<div class="container">
-			  <div class="carousel-caption">
-
-			  </div>
-			</div>
-		  </div>
-          <div class="item">
-			<img alt="Next slide" src="{% static 'images/banner_4.png' %}" class="first-slide" style="height: auto;">
-			<div class="container">
-			  <div class="carousel-caption">
-
-			  </div>
-			</div>
-		  </div>
-          <div class="item">
-			<img alt="Next slide" src="{% static 'images/banner_3.png' %}" class="first-slide" style="height: auto;">
-			<div class="container">
-			  <div class="carousel-caption">
-
-			  </div>
-			</div>
-		  </div>
-		  <div class="item">
-			<img alt="Second slide" src="{% static 'images/banner_5.png' %}" class="second-slide" style="height: auto;">
-			<div class="container">
-			  <div class="carousel-caption">
-
-			  </div>
-			</div>
-		  </div>
-		  <div class="item">
-			<img alt="Third slide" src="{% static 'images/banner_1.png' %}" class="third-slide" style="height: auto;">
-			<div class="container">
-			  <div class="carousel-caption">
-
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<a data-slide="prev" role="button" href="#myCarousel" class="left carousel-control">
-		  <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
-		  <span class="sr-only">Previous</span>
-		</a>
-		<a data-slide="next" role="button" href="#myCarousel" class="right carousel-control">
-		  <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
-		  <span class="sr-only">Next</span>
-		</a>
-	  </div><!-- /.carousel -->
-  
-  
-	  <!-- Marketing messaging and featurettes
-	  ================================================== -->
-	  <!-- Wrap the rest of the page in another container to center all the content. -->
-	  <div class="row" style="height: 30px;"></div>
-	  <div class="container">
-		<!-- Three columns of text below the carousel -->
-		<div class="row" style="text-align: center; padding-bottom: 40px; margin-top: 50px;">
-		  <div class="col-lg-4">
-			<img width="140" height="140" alt="" src="{% static 'images/gift.png' %}" class="img-circle">
-			<h2>Analysis </h2>
-			<p>Knowing the trend of your data is the best your can make of your data. With data intelligence, you can make the
-			best decisions from students' results</p>
-			<p><a role="button" href="#" class="btn btn-default">View details »</a></p>
-		  </div><!-- /.col-lg-4 -->
-		  <div class="col-lg-4">
-			<img width="140" height="140" alt="Generic placeholder image" src="{% static 'images/alarm.png' %}" class="img-circle">
-			<h2>Visualization</h2>
-			<p>With effective high end visualization, you can see all your data at a single view with zoom functionality</p>
-			<p><a role="button" href="#" class="btn btn-default">View details »</a></p>
-		  </div><!-- /.col-lg-4 -->
-		  <div class="col-lg-4">
-			<img width="140" height="140" alt="Generic placeholder image" src="{% static 'images/life-guard.png' %}" class="img-circle">
-			<h2>Performance</h2>
-			<p>Nothing sounds more interesting than getting the best for your money and time...</p>
-			<p><a role="button" href="#" class="btn btn-default">View details »</a></p>
-		  </div><!-- /.col-lg-4 -->
-		</div><!-- /.row -->
-       </div>
-		  <div style="color: #000000; background-color: #000000; background-image: url({% static 'images/bg.png' %}); background-repeat: repeat-none; width: 100%; height: 300px;" id="features">
-              <h2 style="text-align: center; padding: 20px; font-size: 4em; font-family: Sansation Light;"><strong>Data Intelligence.Reporting.Visualization</strong></h2>
-		<h3 style= "text-align: center; padding: 20px; padding-top:120px; opacity: none;">
-		  Our vibrant community gives us the motivation to create unique platforms.</br> ...Making the right sense out of data is our priority
-		</h3>
-		</div>
-    <div class="container">
-          <div class="row" style="text-align: center; padding-bottom: 30px;">
-			<h1 style="padding-top: 30px; padding-bottom: 40px; text-align: left; font-size: 3em; font-family: Sansation Light;">Funtional <span style="color: #a0a;">Features</span></h1>
-			<div class="col-md-2">
-                <img width="64" height="64" alt="Generic placeholder image" src="{% static 'images/security-1.png' %}" >
-                <h4 class="user-icon">Just You and Your Data</h4>
-                <p>
-                    Your profile is as secured as your back from your eyes. 
-                </p>
-            </div>
-            <div class="col-md-2">
-                <img width="64" height="64" alt="Generic placeholder image" src="{% static 'images/cloud-upload.png' %}" >
-                <h4 class="user-icon">Quick Upload</h4>
-                 <p>
-                    Make easy analysis with already existing files in <em>csv</em> or <em>json</em> format
-                </p>
-            </div>
-            <div class="col-md-2">
-                <img width="64" height="64" alt="Generic placeholder image" src="{% static 'images/direction.png' %}" >
-                <h4 class="user-icon">Size and Style</h4>
-                <p>
-                    Get the benefits of BIG data analysis with just a click away.
-                </p>
-            </div>
-	    <div class="col-md-2">
-                
-            </div>
-            <div class="col-md-2">
-                <img width="64" height="64" alt="Generic placeholder image" src="{% static 'images/lock.png' %}" >
-                <h4 class="user-icon">Secured Password</h4>
-                 <p>
-                    Protect your data with highly hashed and salted algorithm encryption.
-                </p>
-            </div>
-            
-            
-            <div class="col-md-2">
-                <img width="64" height="64" alt="Generic placeholder image" src="{% static 'images/users.png' %}" >
-                <h4 class="user-icon">User Dashboard</h4>
-                 <p>
-                    Get the feel of al that goes around in one page. A highly customised user dassboard just for you.
-                </p>
-            </div>
-            <div class="col-md-2">
-                <h4 class="user-icon"></h4>
-                 
-            </div>
-            <div class="col-md-2">
-                <h4 class="user-icon"></h4>
-                 
-            </div>
-            </div>
-        </div>
-    <hr>
-	 <div class='row clearfix'>
-	  <h1 style="text-align: center;">Sponsors</h1>
-	  <div class='container'>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/groupon.png' %}" height='60' width='200' style='opacity: 0.4;'>
+  {% if messages %}
+      {% for message in messages %}
+      <div id="notification" class="alert-{{message.tags}}" style="">
+        <div><span onclick="hideMe()">&times;</span></div>
+        <h4><strong>{{message.tags|title}}</strong></h4>
+        <h5>{{ message }}</h5>
+      </div>
+      {% endfor %}
+    {% endif %}
+    <div class="row">
+	    <div style="text-align: center; padding: 20px; background: linear-gradient(to right, #141E30, #243B55); max-width: 100%; overflow-x: hidden;">
+		    <nav class="navbar navbar-default" style="color: #fff;">
+		        <div class="container-fluid">
+		          <div class="navbar-header">
+		            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		              <span class="sr-only">Toggle navigation</span>
+		              <span class="icon-bar"></span>
+		              <span class="icon-bar"></span>
+		              <span class="icon-bar"></span>
+		            </button>
+		            <a class="navbar-brand" href="#">
+		            	<img src="{% static 'images/bytecorp.png' %}" alt="Bytecorp">
+		            </a>
+		          </div>
+		          <div id="navbar" class="navbar-collapse collapse">
+		            <ul class="nav navbar-nav">
+		              <li><a href="#">How it Works</a></li>
+		              <li><a href="#">Pricing</a></li>
+		              <li><a href="#">Request a Demo</a></li>
+		            </ul>
+		            <ul class="nav navbar-nav navbar-right">
+		            	<li><a href="">Meet The Geeks</a></li>
+		              <li><a href="">Can We Talk?</a></li>
+		              <li><a href="">Our Core Values</a></li>
+		              <li><a href="{% url 'result_login' %}">Log In</a></li>
+		            </ul>
+		          </div><!--/.nav-collapse -->
+		        </div><!--/.container-fluid -->
+		      </nav>
+	    	<div style="padding: 20px; color: #f46b45;">
+	            <h1><strong>Hi! This is Acadlytics</strong></h1>
+	            <h4>Glad you made it here today</h4>
+	        </div>
 	    </div>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/photo.png' %}" height='65' width='200' style='opacity: 0.4;'>
-	    </div>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/visa.png' %}" height='40' width='170' style='opacity: 0.4;'>
-	    </div>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/yandex.png' %}" height='60' width='200' style='opacity: 0.4;'>
-	    </div>
-	  </div>
-	 </div>
-	<div id="team" class='row clearfix'>
-	  <h1 style="text-align: center;">The Team...</h1>
-	  <div class='container'>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/groupon.png' %}" style='opacity: 0.4;'>
-	    </div>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/photo.png' %}" height='65' width='200' style='opacity: 0.4;'>
-	    </div>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/visa.png' %}" height='40' width='170' style='opacity: 0.4;'>
-	    </div>
-	    <div class='col-md-3'>
-	      <img src="{% static 'images/yandex.png' %}" height='60' width='200' style='opacity: 0.4;'>
-	    </div>
-	  </div>
-	 </div>
-	{% endblock %}
-	{% block footer%}
-    <div class="footer">
-		<div class="container">
-			<div class="row" style="text-align: center; font-family: helvetica;">
-				
-				<div class="col-md-5">
-					<p style="float: left; font-family: Sansation Light;">&copy; 2016 result analytics</p>
-				</div>
-			</div>
-		</div>
     </div>
+    <div class="container">
+        <div class="row">
+        {% block content %}
+            <div class="col-md-5 center-block login">
+                <div class="panel panel-default" style="padding: 10px 25px;" >
+                    <div class="sub-panel" style="text-align: center; font-size: 1.2em;">
+                        <h3><strong>Sign In</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="login" method= 'post' >{% csrf_token %}
+                            {% for field in form %}
+                            <div class="form-group">
+                            <label for="{{field.id_for_label}}">{{field.label}}</label>
+                            {% if field.html_name == 'username' %}
+                            <input id="{{field.id_for_label}}" name="{{field.html_name}}" type="text" class="form-control" placeholder="Username" style="text-align: center;">
+                            {% else %}
+                            <input id="{{field.id_for_label}}" name="{{field.html_name}}" type="password" class="form-control" placeholder="Password" style="text-align: center;">
+                            {% endif %}
+                            </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <div  style="padding: 10px 0; text-align: center;">
+                                    <a href="{% url 'result_password_reset' %}">Forgot Password?</a><br>
+                                </div>
+                                <button id="submit" type="submit" class="btn btn-sm custom-btn btn-block"><i></i> Login</button>
+                               <input type="hidden" name="next" value="{{ next }}">
+                            </div>
+                        </form>
+                    </div> 
+                </div>
+                <div class="new-signup">
+                    <div style="margin-bottom: 10px;">
+                        <h5 style="margin-bottom: 0;">New to Acadlytics? Sign Up Below</h5> 
+                        <small style="color: #fff;">[Check if you already have an account through your school]</small><br>
+                    </div>
+                    <div class="form-group"> 
+                        <button id="sign" class="btn btn-sm custom-btn">Custom Sign Up</button>
+                        <button id="check_reg" class="btn btn-sm custom-btn" type="button" onclick="validate_show();">Check with Reg Number</button>
+                    </div>
+                    <div>
+                        <h3>{{response}}</h3>
+                    </div>
+                </div> 
+                <div id="validate" class="validate">
+                    <form method="POST" action="{% url 'check_user' %}">{% csrf_token %}
+                        <div class="form-group">
+                            <input class="form-control form-check" type="text" name="check" placeholder="Enter your Reg Number">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-sm custom-btn" type="button" onclick="cancel();">Cancel</button>
+                            <button class="btn btn-sm custom-btn" type="submit">Confirm Reg Number</button>
+                        </div>
+                    </form>
+                </div>               
+            </div>
+        {% endblock %}
+        </div>
+    </div>
+    
+    <script src="{% static 'js/jquery.js' %}" type="text/javascript"></script>
+    <script type="text/javascript" href="{% static 'js/jquery-ui.custom.min.js' %}"></script>
+    <script type="text/javascript" href="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/highcharts.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/pace.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery.tinymce.min.js' %}" type="text/javascript"></script>
+     <script>
+          function hideMe(){
+            $("#notification").hide('slideUp');
+          }
+          setTimeout(function() {
+            $("#notification").slideUp(1000)
+          }, 6000);
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#id_username').focus();
+            $('#validate').hide();
+        });
+
+        function validate_show() {
+            $("#validate").show('fadeIn');
+            $("#sign").hide();
+            $("#check_reg").hide();
+        }
+
+        function cancel() {
+            $("#check_reg").show();
+            $("#sign").show();
+            $("#validate").hide('fadeOut');
+        }
+    </script>
+    <script>
+      $(function() {
+      $("#login").submit(function(){
+          $('i').addClass('icons icons-sm icons-spinner icons-spin');   
+      });
+  });
+    </script>
+    <script>
+      !function() {
+        var t;
+        if (t = window.driftt = window.drift = window.driftt || [], !t.init) return t.invoked ? void (window.console && console.error && console.error("Drift snippet included twice.")) : (t.invoked = !0, 
+        t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ], 
+        t.factory = function(e) {
+          return function() {
+            var n;
+            return n = Array.prototype.slice.call(arguments), n.unshift(e), t.push(n), t;
+          };
+        }, t.methods.forEach(function(e) {
+          t[e] = t.factory(e);
+        }), t.load = function(t) {
+          var e, n, o, i;
+          e = 3e5, i = Math.ceil(new Date() / e) * e, o = document.createElement("script"), 
+          o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + i + "/" + t + ".js", 
+          n = document.getElementsByTagName("script")[0], n.parentNode.insertBefore(o, n);
+        });
+      }();
+      drift.SNIPPET_VERSION = '0.3.1';
+      drift.load('iztpvd7wbr5k');
+    </script>
+    {% block extrajs %}
     {% endblock %}
-
-	<!-- /.container -->
-  
-	  <!-- Bootstrap core JavaScript
-	  ================================================== -->
-	  <!-- Placed at the end of the document so the pages load faster -->
-	  <script src="{% static 'js/jquery-ui.custom.min.js' %}" type="text/javascript"></script>
-	  <script type="text/javascript" href="{% static 'js/jquery-ui.js' %}"></script>
-	  <script type="text/javascript" href="{% static 'js/main.js' %}"></script>
-	  <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
-	  <script src="{% static 'js/jquery.js' %}" type="text/javascript"></script>
-	  <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
-	  <script src="{% static 'js/smoothscroll.js' %}" type="text/javascript"></script>
-	  <script type="text/javascript">
-
-	  {% block script %}
-	  
-	  {% endblock %}
   </body>
 </html>

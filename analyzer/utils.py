@@ -3,6 +3,7 @@ from students.models import Student
 from django.db.models import Sum, Aggregate, FloatField
 from statistics import mean
 from courses.models import Course
+from decimal import Decimal
 
 class MainData(object):
     
@@ -23,29 +24,27 @@ class MainData(object):
         pass
     
     @classmethod
-    def average_performance(cls):
-        data = {'year':[], 'male':[], 'female':[]}
-        male = []
-        female = []
+    def average_performance(cls, **kwargs):
+        data = {'year':[], 'avg_cgpa':[]}
         res = Result.objects.all()
+        years = []
         students = Student.objects.all()
         for student in students:
-            if student.sex == 'F':
-                female.append(cgpaData.get_cgpa(2016, student.id))
+            if student.year_of_admission.year in years:
+                pass
             else:
-                male.append(cgpaData.get_cgpa(2016, student.id))
-                
-        data['male'].append(sum(male)/len(male))
-        data['female'].append(sum(female)/len(female))
-        data['male'].append(4.6)
-        data['female'].append(4.7)
-        data['year'].append(2015)
-        data['year'].append(2016)
-        
+                years.append(student.year_of_admission.year)
+
+        for year in years:
+            avg_cgpa = []
+            for student in students:
+                avg_cgpa.append(cgpaData.get_cgpa(year, student.id))
+            data['year'].append(year)
+            data['avg_cgpa'].append("%.2f" % float(sum(avg_cgpa)/len(avg_cgpa)))       
         return data
     
     @classmethod
-    def average_course_performance(cls):
+    def average_course_performance(cls, **kwargs):
         data = {'course':[], 'passes':[], 'failures':[]}
         
         student = Student.objects.all()
@@ -55,7 +54,7 @@ class MainData(object):
             failures = 0
             res = Result.objects.filter(course=course)
             for r in res:
-                if r.score>=55:
+                if r.total_score>=55:
                     passes+=1
                 else:
                     failures+=1
@@ -66,8 +65,8 @@ class MainData(object):
         return data
         
         
-class ChartData(object):
-    def all_result_data():
+class StudentChartData(object):
+    def all_result_data(**kwargs):
         data = {'level':[], 'grade':[]}
         
         values = Result.objects.all()
@@ -78,36 +77,37 @@ class ChartData(object):
         
         return data
     
-    def student_result_data(id, level):
+    @classmethod
+    def student_result_data(cls, id, level):
         data = {'course':[], 'score':[]}
         records = Result.objects.filter(student_id=id, level=level).order_by('-course')
         
         for value in records:
             data['course'].append(str(value.course)[:6])
-            data['score'].append(float(value.score))
+            data['score'].append(float(value.total_score))
         
         return data
         
 class ResultData(object):
     
     @classmethod
-    def get_result_by_level(cls, student_id):
+    def get_result_by_level(cls, student_id, **kwargs):
         data = {'level':{'course': [], 'score': []}}
         for i in range(100,600,100):
             results = Result.objects.filter(student_id=student_id, level=i).order_by('level')
             data['level'].append(i)
             for avg in results:
-                data['level'][i]['score'].append(avg.score)
+                data['level'][i]['score'].append(avg.total_score)
                 data['level'][i]['course'].append(avg.course)
         return data
     
     @classmethod
-    def get_result_by_semester(cls, student_id, semester, level):
+    def get_result_by_semester(cls, student_id, semester, level, **kwargs):
         results = Result.objects.filter(semester=semester, level=level, student_id=student_id).values('score').distinct()
         
         data = {'score':[], 'course':[]}
         for result in results:
-            data['score'].append(result.score)
+            data['score'].append(result.total_score)
             data['course'].append(result.course)
         return data
     
@@ -117,7 +117,7 @@ class ResultData(object):
         data = {'score': [], 'course': []}
         
         for value in results:
-            data['score'].append(value.score)
+            data['score'].append(value.total_score)
             data['course'].append(value.course)
         return data
     
@@ -132,7 +132,7 @@ class ResultData(object):
         
         record_grade = course_load/credit_load
         return grade[record_grade]
-    
+
     @classmethod
     def get_all_results(cls, student_id):
         results = Result.objects.filter(student_id=student_id).order_by('level')
@@ -140,9 +140,62 @@ class ResultData(object):
         
         for value in results:
             data['course'].append(str(value.course)[:6])
-            data['score'].append(float(value.score))
+            data['score'].append(float(value.total_score))
         return data
-    
+
+    @classmethod
+    def get_result_by_lecturer(cls,results):
+
+        data = {'reg_number':[], 'exam_score':[], 'assignment_score':[], 'quiz_score':[]}
+
+        for result in results:
+            temp_data = {}
+            data['exam_score'].append(float(result.exam_score))
+            data['assignment_score'].append(float(result.assignment_score))
+            data['quiz_score'].append(float(result.quiz_score))
+            data['reg_number'].append((result.student.reg_number))
+        return data
+
+    @classmethod
+    def dept_avg_score(cls, lecturer, course):
+        results = Result.objects.filter(course__lecturer=lecturer, course=course)
+        dept_list = []
+        for result in results:
+            if result.student.department not in dept_list:
+                dept_list.append(result.student.department)
+        data = {'department':[], 'average': []}
+        for dept in dept_list:
+            scores = []
+            for res in results:
+                if res.student.department == dept:
+                    scores.append(res.total_score)
+            data['department'].append(dept.code)
+            data['average'].append(float(sum(scores)/len(scores)))
+        return data 
+
+    @classmethod
+    def dept_avg_performance(cls, lecturer, course, dept):
+        results = Result.objects.filter(course__lecturer=lecturer, course=course)
+        dept_list = []
+        for result in results:
+            if result.student.department not in dept_list:
+                dept_list.append(result.student.department)
+        data = {'department':[], 'passes': [], 'fails':[]}
+
+        for dept in dept_list:
+            passes = 0
+            fails = 0
+            for res in results:
+                if res.student.department == dept:
+                    if res.total_score > 50: # I need th make the value dynamic
+                        passes+=1
+                    else:
+                        fails+=1
+            data['department'].append(dept)
+            data['passes'].append(passes)
+            data['fails'].append(fails)
+        return data
+
 
 class cgpaData(object):
     
@@ -189,29 +242,26 @@ class cgpaData(object):
         credit_load = result.aggregate(credit = Sum('credit_load', output_field=FloatField()))['credit'] or 0
         
         grade = 0
-        if course_load==0:
-            grade = 0
+        if result.exists():
+            if course_load==0:
+                grade = 0
+            else:
+                grade = '%.2f' % (course_load/credit_load)
         else:
-            grade = '%.2f' % (course_load/credit_load)
+            grade = float(5)
         return float(grade)
             
     
-    @classmethod
-    def get_cgpa_by_semester(cls, semester, student_id, level):
-        result = Result.objects.filter(semester=semester, level=level, student_id=student_id)
-        course_load = result.aggregate(course = Sum('course_load', output_field=FloatField()))['course']
-        credit_load = result.aggregate(credit = Sum('credit_load', output_field=FloatField()))['credit']
+    #@classmethod
+    # def get_cgpa_by_semester(cls, semester, student_id, level):
+    #     result = Result.objects.filter(semester=semester, level=level, student_id=student_id)
+    #     course_load = result.aggregate(course = Sum('course_load', output_field=FloatField()))['course']
+    #     credit_load = result.aggregate(credit = Sum('credit_load', output_field=FloatField()))['credit']
         
-        grade = '%.2f' % (course_load/credit_load)
-        return float(grade)
-    
-    @classmethod
-    def get_result_by_lecturer(cls,lecturer):
-        results = Result.objects.filter(course__lecturer=lecturer)
-        data = {'score': [], 'student':[]}
+    #     grade = '%.2f' % (course_load/credit_load)
+    #     return float(grade)
 
-        return data
-    
+
     def grader():
         pass
     
@@ -249,7 +299,34 @@ class RegressionModel(object):
         b = mean(Y) - m*mean(X)
         return m, b
 
-    
-    #code
 
+def pin_generator(length=8):
     
+    '''
+    This is to generate alphanumeric ids for the transaction. the addition of non-alphameric chars increases the uniqueness of the transaction id e.g Qw21#d seem more unique than 1242
+    
+    It can also serve as a secrete key generator of any length.
+    '''
+    
+    import random
+    
+    num = '0123456789'
+    chars = '@#$&'
+    upper_alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    lower_alpha = upper_alpha.lower()
+    gen_base = [num,chars,upper_alpha,lower_alpha]
+    alphanum = ''.join(gen_base)
+    
+    transaction_id = ''
+    
+    for x in range(length):
+        transaction_id += alphanum[random.randint(1,len(alphanum)-1)]
+    
+    return transaction_id 
+ 
+
+def decimal_add(x, y):
+    '''
+    This is an operator for a decimal addition. 
+    '''
+    return Decimal(x) + Decimal(y)

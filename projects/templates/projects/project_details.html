@@ -1,0 +1,76 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}<a href="{% url 'my_projects' %}">{{request.user.student}}/Projects/Index/</a>{{project.name}}{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Project Detail: {{ project.name}}</h3>
+</div>
+<div class="col-md-4">
+	<div class="panel panel-primary">
+		<div class="panel-heading"><i class="icons icons-sm icons-info"></i> <strong>Project Info</strong></div>
+		<div class="panel-body">
+			<div>
+				<label>File Size</label>
+				<p>{{project.file.size}} Bytes</p>
+			</div>
+			<div>
+				<label>Description</label>
+				{% if project.description %}
+				<p>{{project.description}}</p>
+				{% else %}
+				<p>No description for this project</p>
+				{% endif %}
+			</div>
+			<div>
+				{% if project.file.file_type %}
+				<label>File Type</label>
+				<p>{{project.file.file_type}}</p>
+				{% endif %}
+			</div>
+			<div>
+				<label>Date Created</label>
+				<p>{{project.date_created|date:"d F Y"}}</p>
+			</div>
+			<div>
+				<label>Date Last Modified</label>
+				<p>{{project.date_modified|date:"d F Y"}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-md-8">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>{{ project.file.name}}</strong> 
+			<span style="color: teal;"> [ {{project.file.size}}B]</span>
+			<span style="cursor: pointer; float: right;">
+				<i class="icons icons-sm icons-edit" id="edit"></i> <button id="update" disabled class="btn btn-sm custom-btn">Update</button>
+				</span>
+			</div>
+		<div class="panel-body scroll" style="height: 400px; overflow-y: auto;" id="file_container" contenteditable="false"></div>
+	</div>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script>
+	var url = "{{project.file.url}}";
+
+	var jsonFile = new XMLHttpRequest();
+    jsonFile.open("GET",url,true);
+    jsonFile.send();
+
+    jsonFile.onreadystatechange = function() {
+        if (jsonFile.readyState== 4 && jsonFile.status == 200) {
+            document.getElementById("file_container").innerHTML = jsonFile.responseText;
+        }
+     }
+
+     $('#edit').click(function() {	
+     	$('#update').attr('disabled', 'false');
+     	$('#file_container').attr('contenteditable', 'true');
+     
+     })
+</script>
+{% endblock %}

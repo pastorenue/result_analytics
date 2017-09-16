@@ -1,0 +1,88 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+
+{% block breadcrumbs %}<a href="#">Study Forum</a> &raquo; {% endblock %}
+
+{% block content %}
+<div class="row clearfix" style="margin-left: 10px; margin-bottom: 20px;">
+	<h3 class="page-header">Study Forum</h3>
+	<span>{% include 'forum/search.html' %}</span>
+</div>
+<div class="panel panel-default">
+	<div class="sub-panel">
+		<h4 style="padding: 0 4px;">Discussion <span style="float: right; padding-bottom: 3px; margin-bottom: 3px;">
+			<button class="btn btn-sm custom-btn" type="button" data-toggle="modal" data-target="#new_post"><i class="icons icons-sm icons-comment"></i> New Post</button>
+		</span></h4>
+	</div>
+	{% if queryset %}
+	<div class="sub-panel" style="padding: 0 10px;">
+		{% for item in queryset %}
+		{% if item.post.id %}
+		<a href="{% url 'post' item.post.id %}"> 
+			<div class="search-result">
+				<h4>{{item.post.title}} </h4><span> posted {{item.post.created}} by {{item.user.student}}</span>
+				<p>{{item.post.question_or_idea}}</p>
+			</div>
+		</a>
+		{% else %}
+		<a href="{% url 'post' item.id %}"> 
+			<div class="search-result">
+				<h4>{{item.title}} </h4><span> posted {{item.created}} by {{item.user.student}}</span>
+				<p>{{item.question_or_idea}}</p>
+			</div>
+		</a>
+		{% endif %}
+		{% endfor %}
+	</div>
+	{% else %}
+	<div class="sub-panel add-padding">
+		<div style="margin: 50px auto; text-align: center;">
+			<i class="icons icons-x-lg icons-book"></i><br>
+			<h4>Welcome to the Study Forum</h4>
+			<h5>Join a discussion or start one by click the "New Post" icon at the top</h5>
+		</div>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block side %}
+<div class="panel panel-default">
+	<div class="sub-panel" style="margin-bottom: 0px;">
+		<h4 style="font-weight: 600; letter-spacing: 2px;"><i class="icons icons-sm icons-category"></i> CATEGORIES </h4>
+	</div>
+	<div class="sub-panel scroll" style="height: 100%; overflow-y: auto; padding-top: 7px;">
+		{% include 'forum/categories.html' %}
+	</div>
+</div>
+
+<!-- New Post Modal  Window -->
+<div id="new_post" class="modal fade" role="dialog">
+	<form method="POST" action="">{% csrf_token %}
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content" style="text-align: left !important;">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">New Post</h4>
+	      </div>
+		    
+	      <div class="modal-body">
+	      {% for field in form %}
+	        <div class="form-group">
+	        	<label for="field.id_for_label">{{field.label}}</label>{% if field.html_name == 'category' %} <span><a onclick="window.open('/forum/category/', 'newwindow', 'width=600,height=350'); return false;"><i class="icons icons-md icons-plus"></i></a> <small class="text-muted">[Add new category if you don't find any that matches your post]</small></span>{% endif %}
+	        	{{field}}
+	        	<small class="text-muted">{{field.help_text}}</small>
+	        </div>
+	        {% endfor %}
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-sm custom-btn">Start Discussion</button>
+	      </div>
+	    </div>
+	   </div>
+	</form>
+</div>
+{% endblock %}

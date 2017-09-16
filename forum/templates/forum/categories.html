@@ -1,0 +1,20 @@
+<style>
+	.cat{
+		color: #34495e; 
+		font-weight: 600; 
+		background: #ecf0f1; 
+		padding: 6px 2px;
+		margin: 5px;
+    	transition: all .45s ease-in-out;
+	 }
+	 .cat:hover {
+	    box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 4px 4px 1px rgba(0,0,0,.2);
+	    transform: translateY(3px);
+	    transform: translateX(-2px);
+	 }
+</style>
+<div  id="accordion">
+	{% for topic in topics %}
+	<a href="#" ><h5 class="cat" style="">{{topic.name}} <span class="badge"> {{ topic.post_set.count }}</span></h5></a>
+	{% endfor %}
+</div>

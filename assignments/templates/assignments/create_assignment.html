@@ -1,0 +1,36 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}
+New Assignment &raquo;
+{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+	<h3 class="page-header">Add New Assignment</h3>
+</div>
+
+<div class="col-md-10 center-block">
+	<div class="panel panel-default">
+		<form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
+			<div class="panel-body">
+				<div class="sub-panel">
+					<h5>Assignment</h5>
+				</div>
+				<div class="sub-panel add-padding">
+					{% for field in form %}
+					<div class="form-group">
+						<label>{{field.label}}</label>
+						{{field}}
+					</div>
+					{% endfor %}	
+				</div>
+			</div>
+			<div class="sub-panel" style="border-bottom: none; padding-left: 10px;">
+				<button class="btn btn-sm custom-btn" type="submit">Save</button>
+			</div>
+		</form>
+	</div>
+</div>
+	
+{% endblock %}

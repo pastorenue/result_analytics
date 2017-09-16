@@ -1,0 +1,86 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block extra_css %}
+<style>
+  .msg-box {
+    width: 30%; 
+    position: absolute; 
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.2); 
+    padding: 5px; 
+    z-index: 400; 
+    background: #fcfcfc; 
+    border-radius: 5px;
+    display: none;
+    transition: all .45s ease-in-out;
+  }
+  .modal {
+   top: 50%; 
+   margin-top: -150px;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">The Friendship Zone</h3>
+</div>
+
+<div class="col-md-12 center-block">
+ <div class="row">
+   {% for friend in all_friends %}
+   <a href="#{{friend.id}}" data-toggle="modal">
+     <div class="col-sm-2 project">
+       <div>
+        {% if friend.photo %}
+          {% thumbnail friend.photo '100x100' crop='top' as im %}
+          <img src="{{im.url}}" alt="{{friend}}" style="border-radius: 50%; padding: 4px;">
+          {% endthumbnail %}
+        {% else %}
+        <img src="{% static 'images/avatar.png' %}" alt="" width="100" height="100" style="border-radius: 50%; padding: 4px;">
+        {% endif %}
+         <h4><strong>{{friend}}</strong></h4>
+         <p>{{friend.institution}}</p>
+       </div>
+     </div>
+    </a>
+    <div class="modal fade" id="{{friend.id}}" tabindex="-1" role="dialog">
+      {% include 'collaborations/_tooltip.html' %}
+    </div>
+   {% empty %}
+   <div style="text-align: center; color: #2c3e50; margin: 10% auto;">
+        <i class="icons icons-x-lg icons-user"></i><br>
+        <h3>No Friends Available.</h3>
+      </div>
+   {% endfor %}
+ </div>
+</div>
+{% endblock %}
+	
+{% block side%}
+	{% include 'collaborations/_aside_collaborate.html' %}
+{% endblock %}
+
+{% block extrajs %}
+  <script>
+     function displayMsgBox(self, item_id) {
+      var item = document.getElementById(item_id);
+      // // item.className = 'msg-box visible';
+      $(self).click(function(event) {
+        item.setAttribute("style", "left:"+event.pageX+"px, top: "+event.pageY+"px, display: block");
+        console.log(this); 
+      });
+     }
+      function hideMsgBox(item) {
+      $(item).click(function(evt) {
+        $(item).css({'display': 'none'});
+     });
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('[data-toggle=tooltip]').tooltip();
+    });
+  </script>
+{% endblock %}

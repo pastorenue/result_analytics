@@ -7,11 +7,15 @@ from django.conf import settings
 
 
 class Course(models.Model):
+    SEMESTER_CHOICES = (
+    (1, 'First Semester'),
+    (2, 'Second Semester'),
+    )
     course_code = models.CharField(max_length=7, null=True)
     name = models.CharField(max_length=250, null=True)
-    unit = models.PositiveIntegerField(default=0)
+    unit = models.PositiveIntegerField(default=0, verbose_name="Number of credit units")
     level = models.IntegerField(choices=settings.LEVEL_CHOICES, null=True)
-    semester = models.IntegerField(null=True)
+    semester = models.IntegerField(choices=SEMESTER_CHOICES, null=True)
     department = models.ForeignKey(Department, null=True)
     lecturer = models.ManyToManyField(Lecturer, help_text="Hold down the control key and select more than one lecturer",  blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)

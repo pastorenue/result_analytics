@@ -1,0 +1,38 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}New Student{% endblock %}
+
+{% block breadcrumbs %}
+<a href="#">New student</a>
+{% endblock %}
+{% block content %}
+	<div class="col-md-12" style="margin-bottom: 15px;">
+		<h3 class="page-header">New Student</h3>
+	</div>
+	<form method="post" action="" style="margin-left: 15px;">{% csrf_token %}
+		<div class="row"  >
+			<div class="col-md-6">
+			{% for field in form|slice:":5" %}
+				<div class="form-group">
+					<p>{{ field.errors }}</p>
+					<label for="field.id_for_label">{{ field.label }}</label>{{ field }}
+				</div>
+			{% endfor %}
+			</div>
+			<div class="col-md-6">
+			{% for field in form|slice:"5:" %}
+				<div class="form-group">
+					<p>{{ field.errors }}</p>
+					<label for="field.id_for_label">{{ field.label }}</label><br>
+					{{ field }}
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+		<div class="form-group" style="text-align: center;">
+			<button type="submit" class="btn btn-sm custom-btn btn-block" style="width: 40%;">Save</button>
+		</div>
+	</form>
+{% endblock %}

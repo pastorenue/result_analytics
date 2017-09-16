@@ -1,0 +1,18 @@
+<div class="search-result">
+    {% if project %}
+    {% if is_own_profile %}<a class="delete-section pull-right" href="#">Delete</a>{% endif %}
+    {% endif %}
+    <p>
+        <i class="icons icons-sm icons-book"></i>
+        {% if is_own_profile %}
+        <a href="{{ project.file.url }}" target="_blank">{{ project.name|title }}</a>
+        {% else %}
+        {{ project.name|title }}
+        {% endif %}
+    </p>
+    {% if project.description %}
+    <div>
+        {{ project.description }}
+    </div>
+    {% endif %}
+</div>

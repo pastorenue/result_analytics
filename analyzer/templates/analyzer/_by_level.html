@@ -1,4 +1,4 @@
-{% extends'students/student_profile.html' %}
+{% extends'dashboard.html' %}
 {% load staticfiles %}
 
 {% block extrahead%}
@@ -9,13 +9,12 @@
     
 {% endblock %}
 
-{% block breadcrumbs %}
-{% if user.is_staff %}<a href="{% url 'students:students_list' %}">All students &raquo;</a>{% endif %} {{ student }}'s CGPA Analysis
+{% block breadcrumbs %}CGPA Analysis
 {% endblock %}
 
-{% block inner_content %}
+{% block content %}
     <div>
-        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;"> {{ student }}'s CGPA Details</h2>
+        <h3 class="page-header"> {{ student }}'s CGPA Details</h3>
     </div>
     <div class="row">
         <div class="panel panel-danger" style="margin: 10px 20px 35px 35px;">

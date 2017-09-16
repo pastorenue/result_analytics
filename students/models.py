@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.contenttypes import generic
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from institutions.models import *
+import uuid
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import signals
 from django.utils.timezone import now
@@ -94,8 +94,9 @@ class Student(models.Model):
         ('E', _(u'Expelled')),
     )
 
-    user = models.OneToOneField(User, related_name='student')
+    user = models.OneToOneField(User, related_name='student', on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='uploads', blank=True)
+    email = models.EmailField(blank=True)
     last_name = models.CharField(verbose_name=_(u'Surname'), max_length=50, null=True)
     first_name = models.CharField(verbose_name=_(u'First name'), max_length=50, null=True)
     middle_name = models.CharField(verbose_name=_(u'Middle name'), max_length=50, blank=True)
@@ -106,10 +107,10 @@ class Student(models.Model):
     bank = models.ForeignKey(Bank, blank=True, null=True)
     bank_account_number = models.CharField(max_length=20, blank=True, null=True)
     marital_status = models.PositiveSmallIntegerField(choices=MARITAL_STATUS_CHOICES, blank=True, null=True)
-    sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='M')
-    level = models.PositiveIntegerField(choices=settings.LEVEL_CHOICES)
-    student_institution = models.ForeignKey(Institution, blank=True, null=True)
-    program_type = models.PositiveIntegerField(choices=PROGRAM_CHOICES, null=True)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
+    level = models.PositiveIntegerField(choices=settings.LEVEL_CHOICES, blank=True)
+    institution = models.ForeignKey(Institution, blank=True, null=True)
+    program_type = models.PositiveIntegerField(choices=PROGRAM_CHOICES, null=True, blank=True)
     birth_date = models.DateField(blank=True, null=True, db_index=True)
     library_id_number = models.PositiveIntegerField(blank=True, null=True)
     school_id_number = models.PositiveIntegerField(blank=True, null=True)
@@ -126,10 +127,10 @@ class Student(models.Model):
     state_of_residence = models.ForeignKey('states.State', null=True,blank=True, related_name='students_residence')
     country = models.ForeignKey('states.Country', related_name='country_of_residence', null=True, blank=True)
     state_of_origin = models.ForeignKey('states.State', related_name='students_origin', blank=True, null=True)
-    lga = models.ForeignKey('states.LGA', verbose_name=_(u'LGA'), related_name='students', blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    clearance_status = StateField(editable=False, default=None)
+    #clearance_status = StateField(editable=False, default=None)
+    slug = models.SlugField(blank=True, unique=True)
     objects = StudentManager()
 
 
@@ -162,18 +163,30 @@ class Student(models.Model):
         return True
 
     @property
+    def get_program_type(self):
+        program_type = {1: 'Regular', 2: 'Sandwich', 3: 'CEP', 4: 'Diploma', 5: 'Others'}
+        if self.program_type:
+            return program_type[self.program_type]
+
+    @property
+    def get_marital_status(self):
+        marital_status = {1: 'Single', 2: 'Married', 3: 'Widowed', 4: 'Divorces'}
+        if self.marital_status:
+            return marital_status[self.marital_status]
+        
+    @property
     def year_of_graduation(self):
-        return (self.year_of_admission.year + self.course_duration)
+        if self.year_of_admission:
+            return (self.year_of_admission.year + self.course_duration)
     
-    @models.permalink
     def get_absolute_url(self):
-        return ('students:student_profile', (), {'student_id': self.pk})
+        return reverse('students:student_account', kwargs={'student_slug':self.slug})
 
 
 class Document(models.Model):
     """Represents electronic documents that form part of a student's record."""
 
-    students = models.ForeignKey(Student)
+    student = models.ForeignKey(Student)
     attached_file = models.FileField(upload_to='uploads/docs/%Y/%m/%d/')
     name = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(_(u'Description'), blank=True)
@@ -196,7 +209,7 @@ class Document(models.Model):
 
 class Scholarship(models.Model):
     '''Scholarship schemes a student is involved in or wishes to be involved in'''
-    student = models.ManyToManyField(Student, related_name='scholarship', blank=True)
+    student = models.ForeignKey(Student, null=True, blank=True)
     title = models.CharField(max_length=250, blank=True, null=True)
     provider = models.CharField(max_length=250, blank=True, null=True)
     location = models.CharField(max_length=150, blank=True, null=True)
@@ -213,21 +226,28 @@ class Scholarship(models.Model):
         return "%s" %(self.title)
 
 
-class Project(models.Model):
-    '''Personal and school projects that a student can participate in'''
-
-    student = models.ForeignKey(Student, related_name='projects', blank=True, null=True)
-    name = models.CharField(max_length=250, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to='students/projects/%Y/%m/%d/')
-    date_created = models.DateField(auto_now_add=True)
-    last_modified = models.DateField(auto_now=True)
-    tag = models.CharField(max_length=150, blank=True, null=True)
+class UniqueMapper(models.Model):
+    reg_number = models.CharField(max_length=30)
+    short_institution_name = models.CharField(max_length=5, null=True)
+    unique_map = models.CharField(max_length=50, blank=True)
+    created = models.DateTimeField(auto_now_add=True) 
 
     class Meta:
-        verbose_name = _(u'Student Project')
-        verbose_name_plural = _(u'Student Projects')
-        ordering = ('name',)
+        verbose_name = _(u'Unique Mapper')
+        verbose_name_plural = _(u'Unique Mappers')
+        ordering = ('short_institution_name',)
 
     def __str__(self):
-        return self.name
+        return "%s-%s" % (self.short_institution_name.upper(), self.unique_map)
+
+
+    def save(self, **kwargs):
+        uuid_found = True
+        while uuid_found:
+            get_uuid = uuid.uuid4()
+            self.unique_map = "%s-%s" % (self.short_institution_name, get_uuid)
+            if not UniqueMapper.objects.filter(unique_map=self.unique_map).exists():
+                uuid_found = False
+        super(UniqueMapper, self).save(**kwargs)
+
+

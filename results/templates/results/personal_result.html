@@ -1,36 +1,23 @@
-{% extends 'students/student_profile.html' %}
+{% extends 'dashboard.html' %}
 
 {% block breadcrumbs %}
     <a href="{% url 'students:students_list' %}"> All students</a>&raquo; {{ student }}'s result detail
 {% endblock %}
 
-{% block inner_content %}
+{% block content %}
     <div style="margin-bottom: 30px;">
-        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;">{{ student}}'s Result Details</h2>
+        <h3 class="page-header">{{ student}}'s Result Details</h3>
     </div>
 <div class='container-fluid '>
-    {% if results %}
-    <table class='table table-condensed table-hover main-page'>
+    <table class='table table-condensed main-page'>
         <thead>
             <tr>
                 <th scope="col" style="width: 6%">&nbsp;</th>
-                <th>Reg Number</th>
-                <th>Course</th>
+                <th style="width: 30%;">Course</th>
                 <th>Semester</th>
                 <th>Level</th>
-                <th style='width: 6%;'>Score</th>
-                <th style='width: 5%;'>Grade</th>
-                <th scope="col" style="width: 6%; text-align: center;">&nbsp;
-                    <div class="dropdown"><span class='caret dropdown-toggle' data-toggle='dropdown' style="cursor: pointer;"></span>
-                        <ul class='dropdown-menu' role="menu" style="left: -120px; border-top: 2px solid #0d8363; background-color: #edf0ef;">
-                            <li style="text-align: center; font-size: 16px;"><strong>Filter</strong></li>
-                            <li class="divider"></li>
-                            <li><a href="">Level</a></li>
-                            <li><a href="">Course</a></li>
-                            <li><a href="">Grade</a></li>
-                        </ul>
-                    </div>
-                </th>
+                <th>Score</th>
+                <th>Grade</th>
             </tr>
         </thead>
         <tbody>
@@ -38,17 +25,19 @@
             <a href=""><tr class="" style="cursor: pointer;">
                <td style="font-size: 1.4em; padding-top: 0px;">
                 </td>
-                <td>{{ result.student.reg_number }}</td>
                 <td>{{ result.course }}</td>
                 <td>{{ result.semester }}</td>
                 <td>{{ result.level }}</td>
-                <td>{{ result.score }}</td>
+                <td>{{ result.total_score }}</td>
                 <td>{{ result.grade }}</td>
             </tr></a>
-            {% endfor %}
+            {% empty %}
+            <tr>
+                <td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
+            </tr>
+            {% endfor %} 
         </tbody>
     </table>
-{% endif %}
 <div>
     <div style="font-size: 1.2em; text-align: center; letter-spacing: 5px; margin-bottom: 20px;">
         {% if results %}
@@ -63,10 +52,6 @@
             <a href="?page={{ results.next_page_number }}">Next</a>
             {% endif %}
             </span>
-        {% else %}
-            <div style="color: #c14; padding: 30px; border-bottom:  none; text-align: center;">
-                <span class="glyphicon glyphicon-fire" style="font-size: 3em;"></span><br>No records to display
-            </div>
         {% endif %}
     </div>
 </div>

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Result, CGPA
+from .models import Result, CGPA, Grading
 from .fields import RestrictedFileField
 
 class BatchResultForm(forms.ModelForm):
@@ -26,22 +26,17 @@ class ResultForm(forms.ModelForm):
        
     class Meta:
         model = Result
-        exclude = ('date_created', 'course_load', 'credit_load')
+        exclude = ('date_created', 'course_load', 'credit_load', 'department')
         
 
     
-class CGPAForm(forms.ModelForm):
-    
-    class Meta:
-        model = CGPA
-        exclude = ('cgpa','date_created')
-        
-class ResultImportForm(forms.Form):
+class ImportForm(forms.Form):
     # File size limited to 2MB
     file = RestrictedFileField(
-        label='CSV File (Max Size 2MB)',
+        label='Upload File (Max Size 2MB)',
         content_types=[
             'application/binary',
+            'application/ms-excel',
             'application/csv',
             'application/octet-stream',
             'application/vnd.ms-excel',
@@ -50,3 +45,26 @@ class ResultImportForm(forms.Form):
         ],
         max_upload_size=2097152,
     )
+
+
+class BatchGradingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(BatchGradingForm, self).__init__(*args, **kwargs)
+        self.fields['caption'].widget.attrs = {'class': 'form-control input-sm', 'placeholder': 'Grade Letter'}
+        self.fields['grade_points'].widget.attrs = {'class': 'form-control input-sm', 'placeholder': 'Grade Point'}
+        self.fields['start'].widget.attrs = {'class': 'form-control input-sm'}
+        self.fields['end'].widget.attrs = {'class': 'form-control input-sm'}
+
+    class Meta:
+        model = Grading
+        exclude = ('institution',)
+
+
+class GradingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(GradingForm, self).__init__(*args, **kwargs)
+        self.fields['institution'].widget.attrs = {'class': 'form-control input-sm'}
+
+    class Meta:
+        model = Grading
+        fields = ('institution',)

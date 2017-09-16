@@ -3,10 +3,20 @@ from django.utils.translation import ugettext_lazy as _
 from courses.models import Course
 from django.conf import settings
 from decimal import Decimal
+from django.db.models import Sum
 from students.models import Student
+from assignments.models import Assignment, Quiz
+from institutions.models import Department, Institution
+from functools import reduce
 
+def decimal_add(x, y):
+    '''
+    This is an operator for a decimal addition. 
+    '''
+    return Decimal(x) + Decimal(y)
 
 class Grading(models.Model):
+    institution = models.ForeignKey(Institution, null=True)
     caption = models.CharField(max_length=15, null=True)
     grade_points = models.DecimalField(max_digits=2, decimal_places=1, null=True)
     start = models.IntegerField(null=True, default=0)
@@ -24,9 +34,13 @@ class Grading(models.Model):
 class Result(models.Model):
     student = models.ForeignKey(Student, null=True)
     course = models.ForeignKey(Course, null=True)
-    score = models.DecimalField(null=True, default=0.0, decimal_places=2, max_digits=6)
+    exam_score = models.DecimalField(null=True, default=0.0, decimal_places=2, max_digits=6)
+    assignment_score = models.DecimalField(null=True,  default=0.0, decimal_places=2, max_digits=6)
+    quiz_score = models.DecimalField(null=True, default=0.0, decimal_places=2, max_digits=6)
+    total_score = models.DecimalField(null=True, default=0.0, decimal_places=2, max_digits=6)
     level = models.PositiveIntegerField(choices=settings.LEVEL_CHOICES,null=True, blank=True)
     semester = models.PositiveIntegerField(choices=settings.SEMESTER_CHOICES, null=True)
+    department = models.ForeignKey(Department, null=True, blank=True)
     credit_load = models.DecimalField(default=0.0, decimal_places=2, max_digits=4, blank=True, null=True)
     session = models.CharField(max_length=10, blank=True, null=True)
     course_load = models.DecimalField(default=0.0, decimal_places=2, max_digits=4, blank=True, null=True)
@@ -39,25 +53,34 @@ class Result(models.Model):
         ordering = ('-date_created',)
         
     def __str__(self):
-        return '%s' % (self.score)
+        return '%s' % (self.total_score)
     
     def save(self, **kwargs):
         self.credit_load = self.get_credit_load
         self.course_load = self.get_course_load
+        self.department = self.student.department
+        self.total_score = self.get_total_score
+        self.level = self.student.level
         
         super(Result, self).save(**kwargs)
 
     @property
     def grade(self):
-        score = self.score
-        end = min([grade.end for grade in Grading.objects.all() if grade.end>=score])
-        grade = Grading.objects.filter(end=end)
+        score = self.total_score
+        end = min([grade.end for grade in Grading.objects.filter(institution=self.student.institution) if grade.end>=score])
+        grade = Grading.objects.filter(institution=self.student.institution, end=end)
         return grade[0]
-    
+
+    @property    
+    def get_total_score(self):
+        total = reduce(decimal_add, [self.exam_score,self.assignment_score, self.quiz_score, 0.0])
+        self.total_score = total
+        return total
+
     @property
     def grade_points(self):
         grade = self.grade
-        grading = Grading.objects.get(caption=grade)
+        grading = Grading.objects.filter(institution=self.student.institution, caption=grade)[0]
         return grading.grade_points
     
     @property

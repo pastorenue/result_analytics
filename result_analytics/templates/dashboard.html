@@ -1,129 +1,266 @@
-{% extends 'user_base.html' %}
+<!DOCTYPE html>
+<html>
+  <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="description" content="Students- Collaboration Platform (Acadalytics">
 
-{% block title%}Home-Dashboard{% endblock %}
-{% load staticfiles %}
-{% block content %}
-
-  <div class="col-sm-9" style="margin-left: 40px;">
-    <div class="row">
-      <div class="col-md-9" style="padding-left: 0;">
-        <div class="row">
-          <div class="col-sm-6" style="padding-left: 15px;">
-            <div class="alert">
-              <div class="panel-heading" style="padding-top: 0; padding-left: 5px; padding-right: 0;">
-                <h5>Notification</h5>
-              </div>
-             
-              <div class="cost-main-panel">
-                  Notifications here...
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="alert">
-              <div class="panel-heading"  style="padding-top: 0; padding-left: 5px;">
-                <h5>Alerts</h5>
-              </div>
-              
-              <div class="cost-main-panel">
-                 Alerts Here...
-              </div>
-            </div>
-          </div>
+        <title>Result Analytics | {% block title%}{% endblock %}</title>
+        {% load staticfiles %}
+        {% load thumbnail %}
+        {% load record_filters %}
+        
+        {% load crispy_forms_tags %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/bootstrap-timepicker.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/carousel.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/jquery-ui.custom.min.css' %}"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/analytics-icons.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/profiles.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/pace-theme-flash.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/component.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/link.css' %}"/>
+        <style>
+          .modal.fade .modal-dialog {
+            -webkit-transform: scale(0.1);
+            -moz-transform: scale(0.1);
+            -ms-transform: scale(0.1);
+            transform: scale(0.1);
+            top: 500px;
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        .modal.fade.in .modal-dialog {
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            -webkit-transform: translate3d(0, -300px, 0);
+            transform: translate3d(0, -500px, 0);
+            opacity: 1;
+        }
+        </style>
+        {% block extra_css %}
+        {% endblock %}
+        
+  </head>
+  
+  <body class="scroll" style="height: 100vh; overflow: auto;">
+    {% if messages %}
+      {% for message in messages %}
+      <div id="notification" class="alert-{{message.tags}}" style="">
+        <div><span onclick="hideMe()">&times;</span></div>
+        <h4><strong>{{message.tags|title}}</strong></h4>
+        <h5>{{ message }}</h5>
+      </div>
+      {% endfor %}
+    {% endif %}
+    
+    {% include '_topbar.html' %}
+    <!-- {% include '_mainbar.html' %} -->
+    <div style="height: 75px;"></div>
+    <div class="row clearfix" style="padding: 0 15px;">
+      <div class="col-md-2 scroll" style="padding-right: 5px; color: #fff; background: linear-gradient(to bottom, #141E30, #243B55); height: 100vh; overflow: auto;">
+        <div style="text-align: center; border-bottom: 1px dashed #ecf0f1; padding: 4px;">
+          <h4 style="margin:5px 2px; color: #fff;">{% if user.is_staff%} Mr. {{ user.first_name|upper}} {% else %}{{user.student.full_name|upper}}{% endif %}</h4>
+          <p style="margin-top: 0px;"><i class="icons icons-sm icons-school"></i> {% if user.student %}{{ user.student.institution }}{% else %}{{ user.lecturer.institution }}{% endif %}</p>
         </div>
-        <div class="row  alert-charts">
-          <div class="alert">
-            <div class="panel-heading">
-              <h5>Activity Log</h5>
-            </div>
-            <div class="cost-main-panel" id="container">
-               Activities Logging panel 
-            </div>
-          </div>
-          <div class="alert">
-            <div class="panel-heading panel-heading-no-title">
-              <h5>Photo Chart</h5>
-            </div>
-               <div class="cost-main-panel">
-                Chart Here...
-               </div>
-          </div>
-          <div class="alert">
-            <div class="panel-heading panel-heading-no-title">
-              <h5>Cash Flow</h5>
-            </div>
-               <div class="cost-main-panel">
-                Chart Here...
-               </div>
+        <div style="text-align: center;">
+          <div style="margin-top: 2px;">
+              <div class="sub-menu">
+                <ul>
+                  {% block menu %}
+                  {% include 'analyzer/attached.html' %}           
+                {% endblock %}
+                </ul>
+              </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3" style="">
-        <div class="row outer-div">
-              <div class="panel-heading panel-heading-no-title"></div>
-                <div class="total-div">
-                  <span class="total-pix"></span>
-                  <div>
-                    <span class="photo">photos</span>
-                  </div>
-              </div>
-          </div>
-        <div class="row" style="padding-top: 20px; padding-left: 10px;" >
-          <div class="col-sm-6 outer-div" style="margin-right: 8px;">
-                <div class="panel-heading panel-heading-no-title"></div>
-                  <div class="total-div">
-                    <span class=""></span>
-                    <span class="total-pix"></span>
-                    <div>
-                      <span class="photo">Albums</span>
-                    </div>
-                </div>
-            </div>
-          <div class="col-sm-5 outer-div" style="margin-left: 8px;">
-                <div class="panel-heading panel-heading-no-title"></div>
-                  <div class="total-div">
-                    <span class=""></span>
-                    <span class="total-pix"></span>
-                    <div>
-                      <span class="photo">Followers</span>
-                    </div>
-                </div>
-            </div>
+      <div class="col-md-8 scroll" style="height: 100vh; overflow: auto;">
+        <div style=" padding-top: 10px;">
+          <a href="{% url 'dashboard' %}" style="text-decoration: none;">Home</a> &raquo; {% block breadcrumbs %}{% endblock %}
         </div>
-        <div class="row outer-div" style="margin-top: 20px;">
-              <div class="panel-heading panel-heading-no-title"></div>
-                <div class="total-div">
-                  <span class=""></span>
-                  <span class="total-pix"><span><strike>N</strike></span> 0.00</span>
-                  <div>
-                    <span class="photo">Total Cash</span>
+        <div class="row-fluid">
+          <div style="background: #fff; padding: 10px; ">
+          {% block content %}
+            <div style="height: 100%; text-align: center;">
+              <h4 style="padding-top: 9%;  font-size: 2em;"><i class="icons icons-x-lg icons-laptop"></i><br>Welcome to Your workspace</h4>
+              <p style="font-size: 1.3em;">
+                We are please you could make it here today. 
+                Have you checked the trends for today?<br>
+                {% if request.user.student %}See how you're doing by viewing the latest students performance trend for the Semester {% endif %}
+                {% if request.user.is_staff %}Check out the students who would want your help. Remember, "Education is golden"{% endif %}
+              </p>
+              <div class="col-md-7 center-block">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="sub-panel add-padding">
+                      <h3 style="color: #2980b9; margin-bottom: 6px;">Remember Your{% if request.user.is_staff %} Principle {% else %} Motivation!!{% endif %}!!</h3>
+                      <h4>{% if request.user.activation.short_motivation_quote %}
+                       {{ request.user.activation.short_motivation_quote }}
+                       {% else %}
+                       Oops!! No Motivation set yet. Activate you account and set a motivation quote. Click <a href="{% url 'activate' %}"><strong>HERE</strong> </a> to activate now
+                       {% endif %}</h4>
+                    </div>
                   </div>
+                </div>
               </div>
+            </div>
+          {% endblock %}
           </div>
-        <div class="row" style="padding-top: 20px; padding-left: 10px;" >
-          <div class="col-sm-6 outer-div" style="margin-right: 8px;">
-                <div class="panel-heading panel-heading-no-title"></div>
-                  <div class="total-div">
-                    <span class=""></span>
-                    <span class="total-pix"><span><strike>N</strike></span> 0.00</span>
-                    <div>
-                      <span class="other">Last Purchase</span>
-                    </div>
-                </div>
-            </div>
-          <div class="col-sm-5 outer-div" style="margin-left: 8px;">
-                <div class="panel-heading panel-heading-no-title"></div>
-                  <div class="total-div">
-                    <span class=""></span>
-                    <span class="total-pix">#</span>
-                    <div>
-                      <span class="other">User ID</span>
-                    </div>
-                </div>
-            </div>
         </div>
+      </div>
+      <div class="col-md-2 scroll" style="background: #ecf0f1; padding-left:7px; text-align: center; height: 100vh; overflow-y: auto;">
+        {% block side %}
+        <h5 style="font-size: 1.1em; border-radius: 2px; background: #2c3e50; color: #ecf0f1; padding: 5px;"><strong>LATEST</strong></h5>
+        {% if not user.is_staff %}
+        <div style="margin-top: 5px;"><!--overall average performance-->
+          <div class="panel panel-default scroll" style="height: 35vh; overflow-y: auto;">
+            <div class="sub-panel add-padding">
+              <h5 class="panel-title text-center"><strong>Trending Performances</strong></h5>
+            </div>
+            <div>
+              <table class="table table-condensed table-hover" style="text-align: left;">
+                <tr>
+                  <th style="width: 70%;">Name</th>
+                  <th style="width: 30%, float: right;">CGPA</th>
+                </tr>
+                {% if trending_performances %}
+                  {% for record in trending_performances %}
+                  <tr style="{% if record|get_dict_values:'user' == request.user %} background: #1abc9c; color: #fff;{% endif %}">
+                    <td>{{record|get_dict_values:"name"}}</td>
+                    <td>{{record|get_dict_values:"cgpa"}}</td>
+                  </tr>
+                  {% endfor %}
+                  <tr><small>These are the first 5</small></tr>
+                {% endif %}
+              </table>
+            </div>  
+            </div>
+          </div>
+          {% endif %} 
+        <div style="margin-top: 5px;"><!--Ranking-->
+          <div class="panel panel-default">
+            <div class="sub-panel add-padding" style="margin-bottom: 0px;">
+              <h5 class="panel-title text-center"> {% if user.is_staff %} Trending Students {% else %} Recommendations {% endif %}</h5>
+            </div>
+            <div style="width: 100%;">
+              {% if not user.is_staff %}
+              {% if recommendations %}
+                {% for r in recommendations|get_dict_values:'match' %}
+                  <div class="recommend">
+                    <img src="{% static 'images/avatar.png' %}" alt="">
+                    {% for i in r|slice:'1' %}
+                    <div>                  
+                     {% if i.department %} 
+                     <h4>{{i}}</h4>
+                      <p>{{i.department}}</p>
+                      {% endif %}
+                    </div>        
+                    {% endfor %}       
+                    <div>
+                      <label ><i class="icons icons-sm icons-info"></i></label>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  {% else %}
+                  <div style="padding: 10px;">
+                    <p><span style="color: #2c3e50; font-weight: 600;">No Recommentations.</span><br> Your grades look pretty <strong>IMPRESSIVE</strong>. Remember to support others in NEED!!. Use the Forum and share your ideas and study tips.</p>
+                  </div>
+              {% endif %}
+            {% else %}
+              <h4>List of Trending Students in Department</h4>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="sub-panel add-padding">
+            {% if request.user.student %}
+            <button class="btn btn-sm custom-btn"><i class="icons icons-sm icons-vcard"></i> Connect with an Adviser</button>
+            {% elif request.user.is_staff %}
+             <button class="btn btn-sm custom-btn"><i class="icons icons-sm icons-vcard"></i> Connect with a Staff</button>
+             {% endif %}
+          </div>
+        </div>
+        {% endblock side %}
       </div>
     </div>
-  </div>   
-{% endblock %}
-		  
+    <div class="modal fade" id="modal-course" tabindex="-1" role="dialog" style="">
+        {% include 'courses/course_create.html' %}
+    </div>
+    <div class="modal fade" id="modal-faculty" tabindex="-1" role="dialog" style="">
+        {% include 'institutions/new_faculty.html' %}
+    </div>
+    <div class="modal fade" id="modal-department" tabindex="-1" role="dialog" style="">
+        {% include 'institutions/new_department.html' %}
+    </div>
+    
+    <script src="{% static 'js/jquery.js' %}" type="text/javascript"></script>
+    <script type="text/javascript" href="{% static 'js/jquery-ui.custom.min.js' %}"></script>
+    <script type="text/javascript" href="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/highcharts.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/pace.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery.tinymce.min.js' %}" type="text/javascript"></script>
+    <!--<script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+          function hideMe(){
+            $("#notification").hide('fade');
+          }
+          setTimeout(function() {
+            $("#notification").fadeOut(3000)
+          }, 6000);
+    </script>
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').tooltip(); 
+          $('#notification_pane').hide();  
+      });
+    </script>
+    <script>
+      $('#new_info').click(function() {
+        $('#notification_pane').show();
+      });
+
+      $("body").click(function(e) {
+        if(!$(e.target).is(".icons-bell")) {
+          $('#notification_pane').hide('fade'); 
+        }
+      });
+    </script>
+    <script>
+      !function() {
+        var t;
+        if (t = window.driftt = window.drift = window.driftt || [], !t.init) return t.invoked ? void (window.console && console.error && console.error("Drift snippet included twice.")) : (t.invoked = !0, 
+        t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ], 
+        t.factory = function(e) {
+          return function() {
+            var n;
+            return n = Array.prototype.slice.call(arguments), n.unshift(e), t.push(n), t;
+          };
+        }, t.methods.forEach(function(e) {
+          t[e] = t.factory(e);
+        }), t.load = function(t) {
+          var e, n, o, i;
+          e = 3e5, i = Math.ceil(new Date() / e) * e, o = document.createElement("script"), 
+          o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + i + "/" + t + ".js", 
+          n = document.getElementsByTagName("script")[0], n.parentNode.insertBefore(o, n);
+        });
+      }();
+      drift.SNIPPET_VERSION = '0.3.1';
+      drift.load('iztpvd7wbr5k');
+    </script>
+    {% block extrajs %}
+    
+    {% endblock %}  
+  </body>
+</html>

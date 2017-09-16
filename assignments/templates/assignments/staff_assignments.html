@@ -1,0 +1,102 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}<a>Assignments</a>{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Assignments </h3>
+</div>
+
+<div class="col-md-12 panel panel-default">
+	{% if assignments %}
+	<table class='table table-condensed'>
+	    <thead>
+	        <tr>
+	            <th style="width: 30%;">Courses</th>
+	            <th style="width: 8%;">Semester</th>
+	            <th>Level</th>
+	            <th>Category</th>
+	            <th >Points</th>
+	             <th >Due Date</th>
+	            <th style="width: 7%;">Action</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	    	{% for assignment in assignments %}
+    		<tr>
+    			<td><a href="#{{ass_score.assignment.assignment_code}}" data-toggle="modal">{{assignment.course}}</a></td>
+    			<td>{{assignment.semester}}</td>
+    			<td>{{assignment.level}}</td>
+    			<td>{{assignment.category|title}}</td>
+    			<td>{{assignment.possible_points}}</td>
+    			<td>{{assignment.due_date}}</td>
+    			<td><button class="btn btn-sm custom-btn" onclick="location.href='#'">Deactivate</button></td>
+    		</tr>
+    		{% include 'assignments/assignment_detail.html' %}
+	    	{% endfor %}
+	    </tbody>
+	</table>
+	{% else %}
+	<div style="text-align: center; color: #2c3e50; margin: 10% auto;">
+		<i class="icons icons-x-lg icons-book"></i><br>
+		<h3>No Assignments Yet.</h3>
+		<h5>You can explore other features of acadlytics <a href="">HERE</a></h5>
+	</div>
+	{% endif %}
+</div>
+	
+{% endblock %}
+{% block side%}
+
+<div class="panel panel-default" style="min-height: 200px; margin-top: 5px;">
+	<div class="panel-body">
+		<div class="sub-panel">
+			<h4><strong>Query Filter</strong></h4>
+		</div>
+		<form action="">
+			<div class="form-group">
+				<label for="id_level">By Level:</label>
+				<select name="level" class="form-control input-sm" id="id_level">
+				<option value="all">Select Level</option>
+				<option value="100">100 Level</option>
+				<option value="200">200 Level</option>
+				<option value="300">300 Level</option>
+				<option value="400">400 Level</option>
+				<option value="500">500 Level</option>
+				<option value="600">600 Level</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="id_course">By Course:</label>
+				<select id="id_course" name="course" class="form-control input-sm">
+				<option value="all">Select Course</option>
+				{% for course in courses %}
+				<option value="{{course.name}}">{{course}}</option>
+				{% endfor %}
+				</select>
+				<small class="text-muted">[Showing courses that you lecture only]</small>
+			</div>
+			<div class="form-group">
+				<label for="id_category">By Category:</label>
+				<select name="category" id="id_category" class="form-control input-sm">
+				<option value="all">Select Category</option>
+				<option value="major assignment">Major Assignment</option>
+				<option value="quiz">Quiz</option>
+				<option value="mock assignment">Mock Assignment</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-sm custom-btn" type="search">Filter Queryset</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script>
+	
+</script>
+{% endblock %}

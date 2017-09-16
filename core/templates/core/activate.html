@@ -1,0 +1,47 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Activate Account</h3>
+</div>
+
+<div class="col-md-8 center-block">
+	<div class="panel panel-default">
+		<form method="post">{% csrf_token %}
+			<div class="panel-body">
+				<div class="sub-panel">
+					<h5>Acccount Activation</h5>
+				</div>
+				<div class="sub-panel add-padding">
+					{% for field in form %}
+					{% if field.html_name != "short_motivation_quote" %}
+					<div class="form-group">
+						{{field.label}}<span><small class="text-muted"> {{field.help_text}}</small></span>
+						<span style="float: right;"><label class="toggle">
+							<input hidden="hidden" id="{{field.id_for_label}}" {% if field.value %}checked{% endif %} type="checkbox" name="{{field.html_name}}" class="toggle_input">
+							<div class="toggle_control"></div>
+						</label>
+					</div>
+					{% else %}
+					<div class="form-group">
+						<label for="field.id_for_label">{{ field.label }}</label>
+						{{field}}
+						<small class="text-muted">{{field.help_text}}</small>
+					</div>
+					{% endif %}
+					{% endfor %}	
+				</div>
+			</div>
+			<div class="sub-panel" style="border-bottom: none; padding-left: 10px;">
+				<button class="btn btn-sm custom-btn" type="submit">Activate</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block aside %}
+
+{% endblock %}

@@ -1,0 +1,139 @@
+<div id="tabs" class="tabs">
+  <nav>
+    <ul>
+      <li><a href="#section-1">User Setup</a></li>
+      <li><a href="#section-2">Personal Details</a></li>
+      <li><a href="#section-3">Academics</a></li>
+      <li><a href="#section-4">Other Info</a></li>
+    </ul>
+  </nav>
+  <div class="content panel panel-default">
+    <section id="section-1" class="">
+      <div class="content-detail">
+        <h4>Login Details</h4>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Username</td>
+              <td>{{request.user.username}}</td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><em>Hidden</em> <i class="icons icons-sm icons-info" data-toggle="popover" title="Your password cannot be seen because it has been encripted securedly."></i></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>{{request.user.email}}</td>
+            </tr>
+            <tr>
+              <td>First Name</td>
+              <td>{{request.user.first_name}}</td>
+            </tr>
+            <tr>
+              <td>Middle Name</td>
+              <td>{{student.middle_name}}</td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td>{{request.user.last_name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="section-2">
+    <div class="content-detail" id="personal">
+      <h4><strong>Personal Details</strong></h4>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Gender</td>
+              <td>{% if student.sex == 'F' %}Female{% elif student.sex == 'M' %}Male{% endif %}</td>
+            </tr>
+            <tr>
+              <td>Marital Status</td>
+              <td>{{student.get_marital_status}}</td>
+            </tr>
+            <tr>
+              <td>Date of Birth</td>
+              <td>{{student.birth_date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="content-detail">
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>State of Residence</td>
+              <td>{{student.state_of_residence}}</td>
+            </tr>
+            <tr>
+              <td>Nationality</td>
+              <td>{{student.country}}</td>
+            </tr>
+            <tr>
+              <td>State of Origin</td>
+              <td>{{student.state_of_origin}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="section-3">
+      <div class="content-detail">
+        <h4>Academics</h4>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Registration Number</td>
+              <td>{{student.reg_number}}</td>
+            </tr>
+            <tr>
+              <td>Institution</td>
+              <td style="width: 60%;">{{student.institution}}</td>
+            </tr>
+            <tr>
+              <td>Faculty</td>
+              <td>{{ student.faculty}}</td>
+            </tr>
+            <tr>
+              <td>Department</td>
+              <td>{{student.department}}</td>
+            </tr>
+            <tr>
+              <td>Current Level</td>
+              <td>{{student.level}}</td>
+            </tr>
+             <tr>
+              <td>Year of Admission</td>
+              <td>{{student.year_of_admission}}</td>
+            </tr>
+            <tr>
+              <td>Estimated Year of Graduation</td>
+              <td>{{student.year_of_graduation}}</td>
+            </tr>
+            <tr>
+              <td>Program Type</td>
+              <td>{{student.get_program_type}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+    </section>
+    <section id="section-4">
+      <div class="content-detail">
+        <h4>Payment <span style="font-size: 14px;">[COMING SOON!]</span></h4>
+        <p>You will be able to subscribe to a plan <strong>[Monthly, Semesterly, or Sessionally]</strong> and we will notify you once your subscription is about to expire or you can pay everytime your payment expires</p>
+      </div>
+      <div class="content-detail">
+        <h4>Result Upload</h4>
+        <p>Your results are always <strong>LIVE</strong> the moment your school uploads them. If you are operating a custom account, you get to see your analysis as soon as you upload your results.</p>
+      </div>
+      <div class="content-detail">
+        <h4>Collaboration</h4>
+        <p>One of the essence of acadlytics is for collaboration. It is to ensure an effective study admosphere for students among their peers and lecturers even with lecturers that are not of your institution.</p>
+      </div>
+    </section>
+  </div>
+</div>

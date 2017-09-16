@@ -1,4 +1,4 @@
-{% extends "staff/dashboard.html" %}
+{% extends "dashboard.html" %}
 
 {% load crispy_forms_tags %}
 {% load staticfiles %}
@@ -8,12 +8,12 @@ Import Result &raquo;
 {% endblock %}
 
 {% block content %}
-    <h3 style="margin-top: 0px; border-radius: 5px; padding: 5px; color: #111; border-bottom: 2px solid #c15;">
-        <i class="fa fa-database" aria-hidden="true"></i> Data Import...
-    </h3>
-    <div class="row">
-      <div class="col-md-6">
-          <h4>Instructions</h4>
+    <div style="margin-bottom: 30px;">
+       <h3 class="page-header">Result Import Pane</h3>
+    </div>
+    
+      <div class="col-md-6 panel panel-default">
+          <h3 class="head-color">Instructions for Assignment/Quiz</h3>
           <p>
             To properly import your data, the <b>CSV</b> file must follow
             this order and format:
@@ -26,26 +26,73 @@ Import Result &raquo;
             <li>Semester</li>
             <li>Session</li>
             </ol>
-            You can also download this template as a guide:
-              <a href="{% static 'samples/csv_import_template.csv' %}">csv_import_template.csv</a>
           </p>
+          <div class="import-footer">
+            You can also download this template as a guide:<br>
+              <a href="{% static 'samples/assignment_import_template.csv' %}" class="head-color"><i class="icons icons-sm icons-file"></i> assignment_or_quiz_import_template.csv</a>
+          </div>
+        </div>
+        <div class="col-md-6 panel panel-default">
+          <h3 class="head-color">Instructions for Exam Uploads</h3>
           <p>
-             <span style="font-size: 1.1em; font-weight: 600; color: #c19;">Note:</span> You have to make sure all your upload files are in your documents folder
+            To properly import your data, the <b>CSV</b> file must follow
+            this order and format:
+            <ol>
+            <li>Registration Number</li>
+            <li>Course Code(if no matching course in our system,
+            'No course' will be assigned)</li>
+            <li>Score</li>
+            <li>Level</li>
+            <li>Semester</li>
+            <li>Session</li>
+            </ol>
+            <div class="import-footer">
+              You can also download this template as a guide:<br>
+              <a href="{% static 'samples/exam_import_template.csv' %}" class="head-color"><i class="icons icons-sm icons-file"></i> exam_import_template.csv</a>
+            </div>
           </p>
         </div>
+        <div class="col-md-6 panel panel-default">
+          <h3 class="head-color">Instructions for All Results</h3>
+          <p>
+            <ol>
+            <li>Registration Number</li>
+            <li>Course Code</li>
+            <li>Assignment Score</li>
+            <li>Quiz Score</li>
+            <li>Exam Score</li>
+            <li>Level</li>
+            <li>Semester</li>
+            <li>Session</li>
+            </ol>
+          </p>
+          <div class="import-footer">
+            You can also download this template as a guide:<br>
+              <a href="{% static 'samples/all_result_import_template.csv' %}" class="head-color"><i class="icons icons-sm icons-file"></i> all_result_import_template.csv</a>
+          </div>
+        </div>
 
-        <div class="col-md-6" style="margin-bottom: 30px; padding: 40px;">
-            <form method="post" action="{% url "results:upload_csv" %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="col-md-6 panel panel-default" style="margin-bottom: 30px; padding: 11px; background: #f9f9f9;">
+            <form method="POST" action="{% url 'import_json' %}" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-group">
+                <label for="id_upload_type">Upload Type</label>
+                  <select name="upload_type" id="id_upload_type" class="form-control">
+                    <option value="all">All</option>
+                    <option value="quiz_score">Quiz Scores</option>
+                    <option value="assignment_score">Assignment Scores</option>
+                    <option value="exam_score">Examination Scores</option>
+                  </select>
+                  <small class="text-muted"><strong>Please  ensure to choose the right upload type to avoid uploading into the wrong database table since all the single results are of the same layout format.</strong></small>
+                </div>
                 <div class="form-group">
                   {{ form }}
-                  <div style="margin-top: 20px; width: 40%;">
-                      <button id="import" disabled="disabled" class="btn btn-primary btn-sm btn-block" type="submit">Import</button>
+                  <div style="margin-top: 30px; width: 40%;">
+                      <button id="import" disabled="disabled" class="btn custom-btn btn-sm btn-block" type="submit">Import</button>
                   </div>
                 </div>              
             </form>
         </div>
-    </div>
-    <div class="row" style="margin: 5px;">
+    <div class="col-md-12 scroll" style="padding: 4px; width: 100%; overflow-x: auto; border-radius: 3px; border: 1px solid #f1f1f1;">
       <div id="import_container">
       </div>
     </div>
@@ -73,12 +120,30 @@ Import Result &raquo;
           table_data += '</tr>';
         }
         table_data += '</table>';
-        console.log(table_data);
         var output = document.getElementById('import_container');
-        output.innerHTML = '<h3>PREVIEW DATA</h3>';
+        output.innerHTML = '<h4 style="margin-left: 10px; font-weight: 600;">Previewed Records</h4>';
         output.innerHTML += table_data;
         document.getElementById('import').disabled = false;
       }
     });
+
+    var ajax_url = "{% url 'import_json' %}";
+    function loadData(path){
+        $.post({
+          type: 'POST',
+          data: $('#id_file').files[0],
+          url: path,
+          success: function(data) {
+            update_messages(data.messages);
+          }
+        });
+    }
+
+    function update_messages(messages){
+        $("#notification").html("");
+        $.each(messages, function (i, m) {
+                $("#notification").append("<div class='alert alert-"+m.tags+"''>"+m.message+"</div>");
+            });
+    }
   </script>
 {% endblock %}

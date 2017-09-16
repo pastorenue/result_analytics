@@ -1,21 +1,17 @@
-{% extends 'students/student_profile.html' %}
+{% extends 'dashboard.html' %}
 {% load staticfiles %}
 
 {% block extrahead%}
   
 {% endblock %}
 
-{% block side_panel %}
-    
-{% endblock %}
-
 {% block breadcrumbs %}
 {% if user.is_staff %}<a href="{% url 'students:students_list' %}">All students &raquo;</a>{% endif %} {{ student }}'s Analysis
 {% endblock %}
 
-{% block inner_content %}
-    <div>
-        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid #1c4;"> {{ student }}'s Analysis Breakdown</h2>
+{% block content %}
+    <div class="row clearfix" style="margin-left: 10px; margin-bottom: 20px;">
+        <h3 class="page-header">{{ student.reg_number }} - Analysis Breakdown</h3>
     </div>
     <div class="row">
         <div class="col-md-6">

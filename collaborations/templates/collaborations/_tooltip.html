@@ -1,0 +1,26 @@
+<div class="modal-dialog" style="width: 30%;">
+  <div class="modal-content">
+    <form method="POST" action="{% url 'collaborate:add-friend' %}">{% csrf_token %}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 style="text-align: center;">Friend Request to <strong>{{friend}}</strong></h4>
+      </div>
+      <div class="modal-body">
+        <div style="margin: 0 auto;">
+            <input type="text" value="{{friend.user.id}}" name="other_user_id" hidden="hidden">
+            <div class="form-group">
+              <label for="id_message">Short Message <small>[optional]</small>: </label>
+              <textarea name="message" id="id_message" cols="20" rows="2" class="form-control" placeholder="Attach a short message"></textarea>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <button type="submit" class="btn btn-sm custom-btn">Send request</button>
+          <button type="button" class="btn btn-sm btn-primary" onclick="location.href='{% url 'collaborate:follow' friend.user.id %}'">Follow</button>
+          <button type="button" class="btn btn-sm btn-info" onclick="location.href='{% url 'students:student_account' friend.slug %}'"><i class="icons icons-sm icons-user"></i> See Profile</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+{% load staticfiles thumbnail %}
+
+<div style="margin-bottom: 5px;">
+ <h3 style="border-bottom: 2px solid rgba(0,0,0,0.04); font-weight: 600;">Your Collaborators</h3>
+</div>
+{% if friends %}
+{% for friend in friends %}
+<div class="friend">
+  {% if friend.student.photo %}
+  {% thumbnail friend.student.photo "100x100" crop="top" as im %}
+  <img src="{{im.url}}" alt="{{req.from_user.student}}">
+  {% endthumbnail %}
+  {% else %}
+  <img src="{% static 'images/avatar.png' %}" alt="avatar">
+  {% endif %}
+<div>
+  <h4>{{ friend.student }}</h4>
+  <p>{{friend.student.department}}</p>
+  <p>{{friend.student.institution}}</p>
+</div>
+<span>
+  <button class="btn btn-sm"><i class="icons icons-sm icons-chat"></i> Interact Now</button> 
+  <label for="" class="dropdown"><a href="#" data-toggle="dropdown"><i class="icons icons-sm icons-ellipse"></i> </a>
+        <ul class="dropdown-menu" role="menu" style="left: -110px !important; background-color: #fff; color: #21a380; border-top: 1px solid  #34495e; top: 24px;">
+              <li><a href="{% url 'collaborate:cancel_friendship' friend.id %}"> Cancel Friendship</a></li>
+        </ul> 
+      </label>
+    </span>
+</div>
+{% endfor %}
+{% else %}
+<div class="add-padding center-block" style="text-align: center;">
+  <h4>No Collaborators For You Yet</h4>
+</div>
+{% endif %}

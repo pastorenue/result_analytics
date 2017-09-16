@@ -1,46 +1,57 @@
 {% load staticfiles %}
 {% load thumbnail %}
 <div class="basicprofile vcard">
-   
-   {%if student.photo %}
-   {% thumbnail student.photo "100x100" crop="top" as im %}
-   <img class="photo img-circle" src="{{ im.url}}" />
-   {% endthumbnail %}
-   {% else %}
-   <img class="photo img-circle" src="{% static 'images/avatar.png' %}" />
-   {% endif %}
-    <div class="n">
-        <a href="{{ student.get_absolute_url }}">
-        <span class="given-name">{{ student.first_name }}</span>
-        {% if student.middle_name %}<span class="additional-name">{{ student.middle_name }}</span>{% endif %}
-        <span class="family-name">{{ student.last_name }}</span>
-        </a>
-    </div>
-    <div>
-        Student of {{ student.department }}
-    </div>
-    <div class="org">
-        {% if student.user_status == 'G' %}{{ student.first_name }} has Graduated
-     {% elif student.user_status == 'S' %}{{ student.first_name }} is on Suspension
-  {% else %}Currently in {{ student.level }}
-        <span class="organization-unit"> Level</span>
-     {% endif %}
-    </div>
-    {% if student.email %}
-    <div class="email">
-        <i class="fa fa-fw fa-envelope"></i>
-        <span class="value">{{ student.email|urlize }}</span>
-    </div>
-    {% endif %}
-    {% if student.phone %}
-    <div class="tel">
-        <i class="fa fa-fw fa-phone"></i>
-        <span class="value">{{ student.phone }}</span>
-    </div>
-    {% endif %}
-    
-    {% if is_own_profile or user.is_staff %}
-    <div class="">
-        <a class="edit-section" href="#">Edit</a>
-    </div> {% endif %}
-</div>
+   <div class="row">
+       <div class="col-md-4 col-sm-6">
+           <div class="panel panel-default add-padding">
+                <div class="sub-panel add-padding">
+                    <form method="POST" action="">{% csrf_token %}
+                        <button class="btn btn-sm custom-btn">Request for Details</button>
+                    </form>
+                </div>
+               <div class="">
+                   {%if student.photo %}
+                   {% thumbnail student.photo "127x127" crop="top" as im %}
+                   <img class="img-hexagon img-circle" src="{{ im.url}}" />
+                   {% endthumbnail %}
+                   {% else %}
+                   <img class="img-hexagon img-circle" src="{% static 'images/avatar.png' %}" />
+                   {% endif %}
+               </div>
+           </div>
+       </div>
+       <div class="col-md-8 col-sm-6">
+           <div class="panel panel-default add-padding" style="height: 251px;">
+                <h3><strong>{{ student.full_name }}</strong></h3>
+                <div>
+                    <h4>Student of {{ student.department }}</h4>
+                </div>
+                <div>
+                    {% if student.user_status == 'G' %}{{ student.first_name }} has Graduated
+                    {% elif student.user_status == 'S' %}{{ student.first_name }} is on Suspension
+                    {% else %}Currently in {{ student.level }}
+                    <span> Level <i class="icons icons-sm icons-info" data-toggle="popover" title="Set your school year to enable automatic update of your level"></i></span>
+                    {% endif %}
+                </div>
+                {% if student.email %}
+                <div class="email">
+                    <span class="value"><i class="icons icons-sm icons-email"></i> {{ student.email|urlize }}</span>
+                </div>
+                {% endif %}
+                {% if student.phone %}
+                <div class="tel">
+                    <i class="icons icons-sm icons-mobile"></i>
+                    <span class="value">{{ student.phone }}</span>
+                </div>
+                {% endif %}
+                
+                {% if is_own_profile or user.is_superuser %}
+                <div class="">
+                    <a class="edit-section" href="#"><i class="icons icons-sm icons-edit"></i>Edit</a>
+                </div> 
+                {% endif %}
+                </div>
+            </div>
+        </div>
+   </div>
+

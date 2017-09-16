@@ -1,0 +1,66 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}<a>User Account</a>{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">User Account</h3>
+</div>
+
+<div class="col-md-12 center-block">
+	{% include 'staff/_account_details.html' %}
+</div>
+{% endblock %}
+{% block side%}
+
+<div class="panel panel-default" style="min-height: 300px;">
+	<div class="panel-body">
+		<div class="sub-panel add-padding">
+			{% if request.user.activation.activated %}
+			<button type="button" class="btn btn-sm custom-btn"><i class="icons icons-deactivate icons-sm"></i> Deactivate Account</button>
+			{% else %}
+			<button type="button" class="btn btn-sm custom-btn" onclick="location.href='{% url 'activate' %}'"><i class="icons icons-activate icons-sm"></i> Activate Account</button>
+			{% endif %}
+		</div>
+		<div class="sub-panel add-padding">
+			<p>
+				<i class="icons icons-x-lg icons-hat"></i><br>
+				<span style="color: #34495e; font-weight: 700;">Notice:</span><br>
+				All information here are highly secured. you're rest 
+				assured your data is safe with Acadlytics
+			</p>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="sub-panel">
+			<form method="post" action="{% url 'update_quote' %}">{% csrf_token %}
+				<div class="form-group">
+				<label for="quote">Update Motivation Quote</label>
+					<textarea style="color: #000;" id="id_quote" name="quote" rows="7" class="form-control scroll">
+						{{request.user.activation.short_motivation_quote}}
+					</textarea>
+				</div>
+				<div class="sub-panel" style="border-bottom: none; padding-left: 10px;">
+					{% if request.user.activation.activated %}
+					<button class="btn btn-sm custom-btn" type="submit">Save Changes</button>
+					{% else %}
+					<button class="btn btn-sm custom-btn" type="button" data-toggle="popover" title="Sorry! You need to activate your account before you can update your quote. Activate by clicking the activation button above." data-content="">Save Changes</button>
+					{% endif %}
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="{% static 'js/cbpFWTabs.js' %}"></script>
+<script>
+	new CBPFWTabs( document.getElementById( 'tabs' ) );
+</script>
+{% endblock %}

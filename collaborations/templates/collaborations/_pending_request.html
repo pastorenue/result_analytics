@@ -1,0 +1,29 @@
+{% load staticfiles thumbnail %}
+
+<div style="margin: 10px;">
+   <h3 style="border-bottom: 2px solid rgba(0,0,0,0.04); font-weight: 600;">Pending Collaborators</h3>
+</div>
+{% if requests %}
+{% for req in requests %}
+<div class="request">
+  {% if req.from_user.student.photo %}
+  {% thumbnail req.from_user.student.photo "100x100" crop="top" as im %}
+  <img src="{{im.url}}" alt="{{req.from_user.student}}">
+  {% endthumbnail %}
+  {% else %}
+  <img src="{% static 'images/avatar.png' %}" alt="avatar">
+  {% endif %}
+  <div>
+    <p>{{req.from_user.student}}</p>
+    <p>{{req.from_user.student.department}}</p>
+    <p>{{req.from_user.student.institution}}</p>
+  </div>
+  <button class="btn btn-sm btn-success" onclick="location.href='{% url 'collaborate:accept' req.id %}'"><i class="icons icons-sm icons-chat"></i> Accept</button>
+  <button class="btn btn-sm btn-danger" onclick="location.href='{% url 'collaborate:reject' req.id %}'"> Reject</button>
+</div>
+{% endfor %}
+{% else %}
+<div class="add-padding center-block" style="text-align: center;">
+	<h4>No Available Requests</h4>
+</div>
+{% endif %}

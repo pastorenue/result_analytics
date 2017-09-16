@@ -1,0 +1,61 @@
+{% load staticfiles %}
+{% load thumbnail notifications_tags %}
+{% notifications_unread as unread_count %}
+
+<div class="" style="position: fixed; width: 100%; top: 0; z-index: 150; padding-top: 8px; background-color: #fff; border-bottom: 2px solid #c16;"><!--top nav container-->
+    <div class="row" style="padding: 0 30px;">
+      <div class="col-md-6" style="padding-left: 40px;">
+          
+          <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><i class="icons icons-sm icons-home"></i> {% if user.is_staff %} {{ user|capfirst }}'s Space{% else %} Result Analytics{% endif %}</a> &raquo; {% block breadcrumbs %}{% endblock %}
+          
+          <!--Main breadcrumb Section-->
+      </div>
+      
+      <div class="col-md-6" style="padding-left: 20px;">
+          <a href="" style="color: #bbc; text-decoration: none; "><i class="icons icons-sm icons-cloud-download"></i> Download</a>
+          <a href="{% url 'user-settings' %}" style="color: #bbc; text-decoration: none; padding-left: 20px;"><span><i class="icons icons-sm icons-settings"></i> Settings</a>
+             {% if not request.user.activation.activated %}
+             <span style="color: #c12c12; font-weight: 600;">[TEST MODE]</span>
+             {% endif %}
+          <label id="new_info" class="pull-right" style="margin-right: 10px; cursor: pointer;"><i class="icons icons-sm icons-bell"></i><span class="icon-badge">{{unread_count}}</span></label>
+          <div id="notification_pane" class="panel panel-default notifications">
+              <h4><strong>Notifications</strong> <span style="float: right; font-size: 14px; padding-right: 5px;"><a href="{% url 'notifications:mark_all_as_read' %}">mark all as read</a></span></h4>
+              <div class=" ">
+                {% for notification in user.notifications.unread %}
+                <div class="item">
+                  <a href="{% url 'collaborate:collaboration_index' %}#section-4"><h5>{{notification.verb}}</h5></a>
+                </div>
+                {% empty %}
+                <div>
+                  <h5>No notifications available</h5>
+                </div>
+                {% endfor %}
+              </div>    
+          </div>
+          <label class="dropdown pull-right" style="padding-left: 30px; padding-right: 20px;">
+              <a href="#" data-toggle="dropdown" style="text-decoration: none; color: #bbc;">
+              {% if request.user.student.photo %}
+              {% thumbnail user.student.photo "25x25" crop="center" as im %}
+                    <img style="padding: 2.5px; background-color: #fff;" class="img-circle" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+              {% endthumbnail %}
+              {% else %}
+                    <img style="padding: 2.5px; background-color: #fff;" class="img-circle" src="{% static 'svg/user.svg' %}" width="25" height="25">
+              {% endif %}
+           <span>Welcome {{ user.first_name|capfirst }}</span><b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu" style="font-size: 12px; background-color: #edf0ef; color: #21a380; border-top: 2px solid #0d8363; top: 28px;">
+                {% if request.user.is_staff %}
+                    <li><a href="{% url 'staff_account' %}"><i class="icons icons-sm icons-user"></i> Account Details</a></li>
+                    {% else %}
+                    <li><a href="{% url 'students:student_account' request.user.student.slug %}"><i class="icons icons-sm icons-user"></i> Account Details</a></li>
+                    {% endif %}
+                    <li class="divider"></li>
+                    <li><a href="{% url 'change-password' %}"><i class="icons icons-sm icons-lock"></i> Change Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'result_logout' %}"><i class="icons icons-sm icons-sign-out"></i> Logout</a></li>
+              </ul>
+            </label>
+          <!--Main Menu Section-->
+      </div>
+    </div>
+    {% include '_mainbar.html' %}
+</div><!--end of nav container div-->

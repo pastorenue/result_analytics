@@ -1,0 +1,83 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block breadcrumbs %}<a>User Account</a>{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 style="border-bottom: 2px solid rgba(0,0,0,0.04);">User Account <span style="float: right; font-size: 16px;"><a href="{% url 'students:edit-profile' %}" class="pull-right"><i class="icons icons-sm icons-edit"> Edit</i></a></span></h3>
+</div>
+
+<div class="col-md-12 center-block">
+	{% include 'students/_account_details.html' %}
+</div>
+{% endblock %}
+
+{% block side%}
+<div class="panel panel-default" style="min-height: 300px; margin-top: 5px;">
+	<div class="panel-body">
+		<div class="sub-panel add-padding">
+			{% if student.photo %}
+			{% thumbnail student.photo "100x100" crop="center" as im %}
+			<img  class="img-circle" src="{{im.url}}" width="{{im.width}}" height="{{im.height}}">
+			{% endthumbnail %}
+			{% else %}
+			<i class="icons icons-x-lg icons-user" style="font-size: 6em;"></i>
+			{% endif %}
+			<a href="{{student.get_absolute_url}}"><h3><strong>{{student}}</strong></h3></a>
+			<p>{{student.department}}, Faculty of {{student.faculty}}</p>
+			<form method="POST" id="form_update" action="{% url 'students:update_photo' %}" enctype="multipart/form-data">{% csrf_token %}
+				<input id="id_photo" type="file" style="position: absolute; top: -100px;" name="photo">
+				<input type="hidden" name="user_id" value="{{student.id}}">
+				<input type="submit" id="frm_submit" hidden="hidden">
+				<button id="photo_change" class="btn btn-sm custom-btn" type="button">Change Photo</button>
+			</form>
+			<div id="container" style="display: none;">
+				<h5>Image Preview</h5>
+				<img id="img_preview" src="" style="width: 100px; height: 110px; border-radius: 4px; padding: 3px; border: 2px solid #f1f1f1;">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="sub-panel">
+			<img src="{{ student.institution.logo.url}}" width="95" height="110">
+		</div>
+		<div>
+			{{student.institution}}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'js/cbpFWTabs.js' %}"></script>
+<script>
+	new CBPFWTabs( document.getElementById( 'tabs' ) );
+</script>
+
+<script>
+	file_input = document.getElementById('id_photo');
+	$("button").click(function() {
+		console.log(this);
+		file_input.click(); 
+
+	});
+
+	function preview_image(file_input_id, preview_image_id){
+        var ofReader = new FileReader();
+        ofReader.readAsDataURL(document.getElementById(file_input_id).files[0]);
+        ofReader.onload = function(ofReader){
+            document.getElementById(preview_image_id).src = ofReader.target.result;
+        }
+    }
+
+    $('#id_photo').change(function(){
+        preview_image('id_photo','img_preview');
+        $('#container').css('display', 'inline-block');
+        $('#frm_submit').click();
+    	});   
+</script>
+{% endblock %}

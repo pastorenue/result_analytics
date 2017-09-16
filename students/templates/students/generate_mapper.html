@@ -1,0 +1,46 @@
+{% extends "dashboard.html" %} 
+{% load crispy_forms_tags %} 
+{% load staticfiles %} 
+
+{% block breadcrumbs %} Import Result &raquo; {% endblock %} 
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+    <h3 class="page-header">Student Reg-Map Generator</h3>
+</div>
+<div class="col-md-10 center-block">
+    <p>A <strong>Reg-Map</strong> is a unique ID that maps a students registration number to a particular school. 
+    It enables and saves the school the huddle of creating a user account for each student.
+     </p>
+     <br>
+     <h4 class="head-color"><strong>STEPS</strong></h4>
+     <p>1) Save all students reg numbers in an excel file with two columns: <br> (i)Reg Number and (ii) Short Code of Institution</p>
+     <p>2) Upload it to the Reg-Mapper and it generates unique IDs for each students and returns thesame file as a downloadable  having the last column containing the Mapped ID</p>
+     <p>3) This can be pasted on a notice board for students to copy and used for their sign up</p>
+</div>
+<div class="col-md-10 center-block panel panel-default" style="margin-bottom: 30px; padding: 15px; background: #f9f9f9;">
+    <form method="POST" action="{% url 'students:generate' %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="form-group">
+            {{ form }}
+            <div style="margin-top: 30px; width: 40%;">
+                <button id="import" disabled="disabled" class="btn custom-btn btn-sm btn-block" type="submit">Generate Mapper</button> </div>
+        </div>
+        <div class="form-group">
+            <p class="text-muted">An excel file will be downloaded once you click the "Generate Mapper" button.
+             Check your local downloads folder for the file</p>
+        </div>
+    </form>
+</div>
+<div class="col-md-12 scroll" style="padding: 4px; width: 100%; overflow-x: auto; border-radius: 3px; border: 1px solid #f1f1f1;">
+    <div id="import_container">
+    </div>
+</div>
+{% endblock %} 
+
+{% block extrajs %}
+<script>
+    $('#id_file').change(function() {
+        $('#import').attr('disabled', false);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}<a>Assignments</a>{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Assignments </h3>
+</div>
+
+<div class="col-md-12 panel panel-default">
+	{% if assignments %}
+	<table class='table table-condensed'>
+	    <thead>
+	        <tr>
+	            <th style="width: 7%;">Status</th>
+	            <th style="width: 18%;">Lecturer</th>
+	            <th style="width: 35%;">Courses</th>
+	            <th style="width: 8%;">Semester</th>
+	            <th>Level</th>
+	            <th style="width: 7%;">Score</th>
+	            <th style="width: 7%;">Points</th>
+	            <th style="width: 7%;">Action</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	    	{% for ass_score in assignments %}
+    		<tr>
+    			<td><div class="{{ass_score.status}}"></div></td>
+    			<td>{{ass_score.assignment.lecturer}}</td>
+    			<td><a href="#{{ass_score.assignment.assignment_code}}" data-toggle="modal">{{ass_score.assignment.course}}</a></td>
+    			<td>{{ass_score.assignment.semester}}</td>
+    			<td>{{ass_score.assignment.level}}</td>
+    			<td>{{ass_score.score}}</td>
+    			<td>{{ass_score.assignment.possible_points}}</td>
+    			{% if ass_score.status == 'A' %}
+    			<td><button class="btn btn-sm custom-btn" onclick="location.href='{% url 'assignment:submit_assignment' ass_score.assignment.assignment_code %}'">Submit</button></td>
+    			{% else %}
+    			<td style="font-weight: 600; color: #8e44ad;">No Action</td>
+    			{% endif %}
+    		</tr>
+    		{% include 'assignments/assignment_detail.html' %}
+	    	{% endfor %}
+	    </tbody>
+	</table>
+	{% else %}
+	<div style="text-align: center; color: #2c3e50; margin: 10% auto;">
+		<i class="icons icons-x-lg icons-book"></i><br>
+		<h3>No Assignments Yet.</h3>
+		<h5>You can explore other features of acadlytics <a href="">HERE</a></h5>
+	</div>
+	{% endif %}
+</div>
+	
+{% endblock %}
+{% block side%}
+
+<div class="panel panel-default" style="min-height: 200px; margin-top: 5px;">
+	<div class="panel-body">
+		<div class="sub-panel">
+			<h4><strong>Status Colour Code</strong></h4>
+		</div>
+		<div class="add-padding" id="container">
+			<table class="table table-condensed">
+				<tbody>
+					<tr><td><div class="A"></div></td><td>Active</td></tr>
+					<tr><td><div class="D"></div></td><td>Declined</td></tr>
+					<tr><td><div class="S"></div></td><td>Submitted</td></tr>
+					<tr><td><div class="M"></div></td><td>Marked</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script>
+	
+</script>
+{% endblock %}

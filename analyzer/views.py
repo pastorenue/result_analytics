@@ -11,7 +11,7 @@ from result_analytics.utils.excel import ExcelReport
 from results.models import Result, CGPA
 from decimal import Decimal
 from courses.models import Course
-from analyzer.utils import cgpaData, ChartData, RegressionModel, ResultData, MainData as main
+from analyzer.utils import cgpaData, StudentChartData, RegressionModel, ResultData, MainData as main
 
 
 @login_required
@@ -40,9 +40,9 @@ def course_analysis(request, course_id=None, department=None, level=None):
     pass
 
 @login_required
-def cgpa_by_level(request,  student_id, chartID='container', chart_type = 'area', chart_height=300):
-    student = get_object_or_404(Student, pk=student_id)
-    fcgpa = cgpaData.get_fcgpa(student_id)
+def cgpa_by_level(request,  student_slug, chartID='container', chart_type = 'area', chart_height=300):
+    student = get_object_or_404(Student, slug=student_slug)
+    fcgpa = cgpaData.get_fcgpa(student.id)
     degree = ""
     if fcgpa >=4.5:
         degree = "You are currently on FIRST CLASS"
@@ -59,7 +59,7 @@ def cgpa_by_level(request,  student_id, chartID='container', chart_type = 'area'
     level = []
     pseudo_level = []
     data = {'level':[], 'cgpa':[]}
-    res = Result.objects.filter(student_id=student_id)
+    res = Result.objects.filter(student_id=student.id)
     for r in res:
         pseudo_level.append(r.level)
     for i in range(100, 700, 100):
@@ -86,12 +86,12 @@ def cgpa_by_level(request,  student_id, chartID='container', chart_type = 'area'
         'series': series,
     }
     
-    return render(request, "analyzer/test_file.html", context)
+    return render(request, "analyzer/cgpa_level.html", context)
 
 @login_required    
-def student_cgpa_analysis(request, student_id, chartID='container', chart_type = 'area', chart_height=300):
-    student = get_object_or_404(Student, pk=student_id)
-    data = cgpaData.get_cgpa(student.id)
+def student_cgpa_analysis(request, student_slug, chartID='container', chart_type = 'area', chart_height=300):
+    student = get_object_or_404(Student, slug=student_slug)
+    data = cgpaData.get_cgpa('2017', student.id)
     
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, "zoomType": 'xy'}
     title = {"text": "%s's CGPA Analysis Chart" % (student)}
@@ -142,12 +142,11 @@ def all_analysis(request, template_name='analyzer/analytics_main.html', chartID=
     
     #average cgpa analysis by gender
     avg_data = main.average_performance()
-    chart = {"renderTo": 'chart_avg', "type": "column", "height": 270, "zoomType": 'xy'}
+    chart = {"renderTo": 'chart_avg', "type": "area", "height": 270, "zoomType": 'xy'}
     title = {"text": "Yearly Average Performance"}
     xAxis = {"title": {"text": 'Year'}, "categories": avg_data['year']}
     yAxis = {"title": {"text": "Average CGPAs"}, "min": 0}
-    series = [{"name": "Males", "data": avg_data['male']},
-        {"name": "Female", "data": avg_data['female']}]
+    series = [{"name": "Annual CGPA Average", "data": avg_data['avg_cgpa']}]
     
     #average analysis by courses
     course_data = main.average_course_performance()
@@ -189,14 +188,14 @@ def all_analysis(request, template_name='analyzer/analytics_main.html', chartID=
     return render(request, template_name, context)
 
 @login_required
-def student_analysis(request, student_id, chartID='container', chart_type = 'bar', chart_height=300):
-    student = Student.objects.get(pk=student_id)
+def student_analysis(request, student_slug, chartID='container', chart_type = 'bar', chart_height=300):
+    student = get_object_or_404(Student, slug=student_slug)
     current_level = student.level
     default_level = 100
     last_passed_level = current_level-default_level
     semester = request.GET.get('semester', 1)
     level = request.GET.get('level', '')
-    result = ChartData.student_result_data(student_id, current_level) 
+    result = StudentChartData.student_result_data(student.id, current_level) 
     
     #details for previous levels
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, "zoomType": 'xy'}
@@ -206,19 +205,23 @@ def student_analysis(request, student_id, chartID='container', chart_type = 'bar
     series = [{'name': 'Scores (%)','data': result['score']}]
     
     #details for current level
-    results = Result.objects.filter(student_id=student_id).order_by('level')
+    results = Result.objects.filter(student_id=student.id).order_by('level')
     other_result = {'score':[], 'course':[]}
     
     for result in results:
         if result.level != current_level:
-            other_result['score'].append(float(result.score))
+            other_result['score'].append(float(result.total_score))
             other_result['course'].append(str(result.course)[:6])
     
     o_chart = {"renderTo": "chart", "type": "column", "height": chart_height, "zoomType": 'x'}
     if last_passed_level == 0:
         o_title = {"text": "No Past Records for %s" % (student)}
-    else:    
-        o_title = {"text": "Student's Previous Level Performance: (%s To %s Level)" % (default_level, last_passed_level)}
+    else:  
+        if last_passed_level == default_level:
+            o_title = {"text": "Student's Previous Level Performance: (%s Level)" % (default_level )}
+        else:
+            o_title = {"text": "Student's Previous Level Performance: (%s To %s Level)" % (default_level, last_passed_level )}
+
     o_xAxis = {"title": {"text": 'Courses'}, "categories":other_result['course']}
     o_yAxis = {"title": {"text": "Scores Obtained"}}
     o_series = [{'name': 'Scores (%)','data': other_result['score']}]
@@ -260,7 +263,7 @@ def chart_data_json(request):
     return HttpResponse(json.dumps(data),"analyzer/_all_results.html", content_type='application/json')
 
 
-def filter_data(request, student_id, chartID='container', chart_type = 'area', chart_height=300):
+def filter_data(request, chartID='container', chart_type = 'area', chart_height=300):
     
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, "zoomType": 'xy'}
     title = {"text": "Student Result Analysis Chart"}
@@ -273,7 +276,6 @@ def filter_data(request, student_id, chartID='container', chart_type = 'area', c
         'chart': chart,
         'title': title,
         'xAxis': xAxis,
-        'student': student,
         'yAxis': yAxis,
         'series': series,
         'new_xAxis': new_xAxis,
@@ -283,10 +285,10 @@ def filter_data(request, student_id, chartID='container', chart_type = 'area', c
     return render(request, "analyzer/_first_main_filter.html", context)
 
 
-def prediction(request, student_id, chartID='chart', chart_type='area', chart_height=300):
-    student = get_object_or_404(Student, pk=student_id)
-    results = Result.objects.filter(student_id=student_id).order_by('level')
-    data = ResultData.get_all_results(student_id)
+def prediction(request, student_slug, chartID='chart', chart_type='area', chart_height=300):
+    student = get_object_or_404(Student, slug=student_slug)
+    results = Result.objects.filter(student_id=student.id).order_by('level')
+    data = ResultData.get_all_results(student.id)
 
     chart = {"renderTo": "container", "type": chart_type, "height": chart_height, "zoomType": 'xy'}
     title = {"text": "Current Performance"}
@@ -307,11 +309,11 @@ def prediction(request, student_id, chartID='chart', chart_type='area', chart_he
     
     return render(request, "analyzer/_predict.html", context)
 
-def make_prediction(request, student_id):
-    student = get_object_or_404(Student, pk=student_id)
+def make_prediction(request, student_slug):
+    student = get_object_or_404(Student, slug=student_slug)
     
-    xs = RegressionModel.get_data_X(student_id)
-    ys = RegressionModel.get_data_Y(student_id)
+    xs = RegressionModel.get_data_X(student.id)
+    ys = RegressionModel.get_data_Y(student.id)
     m = "%.4f" % (RegressionModel.best_fit_slope(xs, ys))
 
     return render(request, 'analyzer/_predict.html', {'mean':ys, 'student': student})

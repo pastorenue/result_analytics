@@ -1,0 +1,199 @@
+
+
+.icons {
+  	display: inline-block;
+  	font-size: inherit;
+  	font-style: normal;
+	color: inherit;
+	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+}
+
+.icons-spin {
+  -webkit-animation: icons-spin 2s infinite linear;
+  animation: icons-spin 2s infinite linear;
+}
+.icons-sm {font-size: 1.1em;}
+.icons-md {font-size: 1.5em;}
+.icons-lg {font-size: 2em;}
+.icons-x-lg {font-size: 4em;}
+@-webkit-keyframes icons-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.icons-dashboard:before { font-family: FontAwesome; content: "\f0e4"; }
+.icons-facebook:before { font-family: FontAwesome; content: "\f230"; }
+.icons-twitter:before { font-family: FontAwesome; content: "\f099"; }
+.icons-linkedin:before { font-family: FontAwesome; content: "\f0e1"; }
+.icons-gplus:before { font-family: FontAwesome; content: "\f0d5"; }
+.icons-settings:before { font-family: FontAwesome; content: "\f085"; }
+.icons-download:before { font-family: FontAwesome; content: "\f019"; }
+.icons-home:before { font-family: FontAwesome; content: "\f015"; }
+.icons-list:before { font-family: FontAwesome; content: "\f022"; }
+.icons-list-alt:before { font-family: FontAwesome; content: "\f03a"; }
+.icons-line-chart:before { font-family: FontAwesome; content: "\f201"; }
+.icons-area-chart:before { font-family: FontAwesome; content: "\f1fe"; }
+.icons-address:before { font-family: FontAwesome; content: "\f2bb"; }
+.icons-notification:before { font-family: FontAwesome; content: "\f0a2"; }
+.icons-calendar:before { font-family: FontAwesome; content: "\f272"; }
+.icons-file:before { font-family: FontAwesome; content: "\f0f6"; }
+.icons-school:before { font-family: FontAwesome; content: "\f19c"; }
+.icons-user:before { font-family: FontAwesome; content: "\f2bd"; }
+.icons-spinner:before { font-family: FontAwesome; content: "\f110"; }
+.icons-mobile:before { font-family: FontAwesome; content: "\f10b"; }
+.icons-lock:before { font-family: FontAwesome; content: "\f023"; }
+.icons-history:before { font-family: FontAwesome; content: "\f1da"; }
+.icons-edit:before { font-family: FontAwesome; content: "\f044"; }
+.icons-column:before { font-family: FontAwesome; content: "\0db"; }
+.icons-payment:before { font-family: FontAwesome; content: "\f09d"; }
+.icons-chat:before { font-family: FontAwesome; content: "\f0e6"; }
+.icons-slider:before { font-family: FontAwesome; content: "\f1de"; }
+.icons-folder:before { font-family: FontAwesome; content: "\f07c"; }
+.icons-group:before { font-family: FontAwesome; content: "\f0c0"; }
+.icons-new-user:before { font-family: FontAwesome; content: "\f234"; }
+.icons-table:before { font-family: FontAwesome; content: "\f0ce"; }
+.icons-sign-out:before { font-family: FontAwesome; content: "\f011"; }
+.icons-phone:before { font-family: FontAwesome; content: "\f095"; }
+.icons-records:before { font-family: FontAwesome; content: "\1c0"; }
+.icons-book:before { font-family: FontAwesome; content: "\f212"; }
+.icons-money:before { font-family: FontAwesome; content: "\f0d6"; }
+.icons-search:before { font-family: FontAwesome; content: "\f002"; }
+.icons-proceed:before { font-family: FontAwesome; content: "\f064"; }
+.icons-user-alt:before { font-family: FontAwesome; content: "\f2bd"; }
+.icons-info:before { font-family: FontAwesome; content: "\f05a"; }
+.icons-view:before { font-family: FontAwesome; content: "\f06e"; }
+.icons-email:before { font-family: FontAwesome; content: "\f0e0"; }
+.icons-deactivate:before { font-family: FontAwesome; content: "\f05e"; }
+.icons-activate:before { font-family: FontAwesome; content: "\f205"; }
+.icons-comment:before { font-family: FontAwesome; content: "\f086"; }
+.icons-bar-chart:before { font-family: FontAwesome; content: "\f080"; }
+.icons-clock:before { font-family: FontAwesome; content: "\f017"; }
+.icons-hat:before { font-family: FontAwesome; content: "\f19d"; }
+.icons-cloud-download:before { font-family: FontAwesome; content: "\f0ed"; }
+.icons-file-archive:before { font-family: FontAwesome; content: "\f1c6"; }
+.icons-heart:before { font-family: FontAwesome; content: "\f004"; }
+.icons-laptop:before { font-family: FontAwesome; content: "\f109"; }
+.icons-vcard:before { font-family: FontAwesome; content: "\f2bc"; }
+.icons-question-mark:before { font-family: FontAwesome; content: "\f128"; }
+.icons-category:before { font-family: FontAwesome; content: "\f1b2"; }
+.icons-single-comment:before { font-family: FontAwesome; content: "\f27a"; }
+.icons-plus:before { font-family: FontAwesome; content: "\f055"; }
+.icons-upload:before { font-family: FontAwesome; content: "\f093"; }
+.icons-certificate:before { font-family: FontAwesome; content: "\f0a3"; }
+.icons-ellipse:before { font-family: FontAwesome; content: "\f141"; }
+.icons-bell:before { font-family: FontAwesome; content: "\f0a2"; }
+.icons-support:before { font-family: FontAwesome; content: "\f1cd"; }
+.icons-tasks:before { font-family: FontAwesome; content: "\f0ae"; }
+.icons-tv:before { font-family: FontAwesome; content: "\f26c"; }
+.icons-sitemap:before { font-family: FontAwesome; content: "\f0e8"; }
+.icons-close:before { font-family: FontAwesome; content: "\f00d"; }
+.icons-share:before { font-family: FontAwesome; content: "\f1e0"; }
+
+
+//Toggle Button
+.toggle_input {
+	display: none;
+}
+.toggle_input:checked + .toggle_control {
+	border-color: #2c3e50;
+	background: #2c3e50;
+}
+.toggle_input:checked + .toggle_control:after {
+	left: 1.6em;
+}
+.toggle_control {
+	width: 3em;
+	height: 1.4em;
+	display: block;
+	border: 1px solid #bdc3c7;
+	border-radius: 1.4em;
+	background-color: fff;
+	position: relative;
+	transition: all .3s cubic-bezier(0.055, 0.25, 0.795, 0.435); 
+}
+.toggle_control:after {
+	content: "";
+	width: 1.2em;
+	height: 1.2em;
+	background: #fff;
+	display: block;
+	border-radius: 50%;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 3px 3px rgba(0,0,0,0.4);
+	position: absolute;
+	transition: all .3s cubic-bezier(0.95, 0.05, 0.795, 0.035); 
+	top: 0;
+	left: 0;
+}
+.login {
+	padding: 10px 25px;
+	position: absolute;
+	top: 57%;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	animation-name: fadeIn;
+}
+
+.new-signup {
+	text-align: center;
+	font-size: 1.2em;
+}
+.validate {
+	padding: 10px 20px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.2), 1px 2px 6px rgba(0,0,0,0.3);
+	border-radius: 4px;
+	background: #fff;
+	border: 1px solid #336b87;
+}
+.form-check {
+	margin-top: 20px;
+	border-bottom: none;
+}
+.head {
+	padding-left: 10px;
+	font-weight: 600;
+}
+.icon-badge {
+	position: absolute; 
+	right: 15px; 
+	font-size: 11px; 
+	min-width: 15px; 
+	min-height: 15px; 
+	top: -3px; 
+	background: #16a085; 
+	text-align: center; 
+	border-radius: 50%; 
+	color: #fff;
+}
+.sub-panel .add-row, .sub-panel .delete-row{
+	margin-left: 5px;
+	padding: 3px 15px;
+	border-radius: 15px;
+	transition: all .44s ease-in-out;
+}
+.sub-panel .delete-row {
+	border: 1px solid #c12;
+	background: #c12;
+	color: #fff;
+}
+.sub-panel .add-row {
+	border: 1px solid #243B55;
+	background: #243B55;
+	color: #fff;
+}
+.sub-panel .add-row:hover, .sub-panel .delete-row:hover {
+	box-shadow: 1px 2px 4px rgba(0,0,0,0.1), 2px 2px 6px rgba(0,0,0,0.2);
+	transform: translateX(7px);
+}
+.head-color {
+	color: #191654;
+	font-weight: bold;
+}

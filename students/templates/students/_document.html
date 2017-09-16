@@ -1,11 +1,15 @@
-<div class="item">
+<div class="search-result">
     {% if document %}
-    <a class="delete-section pull-right" href="#">Delete</a>
+    {% if is_onw_profile %}<a class="delete-section pull-right" href="#">Delete</a>{% endif %}
     {% endif %}
-    <h5>
-        <i class="glyphicon glyphicon-file"></i>
+    <p>
+        <i class="icons icons-sm icons-file"></i>
+        {% if id_own_profile %}
         <a href="{{ document.attached_file.url }}" target="_blank">{{ document.name|title }}</a>
-    </h5>
+        {% else %}
+        {{ document.name|title }}
+        {% endif %}
+    </p>
     {% if document.description %}
     <div>
         {{ document.description }}

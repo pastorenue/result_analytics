@@ -1,20 +1,20 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.forms import UserCreationForm
-from notification.forms import ContactForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 def index(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            return redirect('/#contact')
+    context = {}
+    if request.user.is_anonymous():
+        return render(request, 'index.html', context)
     else:
-        form = ContactForm()
-    context = {'form':form}
-    return render(request, 'base.html', context)
+        return HttpResponseRedirect(reverse('dashboard'))
 
 def register_success(request):
     return render_to_response('register_success.html')
@@ -36,12 +36,26 @@ def register_user(request):
    
 @login_required
 def home(request):
-    if request.user.is_active:
-        tag = "Active User"
+    template = 'dashboard.html'
+
+    context = {
+        
+    }
+    return render(request, template, context)
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change-password')
+        else:
+            messages.error(request, 'Please correct the error below.')
     else:
-        tag = "%s" % (request.user)
-    if not request.user.is_authenticated():
-        return redirect('login.html')
-    else:
-        photos = Photo.objects.filter(user = request.user)
-        return render(request, template, context)
+        form = PasswordChangeForm(request.user)
+    return render(request, 'password_change.html', {
+        'form': form
+    })
+

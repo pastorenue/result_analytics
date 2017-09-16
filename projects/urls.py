@@ -1,0 +1,8 @@
+from django.conf.urls import patterns, url
+from .views import *
+
+urlpatterns = patterns('', 
+	url(r'^list/$', ProjectListView.as_view(), name='my_projects'),
+	url(r'^details/(?P<pk>\d+)/(?P<slug>[\w-]+)/$', ProjectDetailView.as_view(), name='project_detail'),
+	url(r'^add/$', new_project, name='new_project'),
+)

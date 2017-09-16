@@ -1,4 +1,4 @@
-{% extends 'staff/dashboard.html' %}
+{% extends 'dashboard.html' %}
 {% load staticfiles %}
 
 {% block title %}Students{% endblock %}
@@ -7,8 +7,8 @@
 <a href="{% url 'students:students_list' %}">All students</a>
 {% endblock %}
 {% block content %}
-    <div style="width: 100%; text-align: center;">
-        <h3>Filter Query</h3>
+    <div style="width: 100%; text-align: center;" id="result">
+        <h4>Filter Query</h4>
         <form method="get" action="" id="filter_form">
             <div class="col-md-3">
                <b>Name or Ref Number:</b><input id="student" name="student" type="text" class="input-text form-control input-sm" placeholder="Student Name or Reg Number" >
@@ -42,16 +42,16 @@
                     </select>
                 </div>
                 <div class="col-md-1" style="margin-top: 20px;">
-                    <span style="float: left;"><button class="btn btn-defult btn-sm" type="submit">Go!</button></span>
+                    <span style="float: left;"><button class="btn custom-btn btn-sm" type="submit">Go!</button></span>
                 </div>
             </div>
         </form>
     </div>
     <div id="query_result" class="row"></div>
     <div style="margin-bottom: 30px;">
-        <h2 style="font-weight: bold; color: #c14; border-bottom: 1.3px solid;">STUDENTS' LIST: <span style="font-size: 18px;">{{ students.count }} Found</span> </h2>
+       <h3 class="page-header">Student List <span style="font-size: 18px; color: #2980b9;">:{{ students.count }} Found</span> </h3>
     </div>
-    <div class=''>
+    <div>
         {% block heading %}{% endblock %}
         <table class='table table-condensed table-hover'>
             <thead>
@@ -82,7 +82,7 @@
                    <td style="font-size: 1.4em; padding-top: 0px;"><strong>
                     {% ifchanged %}{{ student.last_name|first|upper }}{% endifchanged %}</strong>
                     </td>
-                    <td>{{ student.reg_number }}</td>
+                    <td><a href="{% url 'students:student_account' student.slug %}" style="text-decoration: none;">{{ student.reg_number }}</a></td>
                     <td>{{ student.full_name }}</td>
                     <td>{{ student.department }}</td>
                     <td>{{ student.level }}</td>
@@ -90,17 +90,17 @@
                     <td>
                         <div class='dropdown'>
                             <label class='dropdown-toggle' data-toggle='dropdown' style="cursor: pointer;">
-                                <span class='glyphicon glyphicon-menu-hamburger'></span></label>
-                            <ul class='dropdown-menu' role="menu" style="left: -220px; border-top: 3px solid #0d8363; background-color: #edf0ef;">
-                                <li><a href="{% url 'students:student_profile' student.id %}"><span class="glyphicon glyphicon-user"></span> View {{ student.first_name }}'s profile</a></li>
-                                <li><a href="{% url 'results:personal_results' student_id=student.id %}"><span class="glyphicon glyphicon-file"></span> View result information</a></li>
-                                <li><a href="{% url 'analyzer:all_results_plot' student_id=student.id %}"><span class="glyphicon glyphicon-th"></span> Comparative Analysis</a></li>
+                                <i class="icons icons-sm icons-slider"></i></label>
+                            <ul class='dropdown-menu' role="menu" style="left: -220px; border-top: 3px solid #2c3e50; background-color: #ecf0f1;">
+                                <li><a href="{% url 'students:student_account' student_slug=student.slug %}"><i class="icons icons-sm icons-user"></i> View {{ student.first_name }}'s profile</a></li>
+                                <li><a href="{% url 'results:personal_results' student.slug %}"><i class="icons icons-sm icons-table"></i> View result information</a></li>
+                                <li><a href="{% url 'analyzer:all_results_plot' student.slug %}"><i class="icons icons-sm icons-area-chart"></i> Comparative Analysis</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href="{% url 'analyzer:cgpa_analysis' student_id=student.pk %}"><span class="glyphicon glyphicon-tent"></span> {{ student }}'s CGPA Analysis</a></li>
-                                <li><a href="{% url 'analyzer:cgpa_by_level' student_id=student.pk %}"><span class="glyphicon glyphicon-tent"></span>Level BreakDown</a></li>
-                                <li><a href=""><span class="glyphicon glyphicon-list-alt"></span> View Performance History</a></li>
+                                <li><a href="{% url 'analyzer:cgpa_analysis' student.slug %}"><i class="icons icons-sm icons-line-chart"></i> {{ student.last_name }}'s CGPA Analysis</a></li>
+                                <li><a href="{% url 'analyzer:cgpa_by_level' student.slug %}"><i class="icons icons-sm icons-history"></i> CGPA By Level</a></li>
+                                <li><a href=""><i class="icons icons-sm icons-history"></i> View Performance History</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href=""><span class="glyphicon glyphicon-ban-circle"></span> Start expulsion process for {{ student }}</a></li>
+                                <li><a href=""><i class="icons icons-sm icons-proceed"></i> Start clearance process for {{ student.last_name }}</a></li>
                             </ul>
                         </div>
                     </td>

@@ -1,10 +1,12 @@
 
-<table class="table table-striped">
+<table class="table">
     <tbody>
+        {% if student.sex %}
         <tr>
             <th scope="row" style="width:35%">Sex</th>
             <td>{{ student.get_sex_display }}</td>
         </tr>
+        {% endif %}
         {% if student.blood_group %}
         <tr>
             <th scope="row">Blood group</th>
@@ -89,10 +91,5 @@
             <td>{{ student.mothers_maiden_name }}</td>
         </tr>
         {% endif %}
-        <tr>
-            <td colspan="2">
-                <a class="edit-section" href="#">Edit</a>
-            </td>
-        </tr>
     </tbody>
 </table>

@@ -1,14 +1,32 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, render_to_response
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, TemplateView
+from django.template.response import TemplateResponse
+from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 from .models import Student
+from .forms import *
+from django.utils.decorators import method_decorator
 from institutions.models import Department, Faculty
 from results.models import Result
-from students.models import Student
+from results.forms import ImportForm
+from students.models import *
+from students.forms import StudentCreationForm
 from result_analytics.utils.excel import ExcelReport
-from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.db.models import Q, Avg
+from django.db import transaction
+from django.contrib import messages
+from .utils import user_is_student, generate_mapper_excel
+from django.utils.decorators import method_decorator
+from courses.models import Course
+from analyzer.utils import StudentChartData, cgpaData
+try:
+    import json
+except:
+    import simplejson as json
 
 
 class StudentListView(ListView):
@@ -35,9 +53,7 @@ class StudentListView(ListView):
             queryset = queryset.filter(level=level)
         if status != "status":
             queryset = queryset.filter(user_status=status)
-        
         return queryset
-
     
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -47,16 +63,49 @@ class StudentListView(ListView):
 
         return context
 
+    @method_decorator(login_required)
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, request, *args, **kwargs):
+        return super(StudentListView, self).dispatch(request, *args, **kwargs)   
+
 @login_required
-def student_profile(request, student_id=None):
-    student = get_object_or_404(Student, pk=student_id)
+@user_passes_test(lambda u: u.is_staff)
+def create_student(request):
+    if request.method == "POST":
+        form = StudentCreationForm(request.POST)
+        if form.is_valid():
+            try:
+                new_student = form.save()
+                messages.success(request, "%s's record has been successfully created." % (new_student))
+                return HttpResponseRedirect(reverse('students:student_account', kwargs={'student_slug': new_student.slug}))
+            except Exception as e:
+                messages.error(request, e)
+    else:
+        form = StudentCreationForm()
+    return render(request, 'students/new_student.html', {'form': list(form)})
+
+
+@login_required
+def student_profile(request, student_slug):
+    template_name = ''
+
+    student = get_object_or_404(Student, slug=student_slug)
     is_own_profile = (student.user == request.user)
+    if is_own_profile:
+        template_name = 'accounts'
+    else:
+        template_name = 'student_profile'
     
-    my_rank = ranking(student)
-    
+    context = {'student': student}
+    context['my_rank'] = ranking(student)
+    context['documents'] = Document.objects.filter(student=student) 
+    context['scholarships'] = Scholarship.objects.filter(student=student)
+
+
     documents = student.document_set.all()
-    template_name = 'student_profile'
-    return render(request, 'students/%s.html' % template_name, {'rank': my_rank, 'documents': documents, 'student': student, 'is_own_profile': is_own_profile})
+    
+    return render(request, 'students/%s.html' % (template_name), context)
+
 
 def ranking(student):
     results = Result.objects.all()
@@ -82,8 +131,128 @@ def export_excel(request):
     report = ExcelReport(students, fields, groupby=request.GET.get('groupby'))
     report.write(response)
     return response
-  
 
+@user_passes_test(user_is_student, login_url='/login/')
+@login_required
+def accounts(request):
+    return render(request, 'students/accounts.html', {})
 # Create your views here.
 
+def update_photo(request):
+    student = get_object_or_404(Student, pk=request.user.student.id)
+    if request.method == "POST":
+        photo = request.FILES['photo']
 
+        student.photo = photo
+        student.save()
+    return HttpResponseRedirect(reverse('students:student_account', kwargs={'student_slug': student.slug}))
+
+
+@login_required
+@user_passes_test(lambda u:u.is_superuser, login_url="/login/") 
+def mapper_excel_generator(request):
+    form = ImportForm()
+    return render_to_response('students/generate_mapper.html', {'form': form}, context_instance=RequestContext(request),)
+
+
+@login_required
+@user_passes_test(lambda u:u.is_superuser, login_url="/login/") 
+def generate(request):
+    if request.method == 'POST':
+        try:
+            # import pdb
+            # pdb.set_trace()
+            excel_file = request.FILES['file']
+            print(excel_file.size)
+            if excel_file.multiple_chunks():
+                messages.error(request,"Uploaded file is too big (%.2f MB)." % (excel_file.size/(1000*1000),))
+                return HttpResponseRedirect(reverse("students:mapper"))
+            response = generate_mapper_excel(excel_file)
+            return response
+        except Exception as e:
+            messages.error(request, e)
+            return HttpResponseRedirect(reverse('students:mapper'))
+
+
+class StudentAnalyticsView(TemplateView):
+    template_name = 'students/_analysis.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentAnalyticsView, self).get_context_data(**kwargs)
+        if Result.objects.filter(student=self.request.user.student).exists():
+            context['fcgpa'] = cgpaData.get_fcgpa(self.request.user.student.id)
+            context['exam_no'] = Result.objects.filter(student_id=self.request.user.student.id).count()
+            context['avg_score'] = Result.objects.filter(student_id=self.request.user.student.id).values('total_score')\
+                                    .aggregate(avg=Avg('total_score'))['avg']
+            context['high_score'] = Result.objects.filter(student_id=self.request.user.student.id).order_by('-total_score')[0]
+        else:
+            context['fcgpa'] = float(5)
+            context['avg_score'] = float(0)
+        return context
+
+    @method_decorator(user_passes_test(user_is_student))
+    def dispatch(self,request, *args, **kwargs):
+        return super(StudentAnalyticsView, self).dispatch(request, *args, **kwargs)
+
+
+def student_chart_json(request):
+    data = {}
+    params = request.GET
+    level = params.get('level')
+    data = StudentChartData.student_result_data(request.user.student.id, level)
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+@transaction.atomic
+def generate_mapper_json(request):
+    map_code = ""
+    message = ""
+    if request.method == 'GET':
+        params = request.GET
+        short_code = params.get('short_code')
+        reg_number = params.get('reg_number')
+
+        if short_code != "" and reg_number != "":
+            if UniqueMapper.objects.filter(reg_number=reg_number, short_institution_name=short_code).exists():
+                message = "You already have a mapper"
+                map_code = UniqueMapper.objects.filter(reg_number=reg_number, short_institution_name=short_code)[0].unique_map
+            else:
+                mapper = UniqueMapper(reg_number=reg_number, short_institution_name=short_code)
+                mapper.save()
+                map_code = mapper.unique_map
+                message = "Successfully creates a map code"
+    data = {
+        "map_code": map_code,
+        "message": message,
+    }
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+@login_required
+def edit_profile(request):
+    context ={}
+    student = Student.objects.get(user=request.user)
+    template_name = 'students/_edit_profile.html'
+    if request.method == 'POST':
+        inst_form = SchoolForm(request.POST, request.FILES, instance=student)
+        b_form = BasicProfileForm(request.POST, request.FILES, instance=student)
+        p_form = PersonalInformationForm(request.POST, request.FILES, instance=student)
+        if inst_form.is_valid() and b_form.is_valid() and p_form.is_valid():
+            try:
+                b_form.save()
+                messages.success(request, "Your profile was successfully updated")
+                return HttpResponseRedirect(reverse('students:student_account', kwargs={'student_slug':student.slug}))
+            except Exception as e:
+                messages.error(e)
+                return HttpResponseRedirect(reverse('students:edit-profile'))
+    else:
+        inst_form = SchoolForm(instance=student)
+        p_form = PersonalInformationForm(instance=student)
+        b_form = BasicProfileForm(instance=student)
+        context = {
+            'inst_form': inst_form,
+            'p_form': p_form,
+            'b_form': b_form,
+            'student': student
+        }
+    return render(request, template_name, context)

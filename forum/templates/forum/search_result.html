@@ -1,0 +1,22 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+
+{% block breadcrumbs %}<a href="#">Search Result for: {{ request.GET.get('search') }}</a> &raquo; {% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="sub-panel">
+		<h4 style="padding: 0 4px;">Search Result For: {{ request.GET.get('search') }}</h4>
+	</div>
+	<div class="sub-panel add-padding">
+		{% for item in queryset %}
+		<div class="search-result">
+			<h4>{{item.post.title}}</h4>
+			<h5>{{item.post.question_or_idea}}</h5>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

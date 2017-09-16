@@ -1,65 +1,49 @@
-{% extends "staff/dashboard.html" %}
-
+{% extends  "dashboard.html" %}
+{% load staticfiles %}
 {% block title %}Result Analytics: {% if is_own_profile %}My{% else %}{{ student.first_name }}'s{% endif %} Profile{% endblock %}
 
 {% block breadcrumbs %}
 <a href="{% url 'students:students_list' %}">{% if user.is_staff %}All students &raquo;{% endif %}</a> {{ student.full_name }}
-{% endblock %}000
-
-{% block menu %}
-    {% include "analyzer/attached.html" %}
 {% endblock %}
 
 {% block content %}
-    {% block inner_content %}
-    <div>
-        {% include "students/_basic_profile.html" %}
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="section" style="margin-left: 15px;">
-               <h4>Academic Information</h4>
-           </div>
-           
-           <div id="personal" class="section left" style="margin-left: 15px;">
-               <h4>Personal Information</h4>
-               {% include "students/_personalinformation.html" %}
-           </div>
-        
-            <div class="section" id="personal" style="margin-left: 15px;">
-                <h4>Scholarship Information</h4>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="section" id="personal">
-                <h4>Bank Information</h4>
-            </div> 
-            <div class="section" id="company">
-                <h4>Documents Information</h4>
-                {% for document in documents %}
-                {% include "students/_document.html" %}
-                {% endfor %}
-                <a class="" style="margin-top: 10px;" href="#">Upload</a>
-            </div>
-            
-            <div class="section" id="personal">
-                <h4>Result Summary</h4>
-            </div>
-            
-            <div class="section" id="personal">
-                <h4>Current Level</h4>
-            </div>
-            <div class="section" id="personal">
-                <h4>Projects Information</h4>
-                {% if is_own_profile %}<a class="" style="margin-top: 10px;" href="#">Add New Project</a>{% endif %}
-            </div> 
-        </div>
-    </div>
-    
-    <div class="profile-sections">
-        
-        
-  </div>
+<div class="row" style="margin-left: 10px; margin-bottom: 20px;">
+    <h3 class="page-header">{{ student }} - {{ student.reg_number }}</h3>
+</div>
+<div>
+    {% include "students/_basic_profile.html" %}
+</div>
 
-    {% endblock inner_content %}
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div id="personal" class="panel panel-default">
+           <div class="sub-panel">
+               <h4 class="head">Personal Information</h4>
+           </div>
+           <div style="text-align: center;">
+             <h4>Personal Information cannot not viewed</h4>
+           </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="panel panel-default" id="academic">
+           <div class="sub-panel">
+               <h4 class="head">Institution Information</h4>
+           </div>
+           {% if student.institution %}
+           <div style="text-align: center;">
+               <img src="{{ student.institution.logo.url }}" alt="Uniport" style="width: 90px; height: 100px;">
+           
+               <h4><strong>{{student.institution.name}}</strong></h4>
+               <h5>{{student.institution.location}}</h5>
+           </div>
+           {% else %}
+           <div style="text-align: center;">
+             <h4>No information yet</h4>
+           </div>
+           {% endif %}
+        </div>
+    </div>
+</div>
+ 
 {% endblock %}

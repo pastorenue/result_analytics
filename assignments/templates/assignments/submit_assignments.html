@@ -1,0 +1,41 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}Submit Assignment &raquo;{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Submit Assignment [<span style="font-size: 16px;"> Assignment CODE: {{assignment.assignment_code}}</span>]</h3>
+</div>
+
+<div class="col-md-8 center-block">
+	<div class="panel panel-default">
+		<form method="post">{% csrf_token %}
+			<div class="panel-body">
+				<div class="sub-panel">
+					<h5>{{assignment.assignment_code}}</h5>
+				</div>
+				<div class="sub-panel add-padding">
+					{% for field in form %}
+					<div class="form-group">
+						<label>{{field.label}}</label>
+						{{field}}
+					</div>
+					{% endfor %}	
+				</div>
+			</div>
+			<div class="sub-panel" style="border-bottom: none; padding-left: 10px;">
+				<button class="btn btn-sm custom-btn" type="submit">Save</button>
+			</div>
+		</form>
+	</div>
+	{% if not assingment.file %}	
+	<div class="panel panel-default">
+		<div class="sub-panel add-padding">
+			<h5>QUESTION:</h5>
+		</div>
+		<h4 style="padding-left: 10px;">{{assignment.question_or_instructions}}</h4>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}

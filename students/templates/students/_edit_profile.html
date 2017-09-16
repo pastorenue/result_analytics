@@ -1,0 +1,108 @@
+{% extends  "dashboard.html" %}
+{% load staticfiles thumbnail %}
+{% block title %}Result Analytics: {% if is_own_profile %}My{% else %}{{ student.first_name }}'s{% endif %} Profile{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'students:students_list' %}">{% if user.is_staff %}All students &raquo;{% endif %}</a> {{ student.full_name }}
+{% endblock %}
+{% block extra_css %}
+<style>
+  .extra-padding {
+    padding: 10px 15px;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="row" style="margin-left: 10px; margin-bottom: 20px;">
+    <h3 class="page-header">Update Profile</h3>
+</div>
+<div class="basicprofile vcard">
+   <div class="row">
+       <div class="col-md-4 col-sm-6">
+           <div class="panel panel-default add-padding">
+                <div class="sub-panel add-padding">
+                    <button id="alt_save" class="btn btn-sm custom-btn">Save Changes</button>
+                </div>
+               <div class="">
+                   {%if student.photo %}
+                   {% thumbnail student.photo "127x127" crop="top" as im %}
+                   <img class="img-hexagon img-circle" src="{{ im.url}}" />
+                   {% endthumbnail %}
+                   {% else %}
+                   <img class="img-hexagon img-circle" src="{% static 'images/avatar.png' %}" />
+                   {% endif %}
+               </div>
+           </div>
+       </div>
+       <div class="col-md-8 col-sm-6">
+           <div class="panel panel-default add-padding" style="height: 251px;">
+                <h3><strong>{{ student.full_name }}</strong></h3>
+                <div>
+                    <h4>Student of {{ student.department }}</h4>
+                    <h5>Faculty of {{student.faculty}}</h5>
+                </div>
+                <div>
+                    {% if student.user_status == 'G' %}{{ student.first_name }} has Graduated
+                    {% elif student.user_status == 'S' %}{{ student.first_name }} is on Suspension
+                    {% else %}Currently in {{ student.level }}
+                    <span> Level <i class="icons icons-sm icons-info" data-toggle="popover" title="Set your school year to enable automatic update of your level"></i></span>
+                    {% endif %}
+                </div>
+                {% if student.email %}
+                <div class="email">
+                    <span class="value"><i class="icons icons-sm icons-email"></i> {{ student.email|urlize }}</span>
+                </div>
+                {% endif %}
+                {% if student.phone %}
+                <div class="tel">
+                    <i class="icons icons-sm icons-mobile"></i>
+                    <span class="value">{{ student.phone }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+   </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-11 center-block" style="background: rgba(255,0,0,0.06); color: #e92e4b; padding: 5px; margin-bottom: 10px; border-radius: 5px; ">
+    <p><strong>WARNING:</strong> Please ensure not to change your <strong>Registration number</strong> as it will affect your ability to see your results and get optimal analysis of your grades.</p>
+  </div>
+  <form method="POST" action="" enctype="multipart/data">{% csrf_token %}
+    <div class="col-md-6 col-sm-6">
+        <div id="personal" class="panel panel-default extra-padding">
+           <div class="sub-panel">
+               <h4 class="head">Basic Information</h4>
+           </div>
+            {{b_form}}
+        </div>
+        <div id="personal" class="panel panel-default extra-padding">
+           <div class="sub-panel">
+               <h4 class="head">Personal Information</h4>
+           </div>
+            {{p_form}}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="panel panel-default extra-padding" id="academic">
+           <div class="sub-panel">
+               <h4 class="head">Institution Information</h4>
+           </div>
+           <div>
+              {{inst_form}}
+           </div>
+        </div>
+        <div class="panel panel-default add-padding">
+          <button id="id_save" type="submit" class="btn btn-sm custom-btn">Save Changes</button>
+        </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script>
+  $("#alt_save").click(function() {
+    $("#id_save").click();
+  });
+</script>
+{% endblock %}

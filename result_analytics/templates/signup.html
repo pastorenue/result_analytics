@@ -1,73 +1,122 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
+{% load staticfiles %}
 {% block title%}Sign Up{% endblock %}
 {% block home_link%}
 <a href="{% url 'photobox_home' %}">photobox</a>
 {% endblock %}
 
 {% block content %}
-{% load crispy_forms_tags %}
-{% load staticfiles %}
-<div class="row" style="height: 60px;">
-    
-</div>
-<div class="container">
-    <div class="row" style="font-family: Sansation Light;">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <div style="height: 20px;"></div>
-            <div style="text-align: center;">
-                <img src="{% static 'images/pro_logo.png' %}" width='380px' height='98px' style="opacity: 0.7;">
-                  <h1 style="font-size: 3em;  margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #D5DECB;">Sign Up</h1>
+ <div class="col-md-6 center-block login" style="margin-top: 45px;">
+        <div class="panel panel-default" style="padding: 10px 25px;" >
+            <div class="sub-panel" style="text-align: center; font-size: 1.2em;">
+                <h3 style="color: #1e3c72;"><strong>Sign Up</strong></h3>
             </div>
-            <div style="border-radius: 10px; background-color:#fff; box-shadow: 0 0 9px #9d9d9d;">
-                <div>
-                    <div class="panel-body">
-                        <div class="controls">
-                            <form method="post">{% csrf_token %}
-                                <div class="form-group" >
-                                    <div class="">
-                                        {{ message }}
-                                    </div>
-                                    <div class="form-group"><label for="id_first_name" class="label-control  requiredField">
-                                        First Name<span class="asteriskField">*</span></label><div class="controls"><input class="input-control form-control" id="id_first_name" maxlength="30" name="firstname" type="text" placeholder="First Name">
-                                        </div>
-                                        </div>
-                                     <div class="form-group"><label for="id_last_name" class="label-control  requiredField">
-                                        Last Name<span class="asteriskField">*</span></label><div class="controls"><input class="input-control form-control" id="id_last_name" maxlength="30" name="lastname" type="text" placeholder="Last Name">
-                                        </div>
-                                        </div>
-                                     <div class="form-group"><label for="id_occupation" class="label-control  requiredField">
-                                        Occupation</label><div class="controls"><span class="menu-icon"></span><input class="input-control form-control" id="id_occupation" maxlength="30" name="occupation" type="text" placeholder="Occupation">
-                                        </div>
-                                        </div>
-                                        <div id="div_id_username" class="form-group"><label for="id_username" class="label-control  requiredField">
-                                        Username<span class="asteriskField">*</span></label><div class="controls"><input class="input-control form-control" id="id_username" maxlength="30" name="username" type="text" placeholder="Username">
-                                            <p id="hint_id_username" class="help-block">Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
-                                        </div>
-                                        </div>
-                                    <div id="div_id_password1" class="form-group"><label for="id_password1" class="label-control  requiredField">
-                                        Password<span class="asteriskField">*</span></label><div class="controls "><input class="input-control form-control" id="id_password1" name="password1" type="password" placeholder="Password">
-                                    </div>
-                                    </div>
-                                    <div id="div_id_password2" class="form-group"><label for="id_password2" class="label-control  requiredField">
-                                        Password confirmation<span class="asteriskField">*</span></label><div class="controls"><input class="input-control form-control" id="id_password2" name="password2" type="password" placeholder="Confirm Password"> <p id="hint_id_password2" class="help-block">Enter the same password as above, for verification.</p></div></div>
-
-                                    <button type="submit" class="btn btn-success vd_bg-green" style="width: 100%; text-align: center; font-size: 1.3em;">Create Account</button>
-                                </div>
-                            </form>
-                            <div style="text-align: center;">
-                                <hr>
-                                <p style="color: ##2C4BAB; font-size: 1.2em;">Already Have an Account?</p>
-                                <p style="color: ##2C4BAB; font-size: 1.5em;"><a style="text-decoration: none; color: #2c4bca;" href="{% url 'result_login' %}">SIGN IN >> </a></p>
-                            </div>
-                        </div> 
+            <div class="panel-body">
+                <form method= 'post'>{% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_institution">Institution</label>
+                        <select name="institution" id="id_institution" class="form-control">
+                            {% for institution in institutions %}
+                            <option value="{{institution.id}}">{{institution}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="id_user_type">User Type</label>
+                        <select name="user_type" id="id_user_type" class="form-control">
+                            <option value="student">Student</option>
+                             <option value="lecturer">Lecturer</option>
+                             <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="id_mapper">
+                        <label for="id_map">Student Reg Mapper</label>
+                        <input type="text" name="map" id="id_map" class="form-control" placeholder="Reg Map" style="text-align: center;" required><span style="position: absolute; top: 280px; left: 73px; font-size: 16px;" onclick="show_mapper()" data-toggle="tooltip" data-placement="right" title="A reg mapper maps your registration number to a unique key that is randomly generated by our hash algorithm. If you don't have a reg map yet, click here to generate one now"><i class="icons icons-sm icons-info"></i></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_reg">Registration Number</label>
+                        <input type="text" name="reg_number" id="id_reg" class="form-control" placeholder="Reg Number e.g ACME/2022/12" required>
+                    </div>
+                    <div class="form-group">
+                        <button id="id_continue" type="submit" class="btn btn-sm custom-btn btn-block"> Continue</button>
+                    </div>
+                </form>
+            </div> 
+        </div>
+        <div id="mapper" class="panel" style="display: none; position: absolute; bottom: 100px; left: -200px; width: 250px; border: 1px solid #1e3c72; border-radius: 4px; box-shadow: 1px 2px 4px rgba(0,0,0,0.08), 1px 2px 6px rgba(0,0,0,0.1);">
+            <div style="border-bottom: 1px solid; padding: 0 10px; text-align: center;">
+                <h4><strong>Generate a Reg Mapper</strong></h4>
+            </div>
+            <div class="sub-panel" style="padding: 10px;">
+                <form id="frm_generator" method="GET" action="">
+                    <div class="form-group">
+                        <input type="text" name="short_code" id="id_short_code" class="form-control input-sm" placeholder="Short School Code e.g OAU">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="reg_number" id="id_reg_number" class="form-control input-sm" placeholder="Reg/Matriculation Number e.g 2021/ACE/XXX">
+                    </div>
+                    <div class="form-group">
+                        <button  type="search" class="btn btn-sm btn-block btn-primary">Generate</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="col-md-2"></div>
+<div class="new-signup">
+            <div style="margin-bottom: 10px;">
+                <h5 style="margin-bottom: 0;">Already have an Account?   <a href="{% url 'result_login' %}" style="font-size: 14px; color: #1e3c72;"><strong>Log In</strong></a></h5> 
+            </div>
+            <div>
+                <h3>{{response}}</h3>
+            </div>
+        </div>          
     </div>
-</div>
-<div style="height: 100px;"></div>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    $('#id_user_type').change(function() {
+        if($('#id_user_type').val() == 'lecturer' || $('#id_user_type').val() == 'admin'){
+        $('#id_mapper').hide('fade')
+        $('#id_reg').hide('fade');
+        }else{
+            $('#id_mapper').show('fade');
+            $('#id_reg').show('fade')
+        }
+    });
+
+    var is_visible = false;
+    function show_mapper() {
+        if(!is_visible) {
+            $('#mapper').show('fade').css('display', 'block');
+            is_visible = true;
+        }
+        else {
+            $('#mapper').css('display', 'none').hide('fade');
+            is_visible = false;
+        }
+    }    
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
+</script>
+<script>
+    var url = "{% url 'students:mapper-json' %}";
+
+    function generate(path) {
+        $.getJSON(path, function(data){
+            console.log(data['map_code']);
+            $('#id_map').val(data['map_code']);
+            $('#id_reg').val($('#id_reg_number').val());
+            $('#id_map').css('text-align', 'center');
+        })
+    }
+
+    $('#frm_generator').submit(function(e){
+        e.preventDefault();
+        generate(url + "?short_code=" + $('#id_short_code').val() + "&reg_number=" + $('#id_reg_number').val());
+        show_mapper();
+    })
+</script>
 {% endblock %}

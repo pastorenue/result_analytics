@@ -1,0 +1,33 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}{{request.user.student}}/Projects/Index{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Projects</h3>
+</div>
+
+<div>
+	{% for project in projects %}
+	<a href="{{ project.get_absolute_url }}">
+		<div class="col-md-2 project">
+			<span><i class="icons icons-x-lg icons-file-archive"></i></span>
+			<h4>{{project.name|truncatechars:22}}</h4>
+			<p>{{project.category}}</p>
+			<p>{{project.date_created|date:"d F Y"}}</p>
+		</div>
+	</a>
+	{% endfor %}
+	<a href="#modal-project" data-toggle="modal">
+		<div class="col-md-2 project">
+			<div style="margin: 30px auto;">
+				<i class="icons icons-x-lg icons-plus"></i>
+			</div>
+		</div>
+	</a>
+</div>
+<div class="modal fade" id="modal-project" tabindex="-1" role="dialog">
+{% include 'projects/_new_project.html' %} 
+</div>
+{% endblock %}

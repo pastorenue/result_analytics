@@ -1,0 +1,202 @@
+
+.friend {
+	border-radius: 2px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px 0;
+	transition: all .55s ease-in-out;
+}
+
+.friend:hover {
+	box-shadow: 2px 1px 4px rgba(0,0,0,0.07), 1px 3px 6px rgba(0,0,0,0.1);
+}
+
+.friend img {
+	height: 70px;
+	width: 70px;
+	display: inline-block;
+	margin: 4px;
+	box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
+	border-radius: 50%;
+	padding: 4px;
+}
+
+.friend div {
+	position: absolute;
+	margin-left: 10px;
+	display: inline-block;
+	padding: 0;	
+}
+
+.friend h4 {
+	margin-bottom: 0;
+	font-weight: 600;
+}
+.friend p {
+	margin-bottom: 0;
+}
+.friend span {
+	float: right;
+	margin: 20px auto;
+	margin-right: 15px;
+}
+.friend button {
+	background: #16a085;
+	color: #fff;
+	transition: all .35s ease-in-out;
+}
+.friend button:hover {
+	color: #fff;
+	background: #34495e;
+}
+.friend label {
+	padding-left: 10px;
+}
+
+/*
+=====================================================
+========= Request Friendship/Collaboration========== */
+.request {
+	width: 160px;
+	height: 220px;
+	overflow-y: hidden;
+	border-radius: 4px;
+	text-align: center;
+	border: 1px solid #f1f1f1;
+	margin: 10px;
+	display: inline-block;
+	padding: 5px;
+	transition: all .55s ease-in-out;
+	cursor: pointer;
+}
+.request img {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+.request p {
+	margin: 2px;
+	padding: 0;
+
+}
+.request p:first-child {
+	padding-top: 10px;
+	font-size: 1.1em;
+	font-weight: 600;
+	margin-top: 5px;
+	border-top: 1px solid #ecf0f1;
+}
+.request div {
+	margin-bottom: 10px;
+}
+.request span {
+	position: absolute;
+	left: 35px;
+	color: #34495e;
+}
+.request:hover {
+	box-shadow: 2px 1px 4px rgba(0,0,0,0.07), 1px 3px 6px rgba(0,0,0,0.1);
+}
+
+/* Notification */
+.notifications {
+	width: 250px;
+	min-height: 100px;
+	border: 1px solid #ecf0f1;
+	position: absolute;
+	border-radius: 3px;
+	top: 20px;
+	right: 20px;
+	text-align: center;
+	z-index: 400;
+	background: #fff;
+	box-shadow: 2px 1px 4px rgba(0,0,0,0.07), 1px 3px 6px rgba(0,0,0,0.1);
+}
+.notifications .item {
+	border-bottom: 1px solid #f5f5f5;
+	margin-bottom: 5px;
+	padding: 5px;
+	background: #fcfcfc;
+	-webkit-transition: all .44s ease-in-out;
+	-moz-transition: all .44s ease-in-out;
+	-o-transition: all .44s ease-in-out;
+	transition: all .44s ease-in-out;
+}
+.notifications .item:hover {
+	box-shadow: 2px 1px 4px rgba(0,0,0,0.07), 1px 3px 6px rgba(0,0,0,0.1);
+	-webkit-transform: translateY(-2px);
+	-moz-transform: translateY(-2px);
+	-o-transform: translateY(-2px);
+	transform: translateY(-2px);
+}
+
+.recommend {
+	display: inline-block;
+	margin-bottom: 1px;
+	cursor: pointer;
+	transition: all .24s ease-in-out;
+	width: 100%;
+	padding: 2px 8px;
+}
+.recommend img {
+	display: inline;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	padding: 2px;
+	float: left;
+	border: 1px solid #f5f5f5;
+}
+
+.recommend div {
+	display: inline;
+	padding-left: 10px;
+	float: left;
+}
+
+.recommend h4 {
+	margin: 1px;
+	font-size: 13px;
+	font-weight: 600;
+}
+.recommend p {
+	font-size: 11px;
+	padding: 0px;
+	margin: 2px;
+}
+.recommend:hover {
+	box-shadow: 1px 2px 5px rgba(0,0,0,0.04), 2px 1px 6px rgba(0,0,0,0.07);
+}
+.project {
+	text-align: center;
+	cursor: pointer;
+	display: inline-block; 
+	position: relative;
+	border-radius: 4px; 	
+	border: 1px solid #f5f5f5; 
+	height: 150px;
+	transition: all .44s ease-in-out;
+	margin: 5px;
+	overflow-y: hidden;
+}
+.project:hover {
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.07), 2px 4px 7px rgba(0,0,0,0.09);
+	transform: translateY(-7px);
+}
+.project h4 {
+	margin: 0px;
+	font-size: 13px;
+}
+.project p {
+	margin: 0px;
+	font-size: 11px;
+}
+.project i {
+	color: #2c3e50;
+}
+.project-init {
+	position: relative;
+	left: 120px;
+	top: 30px;
+	z-index: 300;
+}

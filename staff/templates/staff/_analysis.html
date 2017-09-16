@@ -1,0 +1,205 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Analytics Pane</h3>
+</div>
+<div class="panel panel-default">
+    <div class="sub-panel">
+        <select id="dept_course_select" class="form-control input-sm"  style="display: inline-block; width: 30%;">
+            {% for course in courses %}
+            <option value="{{course.id}}">{{course}}</option>
+            {% endfor %}
+        </select>
+    </div>
+	<div id="avg_grading_container" class="panel-body">  
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="sub-panel">
+        <select id="course_select" class="form-control input-sm"  style="display: inline-block; width: 30%;">
+            {% for course in courses %}
+            <option value="{{course.id}}">{{course}}</option>
+            {% endfor %}
+        </select>
+        <select id="dept_select" class="form-control input-sm"  style="display: inline-block; width: 30%;">
+            <option value="all">All Departments</option>
+            {% for dept in departments %}
+            <option value="{{dept.id}}">{{dept}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div id="course_grading_container" class="panel-body">
+    	
+    </div>
+</div>
+{% endblock %}
+	
+{% block side%}
+	<div class="panel panel-default" style="height: 94vh; overflow: hidden; margin-top: 1px; ">
+        <section style="text-align: center; margin-top: 20px;">
+            <div style="width: 140px; height: 140px; border-radius: 50%; margin: auto; border: 1px solid #c14;">
+                <h1 class="counter" style="padding: 20px 1px;">{{staff_metrics.total_results}}</h1>
+                <div style="position: relative; bottom: 0px; background-color: #fff;">
+                    <h4 style="font-weight: 600; color: #c14;">Total Results Uploaded</h4>
+                </div>
+            </div>
+        </section>
+        <section style="text-align: center; margin-top: 20px;">
+            <div style="width: 140px; height: 140px; border-radius: 50%; margin: auto; border: 1px solid #16a085;">
+                <h1 class="counter" style="padding: 20px 1px;">{{staff_metrics.students_attending_to}}</h1>
+                <div style="position: relative; bottom: 0px; background-color: #fff;">
+                    <h4 style="font-weight: 600; color: #16a085;">Total Students Attending To</h4>
+                </div>
+            </div>
+        </section>
+        <section style="text-align: center; margin-top: 20px;">
+            <div style="width: 140px; height: 140px; border-radius: 50%; margin: auto; border: 1px solid #34495e;">
+                <h1 class="counter" style="padding: 20px 1px;">21</h1>
+                <div style="position: relative; bottom: 0px; background-color: #fff;">
+                    <h4 style="font-weight: 600; color: #34495e;">Current Appraisal Rating</h4>
+                </div>
+            </div>
+        </section>
+        <section style="text-align: center; margin-top: 20px;">
+            <div style="width: 140px; height: 140px; border-radius: 50%; margin: auto; border: 1px solid #2980b9;">
+                <h1 class="counter" style="padding: 20px 1px;">433</h1>
+                <div style="position: relative; bottom: 0px; background-color: #fff;">
+                    <h4 style="font-weight: 600; color: #2980b9;">Total Projects Supervised</h4>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+
+<script>
+	var jsonUrl = '{% url 'chart_data_json' %}'
+	var courseChartOptions = {
+        credits: {
+            enabled: false
+        },
+        chart: {
+            renderTo: 'course_grading_container',
+            type: 'column',
+            height: 300,
+            zoomType: 'xy'
+        },
+        legend: {enabled: true},
+        title: {text: "Student Performance By Course"},
+        xAxis: {labels: {rotation: -45}},
+        yAxis: {title: {text: "Scores"}},
+        exporting: {
+		    buttons: {
+		        contextButton: {
+		        	enabled: true,
+		            menuItems: null,
+		            symbol: "menu",
+		        }
+		    }
+		},
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        series: [],
+    };
+
+	function loadCourseData(path){
+        $.getJSON(path,
+            function(data) {
+                courseChartOptions.xAxis.categories = data['reg_number'];
+                if ($('#dept_select').val() != 'all')
+                    courseChartOptions.subtitle = {text: $('#course_select option:selected').html() + ' for ' + $('#dept_select option:selected').html(),};
+                else
+                    courseChartOptions.subtitle = {text: $('#course_select option:selected').html(),};
+                courseChartOptions.series[0] = ({"name": 'Assignment', "data": data['assignment_score']});
+                courseChartOptions.series[1] = ({"name": 'Quiz', "data": data['quiz_score']});
+                courseChartOptions.series[2] = ({"name": 'Exam', "data": data['exam_score']});
+                var charts = new Highcharts.Chart(courseChartOptions);
+        });
+    }
+
+    $('#course_select').change(function(e){
+        e.preventDefault();
+        var course = $('#course_select').val();
+        var dept = $('#dept_select').val();
+        var path = jsonUrl + '?name=course_data&course=' + course+'&dept=' + dept;
+        loadCourseData(path);
+    });
+    $('#dept_select').change(function(e){
+        e.preventDefault();
+        var course = $('#course_select').val();
+        var dept = $('#dept_select').val();
+        var path = jsonUrl + '?name=course_data&course=' + course +'&dept=' + dept;
+        loadCourseData(path);
+    });
+
+
+    var deptChartOptions = {
+        credits: {
+            enabled: false
+        },
+        chart: {
+            renderTo: 'avg_grading_container',
+            type: 'column',
+            height: 300,
+            zoomType: 'xy',
+        },
+        legend: {enabled: true},
+        title: {text: "Student Performance By Course"},
+        xAxis: {labels: {rotation: -45}},
+        yAxis: {title: {text: "Scores"}},
+        exporting: {
+            buttons: {
+                contextButton: {
+                    enabled: true,
+                    menuItems: null,
+                    symbol: "menu",
+                }
+            }
+        },
+        series: [],
+    };
+
+    function loadDeptAverage(path){
+        $.getJSON(path,
+            function(data) {
+                deptChartOptions.subtitle = {text: $('#dept_course_select option:selected').html() + ' for All departments taking the course',}
+                deptChartOptions.xAxis.categories = data['department'];
+                deptChartOptions.series[0] = ({"name": 'Average', "data": data['average']});
+                var charts = new Highcharts.Chart(deptChartOptions);
+        });
+    }
+    $('#dept_course_select').change(function(e){
+        e.preventDefault();
+        var course = $('#dept_course_select').val();
+        var path = jsonUrl + '?name=course_average_by_dept&course=' + course;
+        loadDeptAverage(path);
+    });
+
+
+    loadCourseData(jsonUrl  + '?name=course_data&course='+ $('#course_select').val()+'&dept='+$('#dept_select').val());
+    loadDeptAverage(jsonUrl + '?name=course_average_by_dept&course=' + $('#dept_course_select').val());
+    
+    $('.counter').each(function () {
+      var $this = $(this);
+      $({ Counter: 0 }).animate({ Counter: $this.text() }, {
+        duration: 1000,
+        easing: 'swing',
+        step: function () {
+          $this.text(Math.ceil(this.Counter));
+        }
+      });
+    });
+</script>
+{% endblock %}

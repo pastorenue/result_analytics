@@ -1,9 +1,15 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+import uuid
+
 class Institution(models.Model):
-    name = models.CharField(max_length=250, blank=True, null=True)
+    name = models.CharField(max_length=250, null=True)
     location = models.CharField(max_length=150, blank=True, null=True)
+    logo = models.ImageField(upload_to='institution/logo/%Y/%m/', blank=True)
+    postal_code = models.CharField(max_length=30, null=True, blank=True)
+    full_address = models.TextField(null=True, blank=True)
+    #grading_type = models.OneToOneField(Grade)
 
     class Meta:
         verbose_name = _(u'Institution')
@@ -12,6 +18,7 @@ class Institution(models.Model):
 
     def __str__(self):
         return '%s, %s' % (self.name, self.location)
+
 
 class Faculty(models.Model):
     code = models.CharField(max_length=5, null=True)
@@ -61,48 +68,39 @@ class Lecturer(models.Model):
     '''brief detail of Lecturers information'''
 
     LECTURER_TITLE = (
-    ('Mr.', 'Mr'),
-    ('Mrs', 'Mrs'),
-    ('Miss', 'Miss'),
-    ('Dr.', 'Dr'),
-    ('Prof', 'Prof'),
-    ('Prof', 'Mallam'),
-)
-    user = models.ForeignKey(User)
+        ('Mr.', 'Mr'),
+        ('Mrs', 'Mrs'),
+        ('Miss', 'Miss'),
+        ('Dr.', 'Dr'),
+        ('Prof', 'Prof'),
+        ('Mallam', 'Mallam'),
+    )
+    user = models.OneToOneField(User, related_name="lecturer")
     title = models.CharField(max_length=5, choices=LECTURER_TITLE, null=True, blank=True)
-    name = models.CharField(max_length=250, null=True)
+    first_name = models.CharField(max_length=50, null=True)
+    last_name = models.CharField(max_length=50, null=True)
+    email = models.EmailField(null=True)
     department = models.ForeignKey(Department, null=True)
+    institution = models.ForeignKey(Institution, null=True)
     specialty = models.CharField(max_length=170, null=True, blank=True)
     position = models.ForeignKey(Position, null=True, blank=True)
+    unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    slug = models.SlugField(unique=True, null=True)
 
     class Meta:
         verbose_name = _(u'Lecturer')
         verbose_name_plural = _(u'Lecturers')
-        ordering = ('name',)
+        ordering = ('first_name',)
 
     def __str__(self):
-        return '%s %s' % (self.title, self.name)
+        return '%s %s' % (self.title, self.full_name)
 
+    @property
+    def full_name(self):
+        return "%s %s" % (self.first_name, self.last_name)
 
-class InstitutionDetail(models.Model):
-    '''
-    Gives the complete detail of the institution. Will be relevant when schools wan to have specific control.
-    It might be useful in the future
-    '''
-    institution = models.ForeignKey(Institution, null=True)
-    logo = models.ImageField(upload_to='institution/logo/%Y/%m/', blank=True)
-    postal_code = models.CharField(max_length=30, null=True, blank=True)
-    full_address = models.TextField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = _(u'Institution Complete Detail')
-        verbose_name_plural = _(u'Institution Complete Details')
-        ordering = ('institution',)
-
-    def __str__(self):
-        return self.institution
     
-class DeparmentalCode(models.Model):
+class DepartmentalCode(models.Model):
     name = models.CharField(max_length=50, null=True)
     code = models.IntegerField(null=True)
     
@@ -113,3 +111,15 @@ class DeparmentalCode(models.Model):
         verbose_name = _(u'Departmental Code')
         verbose_name_plural = _(u'Departmental Codes')
         ordering = ('name',)
+
+class AcadamicYear(models.Model):
+    year_starting = models.DateField()
+    year_ending = models.DateField()
+
+    def __str__(self):
+        return "from %s to %s" % (self.year_starting, self.year_ending)
+
+class AdminStaff(models.Model):
+    user = models.OneToOneField(User)
+    institution = models.OneToOneField(Institution)
+    

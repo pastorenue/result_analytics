@@ -1,0 +1,54 @@
+<div id="{{ass_score.assignment.assignment_code}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title"><strong>Assignment Details:</strong> [<span style="font-size: 17px;">{{ass_score.assignment.assignment_code}}</span>]</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row" style="margin-left: 0px;">
+          <div class="col-md-9" style="padding: 1px;">
+            <div class="panel panel-default" style="padding: 0 5px;">
+              <p>Course Code: <span style="float: right; font-weight: 600;">{{ ass_score.assignment.course.course_code}}</span></p>
+              <p>Course Title: <span style="float: right; font-weight: 600;">{{ ass_score.assignment.course}}</span></p>
+              <p>Category: <span style="float: right; font-weight: 600;">{{ ass_score.assignment.category|title}}</span></p>
+              <p>Standard: <span style="float: right; font-weight: 600;">{{ ass_score.assignment.standard}}%</span></p>
+              <p>Due Date: <span style="float: right; font-weight: 600;">{{ ass_score.assignment.due_date}}</span></p>
+              <p>Lecturer: <span style="float: right; font-weight: 600;">{{ ass_score.assignment.lecturer}}</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="panel panel-default" style="text-align: center;">
+              {% if ass_score.assignment.file %}
+              <a href="{{ass_score.assignment.file.url }}"><i class="icons icons-x-lg icons-file"></i></a>
+              <h5>Click file to load the assignment</h5>
+              {% else %}
+              <i class="icons icons-x-lg icons-file"></i>
+              <h5>No file for this assignment</h5>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default" style="padding: 0 5px; text-align: center;">
+          <div class="sub-panel add-padding">
+            <h5>Question or File Instructions</h5>
+          </div>
+          <h5>{{ass_score.assignment.question_or_instructions}}</h5>
+        </div>
+        <small class="text-muted">Make sure you confirm your answers before submitting. Once submitted, it cannot be edited any longer.</small> 
+      </div>
+      <div class="modal-footer">
+        {% if ass_score.status == 'A' %}
+        <button type="button" class="btn btn-sm custom-btn" onclick="location.href='{% url 'assignment:submit_assignment' ass_score.assignment.assignment_code %}'">Submit Answer Now</button>
+        <button type="button" class="btn btn-sm custom-btn" data-dismiss="modal">Submit Later</button>
+        {% else %}
+        <label>{% if ass_score.status == 'D' %} You cannot no longer submit{% else %}You have submitted already{% endif %}</label>
+        <button type="button" class="btn btn-sm custom-btn" data-dismiss="modal">Cancel</button>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>

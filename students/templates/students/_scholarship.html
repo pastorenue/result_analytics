@@ -1,0 +1,18 @@
+<div class="search-result">
+    {% if scholarship %}
+    <a class="delete-section pull-right" href="#">Delete</a>
+    {% endif %}
+    <p>
+        <i class="icons icons-sm icons-certificate"></i>
+        {% if is_on_profile %}
+        <a href="{{ document.attached_file.url }}" target="_blank">{{ document.title|title }}</a>
+        {% else %}
+        {{ document.title|title }}
+        {% endif %}
+    </p>
+    {% if scholarship.provider %}
+    <p>
+        <strong>Provided by:</strong> {{ scholarship.provider }}
+    </p>
+    {% endif %}
+</div>

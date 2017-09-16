@@ -1,59 +1,38 @@
+
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+import datetime
 from students.models import *
 from django import forms
-from form_utils.widgets import CalendarWidget, DateFieldMixin
 from django.db import transaction, IntegrityError
 from datetime import date, timedelta
-from form_utils.base import ModelForm
+from analyzer.utils import pin_generator
 #from scheduler import create_event, schedule_assignment
 from states.models import Country
+from django.contrib.admin.widgets import AdminDateWidget
+from django.forms.extras.widgets import SelectDateWidget
+from django.utils.text import slugify
+from core.models import Activation, StudentSetup
 
 
-
-def create_user(first_name, last_name):
+def create_user(email, first_name, last_name):
     """Creates a user with a username generated from the supplied `first_name` and `last_name`."""
+
     user = None
-    for i in range(len(first_name)):
-        username = ("%s%s" % (first_name[:i+1], last_name)).lower()
-        if(User.objects.filter(username=username)):
-            continue#username exists, try next
-        user = User.objects.create(username=username, first_name=first_name, last_name=last_name)
-        break
-    else:
-        for i in xrange(100):
-            if(User.objects.filter(username=username)):
-                continue
-            user = User.objects.create(username="%s%d" % (username, i))
-            break
-        else:
-            # Should probably add some code here to handle the case where a username can't
-            # be generated (should that ever happen):
-            raise Exception(u'No available username for: %s %s' % (first_name, last_name))
+    user = User.objects.create(email=email, first_name=first_name, last_name=last_name)
     return user
 
-class ProjectForm(forms.ModelForm):
-    
-    class Meta:
-        model = Project
-        fields = (
-            'name',
-            'description',
-            'file',
-            'tag',
-        )
-        
 
-class ScholarshipForm(forms.ModelForm):
+# class ScholarshipForm(forms.ModelForm):
     
-    class Meta:
-        model = Scholarhip
-        fields = (
-            'title',
-            'provider',
-            'location',
-            'website',
-        )
+#     class Meta:
+#         model = Scholarhip
+#         fields = (
+#             'title',
+#             'provider',
+#             'location',
+#             'website',
+#         )
         
 
 class DocumentForm(forms.ModelForm):
@@ -61,26 +40,32 @@ class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = (
-            'file','description'
+            'name',
+            'attached_file',
+            'description'
         )
         
         
         
 class BasicProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+         super(BasicProfileForm, self).__init__(*args, **kwargs)
+         self.fields['email'].widget.attrs = {'placeholder' : 'Email e.g. example@example.com', 'class': 'form-control'}
+         self.fields['first_name'].widget.attrs = {'placeholder' : 'Student Surname', 'class': 'form-control'}
+         self.fields['last_name'].widget.attrs = {'placeholder' : 'First Name', 'class': 'form-control'}
+         self.fields['middle_name'].widget.attrs = {'placeholder' : 'Other Name', 'class': 'form-control'}
+         self.fields['birth_date'].widget.attrs = {'class': 'form-control'}
+         self.fields['phone_number'].widget.attrs = {'class': 'form-control'}
     
     class Meta:
         model = Student
         fields = (
-            'title',
             'first_name',
             'last_name',
             'middle_name',
-            'photo',
-            'birth_date',
-            'unit',
-            'position',
             'email',
-            'phone',
+            'birth_date',
+            'phone_number'
         )
     
     def save(self, commit=True):
@@ -95,46 +80,55 @@ class BasicProfileForm(forms.ModelForm):
 
 class PersonalInformationForm(forms.ModelForm):
     """Edit an student's personal information."""
+    def __init__(self, *args, **kwargs):
+         super(PersonalInformationForm, self).__init__(*args, **kwargs)
+         self.fields['sex'].widget.attrs = {'class': 'form-control'}
+         self.fields['marital_status'].widget.attrs = {'class': 'form-control'}
+         self.fields['address'].widget.attrs = {'placeholder' : 'Your location e.g #4 glo street, Ikeja ', 'class': 'form-control'}
+         self.fields['state_of_residence'].widget.attrs = {'class': 'form-control'}
+         self.fields['state_of_origin'].widget.attrs = {'class': 'form-control'}
+         self.fields['country'].widget.attrs = {'class': 'form-control'}
+         self.fields['religion'].widget.attrs = {'class': 'form-control'}
     
     class Meta:
         model = Student
         fields = (
             'sex',
-            'genotype',
-            'blood_group',
             'marital_status',
             'address',
-            'permanent_address',
             'state_of_residence',
             'state_of_origin',
-            'lga',
             'country',
-            'national_id_number',
             'religion',
-        )
-
-    def __init__(self, *args, **kwargs):
-        super(PersonalInformationForm, self).__init__(*args, **kwargs)
-        self.fields['lga'].widget.attrs['class'] = 'chainedSelect { parent: "#id_state_of_origin", url: "%s" }' % (reverse('states_lga_by_state'))
-        if 'country' not in self.initial:
-            try:
-                self.initial['country'] = Country.objects.get(code='NGA').pk # 9ja 4 life :)
-            except Country.DoesNotExist:
-                pass
+        )    
 
 
 class SchoolForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+         super(SchoolForm, self).__init__(*args, **kwargs)
+         self.fields['reg_number'].widget.attrs = {'placeholder' : 'Reg Number', 'class': 'form-control'}
+         self.fields['institution'].widget.attrs = {'class': 'form-control'}
+         self.fields['library_id_number'].widget.attrs = {'placeholder' : 'Enter Library Id', 'class': 'form-control'}
+         self.fields['program_type'].widget.attrs = {'class': 'form-control'}
+         self.fields['department'].widget.attrs = {'class': 'form-control'}
+         self.fields['faculty'].widget.attrs = {'class': 'form-control'}
+         self.fields['year_of_admission'].widget.attrs = {'class': 'form-control'}
+         self.fields['level'].widget.attrs = {'class': 'form-control'}
+         self.fields['course_duration'].widget.attrs = {'max_length': 1, 'class': 'form-control'}
+
     
     class Meta:
         model = Student
         fields = (
-            'reg_number'
-            'student_institution',
+            'reg_number',
+            'institution',
             'library_id_number',
             'program_type',
             'department',
             'faculty',
-            'year_of_graduation',
+            'year_of_admission',
+            'level',
+            'course_duration'
         )
         
 class BankForm(forms.ModelForm):
@@ -147,52 +141,70 @@ class BankForm(forms.ModelForm):
         )
 
 
-class StudentCreationForm(DateFieldMixin, ModelForm):
-    """A (much) simpler form, containing only the required fields for creating an employee."""
-
-    class Meta:
-        model = Employee
-        widgets = {
-            'birth_date': CalendarWidget(year_range=(-60, 1)),
-            'hire_date': CalendarWidget(year_range=(-60, 1)),
-            'sex': widgets.RadioSelect,
-        }
-        fields = (
-            'staff_id_number',
-            'first_name',
-            'last_name',
-            'email',
-            'employee_type',
-            'birth_date',
-            'sex',
-            'position',
-            'location',
-            'grade_level',
-            'basic',
-            'pay_template',
-            'unit',
-            'state_of_origin',
-            'state_of_residence',
-            'hire_date',
-        )
+class StudentCreationForm(forms.ModelForm):
+    year_of_admission = forms.DateField(widget = SelectDateWidget(years=range(1990, datetime.date.today().year+50), attrs=({'class': 'form-control', 'style': 'width: 30%; display: inline-block;'})))
 
     def __init__(self, *args, **kwargs):
-        super(StudentCreationForm, self).__init__(*args, **kwargs)
-        self.initial.update({
-            'hire_date': date.today(),
-        })
+         super(StudentCreationForm, self).__init__(*args, **kwargs)
+         self.fields['email'].widget.attrs = {'placeholder' : 'Email e.g. example@example.com', 'class': 'form-control'}
+         self.fields['last_name'].widget.attrs = {'placeholder' : 'Student Surname', 'class': 'form-control'}
+         self.fields['first_name'].widget.attrs = {'placeholder' : 'First Name', 'class': 'form-control'}
+         self.fields['middle_name'].widget.attrs = {'placeholder' : 'Other Name', 'class': 'form-control'}
+         self.fields['reg_number'].widget.attrs = {'placeholder' : 'Reg Number', 'class': 'form-control'}
+         self.fields['faculty'].widget.attrs = {'class': 'form-control'}
+         self.fields['department'].widget.attrs = {'class': 'form-control'}
+         self.fields['level'].widget.attrs = {'class': 'form-control'}
+         self.fields['course_duration'].widget.attrs = {'max_length': 1, 'class': 'form-control'}
 
+    class Meta:
+        model = Student
+        fields = (
+            'email',
+            'last_name',
+            'first_name',
+            'middle_name',
+            'reg_number',
+            'faculty',
+            'department',
+            'level',
+            'year_of_admission',
+            'course_duration'
+        )
+
+ 
     @transaction.atomic
     def save(self, commit=True):
-        user = create_user(self.cleaned_data['first_name'], self.cleaned_data['last_name'])
-        user.email = self.cleaned_data['email']
+        user = create_user(self.cleaned_data['email'], self.cleaned_data['last_name'], self.cleaned_data['first_name'])
         # Set default password to this user's username and birth date (if provided):
-        suffix = self.cleaned_data['birth_date'].strftime('%Y%m%d') if self.cleaned_data['birth_date'] else ''
-        user.set_password(user.username + suffix)
+        # password = pin_generator()
+        user.username = self.cleaned_data['reg_number']
+        user.set_password(self.cleaned_data['reg_number'])
         user.save()
 
-        student = super(StudentCreationForm, self).save(commit=False)
-        student.user = user
-        if commit:
-            student.save()
-        return student
+        setup = StudentSetup(user=user)
+        setup.save()
+
+        activation = Activation(user=user)
+        activation.save()
+
+        instance = super(StudentCreationForm, self).save(commit=False)
+        instance.user = user
+        orig = slugify(instance.last_name)
+        if Student.objects.filter(slug=instance.slug).exists():
+            instance.slug = "%s-%s" % (orig, instance.unique_id)
+        else:
+            instance.slug = "%s-%s" % (orig, instance.unique_id)
+
+        instance.save()
+        return instance
+
+
+class ScholarshipForm(forms.ModelForm):
+
+    class Meta:
+        model = Scholarship
+        fields = {
+            'title',
+            'provider',
+            'location',
+        }
