@@ -70,7 +70,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'livereload.middleware.LiveReloadScript',
 )
 
 ROOT_URLCONF = 'result_analytics.urls'
@@ -167,6 +166,3 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 LOGIN_URL = '/login/' # Expensive to use a login view
 LOGOUT_URL = 'result_logout'
 LOGIN_REDIRECT_URL = 'dashboard'
-
-LIVERELOAD_HOST = '127.0.0.1'
-LIVERELOAD_PORT = 8000
