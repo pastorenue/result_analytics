@@ -51,7 +51,6 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'results',
     'projects',
-    'crispy_forms',
     'river',
     'core',
     'forum',
