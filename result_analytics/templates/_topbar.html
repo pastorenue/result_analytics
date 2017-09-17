@@ -6,7 +6,7 @@
     <div class="row" style="padding: 0 30px;">
       <div class="col-md-6" style="padding-left: 40px;">
           
-          <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><i class="icons icons-sm icons-home"></i> {% if user.is_staff %} {{ user|capfirst }}'s Space{% else %} Result Analytics{% endif %}</a> &raquo; {% block breadcrumbs %}{% endblock %}
+          <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><img src="{% static 'images/grade-sm.png' %}" style="width: 32px; height: 32px;" alt=""></a>{% block breadcrumbs %}{% endblock %}
           
           <!--Main breadcrumb Section-->
       </div>
