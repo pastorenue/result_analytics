@@ -13,6 +13,7 @@ from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.text import slugify
 from core.models import Activation, StudentSetup
+import uuid
 
 
 def create_user(email, first_name, last_name):
@@ -191,9 +192,9 @@ class StudentCreationForm(forms.ModelForm):
         instance.user = user
         orig = slugify(instance.last_name)
         if Student.objects.filter(slug=instance.slug).exists():
-            instance.slug = "%s-%s" % (orig, instance.unique_id)
+            instance.slug = "%s-%s" % (orig, uuid.uuid4())
         else:
-            instance.slug = "%s-%s" % (orig, instance.unique_id)
+            instance.slug = "%s-%s" % (orig, uuid.uuid4())
 
         instance.save()
         return instance
