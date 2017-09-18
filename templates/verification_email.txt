@@ -1,9 +1,0 @@
-Dear {{name}},
-
-Thank you for registering on photobox.
-To complete your registration, kindly activate your account by clicking
-{{ url }} or copy the link below into your browser and hit enter.
-
-{{ url }}
-
-The Outdoor Nigeria Team.
