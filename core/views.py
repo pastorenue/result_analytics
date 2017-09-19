@@ -16,7 +16,7 @@ def setup(request):
 		request.session['django_timezone'] = request.POST.get('time_format')
 		if hasattr(request.user, 'lecturer'):
 			staff_setup = StaffSetup.objects.get(user=request.user)
-			form = SetupForm(request.POST, instance=staff_setup)
+			form = StaffSetupForm(request.POST, instance=staff_setup)
 			form.save()
 			messages.success(request, "Your configuration has been saved")
 			return redirect('dashboard')
@@ -29,7 +29,7 @@ def setup(request):
 	else: 
 		if hasattr(request.user, 'lecturer'):
 			staff_setup = StaffSetup.objects.get(user=request.user)
-			form = SetupForm(instance=staff_setup)
+			form = StaffSetupForm(instance=staff_setup)
 		elif hasattr(request.user, 'student'):
 			student_setup = StudentSetup.objects.get(user=request.user)
 			form = StudentSetupForm(instance=student_setup)

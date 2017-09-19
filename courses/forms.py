@@ -30,6 +30,7 @@ class CourseCreationForm(forms.ModelForm):
 		self.fields['unit'].widget.attrs = {'placehoder': 'Units', 'class': 'form-control'}
 		self.fields['department'].widget.attrs = {'class': 'form-control'}
 		self.fields['semester'].widget.attrs = {'class': 'form-control'}
+		self.fields['lecturers'].widget.attrs = {'class': 'form-control'}
 
 	class Meta:
 		model = Course
@@ -39,5 +40,6 @@ class CourseCreationForm(forms.ModelForm):
 			'unit',
 			'semester',
 			'department',
+			'lecturers'
 		)
 

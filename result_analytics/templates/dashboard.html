@@ -9,6 +9,7 @@
         {% load staticfiles %}
         {% load thumbnail %}
         {% load record_filters %}
+
         
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.css' %}"/>
@@ -67,8 +68,8 @@
     <div class="row clearfix" style="padding: 0 15px;">
       <div class="col-md-2 scroll" style="padding-right: 5px; color: #fff; background: linear-gradient(to bottom, #141E30, #243B55); height: 100vh; overflow: auto;">
         <div style="text-align: center; border-bottom: 1px dashed #ecf0f1; padding: 4px;">
-          <h4 style="margin:5px 2px; color: #fff;">{% if user.is_staff%} Mr. {{ user.first_name|upper}} {% else %}{{user.student.full_name|upper}}{% endif %}</h4>
-          <p style="margin-top: 0px;"><i class="icons icons-sm icons-school"></i> {% if user.student %}{{ user.student.institution }}{% else %}{{ user.lecturer.institution }}{% endif %}</p>
+          <h4 style="margin:5px 2px; color: #fff;">{% if user.is_staff %} Good day, {% if user.lecturer.gender == 'M' %} Sir! {% else %} Ma'am!{% endif %}{% else %}{{user.student.full_name|upper}}{% endif %}</h4>
+          <p style="margin-top: 0px;">{% if user.student %} <i class="icons icons-sm icons-school"></i>{{ user.student.institution }}{% endif %}</p>
         </div>
         <div style="text-align: center;">
           <div style="margin-top: 2px;">
@@ -159,7 +160,7 @@
                     {% for i in r|slice:'1' %}
                     <div>                  
                      {% if i.department %} 
-                     <h4>{{i}}</h4>
+                     <a href="{% url 'students:student_account' i.slug %}"><h4>{{i.first_name}}, {{i.last_name}}</h4></a>
                       <p>{{i.department}}</p>
                       {% endif %}
                     </div>        

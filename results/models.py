@@ -41,6 +41,7 @@ class Result(models.Model):
     level = models.PositiveIntegerField(choices=settings.LEVEL_CHOICES,null=True, blank=True)
     semester = models.PositiveIntegerField(choices=settings.SEMESTER_CHOICES, null=True)
     department = models.ForeignKey(Department, null=True, blank=True)
+    institution = models.ForeignKey(Institution, null=True)
     credit_load = models.DecimalField(default=0.0, decimal_places=2, max_digits=4, blank=True, null=True)
     session = models.CharField(max_length=10, blank=True, null=True)
     course_load = models.DecimalField(default=0.0, decimal_places=2, max_digits=4, blank=True, null=True)

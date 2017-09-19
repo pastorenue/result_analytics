@@ -1,13 +1,13 @@
 from django.db import models
 from institutions.models import *
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-(SINGLE, MARRIED, WIDOWED, DIVORCED) = range(1, 5)
 MARITAL_STATUS_CHOICES = (
-    (SINGLE, _(u'Single')),
-    (MARRIED, _(u'Married')),
-    (WIDOWED, _(u'Widowed')),
-    (DIVORCED, _(u'Divorced')),
+    ('S', _(u'Single')),
+    ('M', _(u'Married')),
+    ('W', _(u'Widowed')),
+    ('D', _(u'Divorced')),
 )
 
 SEX_CHOICES = (
@@ -43,24 +43,31 @@ class Lecturer(models.Model):
         ('Prof', 'Prof'),
         ('Mallam', 'Mallam'),
     )
-    user = models.OneToOneField(User, related_name="lecturer")
-    title = models.CharField(max_length=5, choices=LECTURER_TITLE, null=True, blank=True)
+    user = models.OneToOneField(User)
+    title = models.CharField(max_length=20, choices=LECTURER_TITLE, null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
-    gender = models.CharField(max_length=1, null=True, choices=SEX_CHOICES)
-    marital_status = models.CharField(max_length=1, null=True, blank=True, choices=MARITAL_STATUS_CHOICES)
+    gender = models.CharField(max_length=2, null=True, choices=SEX_CHOICES)
+    marital_status = models.CharField(max_length=2, null=True, blank=True, choices=MARITAL_STATUS_CHOICES)
     email = models.EmailField(null=True)
     staff_id = models.CharField(max_length=50, blank=True)
     department = models.ForeignKey(Department, null=True)
     institution = models.ForeignKey(Institution, null=True)
     specialty = models.CharField(max_length=170, null=True, blank=True)
     position = models.ForeignKey(Position, null=True, blank=True)
-    slug = models.SlugField(unique=True, null=True)
+    is_admin = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=250, unique=True, null=True, blank=True)
 
     class Meta:
         verbose_name = _(u'Lecturer')
         verbose_name_plural = _(u'Lecturers')
         ordering = ('first_name',)
+        permissions = (
+        	('can_edit_records', 'Staff can edit other records'),
+        	('is_admin', 'Staff is an administrative user'),
+        	('can_add_courses', 'Staff can add new courses'),
+        	('can_add_result', 'Staff can add results')
+        )
 
     def __str__(self):
         return '%s %s' % (self.title, self.full_name)

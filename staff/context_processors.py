@@ -7,29 +7,37 @@ from forum.models import Category
 from analyzer.utils import cgpaData
 from results.ml_api.recommendations import *
 from django.contrib.auth.decorators import login_required
+from staff.models import Lecturer
+from courses.models import Course
 
 def home_context(request):   
-    all_students = Student.objects.all()
-    departments = Department.objects.all()
-    lecturers = Lecturer.objects.all ()
-    all_results = Result.objects.all()
+    all_students = []
+    lecturers = []
+    all_results = []
+    if request.user.is_authenticated():
+        if hasattr(request.user, 'lecturer'):
+            all_students = Student.objects.filter(institution=request.user.lecturer.institution)
+            lecturers = Lecturer.objects.filter(institution=request.user.lecturer.institution)
+            all_results = Result.objects.filter(institution=request.user.lecturer.institution)
     topics = Category.objects.all()[:10]
-    
+    departments = Department.objects.all()
+    courses = Course.objects.all()
     avg_performance = Result.objects.aggregate(avg = Avg('exam_score'))['avg'] or 0
-    
+
     ranking = int(avg_performance*0.1) or 0
     
     
     return {
         'departments': departments,
         'faculties': Faculty.objects.all(),
-        'lecturers': lecturers,
         'avg_performance': avg_performance,
         'ranking': ranking,
         'all_students': all_students,
+        'courses': courses,
         'institutions': Institution.objects.all(),
         'all_results': all_results,
         'topics': topics,
+        'lecturers': lecturers
     }
 
 def performances(request):
@@ -71,7 +79,7 @@ def course_recommendation(request):
     courses = {}
     data = {}
     is_new = True
-    if request.user.is_authenticated() and not request.user.is_staff:
+    if request.user.is_authenticated() and  hasattr(request.user, 'student'):
         for result in Result.objects.filter(student=request.user.student):
             if result.total_score < 60:
                 courses[result.course] = result.total_score
@@ -86,7 +94,7 @@ def course_recommendation(request):
 
 
 def performance_recommendation(request):
-    if request.user.is_authenticated() and not request.user.is_staff:
+    if request.user.is_authenticated() and hasattr(request.user, 'student'):
         dataset = get_dataset()
         matches = top_matches(dataset, request.user.student, length=5, algorithm=sim_pearson)
         return dict(matches)

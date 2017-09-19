@@ -3,7 +3,7 @@
     <ul>
       <li><a href="#section-1">User Setup</a></li>
       <li><a href="#section-2">Institution</a></li>
-      <li><a href="#section-3">Documentation</a></li>
+      <li><a href="#section-3">Other Details</a></li>
       <li><a href="#section-4">Payment Setup</a></li>
     </ul>
   </nav>
@@ -40,44 +40,47 @@
     <section id="section-2">
     <div class="content-detail">
         <h4>Institution</h4>
+         {% if user.lecturer %}
         <table class="table table-condensed">
           <tbody>
             <tr>
-              <td>Username</td>
-              <td>{{request.user.username}}</td>
+              <td>Title</td>
+              <td>{{user.lecturer.title}}</td>
             </tr>
             <tr>
-              <td>Password</td>
-              <td><em>Hidden</em></td>
+              <td>Institution</td>
+              <td>{{user.lecturer.institution}}</td>
             </tr>
             <tr>
-              <td>Email</td>
-              <td>{{request.user.email}}</td>
+              <td>Department</td>
+              <td>{{ user.lecturer.department }}</td>
             </tr>
             <tr>
-              <td>First Name</td>
-              <td>{{request.user.first_name}}</td>
+              <td>Faculty</td>
+              <td>{{user.lecturer.department.faculty}}</td>
             </tr>
             <tr>
-              <td>Last Name</td>
-              <td>{{request.user.last_name}}</td>
+              <td>Position</td>
+              <td>{{user.lecturer.position}}</td>
             </tr>
           </tbody>
         </table>
+         {% endif %}
       </div>
     </section>
     <section id="section-3">
       <div class="content-detail">
-        <h4>Institution Details</h4>
+        <h4>Other Details</h4>
+        {% if user.lecturer %}
         <table class="table table-condensed">
           <tbody>
             <tr>
-              <td>Username</td>
-              <td>{{request.user.username}}</td>
+              <td>Marital Status</td>
+              <td>{{user.lecturer.marital_status}}</td>
             </tr>
             <tr>
-              <td>Password</td>
-              <td><em>Hidden</em></td>
+              <td>Gender</td>
+              <td>{{user.lecturer.gender}}</td>
             </tr>
             <tr>
               <td>Email</td>
@@ -93,6 +96,7 @@
             </tr>
           </tbody>
         </table>
+        {% endif %}
       </div> 
     </section>
     <section id="section-4">

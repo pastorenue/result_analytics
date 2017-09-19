@@ -51,6 +51,14 @@
              <option value="2">Second Semester</option>
            </select>
          </div>
+         <div class="form-group">
+           <label for="id_lecturer">Lecturers <span><small>[Hold control and select, to choose multiple lecturers]</small></span></label>
+           <select multiple name="lecturer" id="id_lecturer" class="form-control">
+             {% for lecturer in lecturers %}
+             <option value="{{lecturer.id}}">{{lecturer}}</option>
+             {% endfor %}
+           </select>
+         </div>
       </div>
       <div class="modal-footer">
         <div class="form-group">

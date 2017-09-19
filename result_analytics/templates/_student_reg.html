@@ -1,0 +1,39 @@
+<div id="student_main_reg" class="col-md-8 center-block login" style="margin-top: 45px; display: none; z-index: 500;">
+    <div class="panel panel-default">
+        <div class="sub-panel" style="text-align: center; font-size: 1.2em;">
+            <h3><strong>Registration</strong></h3>
+        </div>
+        <div class="panel-body">
+            <form id="frm_student">{% csrf_token %}
+                <div class="col-md-6">
+                {% for field in s_form|slice:":5" %}
+                    <div class="form-group">
+                        <p>{{ field.errors }}</p>
+                        <label for="field.id_for_label">{{ field.label }}</label>{{ field }}
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="col-md-6">
+                {% for field in s_form|slice:"5:" %}
+                    <div class="form-group">
+                        <p>{{ field.errors }}</p>
+                        <label for="field.id_for_label">{{ field.label }}</label><br>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="hidden" name="type" value="student">
+                        <input type="hidden" name="institution_id" id="my_institution">
+                        <div class="reg-notification">
+                            <p><strong>NOTE:</strong> Please note that <strong>username and password</strong> is set to your registration number by default. Ensure to change your password upon first login</p>
+                        </div>
+                        <button type="button" class="btn btn-sm custom-btn" onclick="goBack()">&laquo; Back</button>
+                        <button type="submit" class="btn btn-sm custom-btn"> Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -9,8 +9,8 @@
       {% else %}
       <li><a href="{% url 'students:student_account' request.user.student.slug %}"><i class="icons icons-sm icons-user"></i> Account</a></li>
       {% endif %}
-      <li id='userEdit'>{% if user.is_superuser %}<a href="{% url 'analyzer:all_analysis' %}">{% elif request.use.is_staff or request.user.lecturer %}<a href="{% url 'staff_analytics' %}">{% else %}<a href="{% url 'students:student_analytics' %}">{% endif %}<i class="icons icons-sm icons-bar-chart"></i> Analytics</a></li>
-      {% if user.is_superuser %}
+      <li id='userEdit'>{% if user.lecturer.is_admin %}<a href="{% url 'analyzer:all_analysis' %}">{% elif request.use.is_staff or request.user.lecturer %}<a href="{% url 'staff_analytics' %}">{% else %}<a href="{% url 'students:student_analytics' %}">{% endif %}<i class="icons icons-sm icons-bar-chart"></i> Analytics</a></li>
+      {% if user.lecturer.is_admin %}
       <li><a href="{% url 'students:mapper' %}" data-toggle="popover" title="You can generate mappers"><i class="icons icons-sm icons-lock"></i> Generate Reg-Map</a></li>
       <li><label class="dropdown" style="">
               <a href="#" data-toggle="dropdown"><span>Create New</span><b class="caret"></b></a>
@@ -41,7 +41,7 @@
           </label>
       </li>
       {% endif %}
-      {% if not user.is_staff %}
+      {% if user.student %}
       <li><a href="{% url 'assignment:all_assignments' %}"><i class="icons icons-sm icons-book"></i> Assignments</a></li>
       <li><a href="{% url 'my_projects' %}"><i class="icons icons-sm icons-file-archive"></i> Projects</a></li>
       <li><a href="{% url 'forum' request.user.student.slug %}"><i class="icons icons-sm icons-chat"></i> Study Forum</a></li>

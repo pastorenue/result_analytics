@@ -35,8 +35,9 @@ class StudentListView(ListView):
     context_object_name = "students"
 
     def get_queryset(self):
-        queryset = Student.objects.all()
-
+        print(self.request.user.lecturer.institution.id)
+        queryset = Student.objects.filter(institution_id=self.request.user.lecturer.institution.id)
+        print(queryset)
         department = self.request.GET.get("department", "all")
         faculty = self.request.GET.get("faculty", "all")
         student = self.request.GET.get("student", "")
@@ -64,7 +65,7 @@ class StudentListView(ListView):
         return context
 
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    @method_decorator(user_passes_test(lambda u: u.lecturer.is_admin))
     def dispatch(self, request, *args, **kwargs):
         return super(StudentListView, self).dispatch(request, *args, **kwargs)   
 
@@ -124,7 +125,7 @@ def ranking(student):
 
 def export_excel(request):
     students = ((e.last_name, e.first_name, e.reg_number, e.level, e.sex, e.birth_date or '', e.program_type, e.department.name or '', e.faculty.name or '')
-        for e in Student.objects.order_by('level'))
+        for e in Student.objects.filter(institution=request.user.lecturer.institution).order_by('level'))
     fields = ["last_name", "first_name", "reg_number", "level", "sex", "birth_date", "program_type", "department", "faculty"]
     response = HttpResponse(content_type="application/vnd.ms-excel")
     response["Content-Disposition"] = "attachment;filename=students.xls"
@@ -149,14 +150,14 @@ def update_photo(request):
 
 
 @login_required
-@user_passes_test(lambda u:u.is_superuser, login_url="/login/") 
+@user_passes_test(lambda u:u.lecturer.is_admin, login_url="/login/") 
 def mapper_excel_generator(request):
     form = ImportForm()
     return render_to_response('students/generate_mapper.html', {'form': form}, context_instance=RequestContext(request),)
 
 
 @login_required
-@user_passes_test(lambda u:u.is_superuser, login_url="/login/") 
+@user_passes_test(lambda u:u.lecturer.is_admin, login_url="/login/") 
 def generate(request):
     if request.method == 'POST':
         try:

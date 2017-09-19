@@ -62,6 +62,7 @@ def import_result_from_csv(csv_file, lecturer):
                 Result.objects.create(
                     student=student,
                     course=course,
+                    institution=lecturer.institution,
                     exam_score=row[2],
                     level=row[3],
                     semester=row[4],

@@ -43,15 +43,15 @@
               {% endif %}
            <span>Welcome {{ user.first_name|capfirst }}</span><b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu" style="font-size: 12px; background-color: #edf0ef; color: #21a380; border-top: 2px solid #0d8363; top: 28px;">
-                {% if request.user.is_staff %}
-                    <li><a href="{% url 'staff_account' %}"><i class="icons icons-sm icons-user"></i> Account Details</a></li>
-                    {% else %}
-                    <li><a href="{% url 'students:student_account' request.user.student.slug %}"><i class="icons icons-sm icons-user"></i> Account Details</a></li>
-                    {% endif %}
-                    <li class="divider"></li>
-                    <li><a href="{% url 'change-password' %}"><i class="icons icons-sm icons-lock"></i> Change Password</a></li>
-                    <li class="divider"></li>
-                    <li><a href="{% url 'result_logout' %}"><i class="icons icons-sm icons-sign-out"></i> Logout</a></li>
+                {% if request.user.student %}
+                <li><a href="{% url 'students:student_account' request.user.student.slug %}"><i class="icons icons-sm icons-user"></i> Account Details</a></li>
+                {% else %}
+                <li><a href="{% url 'staff_account' %}"><i class="icons icons-sm icons-user"></i> Account Details</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                <li><a href="{% url 'change-password' %}"><i class="icons icons-sm icons-lock"></i> Change Password</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url 'result_logout' %}"><i class="icons icons-sm icons-sign-out"></i> Logout</a></li>
               </ul>
             </label>
           <!--Main Menu Section-->

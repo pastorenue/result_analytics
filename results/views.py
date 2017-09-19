@@ -53,6 +53,8 @@ def add_result(request):
             "semester": semester,
             "session": session,
         }
+        import pdb
+        pdb.set_trace()
         record = Result.objects.filter(student=student, level=level, course=course, semester=semester)
         if record.exists():
             record = record[0]
@@ -63,15 +65,21 @@ def add_result(request):
                 record.save()
                 messages.success(request, _(u'The result was successfully updated!'))
         else:
-            result = Result(**result_data)
-            messages.success(request, _(u'The result was successfully Entered!'))
+            try:
+                result = Result(**result_data)
+                result.institution = request.user.lecturer.institution
+                result.save()
+                messages.success(request, _(u'The result for %s, was successfully Entered!') % (student))
+            except Exception as e:
+                messages.error(request, "It appears your school have not set a \
+                    grading scheme yet. Please contact admin for help or chat a Grade-X expert now.")
         django_message = []
         for message in messages.get_messages(request):
             django_message.append(message.message)
         data['messages'] = django_message
     else:
        pass
-    return TemplateResponse(request, 'results/add_results.html', {'data': data, 'courses': Course.objects.filter(lecturer=request.user.lecturer)})
+    return TemplateResponse(request, 'results/add_results.html', {'data': data, 'courses': Course.objects.filter(lecturers__id=request.user.lecturer.id)})
 # Create your views here.
 
 @user_passes_test(user_is_staff, login_url="/login/") 
@@ -79,7 +87,7 @@ def add_result(request):
 def result_list(request):
     template_name = 'results/_results.html'
     
-    results = Result.objects.all().order_by('-date_created')
+    results = Result.objects.filter(institution=request.user.lecturer.institution).order_by('-date_created')
     paginator = Paginator(results, 30)
     page = request.GET.get('page')
     try:
@@ -155,7 +163,7 @@ def import_student(request):
 @login_required
 def export_excel(request):
     results = (("%s %s" %(e.student.first_name, e.student.last_name), e.level, e.course.name, e.score,e.credit_load, e.course_load, e.grade.caption)
-        for e in Result.objects.order_by('level'))
+        for e in Result.objects.filter(institution=request.user.lecturer.institution).order_by('level'))
     fields = ["student", "level", "course", "score", "credit_load", "course_load", "grade"]
     response = HttpResponse(content_type="application/vnd.ms-excel")
     response["Content-Disposition"] = "attachment;filename=result.xls"
@@ -183,7 +191,7 @@ def upload_csv(request):
             return HttpResponseRedirect(reverse("results:result_import"))
 
         # else continue
-        response = import_result_from_csv(csv_file)
+        response = import_result_from_csv(csv_file, request.user.lecturer)
         if response > 0:
             messages.success(request, "Your records were successfully imported.\r\n Total Records: %s" % (response))
         else:

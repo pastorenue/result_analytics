@@ -18,7 +18,7 @@
                 <th scope="col" style="width: 10%;">Semester</th>
                 <th scope="col" style="width: 7%;">Level</th>
                 <th scope="col" style="width: 10%;">Score</th>
-                <th scope="col" style="width: 10%;">Grade</th>
+                <th scope="col" style="width: 6%;">Grade</th>
             </tr>
         </thead>
         <tbody>
@@ -30,8 +30,8 @@
                 <td>{{ result.course }}</td>
                 <td>{{ result.semester }}</td>
                 <td>{{ result.level }}</td>
-                <td>{{ result.score }}</td>
-                <td>{{ result.grade }}</td>
+                <td>{{ result.total_score }}</td>
+                <td style="text-align: left;">{{ result.grade }}</td>
             </tr>
             {% endfor %}
         {% else %}

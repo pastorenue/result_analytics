@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from institutions.models import Department
-
+from staff.models import Lecturer
 
 @transaction.atomic
 @login_required
@@ -22,20 +22,28 @@ def new_course(request):
         dept_id = params.get('department', '')
         semester = params.get('semester', '')
         level = params.get('level', '')
+        lecturers = params.getlist('lecturer', '')
         department = Department.objects.get(pk=dept_id)
+        lecturer_list = []
+        for i in lecturers:
+            lecturer = Lecturer.objects.get(pk=int(i))
+            lecturer_list.append(lecturer)
 
-        pay_load = {
-            'course_code': course_code,
-            'name': name,
-            'unit': unit,
-            'department': department,
-            'level': level,
-            'semester': semester
-        }
+        import pdb
+        pdb.set_trace()
         try:
+            pay_load = {
+                'course_code': course_code,
+                'name': name,
+                'unit': unit,
+                'department': department,
+                'level': level,
+                'semester': semester,
+            }
             course = Course(**pay_load)
             course.added_by = request.user
             course.save()
+            course.lecturers.add(lecturer)
             messages.success(request, "The course: '%s: %s', has been successfully created" %(course.course_code, course.name))
         except Exception as e:
             messages.error(request, e)
