@@ -38,20 +38,20 @@ class Project(models.Model):
     	return reverse('project_detail', args=[self.pk, self.slug])
 
 
-class ProjectSupervision(models.Model):
-	ACTIVE, DECLINED, COMPLETED, REVOKED = ('A', 'D', 'C', 'R')
-	PROJECT_STATUS = (
-		(ACTIVE, 'Active'),
-		(DECLINED, 'Declined'),
-		(COMPLETED, 'Completed'),
-		(REVOKED, 'Revoked')
-	)
-	lecturer = models.ForeignKey('staff.Lecturer', null=True)
-	project = models.ForeignKey(Project, null=True)
-	status = models.CharField(max_length=1, choices=PROJECT_STATUS, default='A')
-	last_checked = models.DateTimeField(auto_now=True, null=True)
+# class ProjectSupervision(models.Model):
+# 	ACTIVE, DECLINED, COMPLETED, REVOKED = ('A', 'D', 'C', 'R')
+# 	PROJECT_STATUS = (
+# 		(ACTIVE, 'Active'),
+# 		(DECLINED, 'Declined'),
+# 		(COMPLETED, 'Completed'),
+# 		(REVOKED, 'Revoked')
+# 	)
+# 	lecturer = models.ForeignKey(Lecturer, null=True)
+# 	project = models.ForeignKey(Project, null=True)
+# 	status = models.CharField(max_length=1, choices=PROJECT_STATUS, default='A')
+# 	last_checked = models.DateTimeField(auto_now=True, null=True)
 
-	def __str__(self):
-		return "%s-->%s" % (lecturer, self.project)
+# 	def __str__(self):
+# 		return "%s-->%s" % (lecturer, self.project)
 
 
