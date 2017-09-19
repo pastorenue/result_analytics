@@ -1,6 +1,7 @@
 from results.models import Result
-from institutions.models import Department, Lecturer, Faculty, Institution
+from institutions.models import Department, Faculty, Institution
 from students.models import Student
+from .models import Lecturer
 from django.db.models import *
 from forum.models import Category
 from analyzer.utils import cgpaData

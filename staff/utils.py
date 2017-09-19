@@ -1,6 +1,6 @@
 from results.models import Result
 from students.models import Student
-from institutions.models import Lecturer
+from .models import Lecturer
 from django.db import transaction
 from courses.models import Course
 def user_is_staff(user):

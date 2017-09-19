@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import * 
 from results.models import Result
-from institutions.models import Department, Lecturer
+from .models import Lecturer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator

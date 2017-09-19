@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Sum, Aggregate
 from chartit import DataPool, Chart
 from students.models import Student
-from institutions.models import Lecturer
+from staff.models import Lecturer
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 import json
