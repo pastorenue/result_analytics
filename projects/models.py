@@ -46,7 +46,7 @@ class ProjectSupervision(models.Model):
 		(COMPLETED, 'Completed'),
 		(REVOKED, 'Revoked')
 	)
-	lecturer = models.ForeignKey(Lecturer, null=True)
+	lecturer = models.ForeignKey('staff.Lecturer', null=True)
 	project = models.ForeignKey(Project, null=True)
 	status = models.CharField(max_length=1, choices=PROJECT_STATUS, default='A')
 	last_checked = models.DateTimeField(auto_now=True, null=True)
