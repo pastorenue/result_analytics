@@ -14,14 +14,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Actvity',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('activity_name', models.CharField(max_length=100, null=True)),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('department', models.ForeignKey(to='institutions.Department')),
             ],
             options={
-                'verbose_name_plural': 'Analysis Activities',
                 'verbose_name': 'Analysis Activity',
+                'verbose_name_plural': 'Analysis Activities',
                 'ordering': ('date_created',),
             },
         ),

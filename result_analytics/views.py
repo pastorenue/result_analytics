@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from students.forms import StudentCreationForm
 
 def index(request):
     context = {}
@@ -21,17 +22,13 @@ def register_success(request):
 
 def register_user(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname')
-        password = request.POST.get('password1')
-        user=User.objects.create_user(username=username, password=password, first_name = firstname, last_name=lastname)
-        user.save()
-        profile = Profile(user=user, first_name=firstname, last_name=lastname)
-        profile.save()
+        s_form = StudentCreationForm(request.POST, request.FILES)
+        if s_form.is_valid:
+            s_form.save()
         return redirect('photobox_success')
     else:
-        return render(request, 'signup.html', {})
+        s_form = StudentCreationForm()
+        return render(request, 'signup.html', {'s_form': list(s_form)})
  
    
 @login_required

@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from students.models import Student
-from institutions.models import Department, Lecturer
+from institutions.models import Department 
+from staff.models import Lecturer
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
@@ -17,7 +18,7 @@ class Course(models.Model):
     level = models.IntegerField(choices=settings.LEVEL_CHOICES, null=True)
     semester = models.IntegerField(choices=SEMESTER_CHOICES, null=True)
     department = models.ForeignKey(Department, null=True)
-    lecturer = models.ManyToManyField(Lecturer, help_text="Hold down the control key and select more than one lecturer",  blank=True)
+    lecturer = models.ManyToManyField('staff.Lecturer', help_text="Hold down the control key and select more than one lecturer",  blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     added_by = models.ForeignKey(User)

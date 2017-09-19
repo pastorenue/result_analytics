@@ -4,6 +4,7 @@ import uuid
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.text import slugify
+from staff.models import Lecturer
 
 
 class Project(models.Model):
@@ -45,7 +46,7 @@ class ProjectSupervision(models.Model):
 		(COMPLETED, 'Completed'),
 		(REVOKED, 'Revoked')
 	)
-	lecturer = models.ForeignKey('institutions.Lecturer', null=True)
+	lecturer = models.ForeignKey(Lecturer, null=True)
 	project = models.ForeignKey(Project, null=True)
 	status = models.CharField(max_length=1, choices=PROJECT_STATUS, default='A')
 	last_checked = models.DateTimeField(auto_now=True, null=True)

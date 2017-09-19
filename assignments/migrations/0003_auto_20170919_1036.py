@@ -7,27 +7,17 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('courses', '0001_initial'),
-        ('students', '0001_initial'),
-        ('institutions', '0001_initial'),
-        ('assignments', '0001_initial'),
+        ('assignments', '0002_quiz_course'),
+        ('staff', '0001_initial'),
+        ('courses', '0002_course_lecturer'),
+        ('students', '0003_auto_20170914_1354'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='submitted',
-            name='student',
-            field=models.ForeignKey(to='students.Student'),
-        ),
-        migrations.AddField(
-            model_name='quiz',
-            name='course',
-            field=models.ForeignKey(to='courses.Course'),
-        ),
-        migrations.AddField(
             model_name='quiz',
             name='invigilators',
-            field=models.ManyToManyField(blank=True, help_text='Hold down the control key and select more than one lecturer', to='institutions.Lecturer'),
+            field=models.ManyToManyField(help_text='Hold down the control key and select more than one lecturer', blank=True, to='staff.Lecturer'),
         ),
         migrations.AddField(
             model_name='quiz',
@@ -52,6 +42,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='assignment',
             name='lecturer',
-            field=models.ForeignKey(to='institutions.Lecturer', null=True),
+            field=models.ForeignKey(to='staff.Lecturer', null=True),
         ),
     ]

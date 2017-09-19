@@ -3,7 +3,8 @@ from courses.models import Course
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from students.models import Student
-from institutions.models import Institution, Lecturer
+from institutions.models import Institution 
+from staff.models import Lecturer
 import uuid
 # Create your models here.
 
@@ -82,7 +83,7 @@ class Quiz(models.Model):
 	semester = models.PositiveIntegerField(choices=settings.SEMESTER_CHOICES, null=True)
 	session = models.CharField(max_length=10, blank=True, null=True)
 	date_created = models.DateTimeField(auto_now_add=True)
-	invigilators = models.ManyToManyField('institutions.Lecturer', help_text="Hold down the control key and select more than one lecturer",  blank=True)
+	invigilators = models.ManyToManyField('staff.Lecturer', help_text="Hold down the control key and select more than one lecturer",  blank=True)
 
 	class Meta:
 		verbose_name = _(u'Quiz')

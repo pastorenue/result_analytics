@@ -12,12 +12,6 @@ class DepartmentAdmin(admin.ModelAdmin):
 class FacultyAdmin(admin.ModelAdmin):
     list_display = ('code', 'name')
 
-class LecturerAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'position', 'specialty',)
-    list_display_links = ('full_name',)
-
 admin.site.register(Institution, InstitutionsAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Faculty, FacultyAdmin)
-admin.site.register(Lecturer, LecturerAdmin)
-admin.site.register(Position)
