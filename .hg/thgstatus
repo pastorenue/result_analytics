@@ -6,11 +6,13 @@ rassignments/migrations
 mcourses
 mcourses/__pycache__
 rcourses/migrations
+rcourses/migrations/__pycache__
 minstitutions
 minstitutions/__pycache__
-minstitutions/migrations/__pycache__
+minstitutions/migrations
+rinstitutions/migrations/__pycache__
 mprojects
-rprojects/migrations
+mprojects/migrations
 mresult_analytics
 mresult_analytics/__pycache__
 rresult_analytics/static/bootstrap-3.3.4-dist/css
@@ -27,6 +29,8 @@ rresults/migrations/__pycache__
 mresults/templates/results
 mstaff
 mstudents
+rstudents/migrations
+rstudents/migrations/__pycache__
 mstudents/templates/students
 rtemplates
 rtemplates/employees
