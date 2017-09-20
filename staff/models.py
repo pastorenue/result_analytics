@@ -70,7 +70,7 @@ class Lecturer(models.Model):
         )
 
     def __str__(self):
-        return '%s %s' % (self.title, self.full_name)
+        return '%s' % (self.full_name)
 
     @property
     def full_name(self):

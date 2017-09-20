@@ -5,7 +5,6 @@ from django.conf import settings
 from decimal import Decimal
 from django.db.models import Sum
 from students.models import Student
-from assignments.models import Assignment, Quiz
 from institutions.models import Department, Institution
 from functools import reduce
 

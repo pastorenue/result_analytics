@@ -5,9 +5,9 @@
        <div class="col-md-4 col-sm-6">
            <div class="panel panel-default add-padding">
                 <div class="sub-panel add-padding">
-                    <form method="POST" action="">{% csrf_token %}
-                        <button class="btn btn-sm custom-btn">Request for Details</button>
-                    </form>
+                    {% if user.student %}
+                    <a href="{% url 'students:help' student.id %}"><button class="btn btn-sm custom-btn">Request for Help</button></a>
+                    {% endif %}
                 </div>
                <div class="">
                    {%if student.photo %}
@@ -43,12 +43,6 @@
                     <i class="icons icons-sm icons-mobile"></i>
                     <span class="value">{{ student.phone }}</span>
                 </div>
-                {% endif %}
-                
-                {% if is_own_profile or user.is_superuser %}
-                <div class="">
-                    <a class="edit-section" href="#"><i class="icons icons-sm icons-edit"></i>Edit</a>
-                </div> 
                 {% endif %}
                 </div>
             </div>

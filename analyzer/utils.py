@@ -8,8 +8,8 @@ from decimal import Decimal
 class MainData(object):
     
     @classmethod
-    def get_performance_report(cls):
-        students = Student.objects.all()
+    def get_performance_report(cls, institution):
+        students = Student.objects.filter(institution=institution)
         data = {}
         
         for student in students:
@@ -24,17 +24,17 @@ class MainData(object):
         pass
     
     @classmethod
-    def average_performance(cls, **kwargs):
+    def average_performance(cls, institution, **kwargs):
         data = {'year':[], 'avg_cgpa':[]}
-        res = Result.objects.all()
+        res = Result.objects.filter(institution=institution)
         years = []
-        students = Student.objects.all()
+        students = Student.objects.filter(institution=institution)
         for student in students:
             if student.year_of_admission.year in years:
                 pass
             else:
                 years.append(student.year_of_admission.year)
-
+        years.sort()
         for year in years:
             avg_cgpa = []
             for student in students:
@@ -44,10 +44,10 @@ class MainData(object):
         return data
     
     @classmethod
-    def average_course_performance(cls, **kwargs):
+    def average_course_performance(cls, institution, **kwargs):
         data = {'course':[], 'passes':[], 'failures':[]}
         
-        student = Student.objects.all()
+        student = Student.objects.filter(institution=institution)
         courses = Course.objects.all().order_by('course_code')
         for course in courses:
             passes = 0
@@ -211,9 +211,10 @@ class cgpaData(object):
         return float(grade)
    
     @classmethod
-    def get_all_cgpa(cls):
-        active_students = Student.objects.filter(user_status='A').order_by('department')
-        graduate_students = Student.objects.filter(user_status='G').order_by('department')
+    def get_all_cgpa(cls, institution):
+        students = Student.objects.filter(institution=institution)
+        active_students = students.filter(user_status='A').order_by('department')
+        graduate_students = students.filter(user_status='G').order_by('department')
         data_active = {'student': [], 'cgpa': []}
         data_graduate ={'student': [], 'cgpa': []}
         

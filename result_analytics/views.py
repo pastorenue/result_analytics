@@ -28,12 +28,8 @@ def register_success(request):
 def register_user(request):
     if request.method == 'POST':
         user_type = request.POST.get('type')
-        institution_id = request.POST.get('institution_id')
-        institution = get_object_or_404(Institution, pk=int(institution_id))
         s_form = StudentCreationForm(request.POST)
         l_form = LecturerCreationForm(request.POST)
-        import pdb  
-        pdb.set_trace()
         if l_form.is_valid() and user_type == 'staff':
             try:
                 l_form.save()
@@ -44,8 +40,10 @@ def register_user(request):
                 messages.error(request, e)
                 return redirect('result_signup')
 
-        if s_form.is_valid() and user_type == 'student':
+        elif s_form.is_valid() and user_type == 'student':
             try:
+                institution_id = request.POST.get('institution_id')
+                institution = get_object_or_404(Institution, pk=int(institution_id))
                 student = s_form.save(commit=False)
                 student.institution = institution
                 student.save()
@@ -55,11 +53,15 @@ def register_user(request):
             except Exception as e:
                 messages.error(request, e)
                 return redirect('result_signup')
+        else:
+            messages.error(request, "Sorry!, your registration was not successful. \
+                Perhaps you have supplied Invalid fields. If it continues please chat us up.\
+                We'll be glad to help")
+            return redirect('result_signup')
     else:
         s_form = StudentCreationForm()
         l_form = LecturerCreationForm()
         return render(request, 'signup.html', {'s_form': list(s_form), 'l_form': list(l_form)})
-    return redirect('result_signup')
  
    
 @login_required

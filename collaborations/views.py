@@ -111,4 +111,5 @@ def friend_zone(request):
 
 @login_required
 def mark_all_as_read(request):
-	pass
+	request.user.notifications.mark_all_as_read()
+	return HttpResponseRedirect(reverse('dashboard'))

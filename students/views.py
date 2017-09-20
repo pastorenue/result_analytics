@@ -23,6 +23,8 @@ from .utils import user_is_student, generate_mapper_excel
 from django.utils.decorators import method_decorator
 from courses.models import Course
 from analyzer.utils import StudentChartData, cgpaData
+from notifications.signals import notify
+from utils.url_dispatcher import get_url
 try:
     import json
 except:
@@ -35,7 +37,6 @@ class StudentListView(ListView):
     context_object_name = "students"
 
     def get_queryset(self):
-        print(self.request.user.lecturer.institution.id)
         queryset = Student.objects.filter(institution_id=self.request.user.lecturer.institution.id)
         print(queryset)
         department = self.request.GET.get("department", "all")
@@ -257,3 +258,17 @@ def edit_profile(request):
             'student': student
         }
     return render(request, template_name, context)
+
+@login_required
+def request_help(request, student_id):
+    student = get_object_or_404(Student, pk=student_id)
+    own = request.user.student
+    notify.send(request.user, recipient=student.user,
+        description=\
+        get_url(request, reverse('students:student_account', kwargs={'student_slug':own.slug})),
+        verb="%s is requesting for your help. Can you assist?" % (request.user.student))
+    messages.success(request, "Your request has been sent to %s.\
+     He will get back to you soon" % (student))
+    print(":Done")
+    return HttpResponseRedirect(reverse('dashboard'))
+

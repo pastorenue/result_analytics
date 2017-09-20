@@ -30,13 +30,12 @@
         <label class="dropdown" style="">
               <a href="#" data-toggle="dropdown"><span>Export Excel...</span><b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu" style="font-size: 14px; background-color: #fff; color: #21a380; border-top: 2px solid #34495e; top: 24px;">
-                    <li><a href="{% url 'students:export_excel' %}"><i class="icons icons-sm icons-group"></i> Students...</a></li>
-                    <li class="divider"></li>
-                    <li><a href="{% url 'results:export_excel' %}"><i class="icons icons-sm icons-table"></i> Results...</a></li>
-                    <li class="divider"></li>
-                    <li><a href="{% url 'analyzer:export_excel' %}"><i class="icons icons-sm icons-history"></i> Performance History...</a></li>
-                    <li class="divider"></li>
-                    <li><a href=""><i class="icons icons-sm icons-area-chart"></i> Analysis...</a></li>
+                    {% if user.lecturer.is_admin %}
+                    <li><a href="{% url 'students:export_excel' %}"><i class="icons icons-sm icons-group"></i> Students</a></li>
+                    <li><a href=""><i class="icons icons-sm icons-area-chart"></i> Analysis</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'results:export_excel' %}"><i class="icons icons-sm icons-table"></i> Results</a></li>
+                    <li><a href="{% url 'analyzer:export_excel' %}"><i class="icons icons-sm icons-history"></i> Performance History</a></li>
               </ul>
           </label>
       </li>

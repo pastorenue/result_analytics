@@ -150,7 +150,7 @@ class StudentCreationForm(forms.ModelForm):
          self.fields['email'].widget.attrs = {'placeholder' : 'Email e.g. example@example.com', 'class': 'form-control'}
          self.fields['last_name'].widget.attrs = {'placeholder' : 'Student Surname', 'class': 'form-control'}
          self.fields['first_name'].widget.attrs = {'placeholder' : 'First Name', 'class': 'form-control'}
-         self.fields['middle_name'].widget.attrs = {'placeholder' : 'Other Name', 'class': 'form-control'}
+         self.fields['sex'].widget.attrs = {'class': 'form-control'}
          self.fields['reg_number'].widget.attrs = {'placeholder' : 'Reg Number', 'class': 'form-control'}
          self.fields['faculty'].widget.attrs = {'class': 'form-control'}
          self.fields['department'].widget.attrs = {'class': 'form-control'}
@@ -163,7 +163,7 @@ class StudentCreationForm(forms.ModelForm):
             'email',
             'last_name',
             'first_name',
-            'middle_name',
+            'sex',
             'reg_number',
             'faculty',
             'department',

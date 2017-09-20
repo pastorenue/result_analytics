@@ -18,12 +18,12 @@
              <span style="color: #c12c12; font-weight: 600;">[TEST MODE]</span>
              {% endif %}
           <label id="new_info" class="pull-right" style="margin-right: 10px; cursor: pointer;"><i class="icons icons-sm icons-bell"></i><span class="icon-badge">{{unread_count}}</span></label>
-          <div id="notification_pane" class="panel panel-default notifications">
-              <h4><strong>Notifications</strong> <span style="float: right; font-size: 14px; padding-right: 5px;"><a href="{% url 'notifications:mark_all_as_read' %}">mark all as read</a></span></h4>
+          <div id="notification_pane" class="panel panel-default notifications scroll">
+              <h4><strong>Notifications</strong> <span style="float: right; font-size: 14px; padding-right: 5px; text-decoration: underline;"><a href="{% url 'collaborate:mark' %}">mark all as read</a></span></h4>
               <div class=" ">
                 {% for notification in user.notifications.unread %}
                 <div class="item">
-                  <a href="{% url 'collaborate:collaboration_index' %}#section-4"><h5>{{notification.verb}}</h5></a>
+                  <a href="{{notification.description}}"><h5>{{notification.verb}}</h5></a>
                 </div>
                 {% empty %}
                 <div>

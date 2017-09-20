@@ -4,6 +4,7 @@ from django.forms.extras.widgets import SelectDateWidget
 from .models import Assignment, AssignmentScore, Submitted
 import datetime
 from students.models import Student
+from django.db import transaction
 
 class AssignmentForm(forms.ModelForm):
 	due_date = forms.DateTimeField(widget = SelectDateWidget(years=range(1990, datetime.date.today().year+20), attrs=({'class': 'form-control', 'style': 'width: 20%; display: inline-block;'})))
@@ -24,6 +25,7 @@ class AssignmentForm(forms.ModelForm):
 		self.fields['semester'].widget.attrs = {'class': 'form-control'}
 		self.fields['session'].widget.attrs = {'class':'form-control'}
 
+	@transaction.atomic
 	def save(self, commit=False):
 		instance = super(AssignmentForm, self).save(commit=False)
 		instance.lecturer = self.request.user.lecturer

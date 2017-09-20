@@ -6,13 +6,13 @@
 
 {% block content %}
     <div style="margin-bottom: 30px;">
-        <h3 class="page-header">{{ student}}'s Result Details</h3>
+        <h3 class="page-header">{% if user.student %} Your {% else %}{{ student}}'s {% endif %} Result Details</h3>
     </div>
 <div class='container-fluid '>
-    <table class='table table-condensed main-page'>
+    <table class='table table-condensed'>
         <thead>
             <tr>
-                <th scope="col" style="width: 6%">&nbsp;</th>
+                <th scope="col" style="width: 7%">S/N</th>
                 <th style="width: 30%;">Course</th>
                 <th>Semester</th>
                 <th>Level</th>
@@ -23,13 +23,12 @@
         <tbody>
             {% for result in results %}
             <a href=""><tr class="" style="cursor: pointer;">
-               <td style="font-size: 1.4em; padding-top: 0px;">
-                </td>
-                <td>{{ result.course }}</td>
+               <td>{{forloop.counter}}</td>
+                <td style="width: 40%;">{{ result.course }}</td>
                 <td>{{ result.semester }}</td>
                 <td>{{ result.level }}</td>
                 <td>{{ result.total_score }}</td>
-                <td>{{ result.grade }}</td>
+                <td style="width: 7%; text-align: left;">{{ result.grade }}</td>
             </tr></a>
             {% empty %}
             <tr>

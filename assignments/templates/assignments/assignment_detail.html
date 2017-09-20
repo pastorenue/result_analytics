@@ -44,7 +44,7 @@
         <button type="button" class="btn btn-sm custom-btn" onclick="location.href='{% url 'assignment:submit_assignment' ass_score.assignment.assignment_code %}'">Submit Answer Now</button>
         <button type="button" class="btn btn-sm custom-btn" data-dismiss="modal">Submit Later</button>
         {% else %}
-        <label>{% if ass_score.status == 'D' %} You cannot no longer submit{% else %}You have submitted already{% endif %}</label>
+        <label>{% if ass_score.status == 'D' %} Assignment time has Elapsed {% else %}You have submitted already{% endif %}</label>
         <button type="button" class="btn btn-sm custom-btn" data-dismiss="modal">Cancel</button>
         {% endif %}
       </div>

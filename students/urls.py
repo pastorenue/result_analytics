@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 from .forms import *
-from .views import (StudentListView, student_profile, 
+from .views import (StudentListView, student_profile, request_help, 
                     export_excel, create_student, update_photo, student_chart_json,  
                     mapper_excel_generator, generate, generate_mapper_json, 
                     edit_profile, StudentAnalyticsView)
@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^update-photo/$', update_photo, name='update_photo'),
     url(r'^student-json/$', student_chart_json, name='student_chart_json'),
     url(r'^mapper-json/$', generate_mapper_json, name='mapper-json'),
+    url(r'^ineed/assistance/(?P<student_id>\d+)/$', request_help , name='help'),
 )

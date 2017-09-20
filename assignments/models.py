@@ -6,7 +6,8 @@ from students.models import Student
 from institutions.models import Institution 
 from staff.models import Lecturer
 import uuid
-# Create your models here.
+from results.models import Result
+
 
 class Assignment(models.Model):
 	EXCELLENT, ABOVE_AVERAGE, AVERAGE, FAIR_ENOUGH = (80, 60, 50, 40)
@@ -21,6 +22,11 @@ class Assignment(models.Model):
         ('major assignment', 'Major Assignments'),
         ('mock assignment', 'Mock Assignment')
     )
+    
+	STATUS_CHOICES = (
+		('A', 'Active'),
+		('D', 'Deactivated')
+	)
 	
 	lecturer = models.ForeignKey(Lecturer, null=True)
 	assignment_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -34,6 +40,7 @@ class Assignment(models.Model):
 	session = models.CharField(max_length=10, blank=True, null=True)
 	possible_points = models.DecimalField(null=True, default=0.0, decimal_places=2, max_digits=6, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='A')
 	due_date = models.DateTimeField()
 
 	def __str__(self):
@@ -72,7 +79,7 @@ class AssignmentScore(models.Model):
     			result[0].save()
     		else:
     			pass
-    	super(Assignment, self).save(**kwargs)
+    	super(AssignmentScore, self).save(**kwargs)
 
 
 class Quiz(models.Model):

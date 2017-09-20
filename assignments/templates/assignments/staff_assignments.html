@@ -31,7 +31,12 @@
     			<td>{{assignment.category|title}}</td>
     			<td>{{assignment.possible_points}}</td>
     			<td>{{assignment.due_date}}</td>
-    			<td><button class="btn btn-sm custom-btn" onclick="location.href='#'">Deactivate</button></td>
+    			<td>
+    				{% if assignment.status == 'A' %}<button class="btn btn-sm custom-btn" onclick="location.href='{% url 'assignment:deactivate' assignment.assignment_code %}'">Deactivate</button>
+    				{% else %}
+			    		<button class="btn btn-sm btn-danger" onclick="location.href='#'">Inactive</button>
+			    	{% endif %}
+			    </td>
     		</tr>
     		{% include 'assignments/assignment_detail.html' %}
 	    	{% endfor %}

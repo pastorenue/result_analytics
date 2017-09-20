@@ -115,7 +115,7 @@ def student_cgpa_analysis(request, student_slug, chartID='container', chart_type
 @login_required
 def all_analysis(request, template_name='analyzer/analytics_main.html', chartID='container', chart_type = 'column', chart_height=300):
     #All cgpa analysis
-    data_active, data_graduate = cgpaData.get_all_cgpa()
+    data_active, data_graduate = cgpaData.get_all_cgpa(institution=request.user.lecturer.institution)
     
     
    #Active Students Charts
@@ -133,15 +133,16 @@ def all_analysis(request, template_name='analyzer/analytics_main.html', chartID=
     g_series = [{"name": "Student CGPA", "data": data_graduate['cgpa']}]
     
     
-    male_students = Student.objects.filter(sex='M').count()
-    female_students = Student.objects.filter(sex='F').count()
-    total = Student.objects.filter(user_status='A').count()
-    suspension = Student.objects.filter(user_status='S').count()
-    graduated = Student.objects.filter(user_status='G').count()
+    students = Student.objects.filter(institution=request.user.lecturer.institution)
+    male_students = students.filter(sex='M').count()
+    female_students = students.filter(sex='F').count()
+    total = students.filter(user_status='A').count()
+    suspension = students.filter(user_status='S').count()
+    graduated = students.filter(user_status='G').count()
     
     
     #average cgpa analysis by gender
-    avg_data = main.average_performance()
+    avg_data = main.average_performance(institution=request.user.lecturer.institution)
     chart = {"renderTo": 'chart_avg', "type": "area", "height": 270, "zoomType": 'xy'}
     title = {"text": "Yearly Average Performance"}
     xAxis = {"title": {"text": 'Year'}, "categories": avg_data['year']}
@@ -149,7 +150,7 @@ def all_analysis(request, template_name='analyzer/analytics_main.html', chartID=
     series = [{"name": "Annual CGPA Average", "data": avg_data['avg_cgpa']}]
     
     #average analysis by courses
-    course_data = main.average_course_performance()
+    course_data = main.average_course_performance(request.user.lecturer.institution)
     c_chart = {"renderTo": 'c_chart', "type": "column", "height": 270, "zoomType": 'x'}
     c_title = {"text": "Course Overall Performance"}
     c_xAxis = {"title": {"text": 'Courses'}, "categories": course_data['course']}
@@ -322,7 +323,7 @@ def make_prediction(request, student_slug):
 def export_excel(request):
     all_cgpa = main.get_performance_report()
     
-    students = Student.objects.all()
+    students = Student.objects.filter(institution=request.user.lecturer.institution)
     print(all_cgpa)
     fcgpa = ((student.full_name, student.reg_number, all_cgpa[student.reg_number]) for student in students)
     fields = ["student","reg number","FCGPA"]
