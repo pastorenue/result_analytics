@@ -44,8 +44,6 @@ def activate(request):
 	instance = get_object_or_404(Activation, user=request.user)
 	if request.method == 'POST':
 		form = ActivationForm(request.POST, instance=instance)
-		import pdb
-		pdb.set_trace()
 		if form.is_valid():
 			try:
 				form = form.save(commit=False)
