@@ -50,8 +50,8 @@ class Activation(models.Model):
 
 class StudentSetup(SetupMixin):
 	allow_my_result_for_analysis = models.BooleanField(default=True)
-	target_cgpa = models.DecimalField(decimal_places=2, default=0.0, max_digits=4, blank=True,)
-	recommed_my_help_to_students = models.BooleanField(default=True)
+	target_cgpa = models.DecimalField(decimal_places=2, default=0.0, max_digits=4, null=True, blank=True)
+	recommend_my_help_to_students = models.BooleanField(default=True)
 	recommend_me_to_students = models.BooleanField(default=True)
 
 	def __str__(self):

@@ -43,11 +43,19 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="sub-panel">
-			<img src="{{ student.institution.logo.url}}" width="95" height="110">
+			{% if student.institution.logo %}
+			{% thumbnail student.institution.logo "100x110" crop="center" as im %}
+			<img src="{{ im.url}}" width="{{im.width}}" height="{{im.height}}">
+			{% endthumbnail %}
+			{% else %}
+			<img src="{% static 'images/grade-sm-2.png' %}" width="100" height="100">
+			{% endif %}
 		</div>
+		{% if student.institution %}
 		<div>
 			{{student.institution}}
 		</div>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

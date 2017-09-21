@@ -16,7 +16,7 @@ class StudentSetupForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(StudentSetupForm, self).__init__(*args, **kwargs)
 		self.fields['time_format'].widget.attrs = {'class': 'form-control'}
-		self.fields['target_cgpa'].widget.attrs = {'class': 'form-control'}
+		self.fields['target_cgpa'].widget.attrs = {'class': 'form-control', 'step': '0.1'}
 
 	class Meta:
 		model = StudentSetup

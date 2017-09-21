@@ -12,26 +12,28 @@ from django.http import HttpResponseRedirect
 @login_required
 def setup(request):
 	form = []
+	student_setup = None
+	staff_setup = None
+	if hasattr(request.user, 'student'):
+		student_setup = StudentSetup.objects.get(user=request.user)
+	if hasattr(request.user, 'lecturer'):
+		staff_setup = StaffSetup.objects.get(user=request.user)
 	if request.method == 'POST':
 		request.session['django_timezone'] = request.POST.get('time_format')
 		if hasattr(request.user, 'lecturer'):
-			staff_setup = StaffSetup.objects.get(user=request.user)
 			form = StaffSetupForm(request.POST, instance=staff_setup)
 			form.save()
 			messages.success(request, "Your configuration has been saved")
 			return redirect('dashboard')
 		elif hasattr(request.user, 'student'):
-			student_setup = StudentSetup.objects.get(user=request.user)
 			form = StudentSetupForm(request.POST, instance=student_setup)
 			form.save()
 			messages.success(request, "Your configuration has been saved")
 			return redirect('dashboard')
 	else: 
 		if hasattr(request.user, 'lecturer'):
-			staff_setup = StaffSetup.objects.get(user=request.user)
 			form = StaffSetupForm(instance=staff_setup)
 		elif hasattr(request.user, 'student'):
-			student_setup = StudentSetup.objects.get(user=request.user)
 			form = StudentSetupForm(instance=student_setup)
 	return render(request, 'setup.html', {'form': list(form)})
 
@@ -39,17 +41,24 @@ def setup(request):
 @login_required
 def activate(request):
 	template_name = 'core/activate.html'
+	instance = get_object_or_404(Activation, user=request.user)
 	if request.method == 'POST':
-		form = ActivationForm(request.POST)
-		if form.is_valid:
-			form = form.save(commit=False)
-			form.activated = True
-			form.user = request.user
-			form.save()
-			messages.info(request, "An email has been sent to your mail. Click to confirm the activation")
-		return redirect('dashboard')
+		form = ActivationForm(request.POST, instance=instance)
+		import pdb
+		pdb.set_trace()
+		if form.is_valid():
+			try:
+				form = form.save(commit=False)
+				form.activated = True
+				form.user = request.user
+				form.save()
+				messages.info(request, "Your account has been activated. \
+					Enjoy the full features of Grade-X")
+				return redirect('dashboard')
+			except Exception as e:
+				messages.error(request, e) 
 	else:
-		form = ActivationForm()
+		form = ActivationForm(instance=instance)
 	return render(request, template_name, {'form': list(form)})
 
 @login_required
