@@ -53,8 +53,6 @@ def add_result(request):
             "semester": semester,
             "session": session,
         }
-        import pdb
-        pdb.set_trace()
         record = Result.objects.filter(student=student, level=level, course=course, semester=semester)
         if record.exists():
             record = record[0]

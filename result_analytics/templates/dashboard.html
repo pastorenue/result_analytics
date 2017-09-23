@@ -224,6 +224,23 @@
           $('[data-toggle="popover"]').tooltip(); 
           $('#notification_pane').hide();  
       });
+
+      var json_url = "{% url 'collaborate:mark' %}";
+      $("#mark_all").click(function() {
+        $.ajax({
+          type: 'GET',
+          url: json_url,
+          success: function(data) {
+            update_messages(data.messages);
+          }
+        });
+      });
+
+      function update_messages(messages){
+        $.each(messages, function (i, m) {
+            $("#notification").append("<div class='alert alert-'"+m.tags+">"+m.message+"</div>");
+        });
+    }
     </script>
     <script>
       $('#new_info').click(function() {

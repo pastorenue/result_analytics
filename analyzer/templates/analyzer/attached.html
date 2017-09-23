@@ -5,8 +5,8 @@
     <li><a href="{% url 'students:students_list' %}"><i class="icons icons-sm icons-group"></i> All Students <span class="badge"> {{ all_students.count }}</span></a></li>
     <li><a href="{% url 'students:create_student' %}"><i class="icons icons-sm icons-new-user"></i> New Student... </a></li>
     <li><a href="{% url 'results:students_results' %}">All Students Results <span class="badge"> {{ all_results.count }}</span></a></li>
-    <li><a href="#">Employee List <span class="badge"> 0</span></a></li>
-    <li><a href=""><i class="icons icons-sm icons-new-user"></i> New Staff... </a></li>
+    <li><a href="{% url 'staff-list' %}">Employee List <span class="badge"> {{lecturers.count}}</span></a></li>
+    <li><a href="{% url 'new-staff' %}"><i class="icons icons-sm icons-new-user"></i> New Staff... </a></li>
     <li><a href="{% url 'results:grading-setting' %}"><i class="icons icons-sm icons-tasks"></i> Grading Setup </a></li>
 {% endif %}
 {% if user.is_staff and student %}

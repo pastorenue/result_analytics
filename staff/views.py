@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.db.models import * 
 from results.models import Result
 from .models import Lecturer
+from .forms import CustomStaffCreationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse, HttpResponseRedirect
 #from chartit import DataPool, Chart
@@ -30,12 +31,23 @@ def accounts(request):
 	return render(request, 'staff/accounts.html', {})
 
 
+class StaffListView(ListView):
+	model = Lecturer
+	template_name = 'staff/staff_list.html'
+	context_object_name = 'lecturers'
+
+	def get_queryset(self):
+		logged_user = self.request.user.lecturer
+		queryset = Lecturer.objects.filter(institution=logged_user.institution)
+		return queryset
+
+
 class StaffAnalyticsView(TemplateView):
 	template_name = 'staff/_analysis.html'
 
 	def get_context_data(self, **kwargs):
 		context = super(StaffAnalyticsView, self).get_context_data(**kwargs)
-		context['courses'] = Course.objects.filter(lecturer=self.request.user.lecturer)
+		context['courses'] = Course.objects.filter(lecturers=self.request.user.lecturer)
 		context['departments'] = get_lecturer_data(self.request)['dept']
 		context['staff_metrics'] = staff_analytics_metrics(self.request.user)
 
@@ -59,18 +71,19 @@ def chart_data_json(request):
 	dept_id = params.get('dept', 'all')
 	name = params.get('name', '')
 	course = Course.objects.get(pk=course_id)
-	if name == 'course_data':
-		dept=None
-		results = None
-		if dept_id != 'all':
-			dept = Department.objects.get(pk=dept_id)
-			results = Result.objects.filter(course__lecturer=request.user.lecturer, course=course, department=dept)
-			data = ResultData.get_result_by_lecturer(results)
-		else:
-			results = Result.objects.filter(course__lecturer=request.user.lecturer, course=course)
-			data = ResultData.get_result_by_lecturer(results)
-	elif name == 'course_average_by_dept':
-		data = ResultData.dept_avg_score(request.user.lecturer, course)
+	if course:
+		if name == 'course_data':
+			dept=None
+			results = None
+			if dept_id != 'all':
+				dept = Department.objects.get(pk=dept_id)
+				results = Result.objects.filter(course__lecturer=request.user.lecturer, course=course, department=dept)
+				data = ResultData.get_result_by_lecturer(results)
+			else:
+				results = Result.objects.filter(course__lecturer=request.user.lecturer, course=course)
+				data = ResultData.get_result_by_lecturer(results)
+		elif name == 'course_average_by_dept':
+			data = ResultData.dept_avg_score(request.user.lecturer, course)
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 
@@ -112,9 +125,28 @@ def other_uploads(request):
 
 
 def get_lecturer_data(req):
-	results = Result.objects.filter(course__lecturer=req.user.lecturer)
+	results = Result.objects.filter(course__lecturers=req.user.lecturer)
 	dept_list = []
 	for result in results:
 		if result.student.department not in dept_list:
 			dept_list.append(result.student.department)
 	return {'dept':dept_list}
+
+
+@login_required
+@user_passes_test(lambda u: u.lecturer.is_admin)
+def create_staff(request):
+    if request.method == "POST":
+        form = CustomStaffCreationForm(request.POST)
+        if form.is_valid():
+            try:
+                staff = form.save(commit=False)
+                staff.institution = request.user.lecturer.institution
+                staff.save()
+                messages.success(request, "%s's record has been successfully created." % (staff))
+                return HttpResponseRedirect(reverse('staff-list'))
+            except Exception as e:
+                messages.error(request, e)
+    else:
+        form = CustomStaffCreationForm()
+    return render(request, 'staff/new_staff.html', {'form': list(form)})

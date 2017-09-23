@@ -2,7 +2,7 @@ from django.shortcuts import render
 from friendship.models import Friend, Follow, FriendshipRequest
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from students.models import Student
@@ -111,5 +111,18 @@ def friend_zone(request):
 
 @login_required
 def mark_all_as_read(request):
-	request.user.notifications.mark_all_as_read()
-	return HttpResponseRedirect(reverse('dashboard'))
+	data = {}
+	if request.is_ajax():
+		request.user.notifications.mark_all_as_read()
+		messages.success(request, "all notifications successfully marked as read")
+		all_msg = []
+		for msg in messages.get_messages(request):
+			all_msg.append({
+				'message':msg.message,
+				'level': msg.level,
+				'tags':msg.tags
+				})
+		data['messages'] = all_msg
+		return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
+	else:
+		raise Http404

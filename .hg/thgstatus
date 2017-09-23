@@ -4,6 +4,8 @@ manalyzer/migrations
 manalyzer/templates/analyzer
 massignments
 rassignments/migrations
+massignments/templates/assignments
+mcollaborations
 mcore
 mcore/__pycache__
 mcourses
@@ -11,6 +13,7 @@ mcourses/__pycache__
 rcourses/migrations
 mcourses/migrations/__pycache__
 mcourses/templates/courses
+mforum/templates/forum
 minstitutions
 minstitutions/__pycache__
 minstitutions/migrations
@@ -28,11 +31,15 @@ rresult_analytics/static/demos/img
 rresult_analytics/static/images
 rresult_analytics/static/svg
 mresult_analytics/templates
+mresults
+mresults/__pycache__
 mresults/migrations
 mresults/migrations/__pycache__
 mresults/templates/results
 mstaff
+mstaff/templates/staff
 mstudents
+mstudents/__pycache__
 rstudents/migrations
 mstudents/migrations/__pycache__
 mstudents/templates/students

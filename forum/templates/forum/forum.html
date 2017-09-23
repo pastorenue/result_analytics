@@ -71,7 +71,7 @@
 	      <div class="modal-body">
 	      {% for field in form %}
 	        <div class="form-group">
-	        	<label for="field.id_for_label">{{field.label}}</label>{% if field.html_name == 'category' %} <span><a onclick="window.open('/forum/category/', 'newwindow', 'width=600,height=350'); return false;"><i class="icons icons-md icons-plus"></i></a> <small class="text-muted">[Add new category if you don't find any that matches your post]</small></span>{% endif %}
+	        	<label for="field.id_for_label">{{field.label}}</label>
 	        	{{field}}
 	        	<small class="text-muted">{{field.help_text}}</small>
 	        </div>

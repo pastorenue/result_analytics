@@ -159,10 +159,6 @@ class Student(models.Model):
         return u' '.join(names)
     
     @property
-    def is_student(self):
-        return True
-
-    @property
     def get_program_type(self):
         program_type = {1: 'Regular', 2: 'Sandwich', 3: 'CEP', 4: 'Diploma', 5: 'Others'}
         if self.program_type:

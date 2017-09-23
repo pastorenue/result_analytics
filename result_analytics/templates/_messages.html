@@ -1,0 +1,9 @@
+{% if messages %}
+  {% for message in messages %}
+  <div id="notification" class="alert-{{message.tags}}" style="">
+    <div><span onclick="hideMe()">&times;</span></div>
+    <h4><strong>{{message.tags|title}}</strong></h4>
+    <h5>{{ message }}</h5>
+  </div>
+  {% endfor %}
+{% endif %}

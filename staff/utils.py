@@ -9,7 +9,7 @@ def user_is_staff(user):
 
 def staff_analytics_metrics(user):
 	lecturer = Lecturer.objects.get(user=user)
-	results = Result.objects.filter(course__lecturer=lecturer)
+	results = Result.objects.filter(course__lecturers=lecturer)
 	student_list = []
 
 	for student in Student.objects.filter(institution=user.lecturer.institution):

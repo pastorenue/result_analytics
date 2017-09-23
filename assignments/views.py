@@ -134,8 +134,8 @@ def submit_assignment(request, assignment_code):
 	return render(request, 'assignments/submit_assignments.html', {'form':form, 'assignment': assignment})
 
 
-def deactivate(request, assignment_code):
-	assignment = get_object_or_404(Assignment, assignment_code=assignment_code)
+def deactivate(request, assignment_id):
+	assignment = get_object_or_404(Assignment, pk=assignment_id)
 	ass_score = AssignmentScore.objects.filter(assignment=assignment)
 	for score in ass_score:
 		score.status = 'D'
@@ -146,5 +146,5 @@ def deactivate(request, assignment_code):
 		'message': 'Success',
 		'tag': 'Reactivate'
 	}
-	return HttpResponseRedirect(reverse('assignment:staff_assignments'))
+	return HttpResponse(json.dumps(data), content_type="application/json")
 

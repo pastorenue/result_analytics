@@ -1,0 +1,62 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
+
+{% block title %}Staff{% endblock %}
+    
+{% block breadcrumbs %}
+<a href="{% url 'students:students_list' %}">All Staff</a>
+{% endblock %}
+{% block content %}
+    <div id="query_result" class="row"></div>
+    <div style="margin-bottom: 30px;">
+       <h3 class="page-header">Staff List <span style="font-size: 18px; color: #2980b9;">:{{ lecturers.count }} Found</span> </h3>
+    </div>
+    <div>
+        {% block heading %}{% endblock %}
+        <table class='table table-condensed table-hover'>
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 6%">&nbsp;</th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Department</th>
+                    <th style='width: 10%;'>Is Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if lecturers %}
+                {% for lecturer in lecturers %}
+                <tr class="{% ifchanged lecturer.last_name|first %} section-group{% endifchanged %}">
+                   <td style="font-size: 1.4em; padding-top: 0px;"><strong>
+                    {% ifchanged %}{{ lecturer.last_name|first|upper }}{% endifchanged %}</strong>
+                    </td>
+                    <td><a href="#" style="text-decoration: none;">{{ lecturer.email }}</a></td>
+                    <td>{{ lecturer }}</td>
+                    <td>{{ lecturer.department }}</td>
+                    <td style="text-align: center;">{{ lecturer.is_admin }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr><td colspan="7" style="text-align: center;">No Records Found</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+{% block extrajs %}
+    <script>
+        
+    </script>
+    <script>
+       function change() {
+        var frm = document.getElementById("status_form");
+            frm.submit(function(e) {
+                e.preventDefault();
+                $.get("/students/", function(response) {
+                    console.log(response);
+                });
+            });
+
+        }
+    </script>
+{% endblock extrajs %}

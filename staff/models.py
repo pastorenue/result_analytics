@@ -47,6 +47,7 @@ class Lecturer(models.Model):
     title = models.CharField(max_length=20, choices=LECTURER_TITLE, null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
+    photo = models.ImageField(upload_to="uploads/%F/%m/%d", null=True)
     gender = models.CharField(max_length=2, null=True, choices=SEX_CHOICES)
     marital_status = models.CharField(max_length=2, null=True, blank=True, choices=MARITAL_STATUS_CHOICES)
     email = models.EmailField(null=True)
@@ -74,4 +75,11 @@ class Lecturer(models.Model):
 
     @property
     def full_name(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return "%s %s" % (self.last_name, self.first_name)
+
+    @property
+    def get_marital_status(self):
+        marital_status = {'S': 'Single', 'M': 'Married', 'W': 'Widowed', 'D': 'Divorces'}
+        if self.marital_status:
+            return marital_status[self.marital_status]
+        

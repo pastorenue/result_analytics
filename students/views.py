@@ -71,7 +71,7 @@ class StudentListView(ListView):
         return super(StudentListView, self).dispatch(request, *args, **kwargs)   
 
 @login_required
-@user_passes_test(lambda u: u.is_staff)
+@user_passes_test(lambda u: u.lecturer.is_admin)
 def create_student(request):
     if request.method == "POST":
         form = StudentCreationForm(request.POST)

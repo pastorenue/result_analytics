@@ -19,7 +19,7 @@
              {% endif %}
           <label id="new_info" class="pull-right" style="margin-right: 10px; cursor: pointer;"><i class="icons icons-sm icons-bell"></i><span class="icon-badge">{{unread_count}}</span></label>
           <div id="notification_pane" class="panel panel-default notifications scroll">
-              <h4><strong>Notifications</strong> <span style="float: right; font-size: 14px; padding-right: 5px; text-decoration: underline;"><a href="{% url 'collaborate:mark' %}">mark all as read</a></span></h4>
+              <h4><strong>Notifications</strong> <span id="mark_all" style="float: right; font-size: 14px; padding-right: 5px; text-decoration: underline; cursor: pointer;">mark all as read</span></h4>
               <div class=" ">
                 {% for notification in user.notifications.unread %}
                 <div class="item">
@@ -27,7 +27,7 @@
                 </div>
                 {% empty %}
                 <div>
-                  <h5>No notifications available</h5>
+                  <h5>No recent notifications available</h5>
                 </div>
                 {% endfor %}
               </div>    

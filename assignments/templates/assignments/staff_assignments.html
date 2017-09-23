@@ -32,7 +32,7 @@
     			<td>{{assignment.possible_points}}</td>
     			<td>{{assignment.due_date}}</td>
     			<td>
-    				{% if assignment.status == 'A' %}<button class="btn btn-sm custom-btn" onclick="location.href='{% url 'assignment:deactivate' assignment.assignment_code %}'">Deactivate</button>
+    				{% if assignment.status == 'A' %}<button class="btn btn-sm custom-btn" onclick="deactivate({{assignment.id}})">Deactivate</button>
     				{% else %}
 			    		<button class="btn btn-sm btn-danger" onclick="location.href='#'">Inactive</button>
 			    	{% endif %}
@@ -102,6 +102,15 @@
 
 {% block extrajs %}
 <script>
-	
+	function deactivate(id) {
+		var json_url = "/assignments/deactivate/"+String(id);
+		$.ajax({
+			type: "GET",
+			url: json_url,
+			success: function(data) {
+				$('document').load('/assignments/list');
+			}
+		});
+	}
 </script>
 {% endblock %}
