@@ -48,3 +48,18 @@ def new_project(request):
 		project.save()
 		message = messages.success(request, "Your project: '%s', has successfully been created" % (project.name))
 	return HttpResponseRedirect(reverse('my_projects'))
+
+
+class LecturerSupervisionView(ListView):
+    model = Project
+    template_name = 'projects/supervision_list.html'
+    context_object_name = 'projects'
+
+    def get_queryset(self):
+    	return Project.objects.filter(supervisor=self.request.user.lecturer).order_by('-last_modified')
+
+    @method_decorator(login_required)
+    @method_decorator(user_passes_test(lambda u:u.lecturer))
+    def dispatch(self, request, *args, **kwargs):
+    	return super(LecturerSupervisionView, self).dispatch(request, *args, **kwargs)
+

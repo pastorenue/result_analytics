@@ -10,15 +10,16 @@ from staff.models import Lecturer
 class Project(models.Model):
     '''Personal and school projects that a student can participate in'''
 
-    student = models.ForeignKey('students.Student', related_name='projects', null=True)
+    student = models.ForeignKey('students.Student', null=True)
     name = models.CharField(max_length=250, null=True)
     description = models.TextField(blank=True, null=True)
     category = models.CharField(max_length=50, null=True)
     file = models.FileField(upload_to='students/projects/%Y/%m/%d/', blank=True)
-    date_created = models.DateField(auto_now_add=True)
-    last_modified = models.DateField(auto_now=True)
+    supervisor = models.ForeignKey(Lecturer, null=True, blank=True) 
     tag = models.CharField(max_length=150, blank=True, null=True)
     slug = models.SlugField(blank=True, unique=True)
+    date_created = models.DateField(auto_now_add=True)
+    last_modified = models.DateField(auto_now=True)
 
     class Meta:
         verbose_name = _(u'Student Project')
