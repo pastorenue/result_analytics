@@ -1,39 +1,21 @@
 ***********************************************************
 ************************MY TODOs **************************
 ***********************************************************
+Automatically update student level and age
+Fix the landing page
+Work on the edit page for all users --Done for Students now
+Add paginators to all listViews
 
 
-2. Generating Reports
-3. New staff\Department\Faculty\Student from the admin panel -- Almost done
-4. Notification for major events (Use django-notification as used in mentorapp)
-
-8. Account page. The user should be able to activate the account --Done
-9. Connect student with staff 
-	i. Creat a page where people can view the staff and students to link up with
-	ii. Use something like a dropdown with message input to send invitation
-	iii. I'll have to figure out if there will be an inbox or a simple chat link
-
-13. Automatically update student level and age
-14. Add a simple reporting for this version. Will improve it in version 1.1
-16. Work on the prediction module
-
-18. Enable collaboration with staff
-
-20. Fix the landing page
-21. Work on the registration for staff and students
-22. Work on the edit page for all users --Done for Students now
-
-24. Creat a setup model (I don't really know why now) -- Done but not implemented to user account yet. This needs proper implementation
-
-31. Add paginators to all listViews
-Finish the add friend module
-
+*******************
 ******NOTE:********
+*******************
 For version 1.0, we'll work with the schools for the payment
 
-****************************************************************
+
+******************************************************************
 ************************VERSION 1.1*******************************
-****************************************************************
+******************************************************************
 Transcript generation
 	Using different transcript templates
 Clearance Details
@@ -51,3 +33,12 @@ Add deactivate account to the settings page
 	i. Figure out how  to reactivate
 	ii. what should the user be restricted from doing upon deactivation?
 Reactivate acount
+Connect student with staff 
+	i. Creat a page where people can view the staff and students to link up with
+	ii. Use something like a dropdown with message input to send invitation
+	iii. I'll have to figure out if there will be an inbox or a simple chat link
+Creat a setup model (I don't really know why now) -- Done but not implemented to user account yet. This needs proper implementation
+Enable collaboration with staff
+Work on the prediction module
+Add a simple reporting for this version. Will improve it in version 1.1
+2. Generating Reports

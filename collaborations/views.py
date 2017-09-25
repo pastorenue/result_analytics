@@ -2,7 +2,7 @@ from django.shortcuts import render
 from friendship.models import Friend, Follow, FriendshipRequest
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from students.models import Student
@@ -83,7 +83,7 @@ def reject_request(request, friend_request_id):
 	except Exception as e:
 		messages.error(e)
 	message = {"success": True}
-	return JsonResponse(json.dumps(message))
+	return HttpResponseRedirect(reverse('collaborate:collaboration_index'))
 
 
 @login_required

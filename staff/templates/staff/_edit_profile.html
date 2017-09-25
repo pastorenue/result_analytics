@@ -1,0 +1,81 @@
+{% extends  "dashboard.html" %}
+{% load staticfiles thumbnail %}
+{% block title %}Grade-X: Profile{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+{% block extra_css %}
+<style>
+  .extra-padding {
+    padding: 10px 15px;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="row" style="margin-left: 10px; margin-bottom: 20px;">
+    <h3 class="page-header">Update Profile</h3>
+</div>
+<div class="basicprofile vcard">
+   <div class="row">
+       <div class="col-md-4 col-sm-12">
+           <div class="panel panel-default add-padding">
+                <div class="sub-panel add-padding">
+                    <button id="alt_save" class="btn btn-sm custom-btn">Save Changes</button>
+                </div>
+               <div class="">
+                   {%if lecturer.photo %}
+                   {% thumbnail lecturer.photo "127x127" crop="top" as im %}
+                   <img class="img-hexagon img-circle" src="{{ im.url}}" />
+                   {% endthumbnail %}
+                   {% else %}
+                   <img class="img-hexagon img-circle" src="{% static 'images/avatar.png' %}" />
+                   {% endif %}
+               </div>
+           </div>
+       </div>
+       <div class="col-md-8 col-sm-12">
+           <div class="panel panel-default add-padding" style="height: 251px;">
+                <h3><strong>{{ lecturer.full_name }}</strong></h3>
+                <div>
+                    <h4>Staff of {{ lecturer.department }}</h4>
+                    <h5>Faculty of {{lecturer.department.faculty}}</h5>
+                </div>
+                {% if lecturer.email %}
+                <div class="email">
+                    <span class="value"><i class="icons icons-sm icons-email"></i> {{ lecturer.email|urlize }}</span>
+                </div>
+                {% endif %}
+                {% if lecturer.phone_number %}
+                <div class="tel">
+                    <i class="icons icons-sm icons-mobile"></i>
+                    <span class="value">{{ lecturer.phone_number }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+   </div>
+</div>
+
+<div class="row">
+  <form method="POST" action="" enctype="multipart/data">{% csrf_token %}
+    <div class="col-md-12 col-sm-12">
+        <div id="personal" class="panel panel-default extra-padding">
+           <div class="sub-panel">
+               <h4 class="head">Basic Information</h4>
+           </div>
+            {{form}}
+        </div>
+        <div class="panel panel-default add-padding">
+          <button id="id_save" type="submit" class="btn btn-sm custom-btn">Save Changes</button>
+        </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script>
+  $("#alt_save").click(function() {
+    $("#id_save").click();
+  });
+</script>
+{% endblock %}

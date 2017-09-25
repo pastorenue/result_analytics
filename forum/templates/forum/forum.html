@@ -11,7 +11,7 @@
 </div>
 <div class="panel panel-default">
 	<div class="sub-panel">
-		<h4 style="padding: 0 4px;">Discussion <span style="float: right; padding-bottom: 3px; margin-bottom: 3px;">
+		<h4 style="padding: 0 4px;">Discussion{% if request.GET.category %} for <strong>{{request.GET.category}}</strong>{% endif %}<span style="float: right; padding-bottom: 3px; margin-bottom: 3px;">
 			<button class="btn btn-sm custom-btn" type="button" data-toggle="modal" data-target="#new_post"><i class="icons icons-sm icons-comment"></i> New Post</button>
 		</span></h4>
 	</div>

@@ -50,8 +50,8 @@
 		              <span class="icon-bar"></span>
 		              <span class="icon-bar"></span>
 		            </button>
-		            <a class="navbar-brand" href="#">
-		            	<img style="padding-bottom: 15px; width: 200px; height: 90px;" src="{% static 'images/grade-x.png' %}" alt="Bytecorp">
+		            <a class="navbar-brand" href="{% url 'user_index' %}">
+		            	<img style="padding-bottom: 15px; width: 100px; height: 50px;" src="{% static 'images/grade-x.png' %}" alt="Bytecorp">
 		            </a>
 		          </div>
 		          <div id="navbar" class="navbar-collapse collapse">
@@ -69,10 +69,12 @@
 		          </div><!--/.nav-collapse -->
 		        </div><!--/.container-fluid -->
 		      </nav>
-	    	<div style="padding: 20px; color: #f46b45;">
+	    	{% block slide %}
+            <div style="padding: 20px; color: #f46b45;">
 	            <h1><strong>Hi! This is Grade-X</strong></h1>
 	            <h4>Glad you made it here today</h4>
 	        </div>
+            {% endblock %}
 	    </div>
     </div>
     <div class="container">

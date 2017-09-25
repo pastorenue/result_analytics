@@ -9,6 +9,7 @@
         <h3 class="page-header">{% if user.student %} Your {% else %}{{ student}}'s {% endif %} Result Details</h3>
     </div>
 <div class='container-fluid '>
+    {% if results %}
     <table class='table table-condensed'>
         <thead>
             <tr>
@@ -30,13 +31,16 @@
                 <td>{{ result.total_score }}</td>
                 <td style="width: 7%; text-align: left;">{{ result.grade }}</td>
             </tr></a>
-            {% empty %}
-            <tr>
-                <td colspan="7" class="bg-warning" style="text-align: center;">No Results Available Currently...</td>
-            </tr>
             {% endfor %} 
         </tbody>
     </table>
+    {% else %}
+    <div style="text-align: center; color: #2c3e50; margin: 10% auto;">
+        <i class="icons icons-x-lg icons-table"></i><br>
+        <h3>No Results Yet. It appears {% if user.lecturer %}this is {% else %} you're {% endif %} a Rookie</h3>
+        <h5>You can explore other features of grade-X <a href=""><u>HERE</u></a></h5>
+    </div>
+    {% endif %}
 <div>
     <div style="font-size: 1.2em; text-align: center; letter-spacing: 5px; margin-bottom: 20px;">
         {% if results %}

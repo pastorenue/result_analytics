@@ -18,7 +18,7 @@
 </div>
 <div class="basicprofile vcard">
    <div class="row">
-       <div class="col-md-4 col-sm-6">
+       <div class="col-md-4 col-sm-12">
            <div class="panel panel-default add-padding">
                 <div class="sub-panel add-padding">
                     <button id="alt_save" class="btn btn-sm custom-btn">Save Changes</button>
@@ -34,7 +34,7 @@
                </div>
            </div>
        </div>
-       <div class="col-md-8 col-sm-6">
+       <div class="col-md-8 col-sm-12">
            <div class="panel panel-default add-padding" style="height: 251px;">
                 <h3><strong>{{ student.full_name }}</strong></h3>
                 <div>
@@ -65,11 +65,11 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-11 center-block" style="background: rgba(255,0,0,0.06); color: #e92e4b; padding: 5px; margin-bottom: 10px; border-radius: 5px; ">
+  <div class="col-md-11 col-sm-12 center-block" style="background: rgba(255,0,0,0.06); color: #e92e4b; padding: 5px; margin-bottom: 10px; border-radius: 5px; ">
     <p><strong>WARNING:</strong> Please ensure not to change your <strong>Registration number</strong> as it will affect your ability to see your results and get optimal analysis of your grades.</p>
   </div>
   <form method="POST" action="" enctype="multipart/data">{% csrf_token %}
-    <div class="col-md-6 col-sm-6">
+    <div class="col-md-6 col-sm-12">
         <div id="personal" class="panel panel-default extra-padding">
            <div class="sub-panel">
                <h4 class="head">Basic Information</h4>
@@ -83,7 +83,7 @@
             {{p_form}}
         </div>
     </div>
-    <div class="col-md-6 col-sm-6">
+    <div class="col-md-6 col-sm-12">
         <div class="panel panel-default extra-padding" id="academic">
            <div class="sub-panel">
                <h4 class="head">Institution Information</h4>

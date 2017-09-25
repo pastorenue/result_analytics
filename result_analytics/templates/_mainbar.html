@@ -43,7 +43,7 @@
       {% if user.student %}
       <li><a href="{% url 'assignment:all_assignments' %}"><i class="icons icons-sm icons-book"></i> Assignments</a></li>
       <li><a href="{% url 'my_projects' %}"><i class="icons icons-sm icons-file-archive"></i> Projects</a></li>
-      <li><a href="{% url 'forum' request.user.student.slug %}"><i class="icons icons-sm icons-chat"></i> Study Forum</a></li>
+      <li><a href="{% url 'forum' %}?category=All Categories"><i class="icons icons-sm icons-chat"></i> Study Forum</a></li>
       <li><a href="{% url 'collaborate:collaboration_index' %}"><i class="icons icons-sm icons-heart"></i> Collaborate</a></li>
       {% endif %}
     </ul>

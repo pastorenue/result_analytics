@@ -18,7 +18,7 @@ def user_is_student(user):
 
 @user_passes_test(user_is_student, login_url='/login/')
 @login_required
-def forum_index(request, student_slug):
+def forum_index(request):
 	template_name = 'forum/forum.html'
 	queryset = Q()
 
@@ -32,12 +32,17 @@ def forum_index(request, student_slug):
 			return HttpResponseRedirect(reverse('post', args=(form.id,)))
 	else:	
 		search = request.GET.get('search_query', 'invalid_search')
+		category = request.GET.get('category')
 		comment_qs = Q(comment__icontains=search)
 		category_qs = Q(post__category__name__icontains=search)
 		post_qs = Q(post__question_or_idea__icontains=search)
 		title_qs = Q(post__title__icontains=search)
+		queryset = Response.objects.filter(post_qs|title_qs) or Post.objects.filter(Q(question_or_idea__icontains=search) | Q(title__icontains=search))
 
-		queryset = Response.objects.filter(category_qs|post_qs|title_qs) or Post.objects.filter(Q(question_or_idea__icontains=search) | Q(title__icontains=search))
+		if category != 'All Categories' and category is not None:
+			queryset = Post.objects.filter(category__name__icontains=category)
+		else:
+			queryset = Post.objects.all()
 		form = PostForm()
 	return render(request, template_name, {'form': list(form), 'queryset':queryset})
 

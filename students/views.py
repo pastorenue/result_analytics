@@ -245,7 +245,7 @@ def edit_profile(request):
                 messages.success(request, "Your profile was successfully updated")
                 return HttpResponseRedirect(reverse('students:student_account', kwargs={'student_slug':student.slug}))
             except Exception as e:
-                messages.error(e)
+                messages.error(request, e)
                 return HttpResponseRedirect(reverse('students:edit-profile'))
     else:
         inst_form = SchoolForm(instance=student)

@@ -15,6 +15,6 @@
 </style>
 <div  id="accordion">
 	{% for topic in topics %}
-	<a href="#" ><h5 class="cat" style="">{{topic.name}} <span class="badge"> {{ topic.post_set.count }}</span></h5></a>
+	<a href="{% url 'forum' %}?category={{topic.name}}" ><h5 class="cat" style="">{{topic.name}} <span class="badge"> {{ topic.post_set.count }}</span></h5></a>
 	{% endfor %}
 </div>

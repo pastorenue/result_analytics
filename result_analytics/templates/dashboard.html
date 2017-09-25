@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="{% static 'css/pace-theme-flash.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/component.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/link.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}"/>
         <style>
           .modal.fade .modal-dialog {
             -webkit-transform: scale(0.1);
@@ -154,6 +155,9 @@
             <div style="width: 100%;">
               {% if not user.is_staff %}
               {% if recommendations %}
+                <div style="border-bottom: 1px solid #f1f1f1; margin-bottom: 3px;">
+                  <small>It appears your grades are dwindling. We have recommendations for you to help in improving your grades.</small>
+                </div>
                 {% for r in recommendations|get_dict_values:'match' %}
                   <div class="recommend">
                     <img src="{% static 'images/avatar.png' %}" alt="">

@@ -1,0 +1,12 @@
+@media screen and (max-width: 375px) {
+	.panel .panel-default {
+		margin: 0;
+	}
+	.modal {
+	   top: 50%; 
+	   margin-top: -150px;
+	}
+	.modal-dialog {
+		width: 100%;
+	}
+}

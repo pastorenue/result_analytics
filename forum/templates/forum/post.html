@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 {% load thumbnail %}
-{% block breadcrumbs %}<a href="{% url 'forum' request.user.student.slug %}">Study Forum</a> &raquo; <a href="#">{{ post.title}}</a>{% endblock %}
+{% block breadcrumbs %}<a href="{% url 'forum' %}?category=All Categories">Study Forum</a> &raquo; <a href="#">{{ post.title}}</a>{% endblock %}
 
 {% block content %}
 <div class="row clearfix" style="margin-left: 10px; margin-bottom: 20px;">

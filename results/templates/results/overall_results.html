@@ -22,7 +22,7 @@
 			{% if levels %}
 			<div class="tab-content "style="padding-right:10px;"><div class="tab-pane active" id="100">
 					<h4 style="margin-bottom: 20px; font-size: 1.2em; color: #53b6d0;">100 Level Result Aggregate</h4>
-					<table class='table table-condensed main-page'>
+					<table class='table table-condensed'>
 						<thead>
 							<tr>
 								<th>S/N</th>
@@ -31,7 +31,6 @@
 								<th>Level</th>
 								<th style='width: 5%;'>Score</th>
 								<th style='width: 5%;'>Grade</th>
-								<th scope="col" style="width: 7%">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -41,9 +40,8 @@
 								<td>{{ result.course }}</td>
 								<td>{{ result.semester }}</td>
 								<td>{{ result.level }}</td>
-								<td>{{ result.score }}</td>
+								<td>{{ result.total_score }}</td>
 								<td>{{ result.grade }}</td>
-								<td><button class="btn btn-primary btn-sm">Edit</button> </td>
 							</tr></a>
 							{% empty %}
 							<tr>
@@ -218,10 +216,6 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
-			<div class="container"><h2>STAT</h2></div>
-			<div class="container">
-
 			</div>
 			{% else %}
 			<div style="text-align: center; color: #2c3e50; margin: 10% auto;">

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.models import * 
 from results.models import Result
 from .models import Lecturer
-from .forms import CustomStaffCreationForm
+from .forms import *
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import TemplateView, ListView
 from django.utils.decorators import method_decorator
@@ -150,3 +150,27 @@ def create_staff(request):
     else:
         form = CustomStaffCreationForm()
     return render(request, 'staff/new_staff.html', {'form': list(form)})
+
+
+@login_required
+def edit_profile(request):
+    context ={}
+    lecturer = Lecturer.objects.get(user=request.user)
+    template_name = 'staff/_edit_profile.html'
+    if request.method == 'POST':
+        form = LecturerCreationForm(request.POST, request.FILES, instance=lecturer)
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, "Your profile was successfully updated")
+                return HttpResponseRedirect(reverse('staff_account'))
+            except Exception as e:
+                messages.error(request, e)
+                return HttpResponseRedirect(reverse('edit-profile'))
+    else:
+        form = LecturerCreationForm(instance=lecturer)
+        context = {
+            'form': form,
+            'lecturer': lecturer
+        }
+    return render(request, template_name, context)

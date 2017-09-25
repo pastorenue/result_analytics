@@ -31,7 +31,7 @@
  <div class="row">
    {% for friend in all_friends %}
    <a href="#{{friend.id}}" data-toggle="modal">
-     <div class="col-sm-2 project">
+     <div class="col-md-2 col-sm-3 col-xs-12 project">
        <div>
         {% if friend.photo %}
           {% thumbnail friend.photo '100x100' crop='top' as im %}

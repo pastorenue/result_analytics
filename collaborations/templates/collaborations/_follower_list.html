@@ -17,7 +17,14 @@
   <p>{{follower.student.department}}</p>
   <p>{{follower.student.institution}}</p>
 </div>
-<span><button class="btn btn-sm"><i class="icons icons-sm icons-chat"></i> Interact Now</button> <label for=""><i class="icons icons-sm icons-ellipse"></i> </label> </span>
+<span>
+    <button class="btn btn-sm" data-toggle="popover" text="Will be available in version 2.0"><i class="icons icons-sm icons-chat"></i> Interact Now</button> 
+    <label for="" class="dropdown"><a href="#" data-toggle="dropdown"><i class="icons icons-sm icons-ellipse"></i> </a>
+        <ul class="dropdown-menu" role="menu" style="left: -110px !important; background-color: #fff; color: #21a380; border-top: 1px solid  #34495e; top: 24px;">
+              <li><a href="#">&times; unfollow</a></li>
+        </ul> 
+      </label>
+  </span>
 </div>
 {% endfor %}
 {% else %}
