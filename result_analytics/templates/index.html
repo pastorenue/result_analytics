@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="{% static 'css/analytics-icons.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/profiles.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/pace-theme-flash.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/index.css' %}"/>
         <style>
             input[type="text"]:focus, input[type="password"]:focus {
                 box-shadow: none !important;
@@ -29,7 +30,7 @@
         </style>
         {% block extra_css %}{% endblock %}
   </head>
-  <body style="position: relative; height: 100vh;">
+  <body style="position: relative; height: 100vh; width: 100%; overflow-x: hidden;">
   {% if messages %}
       {% for message in messages %}
       <div id="notification" class="alert-{{message.tags}}" style="">
@@ -88,21 +89,67 @@
         </div>
     </div>
     <section>
-    	<div class="row" style="padding: 20px; padding-top: 0; color: #243b55; height: 400px;">
+    	<div class="row" style="padding: 20px; padding-top: 0; color: #243b55; min-height: 400px;">
         <div class="container">
-        	<div class="col-md-6">
-        		<h1><strong>Site is under Construction</strong></h1>
-        		<h4>Core Features</h4>
+        	<div style="text-align: center;">
+        		<h2><strong>Effective and innovative feature set</strong></h2>
+        		<h3>Just for scholars with intelligence in mind</h3>
         	</div>
+        	<div class="col-md-4">
+        		<h3>Realtime Result Integration</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Secured, trusted platform</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Intelligence support</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Dynamic-grade support</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Result metrics</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Student-student collaboration</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Beautiful data visualization</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Social-media ops</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        	<div class="col-md-4">
+        		<h3>Paperless assignment module</h3>
+        		<p>The Grade-X Platform enables your teams to deliver apps as fast as they can build them. The platform is optimized for modern development practices, such as agile and continuous delivery.</p>
+        	</div>
+        </div>
+        <div style="text-align: center; margin: 15px 0;">
+        	<hr>
+        	<button class="btn custom-btn">FIND OUT MORE ABOUT GRADE-X</button>
         </div>
     </div>
     </section>
     <section>
-    	<div class="row" style="padding: 20px; padding-top: 0; background: linear-gradient(to left, #243b55, #242c55); color: #7695a5; height: 100px; box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.1), 1px 1px 14px 0px rgba(0,0,0,0.3);">
+    	<div class="row" style="padding: 20px; padding-top: 0; background: linear-gradient(to left, #243b55, #242c55); color: #A0C7F2; height: 100px; box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.1), 1px 1px 14px 0px rgba(0,0,0,0.3);">
         <div class="container">
         	<div class="col-md-6">
         		<h1><strong>Site is under Construction</strong></h1>
         		<h4>Sponsors or Register for Newsletter</h4>
+        	</div>
+        	<div class="clo-md-6">
+        		<div style="margin: 10px auto; text-align: center;">
+        			<button class="btn custom-btn">HAVE A QUESTION?</button>
+        			<a href=""><h5><strong>Schedule an appointment with a GRADE-X expert</strong></h5></a>
+        		</div>
         	</div>
         </div>
     </div>
@@ -110,17 +157,67 @@
         <div class="container">
         	<div class="col-md-6">
         		<h1><strong>Site is under Construction</strong></h1>
-        		<h4>Testimonies</h4>
+        		<h4>Testimonials</h4>
         	</div>
         </div>
     </div>
     </section>
-    <footer style="background: #f0f0f0; position: static; bottom: 0; left: 0; box-shadow: 0 1px 1px 0 rgba(240,240,240,0.1) inset;">
-    	<div class="row" style="padding: 20px; padding-top: 0; color: #243b55; height: 200px;">
+    <footer style="background: #f5f5f5; position: static; bottom: 0; left: 0; box-shadow: 0 1px 1px 0 rgba(240,240,240,0.1) inset;">
+    	<div class="row" style="padding: 20px; padding-top: 15px; height: 200px; margin-bottom: 10px;">
         <div class="container">
+        	<div class="col-md-2">
+        		<p><strong>ABOUT</strong></p>
+        		<ul>
+        			<a href=""><li>About Us</li></a>
+        			<a href=""><li>Our Core Values</li></a>
+        			<a href=""><li>Careers</li></a>
+        			<a href=""><li>Customers</li></a>
+        			<a href=""><li>Partners</li></a>
+        			<a href=""><li>Why GRADE-X?</li></a>
+        		</ul>
+
+        	</div>
+        	<div class="col-md-2">
+        		<p><strong>RESOURCES</strong></p>
+        		<ul>
+        			<a href=""><li>Blog</li></a>
+        			<a href=""><li>How It Works</li></a>
+        			<a href=""><li>Gallery</li></a>
+        		</ul>
+        	</div>
+        	<div class="col-md-3">
+        		<p><strong>SUPPORT</strong></p>
+        		<ul>
+        			<a href=""><li>Help Desk</li></a>
+        			<a href=""><li>Contact Us</li></a>
+        			<a href=""><li>Request Expert</li></a>
+        		</ul>
+        	</div>
+        	<div class="col-md-5">
+        		<h4>Subscribe to our newsletter here!</h4>
+        		<form action="">
+        			<div class="form-group" style="border-bottom: 1px solid #fcfcfc; padding-bottom: 10px;">
+        				<input type="email" class="form-control" placeholder="Your email address">
+        			</div>
+        			<button class="btn btn-sm custom-btn" style="position: absolute; right: 20px; bottom: 28px;">GO</button>
+        		</form>
+        	</div>
+        </div>
+        <div class="row" style="background: #fdfdfd; height: 60px; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1), 1px 0px 4px 0 rgba(0,0,0,0.2); margin-top: 15px;">
+        	<div class="col-md-5" style="padding-left: 60px; text-align: center;">
+        		<h4 style="display: inline-block;"><strong>GRADE-X is a subsidiary of </strong></h4>
+        		<img src="{% static 'images/bytecorp-logo.png' %}" alt="Bytecorp"
+        		width="100" height="50">
+        	</div>
         	<div class="col-md-6">
-        		<h1><strong>Hi! This is Grade-X</strong></h1>
-        		<h4>Footer</h4>
+        		<div class="copyright">
+        			<ul>
+        				<a href=""><li>grade-x.io</li></a>
+        				<a href=""><li>Terms of Service</li></a>
+        				<a href=""><li>Privacy</li></a>
+        				<li>&copy; 2017</li>
+        			</ul>
+        		</div>
         	</div>
         </div>
     </div>

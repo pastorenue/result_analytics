@@ -11,34 +11,36 @@ Add paginators to all listViews
 ******NOTE:********
 *******************
 For version 1.0, we'll work with the schools for the payment
-
+Going forward, We'll be using paystack or create our own payment platform
 
 ******************************************************************
-************************VERSION 1.1*******************************
+************************VERSION 2.0*******************************
 ******************************************************************
-Transcript generation
-	Using different transcript templates
-Clearance Details
-Reporting
-Students can share a link of their transcript to companies on employment situations or to schools 
-Download link (Should be able to download result and transcript)
-	i. Print in pdf format
-	ii. Start the reporting module
-Include post graduate programs
-Add payment using paystack
-Pricing
-I think the register courses will be relevant. Still thinking!!!
-	i. Add Register Course form
-Add deactivate account to the settings page
-	i. Figure out how  to reactivate
-	ii. what should the user be restricted from doing upon deactivation?
-Reactivate acount
-Connect student with staff 
-	i. Creat a page where people can view the staff and students to link up with
-	ii. Use something like a dropdown with message input to send invitation
-	iii. I'll have to figure out if there will be an inbox or a simple chat link
-Creat a setup model (I don't really know why now) -- Done but not implemented to user account yet. This needs proper implementation
-Enable collaboration with staff
-Work on the prediction module
-Add a simple reporting for this version. Will improve it in version 1.1
-2. Generating Reports
+** Transcript generation
+** 	Using different transcript templates
+** Clearance Details
+** Reporting
+** Students can share a link of their transcript to companies on employment situations ** or to schools 
+** Download link (Should be able to download result and transcript)
+** 	i. Print in pdf format
+** 	ii. Start the reporting module
+** Include post graduate programs
+** Add payment using paystack
+** Pricing
+** I think the register courses will be relevant. Still thinking!!!
+** 	i. Add Register Course form
+** Add deactivate account to the settings page
+** 	i. Figure out how  to reactivate
+** 	ii. what should the user be restricted from doing upon deactivation?
+** Reactivate acount
+** Connect student with staff 
+** 	i. Creat a page where people can view the staff and students to link up with
+** 	ii. Use something like a dropdown with message input to send invitation
+** 	iii. I'll have to figure out if there will be an inbox or a simple chat link
+** Creat a setup model (I don't really know why now) -- Done but not implemented to 
+** user account yet. This needs proper implementation
+** Enable collaboration with staff
+** Work on the prediction module
+** Add a simple reporting for this version. Will improve it in version 1.1
+** Generating Reports
+**********************************************************************************************************************************END********************************************************************************************************************************

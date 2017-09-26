@@ -1,0 +1,18 @@
+/*******************Footer***************
+****************************************/
+.copyright {
+	text-align: center;
+	padding-right: 20px;
+}
+.copyright ul {
+	padding: 15px 0;
+	margin: 0;
+}
+.copyright ul li {
+	display: inline-block;
+	margin-left: 10px;
+	list-style: none;
+}
+.copyright ul li:first-child {
+	text-decoration: underline;
+}

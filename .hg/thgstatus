@@ -6,6 +6,7 @@ massignments
 rassignments/migrations
 massignments/templates/assignments
 mcollaborations
+mcollaborations/templates/collaborations
 mcore
 mcore/__pycache__
 mcourses
@@ -13,6 +14,8 @@ mcourses/__pycache__
 rcourses/migrations
 mcourses/migrations/__pycache__
 mcourses/templates/courses
+mforum
+mforum/__pycache__
 mforum/templates/forum
 minstitutions
 minstitutions/__pycache__
