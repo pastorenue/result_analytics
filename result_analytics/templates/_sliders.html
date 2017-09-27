@@ -1,9 +1,28 @@
 {% load static %}
-<div class="row" style="padding: 20px; padding-top: 0; color: #243b55; height: 400px;">
-    <div class="container">
-    	<div class="col-md-6">
-    		<h1><strong>Site is under Construction</strong></h1>
-    		<h4>Sliders</h4>
-    	</div>
+<div class="row" style="padding: 20px; padding-top: 0; background: linear-gradient(to right, #243b55, #143C55, #143C55); color: #fff; min-height: 400px;">
+        <div class="">
+        	<div class="col-md-12" style="text-align: center;">
+	        	<div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 0;">
+					  <!-- Indicators -->
+				  <ol class="carousel-indicators">
+				    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				    <li data-target="#myCarousel" data-slide-to="1"></li>
+				    <li data-target="#myCarousel" data-slide-to="2"></li>
+				  </ol>
+
+				  <!-- Wrapper for slides -->
+				  <div class="carousel-inner">
+				    <div class="item active">
+				      <img src="{% static 'images/info-1.png' %}" alt="Los Angeles" class="img-responsive">
+				    </div>
+				    <div class="item">
+				      <img src="{% static 'images/info-2.png' %}" alt="New York" class="img-responsive">
+				    </div>
+				    <div class="item">
+				      <img src="{% static 'images/info-3.png' %}" alt="Los Angeles" class="img-responsive">
+				    </div>
+				  </div>
+				</div>
+        	</div>
+        </div>
     </div>
-</div>

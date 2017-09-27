@@ -16,3 +16,41 @@
 .copyright ul li:first-child {
 	text-decoration: underline;
 }
+
+/***********************************************
+****************TWEETS**************************
+***********************************************/
+.timeline-Tweet {
+	font-family: Proxima Nova;
+	padding: 5px 10px;
+	border-radius: 4px;
+	margin: 5px 7px;
+	margin-bottom: 12px;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1), 1px 1px 4px 0 rgba(0,0,0,0.2);
+	transition: all .43s ease-in-out;
+}
+.timeline-Tweet h4 {
+	margin-bottom: 2px;
+	font-weight: 500;
+	color:  #A0C7F2;
+	font-weight: 600;
+}
+.timeline-Tweet:hover {
+	transform: translateY(-3px);
+}
+.tweets span {
+	margin-top: 4px;
+	float: right;
+}
+.tweets span a {
+	border-radius: 5px;
+	padding: 5px 20px;
+	border: 1px solid #A0C7F2;
+	color:  #A0C7F2;
+	font-weight: 600;
+	transition: all .45s ease-in-out;
+}
+.tweets span a:hover {
+	background: #A0C7F2;
+	color: #fff;
+}
