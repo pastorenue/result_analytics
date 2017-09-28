@@ -54,3 +54,12 @@
 	background: #A0C7F2;
 	color: #fff;
 }
+/******************************************
+*******************FEATURE_SET************
+********************************************/
+.feature-item img {
+	height: 70px;
+	width: 70px;
+	padding: 10px;
+	float: left;
+}
