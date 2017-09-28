@@ -20,7 +20,7 @@
 /***********************************************
 ****************TWEETS**************************
 ***********************************************/
-.timeline-Tweet {
+.tweet {
 	font-family: Proxima Nova;
 	padding: 5px 10px;
 	border-radius: 4px;
@@ -29,20 +29,30 @@
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1), 1px 1px 4px 0 rgba(0,0,0,0.2);
 	transition: all .43s ease-in-out;
 }
-.timeline-Tweet h4 {
+.tweet h4 {
 	margin-bottom: 2px;
 	font-weight: 500;
 	color:  #A0C7F2;
 	font-weight: 600;
+	text-align: left;
+	margin-top: 0;
 }
-.timeline-Tweet:hover {
+.tweet p {
+	text-align: left;	
+}
+.tweet:hover {
 	transform: translateY(-3px);
 }
-.tweets span {
+.tweet span {
 	margin-top: 4px;
 	float: right;
 }
-.tweets span a {
+.tweet img {
+	padding: 4px;
+	border-radius: 6px;
+	border: 1px solid #f3f3f3;
+}
+.tweet span a {
 	border-radius: 5px;
 	padding: 5px 20px;
 	border: 1px solid #A0C7F2;
@@ -50,7 +60,7 @@
 	font-weight: 600;
 	transition: all .45s ease-in-out;
 }
-.tweets span a:hover {
+.tweet span a:hover {
 	background: #A0C7F2;
 	color: #fff;
 }

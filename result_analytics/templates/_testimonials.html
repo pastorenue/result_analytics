@@ -1,4 +1,4 @@
-{% load static %}
+{% load static thumbnail %}
 
 <div class="row" style="padding: 20px; padding-top: 0; color: #243b55; min-height: 400px;">
     <div class="container" style="margin-top: 20px;">
@@ -13,8 +13,21 @@
     		</div>
     	</div>
     	<div class="col-md-6" style="text-align: center;">
-    		<h2><strong>Testimonials</strong></h2>
-    		
+    		<h3><strong>Recent Blog Posts</strong></h3>
+    		<div class="panel panel-default">
+                <div class="tweet">
+                    <img src="{% static 'images/banner1.jpg' %}" alt="" class="img-responsive">
+                    <span><a href="">Read the full story</a></span>
+                    <h4>The Secrete Tale of Grade-X</h4>
+                    <p>posted by: Pastor Emmanuel</p>
+                </div>
+                <div class="tweet">
+                    <img src="{% static 'images/banner2.png' %}" alt="" class="img-responsive">
+                    <span><a href="">Read the full story</a></span>
+                    <h4>Why Grade-X Chose Intelligent Collaboration</h4>
+                    <p>posted by: Grade-X Admin</p>
+                </div>
+            </div>
     	</div>
     </div>
 </div>
