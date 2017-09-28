@@ -11,6 +11,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li><a href="{% url 'about' %}">Company</a></li>
       <li><a href="{% url 'pricing' %}">Pricing</a></li>
+      <li><a href="#">Blog</a></li>
       {% if user.is_authenticated %}
       <li><a href="{% url 'result_logout' %}">Log out</a></li>
       {% else %}
