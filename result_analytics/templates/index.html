@@ -57,23 +57,7 @@
 		              <span class="icon-bar"></span>
 		            </button>
 		          </div>
-		          <div id="navbar" class="navbar-collapse collapse">
-		            <ul class="nav navbar-nav">
-		            	<li onclick="location.href='{% url 'user_index' %}'" style="cursor: pointer;">
-			            	<img src="{% static 'svg/gx-logo-3.svg' %}" alt="GRADE-X" width="40" height="50">
-			            	<h4 style="display: inline-block; font-weight: 600; margin: 0 10px 0 0;">Grade-X</h4>
-		            	</li>
-		              <li><a href="#">How it Works</a></li>
-		              <li><a href="#">Pricing</a></li>
-		              <li><a href="#">Request a Demo</a></li>
-		            </ul>
-		            <ul class="nav navbar-nav navbar-right">
-		            	<li><a href="">Company</a></li>
-		              <li><a href="">Our Core Values</a></li>
-		              <li><a href="{% url 'result_login' %}">Log In</a></li>
-		            </ul>
-		          </div><!--/.nav-collapse -->
-		        </div><!--/.container-fluid -->
+		          {% include '_main_nav.html' %}
 		      </nav>
 	    </div>
     </div>
@@ -81,11 +65,11 @@
     {% include '_info.html' %}
     {% include '_features.html' %}
     <section>
-    	<div class="row" style="padding: 20px; padding-top: 0; background: linear-gradient(to left, #243b55, #242c55); color: #A0C7F2; height: 100px; box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.1), 1px 1px 14px 0px rgba(0,0,0,0.3);">
+    	<div class="row" style="padding: 20px; padding-top: 0; background: linear-gradient(to left, #243b55, #242c55); color: #A0C7F2; min-height: 100px; box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.1), 1px 1px 14px 0px rgba(0,0,0,0.3);">
         <div class="container">
-        	<div class="col-md-6">
-        		<h1><strong>Site is under Construction</strong></h1>
-        		<h4>Sponsors or Register for Newsletter</h4>
+        	<div class="col-md-6" style="text-align: center;">
+        		<h3><strong>New to Grade-X?</strong></h3>
+        	<button class="btn custom-btn" onclick="location.href='{% url 'result_signup' %}'">Sign Up Here!</button>
         	</div>
         	<div class="clo-md-6">
         		<div style="margin: 10px auto; text-align: center;">

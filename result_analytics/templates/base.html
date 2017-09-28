@@ -53,23 +53,7 @@
 		              <span class="icon-bar"></span>
 		            </button>
 		          </div>
-		          <div id="navbar" class="navbar-collapse collapse">
-		            <ul class="nav navbar-nav">
-                    <li onclick="location.href='{% url 'user_index' %}'" style="cursor: pointer;">
-                        <img src="{% static 'svg/gx-logo-3.svg' %}" alt="GRADE-X" width="40" height="50">
-                        <h4 style="display: inline-block; font-weight: 600; margin: 0 10px 0 0;">Grade-X</h4>
-                    </li>
-		              <li><a href="#">How it Works</a></li>
-		              <li><a href="#">Pricing</a></li>
-		              <li><a href="#">Request a Demo</a></li>
-		            </ul>
-		            <ul class="nav navbar-nav navbar-right">
-		            	<li><a href="">Company</a></li>
-		              <li><a href="">Our Core Values</a></li>
-		              <li><a href="{% url 'result_login' %}">Log In</a></li>
-		            </ul>
-		          </div><!--/.nav-collapse -->
-		        </div><!--/.container-fluid -->
+		          {% include '_main_nav.html' %}
 		      </nav>
 	    	{% block slide %}
             <div style="padding: 20px; color: #f46b45;">
@@ -82,58 +66,7 @@
     <div class="container">
         <div class="row">
         {% block content %}
-            <div class="col-md-5 center-block login">
-                <div class="panel panel-default" style="padding: 10px 25px;" >
-                    <div class="sub-panel" style="text-align: center; font-size: 1.2em;">
-                        <h3><strong>Sign In</strong></h3>
-                    </div>
-                    <div class="panel-body">
-                        <form id="login" method= 'post' >{% csrf_token %}
-                            {% for field in form %}
-                            <div class="form-group">
-                            <label for="{{field.id_for_label}}">{{field.label}}</label>
-                            {% if field.html_name == 'username' %}
-                            <input id="{{field.id_for_label}}" name="{{field.html_name}}" type="text" class="form-control" placeholder="Username" style="text-align: center;">
-                            {% else %}
-                            <input id="{{field.id_for_label}}" name="{{field.html_name}}" type="password" class="form-control" placeholder="Password" style="text-align: center;">
-                            {% endif %}
-                            </div>
-                            {% endfor %}
-                            <div class="form-group">
-                                <div  style="padding: 10px 0; text-align: center;">
-                                    <a href="{% url 'result_password_reset' %}">Forgot Password?</a><br>
-                                </div>
-                                <button id="submit" type="submit" class="btn btn-sm custom-btn btn-block"><i></i> Login</button>
-                               <input type="hidden" name="next" value="{{ next }}">
-                            </div>
-                        </form>
-                    </div> 
-                </div>
-                <div class="new-signup">
-                    <div style="margin-bottom: 10px;">
-                        <h5 style="margin-bottom: 0;">New to Grade-X? Sign Up Below</h5> 
-                        <small style="color: #fff;">[Check if you already have an account through your school]</small><br>
-                    </div>
-                    <div class="form-group"> 
-                        <button id="sign" class="btn btn-sm custom-btn">Custom Sign Up</button>
-                        <button id="check_reg" class="btn btn-sm custom-btn" type="button" onclick="validate_show();">Check with Reg Number</button>
-                    </div>
-                    <div>
-                        <h3>{{response}}</h3>
-                    </div>
-                </div> 
-                <div id="validate" class="validate">
-                    <form method="POST" action="{% url 'check_user' %}">{% csrf_token %}
-                        <div class="form-group">
-                            <input class="form-control form-check" type="text" name="check" placeholder="Enter your Reg Number">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-sm custom-btn" type="button" onclick="cancel();">Cancel</button>
-                            <button class="btn btn-sm custom-btn" type="submit">Confirm Reg Number</button>
-                        </div>
-                    </form>
-                </div>               
-            </div>
+            {% include '_login.html' %}
         {% endblock %}
         </div>
     </div>

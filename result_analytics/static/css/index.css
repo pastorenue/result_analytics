@@ -63,3 +63,23 @@
 	padding: 10px;
 	float: left;
 }
+/********************************************
+********************NAVBAR*******************
+********************************************/
+.sign-up-btn {
+	margin-top: 10px;
+}
+.sign-up-btn>a {
+	background: #243b55; 
+	padding: 5px 20px !important; 
+	border-radius: 25px; 
+	color: #fff;
+	font-weight: 600;
+	transition: all .34s ease-in-out;
+}
+.sign-up-btn>a:hover {
+	background: #fff;
+	color: #243b55;
+
+	border: 1px solid #243b55;
+}

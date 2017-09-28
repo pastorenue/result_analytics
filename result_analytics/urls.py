@@ -48,6 +48,9 @@ urlpatterns+=patterns('',
         url(r'^signup/$', register_user, name="result_signup"),
         url(r'^start/signup/$', TemplateView.as_view(template_name='signup.html'), name="start-signup"),
         url(r'^change-password/$', change_password, name="change-password"),
+        url(r'^howitworks$', TemplateView.as_view(template_name= 'how.html'), name='how-it-works'),
+        url(r'^who-we-are/$', TemplateView.as_view(template_name='about.html'), name='about'),
+        url(r'^pricing$', TemplateView.as_view(template_name='pricing.html'), name='pricing'),
 )
 
 urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,22 @@
+{% load static %}
+<div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li onclick="location.href='{% url 'user_index' %}'" style="cursor: pointer;">
+        <img src="{% static 'svg/gx-logo-3.svg' %}" alt="GRADE-X" width="40" height="50">
+        <h4 style="display: inline-block; font-weight: 600; margin: 0 10px 0 0;">Grade-X</h4>
+      </li>
+      <li><a href="{% url 'how-it-works' %}">How it Works</a></li>
+      <li><a href="#">Request a Demo</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="{% url 'about' %}">Company</a></li>
+      <li><a href="{% url 'pricing' %}">Pricing</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'result_logout' %}">Log out</a></li>
+      {% else %}
+      <li><a href="{% url 'result_login' %}">Log In</a></li>
+      <li class="sign-up-btn"><a href="{% url 'result_signup' %}">Sign Up</a></li>
+      {% endif %}
+    </ul>
+  </div><!--/.nav-collapse -->
+</div><!--/.container-fluid -->
