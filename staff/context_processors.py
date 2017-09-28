@@ -9,8 +9,15 @@ from results.ml_api.recommendations import *
 from django.contrib.auth.decorators import login_required
 from staff.models import Lecturer
 from courses.models import Course
+import random
 
-def home_context(request):   
+def home_context(request): 
+    all_greetings = [
+                    'Hi', 'Ekabo', 'Sannu', 
+                    'Bonjour', 'Mavo', 'Ado', 'Ibaate', 
+                    'Koyo', 'Bawo ni',
+                    'Abole', 'Kedu', 'Ola']
+    greeting = all_greetings[random.randint(0, len(all_greetings)-1)]  
     all_students = []
     lecturers = []
     all_results = []
@@ -37,7 +44,9 @@ def home_context(request):
         'institutions': Institution.objects.all(),
         'all_results': all_results,
         'topics': topics,
-        'lecturers': lecturers
+        'lecturers': lecturers,
+        'greet': greeting
+
     }
 
 def performances(request):
