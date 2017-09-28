@@ -5,6 +5,11 @@
         </div>
         <div class="panel-body">
             <form id="frm_staff">{% csrf_token %}
+                <div class="col-md-12">
+                    <div class="reg-notification">
+                        <p><strong>NOTE:</strong> Please note that <strong>username and password</strong> is set to your email address by default, please ensure to change your password upon first login</p>
+                    </div>
+                </div>
                 <div class="col-md-6">
                 {% for field in l_form|slice:":4" %}
                     <div class="form-group">
@@ -25,9 +30,6 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <input type="hidden" name="type" value="staff">
-                        <div class="reg-notification">
-                            <p><strong>NOTE:</strong> Please note that <strong>username and password</strong> is set to your email address by default, please ensure to change your password upon first login</p>
-                        </div>
                         <button type="button" class="btn btn-sm custom-btn" onclick="goBack()">&laquo; Back</button>
                         <button type="submit" class="btn btn-sm custom-btn"> Register</button>
                     </div>
