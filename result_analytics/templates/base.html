@@ -19,7 +19,9 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/analytics-icons.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/profiles.css' %}"/>
+         <link rel="stylesheet" href="{% static 'css/index.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/pace-theme-flash.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}"/>
         <style>
             input[type="text"]:focus, input[type="password"]:focus {
                 box-shadow: none !important;
@@ -56,8 +58,8 @@
 		          {% include '_main_nav.html' %}
 		      </nav>
 	    	{% block slide %}
-            <div style="padding: 20px; color: #f5f5f5;">
-	            <h1><strong><i>{{greet}}!</i> This is Grade-X </strong><span style="font-size: 25px;">-#TIG</span></h1>
+            <div class="i_gt">
+	            <h1><strong><em>{{greet}}!</em> This is Grade-X </strong><span style="font-size: 25px;">-#TIG</span></h1>
 	            <h4>Glad you made it here today</h4>
 	        </div>
             {% endblock %}
