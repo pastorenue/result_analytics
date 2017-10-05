@@ -14,6 +14,8 @@ from .forms import AssignmentForm, AssignmentSubmitForm
 from notifications.signals import notify
 from django.db import transaction
 from utils.url_dispatcher import get_url
+from django.conf import settings
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 try:
 	import json
 except:
@@ -26,7 +28,7 @@ def user_is_staff(user):
 class AssignmentScoreListView(ListView):
 	model = AssignmentScore
 	template_name = "assignments/list_assignments.html"
-	context_object_name = "assignments"
+	paginated_by = settings.PAGE_SIZE
 	ordering = ['date_created']
 
 	@method_decorator(login_required)
@@ -37,11 +39,26 @@ class AssignmentScoreListView(ListView):
 	def get_queryset(self):
 		return AssignmentScore.objects.filter(student=self.request.user.student).order_by('-date_created')
 
+	def get_context_data(self, **kwargs):
+		context = super(AssignmentScoreListView, self).get_context_data(**kwargs)
+		queryset = self.get_queryset()
+		paginator = Paginator(queryset, self.paginated_by)
+		page = self.request.GET.get('page')
+
+		try:
+			queryset = paginator.page(page)
+		except PageNotAnInteger:
+			queryset = paginator.page(1)
+		except EmptyPage:
+			queryset = paginator.page(paginator.num_pages)
+		context['assignments'] = queryset
+		return context
+
 
 class AssignmentView(ListView):
 	model = Assignment
 	template_name = "assignments/staff_assignments.html"
-	context_object_name = "assignments"
+	paginated_by = settings.PAGE_SIZE
 
 	@method_decorator(login_required)
 	@method_decorator(user_passes_test(user_is_staff))
@@ -65,6 +82,17 @@ class AssignmentView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super(AssignmentView, self).get_context_data(**kwargs)
 		context['courses'] = Course.objects.filter(lecturers=self.request.user.lecturer)
+		queryset = self.get_queryset()
+		paginator = Paginator(queryset, self.paginated_by)
+		page = self.request.GET.get('page')
+
+		try:
+			queryset = paginator.page(page)
+		except PageNotAnInteger:
+			queryset = paginator.page(1)
+		except EmptyPage:
+			queryset = paginator.page(paginator.num_pages)
+		context['assignments'] = queryset
 		return context
 
 

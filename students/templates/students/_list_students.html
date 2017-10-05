@@ -1,5 +1,5 @@
 {% extends 'dashboard.html' %}
-{% load staticfiles %}
+{% load staticfiles record_filters %}
 
 {% block title %}Students{% endblock %}
     
@@ -110,6 +110,9 @@
             {% endif %}
             </tbody>
         </table>
+    </div>
+    <div>
+        {% render_paginator students %}
     </div>
 {% endblock content %}
 {% block extrajs %}

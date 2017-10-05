@@ -1,5 +1,5 @@
 {% extends 'dashboard.html' %}
-
+{% load record_filters %}
 {% block breadcrumbs %}
     <a href="{% url 'students:students_list' %}"> All students</a>&raquo; {{ student }}'s result detail
 {% endblock %}
@@ -41,22 +41,8 @@
         <h5>You can explore other features of grade-X <a href=""><u>HERE</u></a></h5>
     </div>
     {% endif %}
-<div>
-    <div style="font-size: 1.2em; text-align: center; letter-spacing: 5px; margin-bottom: 20px;">
-        {% if results %}
-            <span class="pagination">
-            {% if results.has_previous %}
-            <a href="?page={{ results.previous_page_number }}">Previous</a>
-            {% endif %}
-            <span>
-                Page {{ results.number }} of {{ results.paginator.num_pages }}.
-            </span>
-             {% if results.has_next %}
-            <a href="?page={{ results.next_page_number }}">Next</a>
-            {% endif %}
-            </span>
-        {% endif %}
+    <div>
+      {% render_paginator results %}  
     </div>
-</div>
 </div>
 {% endblock %}

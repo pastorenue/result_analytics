@@ -30,7 +30,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="sub-panel scroll" style="height: 400px; overflow-y: auto;">
+	<div class="sub-panel scroll" style="max-height: 600px; overflow-y: auto;">
 		<h5 style="text-align: right; padding: 5px 10px; color: #2c3e50; background: #ecf0f1;">{{post.response_set.count }}{%if post.response_set.count <= 1 %} Response{% else %} Responses{% endif %}</h5>
 		{% for response in post.response_set.all %}
 		<article class="own-response">
@@ -72,6 +72,10 @@
 		</article>
 		{% endfor %}
 	</div>
+</div>
+
+<div class="add-post">
+	<span data-toggle="modal" data-target="#new_post"><i class="icons icons-sm icons-plus"></i></span>
 </div>
 {% endblock %}
 

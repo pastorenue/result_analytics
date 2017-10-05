@@ -17,16 +17,11 @@ Grading Configurations &raquo;
 				<div class="sub-panel">
 					<h5>Grading Configuration</h5>
 				</div>
-				<div>
-					<p>Add all letters for your grading scheme and save.</p>
+				<div class="alert alert-info">
+					<p>All letters for the grading scheme must be in uppercase.</p>
 				</div>
-				<div class="sub-panel add-padding">
-					{% for field in grading_form %}
-					<div class="form-group">
-						<label for="">Institution</label>
-						{{field}}
-					</div>
-					{% endfor %}	
+				<div class="form-group">
+					<input type="hidden" value="{{user.lecturer.institution.id}}" name="institution" class="form-control">
 				</div>
 				<div class="sub-panel add-padding">
 					{{batch_grading_formset.management_form}}
@@ -48,7 +43,9 @@ Grading Configurations &raquo;
 							<label for="">End</label>
 							{{batch_form.end}}
 							<br>
+							{{batch_form.id}}
 						</div>	
+
 					</div>
 
 					{% endfor %}

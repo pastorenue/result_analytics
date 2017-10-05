@@ -173,3 +173,6 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 LOGIN_URL = '/login/' # Expensive to use a login view
 LOGOUT_URL = 'result_logout'
 LOGIN_REDIRECT_URL = 'dashboard'
+
+PAGE_SIZE = 50
+PAGE_ORPHANS = 10

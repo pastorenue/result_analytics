@@ -12,7 +12,7 @@ from results.models import Result, CGPA
 from decimal import Decimal
 from courses.models import Course
 from analyzer.utils import cgpaData, StudentChartData, RegressionModel, ResultData, MainData as main
-
+from results.utils import Computation as cp
 
 @login_required
 def workspace(request):
@@ -43,17 +43,8 @@ def course_analysis(request, course_id=None, department=None, level=None):
 def cgpa_by_level(request,  student_slug, chartID='container', chart_type = 'area', chart_height=300):
     student = get_object_or_404(Student, slug=student_slug)
     fcgpa = cgpaData.get_fcgpa(student.id)
-    degree = ""
-    if fcgpa >=4.5:
-        degree = "You are currently on FIRST CLASS"
-    elif fcgpa>=3.5:
-            degree = "You are currently on SECOND CLASS-UPPER DIVISION"
-    elif fcgpa>=2.5:
-        degree = "You are currently on SECOND CLASS-LOWER DIVISION"
-    elif fcgpa>=1.5:
-        degree = "You are currently on THIRD CLASS"
-    else:
-        degree = "You might be graduating with a PASS"
+    grades = cp.get_grades(student.institution)
+    degree = cp.get_cgpa_comment(student.institution, fcgpa)
 
     cgpa = []
     level = []
@@ -70,12 +61,13 @@ def cgpa_by_level(request,  student_slug, chartID='container', chart_type = 'are
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, "zoomType": 'xy'}
     title = {"text": "%s's CGPA Breakdown" % (student)}
     xAxis = {"title": {"text": 'Level'}, "categories": data['level']}
-    yAxis = {"title": {"text": "CGPA values"}, "min": 0, "max": 5, "tickInterval": 0.5}
+    yAxis = {"title": {"text": "CGPA values"}, "min": 0, "max": max(grades), "tickInterval": 0.5}
     series = [{"name": "Student CGPA", "data": data['cgpa']}]
      
     
     context = {
         'fcgpa': fcgpa,
+        'max_grade': max(grades),
         'degree': degree,
         'chartID': chartID,
         'chart': chart,
@@ -96,7 +88,7 @@ def student_cgpa_analysis(request, student_slug, chartID='container', chart_type
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, "zoomType": 'xy'}
     title = {"text": "%s's CGPA Analysis Chart" % (student)}
     xAxis = {"title": {"text": 'Level|(Semester)'}, "categories": data['level']}
-    yAxis = {"title": {"text": "Scores Obtained"}, "min": 0, "max": 5, "tickInterval": 0.5}
+    yAxis = {"title": {"text": "Scores Obtained"}, "min": 0, "max": max(cp.get_grades(student.institution)), "tickInterval": 0.5}
     series = [{"name": "Student CGPA", "data": data['cgpa']}]
     
     
@@ -116,20 +108,20 @@ def student_cgpa_analysis(request, student_slug, chartID='container', chart_type
 def all_analysis(request, template_name='analyzer/analytics_main.html', chartID='container', chart_type = 'column', chart_height=300):
     #All cgpa analysis
     data_active, data_graduate = cgpaData.get_all_cgpa(institution=request.user.lecturer.institution)
-    
+    max_grade = max(cp.get_grades(request.user.lecturer.institution))
     
    #Active Students Charts
     cgpa_chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, "zoomType": 'xy'}
     cgpa_title = {"text": "Active Students' CGPA"}
     cgpa_xAxis = {"title": {"text": 'Reg Number'}, "categories": data_active['student']}
-    cgpa_yAxis = {"title": {"text": "CGPAs"}, "min": 0, "max": 5, "tickInterval": 0.5}
+    cgpa_yAxis = {"title": {"text": "CGPAs"}, "min": 0, "max": max_grade, "tickInterval": 0.5}
     cgpa_series = [{"name": "Student CGPA", "data": data_active['cgpa']}]
     
     #Graduated Students Charts
-    g_chart = {"renderTo": "g_charts", "type": "bar", "height": chart_height, "zoomType": 'xy'}
+    g_chart = {"renderTo": "g_charts", "type": "line", "height": chart_height, "zoomType": 'xy'}
     g_title = {"text": "Graduate Students' CGPA"}
     g_xAxis = {"title": {"text": 'Reg Number'}, "categories": data_graduate['student']}
-    g_yAxis = {"title": {"text": "CGPAs"}, "min": 0, "max": 5, "tickInterval": 0.5}
+    g_yAxis = {"title": {"text": "CGPAs"}, "min": 0, "max": max_grade, "tickInterval": 0.5}
     g_series = [{"name": "Student CGPA", "data": data_graduate['cgpa']}]
     
     
@@ -193,6 +185,7 @@ def student_analysis(request, student_slug, chartID='container', chart_type = 'b
     student = get_object_or_404(Student, slug=student_slug)
     current_level = student.level
     default_level = 100
+    max_grade = max(cp.get_grades(student.institution))
     last_passed_level = current_level-default_level
     semester = request.GET.get('semester', 1)
     level = request.GET.get('level', '')
@@ -240,7 +233,7 @@ def student_analysis(request, student_slug, chartID='container', chart_type = 'b
     else:        
         v_title = {"text": "%s Overall Course Performance From %s To %s Level" % (student, default_level, current_level)}
     v_xAxis = {"title": {"text": 'Courses'}, "categories":grade_result['course'], "lineWidth": 2, "lineColor": "#c14"}
-    v_yAxis = {"title": {"text": "Grades Obtained"}, "min": 0, "max": 5, "tickInterval": 1, "lineWidth": 2, "lineColor": "#c14"}
+    v_yAxis = {"title": {"text": "Grades Obtained"}, "min": 0, "max": max_grade, "tickInterval": 1, "lineWidth": 2, "lineColor": "#c14"}
     v_series = [{'name': 'Grade Points','data': grade_result['grade']}]  
     
     context = {
@@ -321,7 +314,7 @@ def make_prediction(request, student_slug):
 
 
 def export_excel(request):
-    all_cgpa = main.get_performance_report()
+    all_cgpa = main.get_performance_report(request.user.lecturer.institution)
     
     students = Student.objects.filter(institution=request.user.lecturer.institution)
     print(all_cgpa)
@@ -332,3 +325,54 @@ def export_excel(request):
     report = ExcelReport(fcgpa, fields, groupby=request.GET.get('groupby'))
     report.write(response)
     return response
+
+
+# @user_passes_test(user_is_staff, login_url='/login/')
+@login_required
+def get_json_data(request):
+    data = None
+    params = request.GET
+    data_active, data_graduate = cgpaData.get_all_cgpa(institution=request.user.lecturer.institution)
+
+    level = params.get('level', '')
+    course_id = params.get('course', '')
+    semester = params.get('semester', '')
+    dept_id = params.get('dept', 'all')
+    name = params.get('name', '')
+    course = Course.objects.get(pk=course_id)
+    if course:
+        if name == 'cgpa_data':
+            dept=None
+            results = None
+            if dept_id != 'all':
+                dept = Department.objects.get(pk=dept_id)
+                results = Result.objects.filter(course=course, department=dept)
+                data = ResultData.get_result_by_lecturer(results)
+            else:
+                results = Result.objects.filter(course__lecturers=request.user.lecturer, course=course)
+                data = ResultData.get_result_by_lecturer(results)
+        elif name == 'course_average_by_dept':
+            data = ResultData.dept_avg_score(course)
+            data = main.average_performance(institution=request.user.lecturer.institution)
+        elif name == 'active_student':
+            dept=None
+            results=ResultData.get_all(request.user.lecturer.institution)
+            if dept_id != 'all':
+                dept = Department.objects.get(pk=dept_id)
+                results = results.filter(department=dept)
+                data = ResultData.get_result_by_lecturer(results)
+            if level !='' or level is not None:
+                results = results.filter(level=level)
+                data = ResultData.get_result_by_lecturer(results)
+        elif name == 'graduate_student':
+            dept=None
+            results=ResultData.get_all(request.user.lecturer.institution)
+            if dept_id != 'all':
+                dept = Department.objects.get(pk=dept_id)
+                results = results.filter(department=dept)
+                data = ResultData.get_result_by_lecturer(results)
+            if level !='' or level is not None:
+                results = results.filter(level=level)
+                data = ResultData.get_result_by_lecturer(results)
+    return HttpResponse(json.dumps(data), content_type='application/json')
+

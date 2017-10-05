@@ -25,6 +25,8 @@ from courses.models import Course
 from analyzer.utils import StudentChartData, cgpaData
 from notifications.signals import notify
 from utils.url_dispatcher import get_url
+from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 try:
     import json
 except:
@@ -34,7 +36,7 @@ except:
 class StudentListView(ListView):
     model = Student
     template_name = 'students/_list_students.html'
-    context_object_name = "students"
+    paginated_by = settings.PAGE_SIZE
 
     def get_queryset(self):
         queryset = Student.objects.filter(institution_id=self.request.user.lecturer.institution.id)
@@ -62,7 +64,17 @@ class StudentListView(ListView):
         context = super(StudentListView, self).get_context_data(**kwargs)
         context["departments"] = Department.objects.all()
         context["faculties"] = Faculty.objects.all()
+        queryset = self.get_queryset()
+        paginator = Paginator(queryset, self.paginated_by)
+        page = self.request.GET.get('page')
 
+        try:
+            queryset = paginator.page(page)
+        except PageNotAnInteger:
+            queryset = paginator.page(1)
+        except EmptyPage:
+            queryset = paginator.page(paginator.num_pages)
+        context['students'] = queryset
         return context
 
     @method_decorator(login_required)

@@ -1,6 +1,6 @@
 {% extends 'dashboard.html' %}
 
-{% load staticfiles %}
+{% load staticfiles record_filters %}
 
 {% block breadcrumbs %}<a href="#">Study Forum</a> &raquo; {% endblock %}
 
@@ -21,19 +21,20 @@
 		{% if item.post.id %}
 		<a href="{% url 'post' item.post.id %}"> 
 			<div class="search-result">
-				<h4>{{item.post.title}} </h4><span> posted {{item.post.created}} by {{item.user.student}}</span>
-				<p>{{item.post.question_or_idea}}</p>
+				<h4>{{item.title}} </h4><span> posted {{item.post.created}} by {{item.user.student}}</span>
 			</div>
 		</a>
 		{% else %}
 		<a href="{% url 'post' item.id %}"> 
 			<div class="search-result">
-				<h4>{{item.title}} </h4><span> posted {{item.created}} by {{item.user.student}}</span>
-				<p>{{item.question_or_idea}}</p>
+				<h4><strong>{{item.title}}</strong> </h4><span> posted {{item.created}} by {{item.user.student}}</span>
 			</div>
 		</a>
 		{% endif %}
 		{% endfor %}
+	</div>
+	<div>
+		{% render_paginator queryset %}
 	</div>
 	{% else %}
 	<div class="sub-panel add-padding">
@@ -58,31 +59,4 @@
 </div>
 
 <!-- New Post Modal  Window -->
-<div id="new_post" class="modal fade" role="dialog">
-	<form method="POST" action="">{% csrf_token %}
-	  <div class="modal-dialog">
-	    <!-- Modal content-->
-	    <div class="modal-content" style="text-align: left !important;">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">New Post</h4>
-	      </div>
-		    
-	      <div class="modal-body">
-	      {% for field in form %}
-	        <div class="form-group">
-	        	<label for="field.id_for_label">{{field.label}}</label>
-	        	{{field}}
-	        	<small class="text-muted">{{field.help_text}}</small>
-	        </div>
-	        {% endfor %}
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-	        <button type="submit" class="btn btn-sm custom-btn">Start Discussion</button>
-	      </div>
-	    </div>
-	   </div>
-	</form>
-</div>
 {% endblock %}

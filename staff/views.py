@@ -15,6 +15,8 @@ from django.contrib import messages
 from django.forms.models import model_to_dict
 from institutions.models import Department
 from results.utils import import_result_from_csv
+from django.conf import settings
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .utils import (user_is_staff, 
 					staff_analytics_metrics, 
 					import_quiz_from_csv,
@@ -34,13 +36,28 @@ def accounts(request):
 class StaffListView(ListView):
 	model = Lecturer
 	template_name = 'staff/staff_list.html'
-	context_object_name = 'lecturers'
+	paginated_by = settings.PAGE_SIZE
 
 	def get_queryset(self):
 		logged_user = self.request.user.lecturer
 		queryset = Lecturer.objects.filter(institution=logged_user.institution)
 		return queryset
+	
+	def get_context_data(self, **kwargs):
+		context = super(StaffListView, self).get_context_data(**kwargs)
+		queryset = self.get_queryset()
 
+		paginator = Paginator(queryset, self.paginated_by)
+		page = self.request.GET.get('page')
+
+		try:
+			queryset = paginator.page(page)
+		except PageNotAnInteger:
+			queryset = paginator.page(1)
+		except EmptyPage:
+			queryset = paginator.page(paginator.num_pages)
+		context['lecturers'] = queryset
+		return context
 
 class StaffAnalyticsView(TemplateView):
 	template_name = 'staff/_analysis.html'
@@ -77,10 +94,10 @@ def chart_data_json(request):
 			results = None
 			if dept_id != 'all':
 				dept = Department.objects.get(pk=dept_id)
-				results = Result.objects.filter(course__lecturer=request.user.lecturer, course=course, department=dept)
+				results = Result.objects.filter(course__lecturers=request.user.lecturer, course=course, department=dept)
 				data = ResultData.get_result_by_lecturer(results)
 			else:
-				results = Result.objects.filter(course__lecturer=request.user.lecturer, course=course)
+				results = Result.objects.filter(course__lecturers=request.user.lecturer, course=course)
 				data = ResultData.get_result_by_lecturer(results)
 		elif name == 'course_average_by_dept':
 			data = ResultData.dept_avg_score(request.user.lecturer, course)
@@ -174,3 +191,4 @@ def edit_profile(request):
             'lecturer': lecturer
         }
     return render(request, template_name, context)
+

@@ -1,6 +1,7 @@
 from math import *
 from students.models import Student
 from results.models import Result
+from analyzer.utils import cgpaData
 import operator
 
 #The data in each of these functions will be in the range of 0-10
@@ -106,9 +107,19 @@ def transform_data(data):
 def get_result_queryset(student):
 	return Result.objects.filter(student=student)
 
-def get_dataset(course=None):
+def get_dataset(request, course=None, use_cgpa=True):
 	data = {}
-	for student in Student.objects.all():
+	students = None
+	active_students = [student for student in Student.objects.all() if student.user.studentsetup.allow_my_result_for_analysis]
+	preferred_students =[student for student in Student.objects.all() if cgpaData.get_fcgpa(student.id) >= 4.0 and 
+							student.user.studentsetup.allow_my_result_for_analysis]
+	if use_cgpa:
+		students = preferred_students
+		if request.user.student not in students:
+			students.append(request.user.student)
+	else:
+		students = active_students	
+	for student in students:
 		tmp_data = {}
 		results = None
 		if course:

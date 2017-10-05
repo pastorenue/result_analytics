@@ -864,8 +864,8 @@ p a {
     padding: 2px 10px;
     transition: all .45s ease-in-out;
 }
-.search-result p {
-    font-size: 1.2em;
+.search-result h4 {
+    margin-bottom: 0;
 }
 .search-result:hover {
     color: #3498db;
@@ -1017,3 +1017,21 @@ p a {
  .main-analytics .panel-body {
     padding: 5px;
  }
+.add-post {
+    position: absolute;
+    top: 70px;
+    right: 35px;
+    width: 30px;
+    height: 30px;
+}
+.add-post span { 
+    font-size: 30px;
+    margin: 3px auto;
+    color: #141E30;
+    cursor: pointer;
+    transition: all .45s ease-in-out;
+}
+.add-post span:hover {
+    transform: translateY(-5px);
+    color: #009688;
+}

@@ -5,6 +5,8 @@ import csv
 import codecs
 from students.models import Student
 from courses.models import Course
+
+
 class Computation(object):
     
     @classmethod
@@ -21,6 +23,44 @@ class Computation(object):
         
         if units!=0 or grade!=0:
             return cgpa
+
+    @classmethod
+    def get_grades(cls, institution):
+        grades = Grading.objects.filter(institution=institution)
+        data = [float(grade.grade_points) for grade in grades]
+        data.append(0.0)
+        sorted(data)
+        return data
+
+
+    @classmethod
+    def get_cgpa_comment(cls, institution, fcgpa, computation_type=None):
+        FIVE_POINT, FOUR_POINT, THREE_POINT = range(5, 2, -1)
+        scale = {5.0:FIVE_POINT, 4.0:FOUR_POINT, 3.0:THREE_POINT}
+
+        max_grade_point = max(cls.get_grades(institution))
+        degree = ""
+        if scale[max_grade_point] == FIVE_POINT:
+            if fcgpa >=4.5:
+                degree = "You are currently on FIRST CLASS"
+            elif fcgpa>=3.5:
+                    degree = "You are currently on SECOND CLASS-UPPER DIVISION"
+            elif fcgpa>=2.5:
+                degree = "You are currently on SECOND CLASS-LOWER DIVISION"
+            elif fcgpa>=1.5:
+                degree = "You are currently on THIRD CLASS"
+            else:
+                degree = "You might be graduating with a PASS"
+        if scale[max_grade_point] == FOUR_POINT:
+            if fcgpa >= 3.5:
+                degree = "You are currently on FIRST CLASS"
+            elif fcgpa >= 3.0 and fcgpa <= 3.49:
+                degree = "You are currently on SECOND CLASS-UPPER DIVISION"
+            elif fcgpa >= 2.0 and fcgpa <= 2.99:
+                degree = "You are currently on SECOND CLASS-LOWER DIVISION"
+            else:
+                degree = "You might be graduating with a PASS"
+        return degree
 
 @transaction.atomic
 def import_result_from_csv(csv_file, lecturer):
@@ -70,3 +110,7 @@ def import_result_from_csv(csv_file, lecturer):
                 )
                 new_value+=1
     return new_value, update_value
+
+def update_results(institution):
+    for result in Result.objects.filter(institution=institution):
+        result.save()

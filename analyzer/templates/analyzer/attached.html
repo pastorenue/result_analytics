@@ -14,18 +14,18 @@
     <li><a href="{% url 'students:student_account' student.slug %}"><i class="icons icons-sm icons-user"></i> {{ student}}'s Profile</a></li>
     <li><a href="{% url 'results:personal_results' student.slug %}"><i class="icons icons-sm icons-table"></i> Result information</a></li>
     <li><a href="{% url 'analyzer:all_results_plot' student.slug %}"><i class="icons icons-sm icons-area-chart"></i> Comparative Analysis</a></li>
-    <li><a href="{% url 'analyzer:prediction' student.slug %}"> Performance Analysis</a></li>
     <li><a href="{% url 'analyzer:cgpa_by_level' student.slug %}"><i class="icons icons-sm icons-line-chart"></i> {{ student.first_name }}'s CGPA By Level</a></li>
     <li><a href="{% url 'results:all_results' student.slug %}"><i class="icons icons-sm icons-history"></i> Performance History</a></li>
-    <li><a href="#"><i class="icons icons-sm icons-payment"></i> All Dues Paid</a></li>
+    <li><a href="#"><i class="icons icons-sm icons-payment"></i> Payment History</a></li>
     {% if user.is_superuser %}
     <li><a href="#"><i class="icons icons-sm icons-proceed"></i> Start Clearance Process for {{ student }}</a></li>
     {% endif %}
 {% endif %}
 {% if request.user.lecturer %}
+    <h4><i class="icons icon-md icons-book"></i> Staff Corner</h4>
     <li><a href="{% url 'assignment:create_assignment' %}"><i class="icons icons-sm icons-plus"></i> Add New Asignment</a></li>
     <li><a href="{% url 'assignment:staff_assignments' %}"><i class="icons icons-sm icons-book"></i> All Asignments</a></li>
-    <h4><i class="icons icon-md icons-book"></i> Projects Supervision</h4>
+    <li><a href="{% url 'results:staff_result' %}"><i class="icons icons-sm icons-list"></i> All Results </a></li>
     <li><a href="{% url 'assignment:staff_assignments' %}"><i class="icons icons-sm icons-book"></i> Project Supervision</a></li>
     <li><a href="{% url 'assignment:staff_assignments' %}"><i class="icons icons-sm icons-user"></i> Project Students</a></li>
     <h4><i class="icons icon-md icons-info"></i> Other Actions</h4>
@@ -37,10 +37,9 @@
     <li><a href="{% url 'collaborate:friend-zone' %}"><i class="icons icons-sm icons-group"></i> Add a Friend</a></li>
     <h4><i class="icons icons-sm icons-area-chart"></i> Analysis</h4>
     <li><a href="{% url 'analyzer:all_results_plot' request.user.student.slug %}"><i class="icons icons-sm icons-area-chart"></i> Comparative Analysis</a></li>
-    <li><a href="{% url 'analyzer:prediction' request.user.student.slug %}"><i class="icons icons-sm icons-book"></i> Performance Analysis</a></li>
     <li><a href="{% url 'analyzer:cgpa_by_level' request.user.student.slug %}"><i class="icons icons-sm icons-line-chart"></i> CGPA By Level</a></li>
     <li><a href="{% url 'results:all_results' request.user.student.slug %}"><i class="icons icons-sm icons-area-chart"></i> Performance History</a></li>
     <h4><i class="icons icons-sm icons-payment"></i> Payment History</h4>
     <li><a href="#"><i class="icons icons-sm icons-money"></i> Check All Payments</a></li>
-    <li><a href="#"><i class="icons icons-sm icons-payment"></i> Make Payment</a></li>
+    <li data-toggle="popover" title="This feature will be available in version 2.0 where you can pay from your account directly with no bank hustle"><a href="#"><i class="icons icons-sm icons-payment"></i> Make Payment <small style="font-size: 10px;">[<i class="icons-sm icons icons-info"></i> Soon]</small></a></li>
 {%endif %}

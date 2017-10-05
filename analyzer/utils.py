@@ -4,6 +4,7 @@ from django.db.models import Sum, Aggregate, FloatField
 from statistics import mean
 from courses.models import Course
 from decimal import Decimal
+from results.utils import Computation as cp
 
 class MainData(object):
     
@@ -15,7 +16,7 @@ class MainData(object):
         for student in students:
             gpa = cgpaData.get_fcgpa(student.id)
             st = student.reg_number
-            data[st]= gpa
+            data[st]= float(gpa)
         return data
     
     @classmethod
@@ -89,6 +90,10 @@ class StudentChartData(object):
         return data
         
 class ResultData(object):
+
+    @classmethod
+    def get_all(cls, institution):
+        return Result.objects.filter(institution=institution)
     
     @classmethod
     def get_result_by_level(cls, student_id, **kwargs):
@@ -145,7 +150,6 @@ class ResultData(object):
 
     @classmethod
     def get_result_by_lecturer(cls,results):
-
         data = {'reg_number':[], 'exam_score':[], 'assignment_score':[], 'quiz_score':[]}
 
         for result in results:
@@ -158,7 +162,7 @@ class ResultData(object):
 
     @classmethod
     def dept_avg_score(cls, lecturer, course):
-        results = Result.objects.filter(course__lecturer=lecturer, course=course)
+        results = Result.objects.filter(course__lecturers=lecturer, course=course)
         dept_list = []
         for result in results:
             if result.student.department not in dept_list:
@@ -241,7 +245,7 @@ class cgpaData(object):
         result = Result.objects.filter(student_id=student_id)
         course_load = result.aggregate(course = Sum('course_load', output_field=FloatField()))['course'] or 0
         credit_load = result.aggregate(credit = Sum('credit_load', output_field=FloatField()))['credit'] or 0
-        
+        student = Student.objects.get(id=student_id)
         grade = 0
         if result.exists():
             if course_load==0:
@@ -249,7 +253,7 @@ class cgpaData(object):
             else:
                 grade = '%.2f' % (course_load/credit_load)
         else:
-            grade = float(5)
+            grade = float(max(cp.get_grades(student.institution)))
         return float(grade)
             
     
@@ -299,6 +303,7 @@ class RegressionModel(object):
         m = ((mean(X)* mean(Y))-(mean(xy))/((mean(X))**2)-mean(xx))
         b = mean(Y) - m*mean(X)
         return m, b
+
 
 
 def pin_generator(length=8):

@@ -29,6 +29,11 @@ class Grading(models.Model):
     def __str__(self):
         return self.caption
 
+class ResultManager(models.Manager):
+
+    def get_staff_results(self, request):
+        return self.filter(course__lecturers=request.user.lecturer)
+
 
 class Result(models.Model):
     student = models.ForeignKey(Student, null=True)
@@ -46,6 +51,7 @@ class Result(models.Model):
     course_load = models.DecimalField(default=0.0, decimal_places=2, max_digits=4, blank=True, null=True)
     date_created = models.DateField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
+    objects = ResultManager()
 
     class Meta:
         verbose_name = _(u'Student Result')
@@ -67,8 +73,8 @@ class Result(models.Model):
     @property
     def grade(self):
         score = self.total_score
-        end = min([grade.end for grade in Grading.objects.filter(institution=self.student.institution) if grade.end>=score])
-        grade = Grading.objects.filter(institution=self.student.institution, end=end)
+        grade = [grade.caption for grade in Grading.objects.filter(institution=self.student.institution) if grade.start<=score and grade.end>=score]
+        #grade = Grading.objects.filter(institution=self.student.institution, end=end)
         return grade[0]
 
     @property    

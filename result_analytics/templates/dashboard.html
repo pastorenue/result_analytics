@@ -92,8 +92,9 @@
         <div class="row-fluid">
           <div style="background: #fff; padding: 10px; ">
           {% block content %}
-            <div style="height: 100%; text-align: center;">
-              <h4 style="padding-top: 9%;  font-size: 2em;"><i class="icons icons-x-lg icons-laptop"></i><br>Welcome to Your workspace</h4>
+            <div style="height: 100%; text-align: center; margin: 100px auto;">
+              <img src="{% static 'svg/gx-logo-2.svg' %}" alt="" width="100">
+              <h4 style="font-size: 2em;">Welcome to Your workspace</h4>
               <p style="font-size: 1.3em;">
                 We are please you could make it here today. 
                 Have you checked the trends for today?<br>
@@ -170,14 +171,11 @@
                       {% endif %}
                     </div>        
                     {% endfor %}       
-                    <div>
-                      <label ><i class="icons icons-sm icons-info"></i></label>
-                    </div>
                   </div>
                   {% endfor %}
                   {% else %}
                   <div style="padding: 10px;">
-                    <p><span style="color: #2c3e50; font-weight: 600;">No Recommentations.</span><br> Your grades look pretty <strong>IMPRESSIVE</strong>. Remember to support others in NEED!!. Use the Forum and share your ideas and study tips.</p>
+                    <p><span style="color: #2c3e50; font-weight: 600;">No Recommentations.</span><br> Remember to support others in NEED!!. Use the Forum and share your ideas and study tips.</p>
                   </div>
               {% endif %}
             {% else %}
@@ -206,6 +204,10 @@
     </div>
     <div class="modal fade" id="modal-department" tabindex="-1" role="dialog" style="">
         {% include 'institutions/new_department.html' %}
+    </div>
+
+    <div id="new_post" class="modal fade" role="dialog">
+      {% include 'forum/_new_post.html' %}
     </div>
     
     <script src="{% static 'js/jquery.js' %}" type="text/javascript"></script>

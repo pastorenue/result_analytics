@@ -5,7 +5,7 @@
 
 {% block content %}
 <div style="margin-bottom: 30px;">
-   <h3 class="page-header">Submit Assignment [<span style="font-size: 16px;"> Assignment CODE: {{assignment.assignment_code}}</span>]</h3>
+   <h3 class="page-header">Submit Assignment [<span style="font-size: 14px; font-weight: 600; color: #243B55;"> Assignment CODE: {{assignment.assignment_code}}</span>]</h3>
 </div>
 
 <div class="col-md-8 center-block">
@@ -13,7 +13,7 @@
 		<form method="post">{% csrf_token %}
 			<div class="panel-body">
 				<div class="sub-panel">
-					<h5>{{assignment.assignment_code}}</h5>
+					<h5>Assignment Submission for {{assignment.course}}</h5>
 				</div>
 				<div class="sub-panel add-padding">
 					{% for field in form %}
@@ -34,7 +34,7 @@
 		<div class="sub-panel add-padding">
 			<h5>QUESTION:</h5>
 		</div>
-		<h4 style="padding-left: 10px;">{{assignment.question_or_instructions}}</h4>
+		<h5 style="padding-left: 10px;">{{assignment.question_or_instructions}}</h5>
 	</div>
 	{% endif %}
 </div>

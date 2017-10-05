@@ -64,6 +64,9 @@ class AssignmentScore(models.Model):
     score = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
     date_created = models.DateField(auto_now_add=True)
 
+    def __str__(self):
+    	return "%s --> %s" % (self.student, self.score)
+
     class Meta:
         verbose_name = _(u'Assigment Grade')
         verbose_name_plural = _(u'Assignment Grades')

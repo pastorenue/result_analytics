@@ -1,5 +1,5 @@
 {% extends 'dashboard.html' %}
-{% load staticfiles %}
+{% load staticfiles record_filters %}
 
 {% block breadcrumbs %}<a>Assignments</a>{% endblock %}
 
@@ -8,8 +8,9 @@
    <h3 class="page-header">Assignments </h3>
 </div>
 
+{% if assignments %}
 <div class="col-md-12 panel panel-default">
-	{% if assignments %}
+	
 	<table class='table table-condensed'>
 	    <thead>
 	        <tr>
@@ -42,14 +43,17 @@
 	    	{% endfor %}
 	    </tbody>
 	</table>
-	{% else %}
-	<div style="text-align: center; color: #2c3e50; margin: 10% auto;">
-		<i class="icons icons-x-lg icons-book"></i><br>
-		<h3>No Assignments Yet.</h3>
-		<h5>You can explore other features of acadlytics <a href="">HERE</a></h5>
-	</div>
-	{% endif %}
 </div>
+<div>
+	{% render_paginator assignments %}
+</div>
+{% else %}
+<div style="text-align: center; color: #2c3e50; margin: 10% auto;">
+	<i class="icons icons-x-lg icons-book"></i><br>
+	<h3>No Assignments Yet.</h3>
+	<h5>You can explore other features of acadlytics <a href="">HERE</a></h5>
+</div>
+{% endif %}
 	
 {% endblock %}
 {% block side%}

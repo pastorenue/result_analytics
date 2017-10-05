@@ -9,6 +9,7 @@ mcollaborations
 mcollaborations/templates/collaborations
 mcore
 mcore/__pycache__
+mcore/templatetags
 mcourses
 mcourses/__pycache__
 rcourses/migrations
@@ -38,6 +39,7 @@ mresults
 mresults/__pycache__
 mresults/migrations
 mresults/migrations/__pycache__
+mresults/ml_api
 mresults/templates/results
 mstaff
 mstaff/templates/staff

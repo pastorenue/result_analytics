@@ -1,0 +1,38 @@
+<div class="row">
+	<nav class="text-center">
+		<ul class="pagination">
+		
+			{% if object_list.has_previous %}
+			<li>
+			  <a href="?page={{ object_list.previous_page_number}}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			{% else %}
+			<li>
+			  <a href="#" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			{% endif %}
+			{% for page in object_list.paginator.page_range %}
+			{% if page <= 5 %}
+			<li><a href="?page={{page}}">{{page}}</a></li>
+			{% endif %}
+			{% endfor %}
+			{% if object_list.has_next %}
+			<li>
+			  <a href="?page={{ object_list.next_page_number }}" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+			{% else %}
+			<li>
+			  <a href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+</div><!-- end row -->

@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from students.models import Student
 from notifications.signals import notify
+from django.conf import settings
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 from django.db import transaction
 try:
@@ -36,7 +38,7 @@ def send_request(request):
 			friend_request = Friend.objects.add_friend(request.user, other_user,                                
     			message=message)
 			notify.send(request.user, recipient=other_user, 
-				description="collaborations",
+				description="",
 				verb="%s sent you a collaboration request." % (request.user.first_name))
 			messages.success(request, "Your request has been sent")
 		except Exception as e:
@@ -105,8 +107,20 @@ def follow(request, to_user_id):
 @login_required
 def friend_zone(request):
 	template_name = 'collaborations/all_collaborator.html'
+	paginated_by = settings.PAGE_SIZE
+
 	all_students = Student.objects.all().exclude(user=request.user)
-	context = {'all_friends': all_students}
+	queryset = all_students
+	paginator = Paginator(queryset, paginated_by)
+
+	page = request.GET.get('page')
+	try:
+		queryset = paginator.page(page)
+	except PageNotAnInteger:
+		queryset = paginator.page(1)
+	except EmptyPage:
+		queryset = paginator.page(paginator.num_pages)
+	context = {'all_friends': queryset}
 	return render(request, template_name, context)
 
 @login_required

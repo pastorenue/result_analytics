@@ -73,14 +73,16 @@ Import Result &raquo;
         <div class="col-md-6 panel panel-default" style="margin-bottom: 30px; padding: 11px; background: #f9f9f9;">
             <form method="POST" action="{% url 'import_json' %}" enctype="multipart/form-data">{% csrf_token %}
                 <div class="form-group">
-                <label for="id_upload_type">Upload Type</label>
+                  <label for="id_upload_type">Upload Type</label>
                   <select name="upload_type" id="id_upload_type" class="form-control">
                     <option value="all">All</option>
                     <option value="quiz_score">Quiz Scores</option>
                     <option value="assignment_score">Assignment Scores</option>
                     <option value="exam_score">Examination Scores</option>
                   </select>
-                  <small class="text-muted"><strong>Please  ensure to choose the right upload type to avoid uploading into the wrong database table since all the single results are of the same layout format.</strong></small>
+                </div>
+                <div class="alert-error form-group">
+                  <small class=""><strong>Please  ensure to choose the right upload type to avoid uploading into the wrong database table since all the single results are of the same layout format.</strong></small>
                 </div>
                 <div class="form-group">
                   {{ form }}

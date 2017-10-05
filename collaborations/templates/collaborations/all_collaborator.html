@@ -1,6 +1,6 @@
 {% extends 'dashboard.html' %}
 
-{% load staticfiles %}
+{% load staticfiles record_filters %}
 {% load thumbnail %}
 
 {% block extra_css %}
@@ -55,6 +55,9 @@
       </div>
    {% endfor %}
  </div>
+</div>
+<div>
+  {% render_paginator all_friends %}
 </div>
 {% endblock %}
 	

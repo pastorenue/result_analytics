@@ -9,6 +9,7 @@ from results.ml_api.recommendations import *
 from django.contrib.auth.decorators import login_required
 from staff.models import Lecturer
 from courses.models import Course
+from results.utils import Computation as cp
 import random
 
 def home_context(request): 
@@ -65,7 +66,7 @@ def performances(request):
         if student.result_set.count() > 0:
             tmp_dict['cgpa'] = cgpaData.get_fcgpa(student.id)
         else:
-            tmp_dict['cgpa'] = float(5)
+            tmp_dict['cgpa'] = float(max(cp.get_grades(student.institution)))
         performance_list[student] = tmp_dict
 
     key_list = sorted(performance_list.keys(), key=lambda x: performance_list[x]['cgpa'], reverse=True)
@@ -94,8 +95,8 @@ def course_recommendation(request):
                 courses[result.course] = result.total_score
         #get the recommendation for each poorly performed course
         for course in courses:
-            dataset = get_dataset(course=course)
-            matches = top_matches(dataset, request.user.student, length=2, algorithm=euclidean_distance_score)
+            dataset = get_dataset(request, course=course)
+            matches = top_matches(dataset, request.user.student, length=5, algorithm=euclidean_distance_score)
             data['match'] = matches
     if hasattr(request.user, 'student'):
         is_new = not Result.objects.filter(student=request.user.student).exists()
@@ -104,8 +105,8 @@ def course_recommendation(request):
 
 def performance_recommendation(request):
     if request.user.is_authenticated() and hasattr(request.user, 'student'):
-        dataset = get_dataset()
-        matches = top_matches(dataset, request.user.student, length=5, algorithm=sim_pearson)
+        dataset = get_dataset(request)
+        matches = top_matches(dataset, request.user.student, length=5, algorithm=euclidean_distance_score)
         return dict(matches)
     else: 
         return {}

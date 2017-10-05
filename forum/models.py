@@ -61,10 +61,8 @@ class Reply(models.Model):
 	def __str__(self):
 		return self.comment[:20]
 
-
-
 class ProfaneWord(models.Model):
     word = models.CharField(max_length=60)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.word

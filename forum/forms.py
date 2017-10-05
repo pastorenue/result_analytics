@@ -1,5 +1,6 @@
 from django import forms
 from .models import Category, Post, Response, Reply
+from functools import reduce
 
 class CategoryForm(forms.ModelForm):
 
@@ -23,7 +24,7 @@ class PostForm(forms.ModelForm):
 		exclude = ('user', 'created')
 
 	def clean_body(self):
-		body = self.cleaned_data["body"]
+		body = self.cleaned_data["question_or_idea"]
 
 		if FILTER_PROFANE_WORDS:
 		    profane_words = ProfaneWord.objects.all() 
