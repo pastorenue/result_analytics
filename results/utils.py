@@ -36,7 +36,8 @@ class Computation(object):
     @classmethod
     def get_cgpa_comment(cls, institution, fcgpa, computation_type=None):
         FIVE_POINT, FOUR_POINT, THREE_POINT = range(5, 2, -1)
-        scale = {5.0:FIVE_POINT, 4.0:FOUR_POINT, 3.0:THREE_POINT}
+        TEST_POINT = 0.0
+        scale = {5.0:FIVE_POINT, 4.0:FOUR_POINT, 3.0:THREE_POINT, 0.0:TEST_POINT}
 
         max_grade_point = max(cls.get_grades(institution))
         degree = ""
@@ -60,6 +61,8 @@ class Computation(object):
                 degree = "You are currently on SECOND CLASS-LOWER DIVISION"
             else:
                 degree = "You might be graduating with a PASS"
+        if scale[max_grade_point] == TEST_POINT:
+            degree = "Your School has not set a grading scheme yet. Just be patient"
         return degree
 
 @transaction.atomic
