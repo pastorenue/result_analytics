@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from students.forms import StudentCreationForm
 from staff.forms import LecturerCreationForm
@@ -30,11 +30,20 @@ def register_user(request):
         user_type = request.POST.get('type')
         s_form = StudentCreationForm(request.POST)
         l_form = LecturerCreationForm(request.POST)
+        import pdb
+        pdb.set_trace()
         if l_form.is_valid() and user_type == 'staff':
             try:
-                l_form.save()
-                messages.success(request, "Your account has been created. \
-                    Login with your email")
+                institution_id = request.POST.get('institution')
+                institution = get_object_or_404(Institution, pk=institution_id)
+                lecturer = l_form.save(commit=False)
+                lecturer.institution = institution
+                lecturer.save()
+                user = authenticate(username=request.POST.get('email'), 
+                        password=request.POST.get('email'))
+                login(request, user)
+                messages.success(request, "Welcome to Grade-X. Your WORKSPACE has \
+                    been created. Ensure to change your password")
                 return redirect('dashboard')
             except Exception as e:
                 messages.error(request, e)
@@ -42,14 +51,18 @@ def register_user(request):
 
         elif s_form.is_valid() and user_type == 'student':
             try:
-                institution_id = request.POST.get('institution_id')
+                institution_id = request.POST.get('institution')
                 institution = get_object_or_404(Institution, pk=int(institution_id))
                 student = s_form.save(commit=False)
                 student.institution = institution
                 student.save()
-                messages.success(request, "Welcome to Grade-X. Your account \
-                    has been successfully created. Login with your reg number")
-                return HttpResponseRedirect(reverse('dashboard'))
+                user = authenticate(username=request.POST.get('reg_number'), 
+                        password=request.POST.get('reg_number'))
+                login(request, user)
+                messages.success(request, "Welcome to Grade-X. Your WORKSPACE of\
+                    has been successfully created. Explore the endless possibilities\
+                    of academics.")
+                return redirect('dashboard')
             except Exception as e:
                 messages.error(request, e)
                 return redirect('result_signup')

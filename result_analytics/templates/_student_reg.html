@@ -14,7 +14,7 @@
                 {% for field in s_form|slice:":5" %}
                     <div class="form-group">
                         <p>{{ field.errors }}</p>
-                        <label for="field.id_for_label">{{ field.label }}</label>{{ field }}
+                        <label for="{{field.id_for_label}}">{{ field.label }}</label>{{ field }}
                     </div>
                 {% endfor %}
                 </div>
@@ -22,7 +22,7 @@
                 {% for field in s_form|slice:"5:" %}
                     <div class="form-group">
                         <p>{{ field.errors }}</p>
-                        <label for="field.id_for_label">{{ field.label }}</label><br>
+                        <label for="{{field.id_for_label}}">{{ field.label }}</label><br>
                         {{ field }}
                     </div>
                 {% endfor %}
@@ -30,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <input type="hidden" name="type" value="student">
-                        <input type="hidden" name="institution_id" id="my_institution">
+                        <input type="hidden" name="institution" id="id_institution">
                         <button type="button" class="btn btn-sm custom-btn" onclick="goBack()">&laquo; Back</button>
                         <button type="submit" class="btn btn-sm custom-btn"> Register</button>
                     </div>

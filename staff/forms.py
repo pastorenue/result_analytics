@@ -25,7 +25,6 @@ class LecturerCreationForm(forms.ModelForm):
 		self.fields['marital_status'].widget.attrs = {'class': 'form-control'}
 		self.fields['staff_id'].widget.attrs = {'placeholder': '[optional] Staff ID number', 'class': 'form-control'}
 		self.fields['department'].widget.attrs = {'class': 'form-control'}
-		self.fields['institution'].widget.attrs = {'class': 'form-control'}
 	
 	class Meta:
 		model = Lecturer
@@ -37,8 +36,34 @@ class LecturerCreationForm(forms.ModelForm):
 			'marital_status',
 			'staff_id',
 			'department',
-			'institution'
 		)
+
+	@transaction.atomic
+	def save(self, commit=True):
+	    user = create_user(self.cleaned_data['email'], self.cleaned_data['last_name'], self.cleaned_data['first_name'])
+	    # Set default password to this user's username and birth date (if provided):
+	    # password = pin_generator()
+	    user.username = self.cleaned_data['email']
+	    user.set_password(self.cleaned_data['email'])
+	    user.is_staff = True
+	    user.save()
+
+	    setup = StaffSetup(user=user)
+	    setup.save()
+
+	    activation = Activation(user=user)
+	    activation.save()
+
+	    instance = super(LecturerCreationForm, self).save(commit=False)
+	    instance.user = user
+	    orig = slugify(instance.last_name)
+	    if Lecturer.objects.filter(slug=instance.slug).exists():
+	        instance.slug = "%s-%s" % (orig, uuid.uuid4())
+	    else:
+	        instance.slug = "%s-%s" % (orig, uuid.uuid4())
+
+	    instance.save()
+	    return instance
 
 
 class CustomStaffCreationForm(forms.ModelForm):
