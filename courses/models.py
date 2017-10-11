@@ -27,7 +27,7 @@ class Course(models.Model):
     class Meta:
         verbose_name = _(u'Course Available')
         verbose_name_plural = _(u'Courses Available')
-        ordering = ('name',)
+        ordering = ('level',)
 
     def __str__(self):
         return '%s: %s' % (self.course_code, self.name)

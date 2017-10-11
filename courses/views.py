@@ -62,10 +62,6 @@ def new_course(request):
         level = params.get('level', '')
         lecturers = params.getlist('lecturer', '')
         department = Department.objects.get(pk=dept_id)
-        lecturer_list = []
-        for i in lecturers:
-            lecturer = Lecturer.objects.get(pk=int(i))
-            lecturer_list.append(lecturer)
         try:
             pay_load = {
                 'course_code': course_code,
@@ -78,7 +74,12 @@ def new_course(request):
             course = Course(**pay_load)
             course.added_by = request.user
             course.save()
-            course.lecturers.add(lecturer)
+            for i in lecturers:
+                lecturer = Lecturer.objects.get(pk=int(i))
+                course.lecturers.add(lecturer)
+            course.save()
+            import pdb
+            pdb.set_trace()
             messages.success(request, "The course: '%s: %s', has been successfully created" %(course.course_code, course.name))
         except Exception as e:
             messages.error(request, e)
@@ -93,3 +94,17 @@ def reg_course(request):
     else:
         form = CourseRegistrationForm()
     return render(request, 'courses/reg_course.html', {'form': form,})
+
+@login_required
+def edit_course(request, course_id):
+    template_name = 'courses/edit_course.html'
+    course = Course.objects.get(pk=course_id)
+    if request.method == "POST":
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "The course '%s' was successfully updated" % (course))
+            return HttpResponseRedirect(reverse('courses:course-list'))
+    else:
+        form = CourseForm(instance=course)
+    return render(request, template_name, {'form': list(form), 'course': course})

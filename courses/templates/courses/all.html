@@ -46,7 +46,7 @@
                             </ol>
                         </div>
                     </td>
-                    <td><button class="btn btn-sm custom-btn">Edit</button></td>
+                    <td><button class="btn btn-sm custom-btn" onclick="location.href='{% url 'courses:edit' course_id=course.id %}'"><i class="icons icons-sm icons-edit" style="font-weight: normal;"></i> Edit</button></td>
                 </tr>
                 {% endfor %}
                 {% else %}

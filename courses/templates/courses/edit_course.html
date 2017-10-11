@@ -1,0 +1,39 @@
+{% extends 'dashboard.html' %}
+
+{% load staticfiles %}
+{% load form_tags %}
+
+{% block content %}
+  <div class="col-md-10 center-block">
+    <h3 class="page-header">Edit {{course}}</h3>
+    <div class="sub-panel add-padding alert alert-info" style="font-size: 15px;">
+        <p><strong>NOTE:</strong> Please be informed that changing the course information will affect other records in the database. If you are not sure of what you're doing, contact a <strong>Grade-X Expert</strong> for assistance.</p>
+    </div>
+    <form class="form-horizontal" method="post" >{% csrf_token %}
+      <div class="col-md-5" style="margin-right: 10px;">
+        {% for field in form|slice:":4" %}
+        <div class="form-group">
+          <label for="{{field.id_for_label}}">{{field.label}}</label>
+          {{field}}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-md-5" style="margin-left: 10px;">
+        {% for field in form|slice:"4:" %}
+        <div class="form-group">
+          <label for="{{field.id_for_label}}">{{field.label}}</label>
+          {% if field.html_name == 'lecturers' %}<p class="alert-success"><strong>Hint:</strong> [{{field.help_text}}]</p>{% endif %}
+          {{field}}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <button class="btn btn-sm custom-btn" type="submit">Save Changes</button>
+        </div>
+      </div>
+    </form>
+</div>
+{% endblock %}
+
+ {% block extrajs %}{% endblock %}  
