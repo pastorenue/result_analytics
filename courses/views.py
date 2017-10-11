@@ -7,9 +7,47 @@ from courses.forms import CourseForm, CourseCreationForm, CourseRegistrationForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.views.generic import ListView
 from django.utils.translation import ugettext as _
 from institutions.models import Department
 from staff.models import Lecturer
+from django.conf import settings
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+class CourseListView(ListView):
+    model = Course
+    template_name = 'courses/all.html'
+    paginated_by = settings.PAGE_SIZE
+
+    def get_queryset(self):
+        queryset = Course.objects.filter(added_by=self.request.user)
+
+        params = self.request.GET
+        level = params.get('level')
+        department = params.get('department')
+
+        if level !="all" and level is not None:
+            queryset = queryset.filter(level=level)
+        if department != "all" and department is not None:
+            queryset = queryset.filter(department_id=department)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseListView, self).get_context_data(**kwargs)
+        queryset = self.get_queryset()
+        paginator = Paginator(queryset, self.paginated_by)
+
+        page = self.request.GET.get('page')
+
+        try:
+            queryset = paginator.page(page)
+        except PageNotAnInteger:
+            queryset = paginator.page(1)
+        except EmptyPage:
+            queryset = paginator.page(paginator.num_pages)
+
+        context['courses'] = queryset
+        return context
 
 @transaction.atomic
 @login_required
@@ -28,9 +66,6 @@ def new_course(request):
         for i in lecturers:
             lecturer = Lecturer.objects.get(pk=int(i))
             lecturer_list.append(lecturer)
-
-        import pdb
-        pdb.set_trace()
         try:
             pay_load = {
                 'course_code': course_code,
@@ -47,7 +82,7 @@ def new_course(request):
             messages.success(request, "The course: '%s: %s', has been successfully created" %(course.course_code, course.name))
         except Exception as e:
             messages.error(request, e)
-    return HttpResponseRedirect(reverse('dashboard'))
+    return HttpResponseRedirect(reverse('courses:course-list'))
 
 
 def reg_course(request):

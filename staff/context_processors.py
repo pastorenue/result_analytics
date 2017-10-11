@@ -29,7 +29,7 @@ def home_context(request):
             all_results = Result.objects.filter(institution=request.user.lecturer.institution)
     topics = Category.objects.all()[:10]
     departments = Department.objects.all()
-    courses = Course.objects.all()
+    courses = Course.objects.filter(added_by=request.user)
     avg_performance = Result.objects.aggregate(avg = Avg('exam_score'))['avg'] or 0
 
     ranking = int(avg_performance*0.1) or 0
@@ -41,7 +41,7 @@ def home_context(request):
         'avg_performance': avg_performance,
         'ranking': ranking,
         'all_students': all_students,
-        'courses': courses,
+        'all_courses': courses,
         'institutions': Institution.objects.all(),
         'all_results': all_results,
         'topics': topics,
