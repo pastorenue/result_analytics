@@ -11,6 +11,7 @@ from staff.models import Lecturer
 from courses.models import Course
 from results.utils import Computation as cp
 import random
+from django.contrib import auth
 
 def home_context(request): 
     all_greetings = [
@@ -29,7 +30,9 @@ def home_context(request):
             all_results = Result.objects.filter(institution=request.user.lecturer.institution)
     topics = Category.objects.all()[:10]
     departments = Department.objects.all()
-    courses = Course.objects.filter(added_by=request.user)
+    courses = []
+    if request.user.is_authenticated():
+        courses = Course.objects.filter(added_by=auth.get_user(request))
     avg_performance = Result.objects.aggregate(avg = Avg('exam_score'))['avg'] or 0
 
     ranking = int(avg_performance*0.1) or 0
