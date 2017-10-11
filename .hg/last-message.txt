@@ -1,1 +1,1 @@
-Implemented notifications and following. Also added chat to admin
+made some changes
