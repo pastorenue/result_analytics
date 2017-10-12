@@ -1,57 +1,15 @@
 {% extends 'base.html' %}
-{% block title%}Log In{% endblock %}
+{% load static %}
 
-{% block content %}
-    <div class="col-md-5 center-block login" style="margin-top: 45px;">
-        <div class="panel panel-default" style="padding: 10px 25px;" >
-            <div class="sub-panel" style="text-align: center; font-size: 1.2em;">
-                <h3 style="color: #1e3c72;"><strong>Sign In</strong></h3>
-            </div>
-            <div class="panel-body">
-                <form id="login" method= 'post' >{% csrf_token %}
-                    {% for field in form %}
-                    <div class="form-group">
-                    <label for="{{field.id_for_label}}">{{field.label}}</label>
-                    {% if field.html_name == 'username' %}
-                    <input id="{{field.id_for_label}}" required="required" name="{{field.html_name}}" type="text" class="form-control" placeholder="Username" style="text-align: center;">
-                    {% else %}
-                    <input id="{{field.id_for_label}}"  name="{{field.html_name}}" type="password" class="form-control" placeholder="Password" style="text-align: center;" required="required">
-                    {% endif %}
-                    </div>
-                    {% endfor %}
-                    <div class="form-group">
-                        <div  style="padding: 10px 0; text-align: center;">
-                            <a href="{% url 'result_password_reset' %}">Forgot Password?</a><br>
-                        </div>
-                        <button id="submit" type="submit" class="btn btn-sm custom-btn btn-block"><i></i> Login</button>
-                       <input type="hidden" name="next" value="{{ next }}">
-                    </div>
-                </form>
-            </div> 
-        </div>
-        <div class="new-signup">
-            <div style="margin-bottom: 10px;">
-                <h5 style="margin-bottom: 0;">New to Grade-X? Sign Up Below</h5> 
-                <small>[Check if you already have an account through your school]</small><br>
-            </div>
-            <div class="form-group"> 
-                <a href="{% url 'result_signup' %}"><button id="sign" class="btn btn-sm custom-btn">Custom Sign Up</button></a>
-                <button id="check_reg" class="btn btn-sm custom-btn" type="button" onclick="validate_show();">Check with Reg Number</button>
-            </div>
-            <div>
-                <h3>{{response}}</h3>
-            </div>
-        </div> 
-        <div id="validate" class="validate">
-            <form method="POST" action="{% url 'check_user' %}">{% csrf_token %}
-                <div class="form-group">
-                    <input class="form-control form-check" type="text" name="check" placeholder="Enter your Reg Number">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-sm custom-btn" type="button" onclick="cancel();">Cancel</button>
-                    <button class="btn btn-sm custom-btn" type="submit">Confirm Reg Number</button>
-                </div>
-            </form>
-        </div>               
-    </div>
+{% block slide %}
+<div class="i_gt">
+    <h1><strong><em>{{greet}}!</em> This is Grade-X </strong><span style="font-size: 25px;">-#TIG</span></h1>
+    <h4>Glad you made it here today</h4>
+</div>
 {% endblock %}
+{% block content %}
+    {% include '_login.html' %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+

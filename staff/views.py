@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import datetime
 from django.db.models import * 
 from results.models import Result
 from .models import Lecturer
@@ -67,6 +68,7 @@ class StaffAnalyticsView(TemplateView):
 		context['courses'] = Course.objects.filter(lecturers=self.request.user.lecturer)
 		context['departments'] = get_lecturer_data(self.request)['dept']
 		context['staff_metrics'] = staff_analytics_metrics(self.request.user)
+		context['years'] = [i for i in range(datetime.date.today().year, 1998, -1 )]
 
 		return context
 
@@ -86,6 +88,7 @@ def chart_data_json(request):
 	course_id = params.get('course', '')
 	semester = params.get('semester', '')
 	dept_id = params.get('dept', 'all')
+	year = params.get('year', '')
 	name = params.get('name', '')
 	course = Course.objects.get(pk=course_id)
 	if course:
@@ -94,13 +97,17 @@ def chart_data_json(request):
 			results = None
 			if dept_id != 'all':
 				dept = Department.objects.get(pk=dept_id)
-				results = Result.objects.filter(course__lecturers=request.user.lecturer, course=course, department=dept)
+				results = Result.objects.filter(course__lecturers=request.user.lecturer, 
+												course=course, 
+												department=dept,
+												date_created__year=year)
 				data = ResultData.get_result_by_lecturer(results)
 			else:
-				results = Result.objects.filter(course__lecturers=request.user.lecturer, course=course)
+				results = Result.objects.filter(course__lecturers=request.user.lecturer, 
+												course=course, date_created__year=year)
 				data = ResultData.get_result_by_lecturer(results)
 		elif name == 'course_average_by_dept':
-			data = ResultData.dept_avg_score(request.user.lecturer, course)
+			data = ResultData.dept_avg_score(request.user.lecturer, course, year=year)
 	return HttpResponse(json.dumps(data), content_type='application/json')
 
 

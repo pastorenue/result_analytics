@@ -161,8 +161,11 @@ class ResultData(object):
         return data
 
     @classmethod
-    def dept_avg_score(cls, lecturer, course):
-        results = Result.objects.filter(course__lecturers=lecturer, course=course)
+    def dept_avg_score(cls, lecturer, course, year=None):
+        try:
+            results = Result.objects.filter(course__lecturers=lecturer, course=course, date_created__year=year)
+        except:
+            results = Result.objects.filter(course__lecturers=lecturer, course=course)
         dept_list = []
         for result in results:
             if result.student.department not in dept_list:

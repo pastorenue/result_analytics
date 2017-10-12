@@ -339,40 +339,45 @@ def get_json_data(request):
     semester = params.get('semester', '')
     dept_id = params.get('dept', 'all')
     name = params.get('name', '')
-    course = Course.objects.get(pk=course_id)
-    if course:
-        if name == 'cgpa_data':
-            dept=None
-            results = None
-            if dept_id != 'all':
-                dept = Department.objects.get(pk=dept_id)
-                results = Result.objects.filter(course=course, department=dept)
-                data = ResultData.get_result_by_lecturer(results)
-            else:
-                results = Result.objects.filter(course__lecturers=request.user.lecturer, course=course)
-                data = ResultData.get_result_by_lecturer(results)
-        elif name == 'course_average_by_dept':
-            data = ResultData.dept_avg_score(course)
-            data = main.average_performance(institution=request.user.lecturer.institution)
-        elif name == 'active_student':
-            dept=None
-            results=ResultData.get_all(request.user.lecturer.institution)
-            if dept_id != 'all':
-                dept = Department.objects.get(pk=dept_id)
-                results = results.filter(department=dept)
-                data = ResultData.get_result_by_lecturer(results)
-            if level !='' or level is not None:
-                results = results.filter(level=level)
-                data = ResultData.get_result_by_lecturer(results)
-        elif name == 'graduate_student':
-            dept=None
-            results=ResultData.get_all(request.user.lecturer.institution)
-            if dept_id != 'all':
-                dept = Department.objects.get(pk=dept_id)
-                results = results.filter(department=dept)
-                data = ResultData.get_result_by_lecturer(results)
-            if level !='' or level is not None:
-                results = results.filter(level=level)
-                data = ResultData.get_result_by_lecturer(results)
+    year = params.get('year', '')
+
+    if name == 'cgpa_data':
+        dept=None
+        results = None
+        if dept_id != 'all':
+            dept = Department.objects.get(pk=dept_id)
+            results = Result.objects.filter(course=course, department=dept, 
+                                            date_created__year=year)
+            data = ResultData.get_result_by_lecturer(results)
+        else:
+            results = Result.objects.filter(course__lecturers=request.user.lecturer, 
+                                            course=course,
+                                            date_created__year=year)
+            data = ResultData.get_result_by_lecturer(results)
+    elif name == 'course_average_by_dept':
+        data = ResultData.dept_avg_score(course)
+        data = main.average_performance(institution=request.user.lecturer.institution)
+    elif name == 'active_student':
+        dept=None
+        results=ResultData.get_all(request.user.lecturer.institution)
+        if dept_id != 'all':
+            dept = Department.objects.get(pk=dept_id)
+            results = results.filter(department=dept)
+            data = ResultData.get_result_by_lecturer(results)
+        if level !='' or level is not None:
+            results = results.filter(level=level)
+            data = ResultData.get_result_by_lecturer(results)
+        if year !='all':
+            results = results.filter(date_created__year=year)
+    elif name == 'graduate_student':
+        dept=None
+        results=ResultData.get_all(request.user.lecturer.institution)
+        if dept_id != 'all':
+            dept = Department.objects.get(pk=dept_id)
+            results = results.filter(department=dept)
+            data = ResultData.get_result_by_lecturer(results)
+        if level !='' or level is not None:
+            results = results.filter(level=level)
+            data = ResultData.get_result_by_lecturer(results)
     return HttpResponse(json.dumps(data), content_type='application/json')
 

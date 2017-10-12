@@ -13,6 +13,11 @@
             <option value="{{course.id}}">{{course}}</option>
             {% endfor %}
         </select>
+        <select id="d_year_select" class="form-control input-sm"  style="display: inline-block; width: 30%;">
+            {% for i in years %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select>
     </div>
 	<div id="avg_grading_container" class="panel-body">  
     </div>
@@ -28,6 +33,11 @@
             <option value="all">All Departments</option>
             {% for dept in departments %}
             <option value="{{dept.id}}">{{dept}}</option>
+            {% endfor %}
+        </select>
+        <select id="c_year_select" class="form-control input-sm"  style="display: inline-block; width: 30%;">
+            {% for i in years %}
+            <option value="{{i}}">{{i}}</option>
             {% endfor %}
         </select>
     </div>
@@ -125,14 +135,24 @@
         e.preventDefault();
         var course = $('#course_select').val();
         var dept = $('#dept_select').val();
-        var path = jsonUrl + '?name=course_data&course=' + course+'&dept=' + dept;
+        var year = $('#c_year_select').val();
+        var path = jsonUrl + '?name=course_data&course=' + course+'&dept=' + dept+'&year='+year;
         loadCourseData(path);
     });
     $('#dept_select').change(function(e){
         e.preventDefault();
         var course = $('#course_select').val();
         var dept = $('#dept_select').val();
-        var path = jsonUrl + '?name=course_data&course=' + course +'&dept=' + dept;
+        var year = $('#c_year_select').val();
+        var path = jsonUrl + '?name=course_data&course=' + course +'&dept=' + dept+'&year='+year;
+        loadCourseData(path);
+    });
+    $('#c_year_select').change(function(e){
+        e.preventDefault();
+        var course = $('#course_select').val();
+        var dept = $('#dept_select').val();
+        var year = $('#c_year_select').val();
+        var path = jsonUrl + '?name=course_data&course=' + course +'&dept=' + dept+'&year='+year;
         loadCourseData(path);
     });
 
@@ -175,13 +195,21 @@
     $('#dept_course_select').change(function(e){
         e.preventDefault();
         var course = $('#dept_course_select').val();
-        var path = jsonUrl + '?name=course_average_by_dept&course=' + course;
+        var year = $('#d_year_select').val();
+        var path = jsonUrl + '?name=course_average_by_dept&course=' + course+'&year='+year;
+        loadDeptAverage(path);
+    });
+    $('#d_year_select').change(function(e){
+        e.preventDefault();
+        var course = $('#dept_course_select').val();
+        var year = $('#d_year_select').val();
+        var path = jsonUrl + '?name=course_average_by_dept&course=' + course+'&year='+year;
         loadDeptAverage(path);
     });
 
 
-    loadCourseData(jsonUrl  + '?name=course_data&course='+ $('#course_select').val()+'&dept='+$('#dept_select').val());
-    loadDeptAverage(jsonUrl + '?name=course_average_by_dept&course=' + $('#dept_course_select').val());
+    loadCourseData(jsonUrl  + '?name=course_data&course='+ $('#course_select').val()+'&dept='+$('#dept_select').val()+'&year='+$('#c_year_select').val());
+    loadDeptAverage(jsonUrl + '?name=course_average_by_dept&course=' + $('#dept_course_select').val()+'&year='+$('#d_year_select').val());
     
     $('.counter').each(function () {
       var $this = $(this);

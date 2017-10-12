@@ -3,10 +3,11 @@
     <h4><i class="icons icons-md icons-dashboard"></i> Dashboard</h4>
 {% if user.lecturer.is_admin %}
     <li><a href="{% url 'students:students_list' %}"><i class="icons icons-sm icons-group"></i> All Students <span class="badge"> {{ all_students.count }}</span></a></li>
-    <li><a href="{% url 'students:create_student' %}"><i class="icons icons-sm icons-new-user"></i> New Student... </a></li>
+    <li><a href="{% url 'students:create_student' %}"><i class="icons icons-sm icons-new-user"></i> New Student </a></li>
+    <li><a href="#"><i class="icons icons-sm icons-new-user"></i> Bulk Student Upload </a></li>
     <li><a href="{% url 'results:students_results' %}">All Students Results <span class="badge"> {{ all_results.count }}</span></a></li>
     <li><a href="{% url 'staff-list' %}">Employee List <span class="badge"> {{lecturers.count}}</span></a></li>
-    <li><a href="{% url 'new-staff' %}"><i class="icons icons-sm icons-new-user"></i> New Staff... </a></li>
+    <li><a href="{% url 'new-staff' %}"><i class="icons icons-sm icons-new-user"></i> New Staff </a></li>
     <li><a href="{% url 'courses:course-list' %}"><i class="icons icons-sm icons-list"></i> All Courses <span class="badge"> {{ all_courses.count }}</span></a></li>
     <li><a href="{% url 'results:grading-setting' %}"><i class="icons icons-sm icons-tasks"></i> Grading Setup </a></li>
 {% endif %}
@@ -23,12 +24,12 @@
     {% endif %}
 {% endif %}
 {% if request.user.lecturer %}
-    <h4><i class="icons icon-md icons-book"></i> Staff Corner</h4>
+    <h4><i class="icons icon-md icons-user"></i> Staff Corner</h4>
     <li><a href="{% url 'assignment:create_assignment' %}"><i class="icons icons-sm icons-plus"></i> Add New Asignment</a></li>
     <li><a href="{% url 'assignment:staff_assignments' %}"><i class="icons icons-sm icons-book"></i> All Asignments</a></li>
     <li><a href="{% url 'results:staff_result' %}"><i class="icons icons-sm icons-list"></i> All Results </a></li>
     <li><a href="{% url 'assignment:staff_assignments' %}"><i class="icons icons-sm icons-book"></i> Project Supervision</a></li>
-    <li><a href="{% url 'assignment:staff_assignments' %}"><i class="icons icons-sm icons-user"></i> Project Students</a></li>
+    <li><a href="{% url 'assignment:staff_assignments' %}"><i class="icons icons-sm icons-group"></i> Project Students</a></li>
     <h4><i class="icons icon-md icons-info"></i> Other Actions</h4>
     <li><a href="{% url 'students:students_list' %}">Perform Appraisal </a></li>
     <li><a href="{% url 'results:add_result' %}"><i class="icons icons-sm icons-plus"></i> Add Exam Results in Singleton </a></li>

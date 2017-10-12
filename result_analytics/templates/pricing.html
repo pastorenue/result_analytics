@@ -5,10 +5,236 @@
     <h1><strong>Pricing</strong></h1>
 </div>
 {% endblock %}
+{% block extra_css %}
+<style>
+	.pricing-block {
+		transition: all .45s ease-in-out;
+	}
+	.pricing-block:hover {
+		transform: translateY(-10px);
+	}
+	.pricing {
+	text-align: center;
+	border: 1px solid #f0f0f0;
+	color: #777;
+	font-size: 14px;
+	padding-left: 0;
+	margin-bottom: 30px;
+  font-family: 'Lato';
+}
+.pricing img {
+	display: block;
+	margin: auto;
+	width: 32px;
+}
+.pricing li:first-child,
+.pricing li:last-child {
+	padding: 20px 13px;
+}
+.pricing li {
+	list-style: none;
+	padding: 13px;
+}
+.pricing li + li {
+	border-top: 1px solid #f0f0f0;
+}
+.pricing big {
+	font-size: 32px;
+}
+.pricing h3 {
+	margin-bottom: 0;
+  font-size: 36px;
+}
+.pricing span {
+	font-size: 16px;
+	font-weight: 600;
+	color: #999;
+}
+.pricing li:nth-last-child(2) {
+	padding: 30px 13px;
+}
+.pricing button {
+	width: auto;
+	margin: auto;
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 50px;
+	color: #fff;
+	padding: 9px 24px;
+	background: #aaa;
+	opacity: 1;
+	transition: opacity .2s ease;
+  border: none;
+  outline: none;
+}
+.pricing button:hover {
+	opacity: .9;
+}
+.pricing button:active {
+	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+/* pricing color */
+.p-green big,
+.p-green h3 {
+	color: #4c7737;
+}
+.p-green button {
+	background: #4c7737;
+}
+.p-yel big,
+.p-yel h3 {
+	color: #ffbb42;
+}
+.p-yel button {
+	background: #ffbb42;
+}
+.p-red big,
+.p-red h3 {
+	color: #e13c4c;
+}
+.p-red button {
+	background: #e13c4c;
+}
+.p-blue big,
+.p-blue h3 {
+	color: #3f4bb8;
+}
+.p-blue button {
+	background: #3f4bb8;
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<div style="text-align: center; color: #106e4e;">
-	<h1><strong>Hi! This is Grade-X</strong></h1>
-	<h2>Site is under construction</h2>
-</div>
+<section class="container">
+	<div class="row">
+		<div class="col-md-12" style="margin: 50px auto; padding: 0 20%; text-align: center;">
+			<h3>We offer a very reliable and affordable pricing mechanism for our clients. Sounds impossible but its true</h3>
+		</div>
+	</div>
+  <div class="row white">
+	<div class="block">
+		<div class="col-xs-12 col-sm-6 col-md-3 pricing-block">
+			<ul class="pricing p-green">
+				<li>
+					<big>Starter</big>
+				</li>
+				<li>0 to 1000 students</li>
+				<li>0 to 50 lecturers</li>
+				<li>No Training</li>
+				<li>1 Admin Staff</li>
+				<li>No SLA (Support Level Agreement)</li>
+				<li>
+					<p><strong>Calculator</strong></p>
+					<input id="id_range" type="range" min="0" max="1000" step="1" value="1" onchange="changeSlider('range1', this.value, 400)">
+					<h4>COST <span id="range1"></span> : <span >0.0</span></h4>
+				</li>
+				<li>
+					<h3>&#x20A6;300</h3>
+					<h5>per semester/student</h5>
+				</li>
+				<li>
+					<button>Join Now</button>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-xs-12 col-sm-6 col-md-3 pricing-block">
+			<ul class="pricing p-yel">
+				<li>
+					<big>Standard</big>
+				</li>
+				<li>0 to 5000 students</li>
+				<li>0 to 100 lecturers</li>
+				<li>No Training</li>
+				<li>3 Admin Staff</li>
+				<li>No SLA (Support Level Agreement)</li>
+				<li>
+					<p><strong>Calculator</strong></p>
+					<input id="id_range" type="range" min="0" max="5000" step="1" value="1" onchange="changeSlider('range2', this.value, 350)">
+					<h4>COST <span id="range2"></span> : <span >0.0</span></h4>
+				</li>
+				<li>
+					<h3>&#x20A6;349.99</h3>
+					<h5>per semester/student</h5>
+				</li>
+				<li>
+					<button>Join Now</button>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-xs-12 col-sm-6 col-md-3 pricing-block">
+			<ul class="pricing p-red">
+				<li>
+					<big>Ultima</big>
+				</li>
+				<li>0 to 10,000 students</li>
+				<li>0 to 150 lecturers</li>
+				<li>Staff Training</li>
+				<li>5 Admin Staff</li>
+				<li>No SLA (Support Level Agreement)</li>
+				<li>
+					<p><strong>Calculator</strong></p>
+					<input id="id_range" type="range" min="0" max="10000" step="1" value="1" onchange="changeSlider('range3', this.value, 450)">
+					<h4>COST <span id="range3"></span> : <span >0.0</span></h4>
+				</li>
+				<li>
+					<h3>&#x20A6;449.99</h3>
+					<h5>per semester/student</h5>
+				</li>
+				<li>
+					<button>Join Now</button>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-xs-12 col-sm-6 col-md-3 pricing-block">
+			<ul class="pricing p-blue">
+				<li>
+					<big>Premium</big>
+				</li>
+				<li> >10,000 students</li>
+				<li> >150 lecturers</li>
+				<li>Staff Training</li>
+				<li>5 Admin Staff</li>
+				<li>No SLA (Support Level Agreement)</li>
+				<li>
+					<p><strong>Calculator</strong></p>
+					<input id="id_range" type="range" min="0" max="10000" step="1" value="1" onchange="changeSlider('range4', this.value, 700)">
+					<h4>COST <span id="range4"></span> : <span >0.0</span></h4>
+				</li>
+				<li>
+					<h3>&#x20A6;699.99</h3>
+					<h5>per semester/student</h5>
+				</li>
+				<li>
+					<button>Join Now</button>
+				</li>
+			</ul>
+		</div>
+
+
+	</div><!-- /block -->
+</div><!-- /row -->
+  </section>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+	$(document).ready(function() {
+		var all = document.getElementsByTagName('input');
+		for (i in all) {
+			if (all[i].type == "range") {
+				all[i].value = 0;
+			}
+		}
+
+	})
+	function changeSlider(id, value, cost) {
+		var newValue = document.getElementById(id);
+		newValue.nextElementSibling.innerHTML = '&#x20A6;'+(value*parseFloat(cost)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		newValue.innerHTML = "for "+value;
+	}
+</script>
 {% endblock %}
