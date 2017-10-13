@@ -1,15 +1,67 @@
 {% extends 'base.html' %}
 
+{% load static %}
+{% block extra_css %}
+<style>
+	.intro {
+		padding: 0 20%;
+	}
+	.feature-item p {
+		font-size: 16px;
+		text-align: justify;
+	}
+	.feature-item h3 {
+		font-size: 22px;
+		font-weight: 600;
+		color: #193045;
+	}
+	.feature-item a {
+		font-size: 16px;
+		color: color: #193045;
+	}
+	.r_pad {
+		padding: 20px 40px;
+	}
+</style>
+{% endblock %}
 {% block slide %}
 <div style="padding: 20px; color: #f5f5f5;">
-    <h1><strong>How It Works</strong></h1>
-    <h3>...together we can make education interesting again</h3>
+    <h1><strong>#TIG Support</strong></h1>
+    <h3 class="intro">Let's take care of the all paper works for you while you focus on performance and excellence.</h3>
 </div>
 {% endblock %}
 
 {% block content %}
-<div style="text-align: center; color: #106e4e; min-height: 400px;">
-	<h1><strong>Hi! This is Grade-X</strong></h1>
-	<h2>Site is under construction</h2>
+<div class="container" style="text-align: center;">
+	<h3><strong>Focus on Performance, not the Computational Overheads</strong></h3>
+	<h4>“I have never let my schooling interfere with my education.” 
+― <strong>Mark Twain</strong></h4>
+</div>
+<hr>
+<div class="container">
+	<div class="row r_pad">
+		<div class="col-md-4 feature-item">
+			<img src="{% static 'images/icons/support1.png' %}" alt="">
+			<h3>Customer Success</h3>
+			<p>We are committed to your success. </p>
+			<button class="btn btn-sm custom-btn">Request support now &raquo;</button>
+		</div>
+		<div class="col-md-4 feature-item">
+			<img src="{% static 'images/icons/expert.png' %}" alt="">
+			<h3>Expert's Help?</h3>
+			<p>We have experts that can attend to your pressing technical issues. You're just a click and get their response with "lightening" speed.</p>
+			<button class="btn custom-btn btn-sm">Place your call now &raquo;</button>
+		</div>
+		<div class="col-md-4 feature-item">
+			<img src="{% static 'images/icons/resources.png' %}" alt="">
+			<h3>Resources</h3>
+			<p>Get a startup guide with detailed documentation on how the <strong>Grade-X</strong> platform works.</p>
+			<button class="btn btn-sm custom-btn">Download &raquo;</button>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="container r_pad" style="text-align: center;">
+	<button class="btn custom-btn" type="button">Contact our sales department to upgrade your plan</button>
 </div>
 {% endblock %}

@@ -1,10 +1,17 @@
+manalyzer
+manalyzer/templates/analyzer
 rassignments/migrations
 rcourses/migrations
 rresult_analytics/static/bootstrap-3.3.4-dist/css
 rresult_analytics/static/bootstrap-3.3.4-dist/fonts
 rresult_analytics/static/bootstrap-3.3.4-dist/js
 rresult_analytics/static/images
+mresult_analytics/templates
+mstaff
+mstaff/templates/staff
+mstudents/__pycache__
 rstudents/migrations
+mstudents/templates/students
 rtemplates
 rtemplates/employees
 rtemplates/fixtures
