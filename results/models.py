@@ -65,28 +65,26 @@ class Result(models.Model):
         self.credit_load = self.get_credit_load
         self.course_load = self.get_course_load
         self.department = self.student.department
-        self.total_score = self.get_total_score
-        self.level = self.student.level
+        self.total_score = self.get_total_score()
         
         super(Result, self).save(**kwargs)
 
     @property
     def grade(self):
-        score = self.total_score
-        grade = [grade.caption for grade in Grading.objects.filter(institution=self.student.institution) if grade.start<=score and grade.end>=score]
-        #grade = Grading.objects.filter(institution=self.student.institution, end=end)
+        score = self.get_total_score()
+        grades = Grading.objects.filter(institution=self.student.institution)
+        grade = [grade.caption for grade in grades if score in range(grade.start, grade.end+1)]
+        
         return grade[0]
-
-    @property    
+    
     def get_total_score(self):
         total = reduce(decimal_add, [self.exam_score,self.assignment_score, self.quiz_score, 0.0])
-        self.total_score = total
         return total
 
     @property
     def grade_points(self):
         grade = self.grade
-        grading = Grading.objects.filter(institution=self.student.institution, caption=grade)[0]
+        grading = Grading.objects.get(institution=self.student.institution, caption=grade)
         return grading.grade_points
     
     @property
@@ -95,7 +93,7 @@ class Result(models.Model):
     
     @property
     def get_course_load(self):
-        course_load = Decimal((self.get_credit_load*self.grade_points))
+        course_load = Decimal((self.course.unit*self.grade_points))
         return course_load
 
 

@@ -43,26 +43,26 @@ class Computation(object):
         degree = ""
         if scale[max_grade_point] == FIVE_POINT:
             if fcgpa >=4.5:
-                degree = "You are currently on FIRST CLASS"
+                degree = "currently on FIRST CLASS"
             elif fcgpa>=3.5:
-                    degree = "You are currently on SECOND CLASS-UPPER DIVISION"
+                    degree = "currently on SECOND CLASS-UPPER DIVISION"
             elif fcgpa>=2.5:
-                degree = "You are currently on SECOND CLASS-LOWER DIVISION"
+                degree = "currently on SECOND CLASS-LOWER DIVISION"
             elif fcgpa>=1.5:
-                degree = "You are currently on THIRD CLASS"
+                degree = "currently on THIRD CLASS"
             else:
-                degree = "You might be graduating with a PASS"
+                degree = "might be graduating with a PASS"
         if scale[max_grade_point] == FOUR_POINT:
             if fcgpa >= 3.5:
-                degree = "You are currently on FIRST CLASS"
+                degree = "currently on FIRST CLASS"
             elif fcgpa >= 3.0 and fcgpa <= 3.49:
-                degree = "You are currently on SECOND CLASS-UPPER DIVISION"
+                degree = "currently on SECOND CLASS-UPPER DIVISION"
             elif fcgpa >= 2.0 and fcgpa <= 2.99:
-                degree = "You are currently on SECOND CLASS-LOWER DIVISION"
+                degree = "currently on SECOND CLASS-LOWER DIVISION"
             else:
-                degree = "You might be graduating with a PASS"
+                degree = "on a PASS"
         if scale[max_grade_point] == TEST_POINT:
-            degree = "Your School has not set a grading scheme yet. Just be patient"
+            degree = "Your school has not set a grading scheme yet. Just be patient"
         return degree
 
 @transaction.atomic

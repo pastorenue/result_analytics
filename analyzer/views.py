@@ -346,7 +346,7 @@ def get_json_data(request):
         results = None
         if dept_id != 'all':
             dept = Department.objects.get(pk=dept_id)
-            results = Result.objects.filter(course=course, department=dept, 
+            results = Result.objects.filter(department=dept, 
                                             date_created__year=year)
             data = ResultData.get_result_by_lecturer(results)
         else:

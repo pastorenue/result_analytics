@@ -91,6 +91,8 @@ def add_result(request):
                 messages.success(request, _(u'The result was successfully updated!'))
         else:
             try:
+                import pdb
+                pdb.set_trace()
                 result = Result(**result_data)
                 result.institution = request.user.lecturer.institution
                 result.save()

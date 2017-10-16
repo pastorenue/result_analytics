@@ -96,20 +96,20 @@
               <img src="{% static 'svg/gx-logo-2.svg' %}" alt="" width="100">
               <h4 style="font-size: 2em;">Welcome to Your workspace</h4>
               <p style="font-size: 1.3em;">
-                We are please you could make it here today. 
-                Have you checked the trends for today?<br>
+                We are pleased you could make it here today. 
+                Have you checked the trends?<br>
                 {% if request.user.student %}See how you're doing by viewing the latest students performance trend for the Semester {% endif %}
-                {% if request.user.is_staff %}Check out the students who would want your help. Remember, "Education is golden"{% endif %}
+                {% if request.user.lecturer %}Check out the students who would want your help. Remember, "Education is golden"{% endif %}
               </p>
               <div class="col-md-7 center-block">
                 <div class="panel panel-default">
                   <div class="panel-body">
                     <div class="sub-panel add-padding">
-                      <h3 style="color: #2980b9; margin-bottom: 6px;">Remember Your{% if request.user.is_staff %} Principle {% else %} Motivation!!{% endif %}!!</h3>
+                      <h3 style="color: #2980b9; margin-bottom: 6px;">Remember Your{% if request.user.lecturer %} Principle {% else %} Motivation!!{% endif %}!!</h3>
                       <h4>{% if request.user.activation.short_motivation_quote %}
                        {{ request.user.activation.short_motivation_quote }}
                        {% else %}
-                       Oops!! No Motivation set yet. Activate you account and set a motivation quote. Click <a href="{% url 'activate' %}"><strong>HERE</strong> </a> to activate now
+                       Oops!! No Quote set yet. Activate you account and set a motivation quote. Click <a href="{% url 'activate' %}"><strong>HERE</strong> </a> to activate it now
                        {% endif %}</h4>
                     </div>
                   </div>

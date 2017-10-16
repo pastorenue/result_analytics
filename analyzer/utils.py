@@ -237,9 +237,10 @@ class cgpaData(object):
     @classmethod
     def get_level_cgpa(cls, level, student_id):
         result = Result.objects.filter(level=level, student_id=student_id)
+        
         course_load = result.aggregate(course = Sum('course_load', output_field=FloatField()))['course']
         credit_load = result.aggregate(credit = Sum('credit_load', output_field=FloatField()))['credit']
-        
+
         grade = '%.2f' % (course_load/credit_load)
         return float(grade)
     
