@@ -8,6 +8,19 @@
 	.mobile-pad {
 		padding: 0;
 	}
+	::-webkit-scrollbar {
+	    width: 0px !important;
+	    background: transparent !important; /* make scrollbar transparent */
+	}
+	::-webkit-scrollbar-thumb{
+	    width: 0px;
+	    background: transparent !important; /* make scrollbar transparent */
+	}
+	::-webkit-scrollbar-track {
+	    width: 0px;
+	    background: transparent !important;
+	    border: none; /* make scrollbar transparent */
+	}
 	.mobile-hide {
 		display: none;
 	}
