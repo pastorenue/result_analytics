@@ -1,0 +1,68 @@
+{% load static thumbnail %}
+<div id="{{result.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title"><strong>Result Details</h3>
+      </div>
+      <form method="post" id="frm_submit" action="{% url 'results:edit_result' %}">{% csrf_token %}
+        <div class="modal-body">
+          <div class="row" style="margin-left: 0px;">
+            <div class="col-md-9" style="padding: 1px;">
+              <div class="panel panel-default" style="padding: 0 5px;">
+                <p>Reg Number: <span style="float: right; font-weight: 600;">{{ result.student.reg_number}}</span></p>
+                <p>Department: <span style="float: right; font-weight: 600;">{{ result.student.department}}</span></p>
+                <p>Course Code: <span style="float: right; font-weight: 600;">{{ result.course.course_code}}</span></p>
+                <p>Course Title: <span style="float: right; font-weight: 600;">{{ result.course}}</span></p>
+                {% if result.submitted.answer %}
+                <p>Answer: <span style="float: right; font-weight: 600;">{{ result.submitted.answer}}</span></p>
+                {% endif %}
+                <p>Date Entered: <span style="float: right; font-weight: 600;">{{ result.date_created}}</span></p>
+                <p>Date Last Modified: <span style="float: right; font-weight: 600;">{% if result.modified_by %}{{ result.date_modified}}{% else %} Not modified yet{% endif %}</span></p>
+                <p>Modified By: <span style="float: right; font-weight: 600;">{% if result.modified_by %}{{ result.modified_by}}{% else %} Not modified yet{% endif %}</span></p>            
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="panel panel-default" style="text-align: center; padding-top: 10px;">
+                {% if result.student.photo %}
+                {% thumbnail result.student.photo "100x100" crop="top" as im %}
+                <img src="{{im.url}}" alt="" class="img-circle">
+                {% endthumbnail %}
+                {% else %}
+                <img src="{% static 'images/avatar.png' %}" alt="" height="100" width="100" class="img-circle">
+                {% endif %}
+                <h5 style="padding: 5px 7px;"><strong>{{ result.student}}</strong></h5>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default" style="padding: 0 10px;">
+            <div class="sub-panel add-padding">
+              <h5>All Available Scores</h5>
+            </div>
+              <div class="form-group">
+                <label for="">Quiz Score</label>
+                <input type="number" name="quiz_score" class="form-control" value="{{result.quiz_score}}">
+              </div>
+              <div class="form-group">
+                <label for="">Assignment Score</label>
+                <input type="number" name="assignment_score" class="form-control" value="{{result.assignment_score}}">
+              </div>
+              <div class="form-group">
+                <label for="">Exam Score</label>
+                <input type="number" name="exam_score" class="form-control" value="{{result.exam_score}}">
+              </div>
+              <input type="hidden" name="result_id" value="{{result.id}}">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-sm custom-btn">Update Scores</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

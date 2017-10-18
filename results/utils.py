@@ -8,21 +8,6 @@ from courses.models import Course
 
 
 class Computation(object):
-    
-    @classmethod
-    def get_cgpa(cls, student_id):
-        data = Result.objects.filter(student_id=student_id)
-        
-        units = 1
-        grade = 1
-        for value in data:
-            grade = grade + float(value.get_course_load)
-            units = units + float(value.get_credit_load)
-        
-        cgpa = grade/units
-        
-        if units!=0 or grade!=0:
-            return cgpa
 
     @classmethod
     def get_grades(cls, institution):

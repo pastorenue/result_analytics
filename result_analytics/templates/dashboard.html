@@ -66,10 +66,11 @@
     
     {% include '_topbar.html' %}
     <!-- {% include '_mainbar.html' %} -->
-    <div style="height: 75px;"></div>
+    <div id="desktop_more"  style="height: 75px;"></div>
+    <div id="mobile_more" class="hide-nav" style="height: 25px;"></div>
     <div class="row clearfix" style="padding: 0 15px;">
-      <div class="col-md-2 scroll" style="padding-right: 5px; color: #fff; background: linear-gradient(to bottom, #141E30, #243B55); height: 100vh; overflow: auto;">
-        <div style="text-align: center; border-bottom: 1px dashed #ecf0f1; padding: 4px;">
+      <div id="left_nav" class="col-md-2 scroll" style="padding-right: 5px; color: #fff; background: linear-gradient(to bottom, #141E30, #243B55); height: 100vh; overflow: auto; padding-top: 20px;">
+        <div class="side-menu-left">
           <h4 style="margin:5px 2px; color: #fff;">{% if user.is_staff %} Good day, {% if user.lecturer.gender == 'M' %} Sir! {% else %} Ma'am!{% endif %}{% else %}{{user.student.full_name|upper}}{% endif %}</h4>
           <p style="margin-top: 0px;">{% if user.student %} <i class="icons icons-sm icons-school"></i>{{ user.student.institution }}{% endif %}</p>
         </div>
@@ -85,12 +86,10 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8 scroll" style="height: 100vh; overflow: auto;">
+      <div class="col-sm-12 col-md-8 col-xs-12 scroll" style="height: 100vh; overflow: auto;">
         <div style=" padding-top: 10px;">
           <a href="{% url 'dashboard' %}" style="text-decoration: none;">Home</a> &raquo; {% block breadcrumbs %}{% endblock %}
         </div>
-        <div class="row-fluid">
-          <div style="background: #fff; padding: 10px; ">
           {% block content %}
             <div style="height: 100%; text-align: center; margin: 100px auto;">
               <img src="{% static 'svg/gx-logo-2.svg' %}" alt="" width="100">
@@ -117,8 +116,6 @@
               </div>
             </div>
           {% endblock %}
-          </div>
-        </div>
       </div>
       <div class="col-md-2 scroll" style="background: #ecf0f1; padding-left:7px; text-align: center; height: 100vh; overflow-y: auto;">
         {% block side %}
@@ -219,6 +216,29 @@
     <script src="{% static 'js/jquery.tinymce.min.js' %}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
+      function windowResize() {
+        if ($(window).width() <= 768) {
+          $("#collapse_fixed").removeClass("hide-nav");
+          $("#main_fixed").addClass("hide-nav");
+          $("#left_nav").addClass("hide-nav");
+          $("#desktop_more").addClass("hide-nav");
+          $("#mobile_more").removeClass("hide-nav");
+        } else {
+          $("#collapse_fixed").addClass("hide-nav");
+          $("#main_fixed").removeClass("hide-nav");
+          $("#left_nav").removeClass("hide-nav");
+          $("#desktop_more").removeClass("hide-nav");
+          $("#mobile_more").addClass("hide-nav");
+          $("#mobile_menu").addClass("hide-nav");
+        }
+      }
+      $(window).resize(function(){
+        windowResize();
+      });
+
+          function showNav() {
+        $("#mobile_menu").toggleClass("hide-nav");
+      }
           function hideMe(){
             $("#notification").hide('fade');
           }
@@ -228,6 +248,7 @@
     </script>
     <script>
       $(document).ready(function(){
+        windowResize();
           $('[data-toggle="popover"]').tooltip(); 
           $('#notification_pane').hide();  
       });

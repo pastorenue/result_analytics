@@ -1,4 +1,74 @@
+/******************************************
+***************NAV*************************/
+.side-menu-left {
+	text-align: center;
+	border-bottom: 1px dashed #ecf0f1; 
+	padding: 4px;
+}
+.fixed-nav {
+	position: fixed; 
+	width: 100%; 
+	top: 0; 
+	z-index: 550; 
+	padding-top: 8px; background-color: #fff; 
+	border-bottom: 2px solid #c16;
+}
+.hide-nav {
+	display: none;
+}
+#collapse_fixed {
+	padding-bottom: 5px;
+	background: #122640;
+	color: #fff;
+}
+.left-menu {
+	-webkit-box-shadow: 15px 4px 20px rgba(20,30,48,0.4);
+	-moz-box-shadow: 15px 4px 20px rgba(20,30,48,0.4);
+	-o-box-shadow: 15px 4px 20px rgba(20,30,48,0.4);
+	box-shadow: 15px 4px 20px rgba(20,30,48,0.4);
+	animation-name: slide-in;
+	animation-duration: .45s;
+	animation-direction: alternate;
+}
+@keyframes slide-in {
+    from {left: -34;}
+    to {left: 0;}
+}
 
+.left-menu ul {
+	padding-left: 20px;
+}
+.left-menu ul li {
+	font-size: 17px;
+	padding: 4px;
+}
+.left-menu ul li label {
+	font-weight: normal;
+	color: #fff;
+}
+.left-menu img {
+	border-radius: 50%;
+	padding: 10px;
+	border: 2px dashed #fff;
+}
+.log-out {
+	padding: 7px 75px;
+	border-radius: 25px !important;
+	text-align: center;
+	width: 100%;
+	border: 2px solid #fff;
+	transition: all .35s ease-in-out;
+}
+.log-out:hover {
+	transform: translateY(-4px);
+	text-align: center;
+	border: 2px solid #fff;
+	box-shadow: 0px 0px 4px rgba(255,255,255,0.1). 1px 1px 6px rgba(0,0,0,0.2);
+
+}
+.log-out a {
+	color: rgba(20,30,48) !important;
+}
 .friend {
 	border-radius: 2px;
 	cursor: pointer;
@@ -100,7 +170,7 @@
 
 /* Notification */
 .notifications {
-	width: 280px;
+	width: 320px;
 	min-height: 100px;
 	max-height: 300px;
 	overflow-y: scroll;
@@ -114,6 +184,13 @@
 	background: #fff;
 	box-shadow: 2px 1px 4px rgba(0,0,0,0.07), 1px 3px 6px rgba(0,0,0,0.1);
 }
+.notifications ._note_click {
+	float: right; 
+	font-size: 14px; 
+	padding-right: 15px; 
+	text-decoration: underline; 
+	cursor: pointer;
+}
 .notifications .item {
 	border-bottom: 1px solid #f5f5f5;
 	margin-bottom: 5px;
@@ -123,6 +200,9 @@
 	-moz-transition: all .44s ease-in-out;
 	-o-transition: all .44s ease-in-out;
 	transition: all .44s ease-in-out;
+}
+.notifications h4 {
+	border-bottom: 1px solid #f5f5f5;
 }
 .notifications .item:hover {
 	box-shadow: 2px 1px 4px rgba(0,0,0,0.07), 1px 3px 6px rgba(0,0,0,0.1);
@@ -201,4 +281,9 @@
 	left: 120px;
 	top: 30px;
 	z-index: 300;
+}
+.forum-search {
+	position: absolute;
+	right: 40px; 
+	top: 144px;
 }

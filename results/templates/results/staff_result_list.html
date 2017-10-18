@@ -15,27 +15,28 @@
             <tr>
                 <th style="width: 3%;">&nbsp;</th>
                 <th scope="col" style="width: 13%;">Reg Number</th>
-                <th scope="col" style="width: 29%;">Course</th>
+                <th scope="col" style="width: 32%;">Course <span><i class="icons icons-info" data-toggle="popover" title="Click the course or reg number to edit score"></i></span></th>
                 <th scope="col" style="width: 7%;">Semester</th>
                 <th scope="col" style="width: 4%;">Level</th>
                 <th scope="col" style="width: 5%;">Score</th>
                 <th scope="col" style="width: 6%;">Grade</th>
-                <th scope="col" style="width: 13%;">Date Entered</th>
+                <th scope="col" style="width: 12%;">Date Entered</th>
             </tr>
         </thead>
         <tbody>
         {% if results %}
             {% for result in results %}
-            <tr class="" style="cursor: pointer;">
+            <tr class="">
                 <td>{{forloop.counter}}</td>
-                <td>{{ result.student.reg_number }}</td>
-                <td>{{ result.course }}</td>
+                <td><a href="#{{result.id}}"  data-toggle="modal">{{ result.student.reg_number }}</a></td>
+                <td><a href="#{{result.id}}"  data-toggle="modal">{{ result.course }}</a></td>
                 <td>{{ result.semester }}</td>
                 <td>{{ result.level }}</td>
                 <td>{{ result.total_score }}</td>
                 <td style="text-align: left;">{{ result.grade }}</td>
                 <td>{{ result.date_created }}</td>
             </tr>
+            {% include 'results/_edit_result.html' %}
             {% endfor %}
         {% else %}
             <tr><td colspan="8" style="text-align: center;">No records to display</td></tr>

@@ -26,6 +26,15 @@
             <label for="id_tag">Add a Tag:</label>
            <input type="text" class="form-control" id="id_tag" name="tag" placeholder="tag other projects">
          </div>
+         <div class="form-group">
+          <label for="">Project Supervisor</label>
+           <select name="lecturer" class="form-control">
+              <option value="">Select ...</option>
+             {% for lecturer in lecturers %}
+             <option value="{{lecturer.id}}">{{lecturer}}</option>
+             {%endfor %}
+           </select>
+         </div>
           <label for="id_file">Upload Project File</label>
          <input id="id_file" type="file" name="file" value="Upload Porject File">
       </div>

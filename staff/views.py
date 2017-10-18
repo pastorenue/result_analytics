@@ -12,6 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from analyzer.utils import ResultData
 from courses.models import Course
+from projects.models import Project
 from django.contrib import messages
 from django.forms.models import model_to_dict
 from institutions.models import Department
@@ -69,6 +70,7 @@ class StaffAnalyticsView(TemplateView):
 		context['departments'] = get_lecturer_data(self.request)['dept']
 		context['staff_metrics'] = staff_analytics_metrics(self.request.user)
 		context['years'] = [i for i in range(datetime.date.today().year, 1998, -1 )]
+		context['projects'] = Project.objects.filter(supervisor=self.request.user.lecturer).order_by('-last_modified').count()
 
 		return context
 

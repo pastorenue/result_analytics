@@ -5,47 +5,48 @@
 
 {% block content %}
 <div style="margin-bottom: 30px;">
-   <h3 class="page-header">Assignments </h3>
+   <h3 class="page-header">Submitted Assignments for {{assignment.course}} [<span style="color: #607d8b;">closing {{assignment.due_date}}]</span></h3>
 </div>
 
-{% if assignments %}
+{% if submitted %}
 <div class="col-md-12 panel panel-default">
 	
 	<table class='table table-condensed'>
 	    <thead>
 	        <tr>
-	            <th style="width: 30%;">Courses</th>
-	            <th style="width: 8%;">Semester</th>
+	            <th style="width: 30%;">Student</th>
+	            <th style="width: 20%;">Department</th>
 	            <th>Level</th>
 	            <th>Category</th>
-	            <th >Points</th>
-	             <th >Due Date</th>
-	            <th style="width: 7%;">Action</th>
+	            <th >Score</th>
+	            <th style="width: 7%;">Status</th>
 	        </tr>
 	    </thead>
 	    <tbody>
-	    	{% for assignment in assignments %}
+	    	{% for ass_score in submitted %}
     		<tr>
-    			<td><a href="{% url 'assignment:score-sheet' assignment_id=assignment.id %}" data-toggle="modal">{{assignment.course}}</a></td>
-    			<td>{{assignment.semester}}</td>
-    			<td>{{assignment.level}}</td>
-    			<td>{{assignment.category|title}}</td>
-    			<td>{{assignment.possible_points}}</td>
-    			<td>{{assignment.due_date}}</td>
+    			<td><a href="#{{ass_score.student.id}}" data-toggle="modal">{{ass_score.student.reg_number}}</a></td>
+    			<td>{{ass_score.student.department}}</td>
+    			<td>{{ass_score.assignment.level}}</td>
+    			<td>{{ass_score.assignment.category|title}}</td>
+    			<td>{{ass_score.score}}</td>
     			<td>
-    				{% if assignment.status == 'A' %}<button class="btn btn-sm custom-btn" onclick="deactivate({{assignment.id}})">Deactivate</button>
+    				{% if ass_score.status == 'S' %}
+    				<button class="btn btn-sm btn-info" >Unmarked</button>
+    				{% elif ass_score.status == 'D' %}
+    				<button class="btn btn-sm btn-danger" >Declined</button>
     				{% else %}
-			    		<button class="btn btn-sm btn-danger" onclick="location.href='#'">Inactive</button>
+			    		<button class="btn btn-sm btn-success" onclick="location.href='#'">Marked</button>
 			    	{% endif %}
 			    </td>
     		</tr>
-    		{% include 'assignments/assignment_detail.html' %}
+    		{% include 'assignments/_mark_assignment.html' %}
 	    	{% endfor %}
 	    </tbody>
 	</table>
 </div>
 <div>
-	{% render_paginator assignments %}
+	{% render_paginator submitted %}
 </div>
 {% else %}
 <div style="text-align: center; color: #2c3e50; margin: 10% auto;">
@@ -61,7 +62,7 @@
 <div class="panel panel-default" style="min-height: 200px; margin-top: 5px;">
 	<div class="panel-body">
 		<div class="sub-panel">
-			<h4><strong>Query Filter</strong></h4>
+			<h4><strong> Query Filter</strong></h4>
 		</div>
 		<form action="">
 			<div class="form-group">
@@ -104,16 +105,5 @@
 {% endblock %}
 
 {% block extrajs %}
-<script>
-	function markAssignment(student_id) {
-		var json_url = "/assignments/deactivate/"+String(id);
-		$.ajax({
-			type: "GET",
-			url: json_url,
-			success: function(data) {
-				$('document').load('/assignments/list');
-			}
-		});
-	}
-</script>
+
 {% endblock %}

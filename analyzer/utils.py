@@ -215,7 +215,8 @@ class cgpaData(object):
         if course_load!= 0 or None:
             grade = '%.2f' % (course_load/credit_load)
         
-        return float(grade)
+        return float(grade)   
+
    
     @classmethod
     def get_all_cgpa(cls, institution):

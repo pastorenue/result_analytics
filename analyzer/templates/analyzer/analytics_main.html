@@ -14,69 +14,67 @@
     </div>
     <div class="row" style='margin-left: 0px; margin-bottom: 10px;'>
         <a href="{% url 'students:students_list' %}" class="menu-anchor">
-        <div class="col-md-2 info">
+        <div class="col-md-2 col-sm-6 col-xs-6 info">
             <h4>All Students</h4>
             <div style="font-size: 1.5em;">
                  {{ all_students.count }}
             </div>
         </div></a>
         <a href="{% url 'students:students_list' %}?status=A" class="menu-anchor">
-        <div class="col-md-2 info">
+        <div class="col-md-2 col-sm-6 col-xs-6 info">
             <h4>Active Student </h4>
             <div style="font-size: 1.5em;">
                  {{ total }}
             </div>
         </div></a>
         <a href="{% url 'students:students_list' %}?status=S" class="menu-anchor">
-        <div class="col-md-2 info">
+        <div class="col-md-2 col-sm-6 col-xs-6 info">
             <h4>On Suspension</h4>
             <div style="font-size: 1.5em;">
                 {{ suspension }}
             </div>
         </div></a>
         <a href="{% url 'students:students_list' %}?status=G" class="menu-anchor">
-        <div class="col-md-2 info">
+        <div class="col-md-2 col-sm-6 col-xs-6 info">
             <h4>Graduated</h4>
             <div style="font-size: 1.5em;">
                  {{ graduated }}
             </div>
         </div></a>  
-        <div class="col-md-2 info">
+        <div class="col-md-2 col-sm-6 col-xs-6 info">
             <h4>Males</h4>
             <div style="font-size: 1.5em;">
                 {{ males }}
             </div>
         </div>
-        <div class="col-md-2 info">
+        <div class="col-md-2 col-sm-6 col-xs-6 info">
             <h4>Females</h4>
             <div style="font-size: 2em;">
                 {{ females }}
             </div>
         </div>
     </div>
-    <div class="row" style=''>
-        <div class="col-md-6">
-            <div class="panel panel-info analytics">
-                <div class="panel-heading">Active Students' GPAs </div>
-                <div class="panel-body">
-                     <div id="all_gpa">
-                         
-                     </div>
-                </div>
-            </div> 
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-success analytics">
-                <div class="panel-heading">Graduate Students' GPAs </div>
-                <div class="panel-body">
-                     <div id="g_charts">
-                         
-                     </div>
-                </div>
-            </div> 
-        </div>
+    <div class="col-md-12 mobile-pad">
+        <div class="panel panel-info analytics">
+            <div class="panel-heading">Active Students' GPAs </div>
+            <div class="panel-body">
+                 <div id="all_gpa">
+                     
+                 </div>
+            </div>
+        </div> 
     </div>
-    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
+    <div class="col-md-12 mobile-pad">
+        <div class="panel panel-success analytics">
+            <div class="panel-heading">Graduate Students' GPAs </div>
+            <div class="panel-body">
+                 <div id="g_charts">
+                     
+                 </div>
+            </div>
+        </div> 
+    </div>
+    <div class="col-md-12 mobile-pad">
         <div class="panel panel-info analytics" style="margin-left: 0px;">
             <div class="panel-heading">Yearly Performance</div>
             <div class="panel-body">
@@ -87,17 +85,15 @@
         </div>
         
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default analytics">
-                <div class="panel-heading">Course Average Performance</div>
-                <div class="panel-body">
-                     <div id='c_chart'>
-                        
-                     </div>
-                </div>
-            </div> 
-        </div>
+    <div class="col-md-12 mobile-pad">
+        <div class="panel panel-default analytics">
+            <div class="panel-heading">Course Average Performance</div>
+            <div class="panel-body">
+                 <div id='c_chart'>
+                    
+                 </div>
+            </div>
+        </div> 
     </div>
 {% endblock %}
 

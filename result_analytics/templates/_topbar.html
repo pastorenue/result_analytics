@@ -1,8 +1,43 @@
 {% load staticfiles %}
 {% load thumbnail notifications_tags %}
 {% notifications_unread as unread_count %}
-
-<div class="" style="position: fixed; width: 100%; top: 0; z-index: 150; padding-top: 8px; background-color: #fff; border-bottom: 2px solid #c16;"><!--top nav container-->
+<div class="fixed-nav hide-nav" id="collapse_fixed">
+  <div class="container"> 
+    <div style="display: inline-block;">
+      <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><img src="{% static 'svg/gx-logo-3.svg' %}" alt="GRADE-X" style="width: 35px; height: 34px;"></a>
+    </div>
+    <div style="display: inline-block; float: right; margin-right: 20px; font-size: 25px;"> 
+      <i class="icons icons-list-alt" onclick="showNav()"></i>
+    </div>
+  </div>
+</div>
+<div id="mobile_menu" class="left-menu hide-nav" style=" width: 80%; position: fixed; z-index: 570; height: 100vh;"> 
+  <div class="scroll" style="height: 100vh; padding-right: 5px; color: #fff; background: linear-gradient(to bottom, #141E30, #243B55); height: 100; overflow: auto; padding-top: 20px;">
+      <div class="side-menu-left">
+        {% if user.student and user.student.photo %}
+        {% thumbnail user.student.photo "100x100" crop="top" as im %}
+        <img src="{{im.url}}" alt="">
+        {% endthumbnail %}
+        {% else %}
+        <img src="{% static 'images/avatar.png' %}" alt="" width="100" height="100">
+        {% endif %}
+        <h4 style="margin:5px 2px; color: #fff;">{% if user.is_staff %} Good day, {% if user.lecturer.gender == 'M' %} Sir! {% else %} Ma'am!{% endif %}{% else %}{{user.student.full_name|upper}}{% endif %}</h4>
+        <p style="margin-top: 0px;">{% if user.student %} <i class="icons icons-sm icons-school"></i>{{ user.student.institution }}{% endif %}</p>
+      </div>
+      <div style="text-align: center;">
+        <div style="margin-top: 2px;">
+            <div class="sub-menu">
+              <ul>
+                {% block menu %}
+                {% include '_added_menu.html' %}          
+              {% endblock %}
+              </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div id="main_fixed" class="fixed-nav"><!--top nav container-->
     <div class="row" style="padding: 0 30px;">
       <div class="col-md-6" style="padding-left: 40px;">
           
@@ -19,7 +54,7 @@
              {% endif %}
           <label id="new_info" class="pull-right" style="margin-right: 10px; cursor: pointer;"><i class="icons icons-sm icons-bell"></i><span class="icon-badge">{{unread_count}}</span></label>
           <div id="notification_pane" class="panel panel-default notifications scroll">
-              <h4><strong>Notifications</strong> <span id="mark_all" style="float: right; font-size: 14px; padding-right: 5px; text-decoration: underline; cursor: pointer;">mark all as read</span></h4>
+              <h4><strong>Notifications</strong> <span id="mark_all" class="_note_click">mark all as read</span><span class="_note_click">All</span></h4>
               <div class=" ">
                 {% for notification in user.notifications.unread %}
                 <div class="item">

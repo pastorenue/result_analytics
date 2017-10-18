@@ -1,6 +1,7 @@
 from math import *
 from students.models import Student
 from results.models import Result
+from results.utils import Computation as cp
 from analyzer.utils import cgpaData
 import operator
 
@@ -111,7 +112,7 @@ def get_dataset(request, course=None, use_cgpa=True):
 	data = {}
 	students = None
 	active_students = [student for student in Student.objects.all() if student.user.studentsetup.allow_my_result_for_analysis]
-	preferred_students =[student for student in Student.objects.all() if cgpaData.get_fcgpa(student.id) >= 4.0 and 
+	preferred_students =[student for student in Student.objects.all() if cgpaData.get_fcgpa(student.id) >= float(0.75*max(cp.get_grades(student.institution))) and 
 							student.user.studentsetup.allow_my_result_for_analysis]
 	if use_cgpa:
 		students = preferred_students

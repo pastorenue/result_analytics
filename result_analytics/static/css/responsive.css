@@ -1,13 +1,154 @@
 @media screen and (max-width: 375px) {
+	body {
+		padding-left: 0px !important;
+		padding-right: 9px;
+		width: 100%;
+		overflow-x: hidden;
+	}
+	.mobile-pad {
+		padding: 0;
+	}
+	.mobile-hide {
+		display: none;
+	}
+	.side-menu-left h4 {
+		font-size: 25px !important;
+	}
+	.side-menu-left p {
+		font-size: 21px !important;
+	}
+	.sub-menu h4 {
+		font-size: 26px !important;
+	}
+	.sub-menu small {
+		font-size: 14px !important;
+	}
+	.left-menu ul li {
+		font-size: 20px;
+		padding: 4px;
+		border-bottom: 1px dashed #5c7eab;
+	}
+	.left-menu ul li:last-child {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		border-bottom: none;
+	}
 	.panel .panel-default {
 		margin: 0;	
 	}
-	.modal {
-	   top: 50%; 
+	.tabs nav ul li {
+		width: 50%;
+	}
+	.add-post {
+		top: 59px;
+	}
+	.forum-search {
+		position: absolute; 
+		right: 40px; 
+		top: 134px;
+	}
+	.modal-open {
+	   top: 50% !important; 
 	   margin-top: -150px;
 	}
 	.modal-dialog {
+		width: 100% !important;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	.modal.fade.in {
+		top: 50%;
+	}
+	.friend span {
+		position: absolute;
+		top: 130px;
+		right: 4px;
+	}
+	.friend h4 {
+		margin-top: 20px;
+	}
+	.i_gt {
+		padding: 5px;
+	}
+	.i_gt h1 {
+		font-size: 22px;
+		margin-bottom: 5px;
+	}
+	.i_gt h4 {
+		font-size: 17px;
+		margin-top: 0;
+	}
+	.navbar {
+		position: relative;
+		z-index: 999;
+	}
+	.sign-up-btn>a {
+		padding: 5px;
+		width: 60%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.signup-main {
+		top: 70%;
+		margin-top: 50%;
+	}
+}
+@media screen and (max-width: 768px) {
+	body {
+		padding-left: 0px !important;
+		padding-right: 9px;
 		width: 100%;
+		overflow-x: hidden;
+	}
+	.side-menu-left h4 {
+		font-size: 30px;
+	}
+	.side-menu-left p {
+		font-size: 26px;
+	}
+	.sub-menu h4 {
+		font-size: 30px;
+	}
+	.sub-menu small {
+		font-size: 18px !important;
+	}
+	.left-menu ul li {
+		font-size: 22px;
+		padding: 4px;
+	}
+	.panel .panel-default {
+		margin: 0;	
+	}
+	.tabs nav ul li {
+		width: 50%;
+	}
+	.add-post {
+		top: 59px;
+	}
+	.forum-search {
+		position: absolute; 
+		right: 40px; 
+		top: 134px;
+	}
+	.modal-open {
+	   top: 50% !important; 
+	   margin-top: -150px;
+	}
+	.modal-dialog {
+		width: 100% !important;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	.modal.fade.in {
+		top: 50%;
+	}
+	.friend span {
+		position: absolute;
+		top: 130px;
+		right: 4px;
+	}
+	.friend h4 {
+		margin-top: 20px;
 	}
 	.i_gt {
 		padding: 5px;

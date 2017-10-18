@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from friendship.models import Friend, Follow, FriendshipRequest
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -11,17 +11,22 @@ from django.conf import settings
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 from django.db import transaction
+from utils.url_dispatcher import get_url
 try:
 	import json
 except:
 	import simplejson as json
 
+@login_required
 def collaboration_index(request):
 	context = {}
-	context['friends'] = Friend.objects.friends(request.user)
-	context['requests'] = Friend.objects.unread_requests(user=request.user)
-	context['followers'] = Follow.objects.followers(request.user)
-	context['follows'] = Follow.objects.following(request.user)
+	try:
+		context['friends'] = Friend.objects.friends(request.user)
+		context['requests'] = Friend.objects.unread_requests(user=request.user)
+		context['followers'] = Follow.objects.followers(request.user)
+		context['follows'] = Follow.objects.following(request.user)
+	except Exception as e:
+		messages.error(request, e)
 	return render(request, 'collaborations/collaboration_index.html', context)
 
 
@@ -38,7 +43,7 @@ def send_request(request):
 			friend_request = Friend.objects.add_friend(request.user, other_user,                                
     			message=message)
 			notify.send(request.user, recipient=other_user, 
-				description="",
+				description=get_url(request,reverse('collaborate:collaboration_index')),
 				verb="%s sent you a collaboration request." % (request.user.first_name))
 			messages.success(request, "Your request has been sent")
 		except Exception as e:
@@ -53,8 +58,9 @@ def accept_request(request, friend_request_id):
 	friend_request.accept()
 	try:
 		notify.send(request.user, recipient=friend_request.from_user, 
-			description="collaborations",
+			description=get_url(request,reverse('collaborate:collaboration_index')),
 			verb="%s has accepted your collaboration request." % (request.user.first_name))
+		messages.success(request, "Friendship accepted")
 	except Exception as e:
 		messages.error(e)
 	return HttpResponseRedirect(reverse('collaborate:collaboration_index'))
@@ -62,16 +68,20 @@ def accept_request(request, friend_request_id):
 
 @login_required
 @transaction.atomic
-def cancel_friendship(request, other_user):
-	Friend.objects.remove_friend(request.user, other_user)
+def cancel_friendship(request, other_user_id):
+	other_user = get_object_or_404(User, pk=other_user_id)
 	message = {"success": True}
 	try:
+		Friend.objects.remove_friend(request.user, other_user)
 		notify.send(request.user, recipient=other_user, 
-			description="collaborations",
+			description=get_url(request,reverse('collaborate:collaboration_index')),
 			verb="%s has cancelled the existing collaborations between the both of you." % (request.user.first_name))
+		messages.info(request, "You just destroyed your friend relationship with %s. \
+					Feel free to leave us a comment on your reason for \
+					quiting." % (Student.objects.get(user=other_user)))
 	except Exception as e:
 		messages.error(e)
-	return JsonResponse(json.dumps(message))
+	return HttpResponseRedirect(reverse('collaborate:collaboration_index'))
 
 @login_required
 @transaction.atomic
@@ -80,8 +90,9 @@ def reject_request(request, friend_request_id):
 	friend_request.reject()
 	try:
 		notify.send(request.user, recipient=friend_request.from_user, 
-			description="collaborations",
+			description=get_url(request,reverse('collaborate:collaboration_index')),
 			verb="%s rejected your collaboration request." % (request.user.first_name))
+		messages.info(request, "Friendship rejected")
 	except Exception as e:
 		messages.error(e)
 	message = {"success": True}
@@ -96,7 +107,7 @@ def follow(request, to_user_id):
 		from_user = request.user
 		Follow.objects.add_follower(from_user, to_user)
 		notify.send(request.user, recipient=to_user, 
-			description="collaborations",
+			description=get_url(request,reverse('collaborate:collaboration_index')),
 			verb="%s has started following you" % (request.user.first_name))
 		messages.success(request, "You are currently following %s" % (to_user.last_name))
 		return HttpResponseRedirect(reverse('collaborate:collaboration_index'))

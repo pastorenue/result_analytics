@@ -37,6 +37,12 @@
 				<label>Date Last Modified</label>
 				<p>{{project.date_modified|date:"d F Y"}}</p>
 			</div>
+			{% if user.student %}
+			<div>
+				<label>Project Supervisor</label>
+				<p>{{project.supervisor}}</p>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>
@@ -46,7 +52,7 @@
 			<strong>{{ project.file.name}}</strong> 
 			<span style="color: teal;"> [ {{project.file.size}}B]</span>
 			<span style="cursor: pointer; float: right;">
-				<i class="icons icons-sm icons-edit" id="edit"></i> <button id="update" disabled class="btn btn-sm custom-btn">Update</button>
+				<i class="icons icons-sm icons-edit" id="edit"></i> <button id="update"class="btn btn-sm custom-btn" disabled>Update</button>
 				</span>
 			</div>
 		<div class="panel-body scroll" style="height: 400px; overflow-y: auto;" id="file_container" contenteditable="false"></div>
@@ -68,9 +74,13 @@
      }
 
      $('#edit').click(function() {	
-     	$('#update').attr('disabled', 'false');
+     	$('#update').attr('disabled', false);
      	$('#file_container').attr('contenteditable', 'true');
      
      })
+
+     function update() {
+     	
+     }
 </script>
 {% endblock %}

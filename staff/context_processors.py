@@ -9,6 +9,7 @@ from results.ml_api.recommendations import *
 from django.contrib.auth.decorators import login_required
 from staff.models import Lecturer
 from courses.models import Course
+from friendship.models import Friend
 from results.utils import Computation as cp
 import random
 from django.contrib import auth
@@ -61,6 +62,10 @@ def performances(request):
         tmp_dict['department']=student.department
         tmp_dict['reg_number']=student.reg_number
         tmp_dict['user']=student.user
+        try:
+            tmp_dict['are_friends'] = Friend.objects.are_friends(request.user, student.user)
+        except:
+            pass
         if student.photo:
             tmp_dict['img']=student.photo
         else:
@@ -71,7 +76,7 @@ def performances(request):
         else:
             tmp_dict['cgpa'] = float(max(cp.get_grades(student.institution)))
         performance_list[student] = tmp_dict
-
+    
     key_list = sorted(performance_list.keys(), key=lambda x: performance_list[x]['cgpa'], reverse=True)
     trending_performances = []
     current_student_rank = None
@@ -94,7 +99,7 @@ def course_recommendation(request):
     is_new = True
     if request.user.is_authenticated() and  hasattr(request.user, 'student'):
         for result in Result.objects.filter(student=request.user.student):
-            if result.total_score < 60:
+            if result.total_score < 62.5:
                 courses[result.course] = result.total_score
         #get the recommendation for each poorly performed course
         for course in courses:

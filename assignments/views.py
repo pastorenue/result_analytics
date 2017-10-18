@@ -24,6 +24,7 @@ except:
 def user_is_staff(user):
 	if hasattr(user, 'lecturer'):
 		return True
+	
 
 class AssignmentScoreListView(ListView):
 	model = AssignmentScore
@@ -176,3 +177,52 @@ def deactivate(request, assignment_id):
 	}
 	return HttpResponse(json.dumps(data), content_type="application/json")
 
+@login_required
+@user_passes_test(user_is_staff)
+def score_sheet(request, assignment_id):
+	assignment = get_object_or_404(Assignment, pk=assignment_id)
+	submitted_assignment = AssignmentScore.objects.filter(assignment=assignment, assignment__lecturer=request.user.lecturer)
+	paginated_by = settings.PAGE_SIZE
+	params = request.GET
+	course = params.get('course', 'all')
+	level = params.get('level', 'all')
+	category = params.get('category', 'all')
+
+	if course != 'all':
+		submitted_assignment = submitted_assignment.filter(assignment__course__name__icontains=course)
+	if level != 'all':
+		submitted_assignment = submitted_assignment.filter(assignment__level=level)
+	if category != 'all':
+		submitted_assignment = submitted_assignment.filter(assignment__category__icontains=category)
+
+	paginator = Paginator(submitted_assignment, paginated_by)
+	page = params.get('page')
+
+	try:
+		submitted_assignment = paginator.page(page)
+	except PageNotAnInteger:
+		submitted_assignment = paginator.page(1)
+	except EmptyPage:
+		submitted_assignment = paginator.page(paginator.num_pages)
+	
+	template_name = 'assignments/score_sheet.html'
+	context = {
+		'submitted': submitted_assignment,
+		'assignment': assignment
+	}
+	context['courses'] = Course.objects.filter(lecturers=request.user.lecturer)
+	return render(request, template_name, context)
+
+@login_required
+@user_passes_test(user_is_staff)
+def mark(request, assignment_id):
+	assignment = get_object_or_404(Assignment, pk=assignment_id)
+	student = get_object_or_404(Student, pk=request.POST.get('student_id'))
+	ass_score = AssignmentScore.objects.get(assignment=assignment, student=student)
+
+	ass_score.score = request.POST.get('score')
+	ass_score.status = 'M'
+	ass_score.save()
+	messages.success(request, "%s assignment on '%s' \
+		has been marked with a score of %s" % (student, ass_score.assignment.course.course_code, ass_score.score))
+	return HttpResponseRedirect(reverse('assignment:score-sheet', kwargs={'assignment_id': assignment.id}))

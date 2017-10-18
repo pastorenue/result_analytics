@@ -27,6 +27,7 @@ from notifications.signals import notify
 from utils.url_dispatcher import get_url
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from results.utils import Computation as cp
 try:
     import json
 except:
@@ -196,11 +197,11 @@ class StudentAnalyticsView(TemplateView):
         if Result.objects.filter(student=self.request.user.student).exists():
             context['fcgpa'] = cgpaData.get_fcgpa(self.request.user.student.id)
             context['exam_no'] = Result.objects.filter(student_id=self.request.user.student.id).count()
-            context['avg_score'] = Result.objects.filter(student_id=self.request.user.student.id).values('total_score')\
-                                    .aggregate(avg=Avg('total_score'))['avg']
+            context['avg_score'] = "%.2f" % (Result.objects.filter(student_id=self.request.user.student.id).values('total_score')\
+                                    .aggregate(avg=Avg('total_score'))['avg'])
             context['high_score'] = Result.objects.filter(student_id=self.request.user.student.id).order_by('-total_score')[0]
         else:
-            context['fcgpa'] = float(5)
+            context['fcgpa'] = max(cp.get_grades(self.request.user.student.institution))
             context['avg_score'] = float(0)
         return context
 

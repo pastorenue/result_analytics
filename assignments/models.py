@@ -18,7 +18,6 @@ class Assignment(models.Model):
         (FAIR_ENOUGH, 'Fair Enough')
     )
 	ASSIGNMENT_TYPE = (
-        ('quiz', 'Quiz'),
         ('major assignment', 'Major Assignments'),
         ('mock assignment', 'Mock Assignment')
     )

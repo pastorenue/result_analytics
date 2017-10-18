@@ -75,7 +75,7 @@ def add_result(request):
         result_data = {
             "student": student,
             "course": course,
-            "level": level,
+            "level": student.level,
             "exam_score": float(score),
             "semester": semester,
             "session": session,
@@ -91,8 +91,6 @@ def add_result(request):
                 messages.success(request, _(u'The result was successfully updated!'))
         else:
             try:
-                import pdb
-                pdb.set_trace()
                 result = Result(**result_data)
                 result.institution = request.user.lecturer.institution
                 result.save()
@@ -109,7 +107,7 @@ def add_result(request):
     return TemplateResponse(request, 'results/add_results.html', {'data': data, 'courses': Course.objects.filter(lecturers__id=request.user.lecturer.id)})
 # Create your views here.
 
-@user_passes_test(user_is_staff, login_url="/login/") 
+@user_passes_test(lambda u: u.lecturer.is_admin, login_url="/login/") 
 @login_required
 def result_list(request):
     template_name = 'results/_results.html'
@@ -128,8 +126,28 @@ def result_list(request):
     return render(request, template_name, {'results': results})
 
 @login_required
+@user_passes_test(user_is_staff)
+def edit_result(request):
+    if request.method == "POST":
+        params = request.POST
+        exam_score = params.get('exam_score')
+        quiz_score = params.get('quiz_score')
+        assignment_score = params.get('assignment_score')
+        result_id = params.get('result_id')
+        result = get_object_or_404(Result, pk=result_id)
+
+        result.exam_score = exam_score
+        result.quiz_score = quiz_score
+        result.assignment_score = assignment_score
+        result.modified_by = request.user.lecturer
+        result.save()
+        messages.success(request, "The result was successfully updated by %s" % (request.user.lecturer))
+    return HttpResponseRedirect(reverse('results:staff_result'))
+@login_required
 def result_by_student(request, student_slug):
-    
+    '''
+    Get the results of a particular student
+    '''
     student = get_object_or_404(Student, slug=student_slug)
     results = Result.objects.filter(student_id=student.id).order_by('level')
     paginated_by = settings.PAGE_SIZE
@@ -146,14 +164,7 @@ def result_by_student(request, student_slug):
     return render(request, 'results/personal_result.html', {'results': results, 'student': student})
 
 
-def compute_cgpa(request):
-    
-    data = Result.objects.all().aggregate(cgpa = Sum('course_load')/Sum('credit_load'))['cgpa'] or 0
-    return render(request, 'results/cgpa.html', {'data': data})
-
-
 def full_detail(request, student_slug):
-
     return render(request, 'results/detail_result.html', {'student_id': student_id})
 
 @login_required
@@ -184,11 +195,6 @@ def import_data(request):
     form = ImportForm()
     return render_to_response('results/result_import.html',{'form': form}, context_instance=RequestContext(request),)
 
-
-def import_student(request):
-    pass
-
-
 @login_required
 def export_excel(request):
     results = None
@@ -205,8 +211,6 @@ def export_excel(request):
     report = ExcelReport(data, fields, groupby=request.GET.get('groupby'))
     report.write(response)
     return response
-
-
  
 @login_required
 @user_passes_test(user_is_staff, login_url="/login/")   
@@ -237,6 +241,7 @@ def upload_csv(request):
 
 @login_required
 @transaction.atomic
+@user_passes_test(lambda u: u.lecturer.is_admin)
 def grading_setting(request):
     initial_data = Grading.objects.filter(institution=request.user.lecturer.institution)
     extra=0

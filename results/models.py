@@ -4,6 +4,7 @@ from courses.models import Course
 from django.conf import settings
 from decimal import Decimal
 from django.db.models import Sum
+from staff.models import Lecturer
 from students.models import Student
 from institutions.models import Department, Institution
 from functools import reduce
@@ -51,6 +52,7 @@ class Result(models.Model):
     course_load = models.DecimalField(default=0.0, decimal_places=2, max_digits=4, blank=True, null=True)
     date_created = models.DateField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
+    modified_by = models.ForeignKey(Lecturer, null=True, blank=True)
     objects = ResultManager()
 
     class Meta:
