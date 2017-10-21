@@ -25,19 +25,19 @@
 		display: none;
 	}
 	.side-menu-left h4 {
-		font-size: 25px !important;
+		font-size: 22px !important;
 	}
 	.side-menu-left p {
 		font-size: 21px !important;
 	}
 	.sub-menu h4 {
-		font-size: 26px !important;
+		font-size: 23px !important;
 	}
 	.sub-menu small {
 		font-size: 14px !important;
 	}
 	.left-menu ul li {
-		font-size: 20px;
+		font-size: 17px !important;
 		padding: 4px;
 		border-bottom: 1px dashed #5c7eab;
 	}
@@ -112,6 +112,19 @@
 		padding-right: 9px;
 		width: 100%;
 		overflow-x: hidden;
+	}
+	::-webkit-scrollbar {
+	    width: 0px !important;
+	    background: transparent !important; /* make scrollbar transparent */
+	}
+	::-webkit-scrollbar-thumb{
+	    width: 0px;
+	    background: transparent !important; /* make scrollbar transparent */
+	}
+	::-webkit-scrollbar-track {
+	    width: 0px;
+	    background: transparent !important;
+	    border: none; /* make scrollbar transparent */
 	}
 	.side-menu-left h4 {
 		font-size: 30px;
