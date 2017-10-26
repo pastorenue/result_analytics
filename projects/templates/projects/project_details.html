@@ -12,8 +12,10 @@
 		<div class="panel-heading"><i class="icons icons-sm icons-info"></i> <strong>Project Info</strong></div>
 		<div class="panel-body">
 			<div>
+				{% if project.file %}
 				<label>File Size</label>
 				<p>{{project.file.size}} Bytes</p>
+				{% endif %}
 			</div>
 			<div>
 				<label>Description</label>
@@ -24,7 +26,7 @@
 				{% endif %}
 			</div>
 			<div>
-				{% if project.file.file_type %}
+				{% if project.file %}
 				<label>File Type</label>
 				<p>{{project.file.file_type}}</p>
 				{% endif %}
@@ -35,7 +37,7 @@
 			</div>
 			<div>
 				<label>Date Last Modified</label>
-				<p>{{project.date_modified|date:"d F Y"}}</p>
+				<p>{{project.last_modified|date:"d F Y"}}</p>
 			</div>
 			{% if user.student %}
 			<div>
@@ -48,24 +50,35 @@
 </div>
 <div class="col-md-8">
 	<div class="panel panel-default">
+		{% if project.file %}
 		<div class="panel-heading">
 			<strong>{{ project.file.name}}</strong> 
 			<span style="color: teal;"> [ {{project.file.size}}B]</span>
 			<span style="cursor: pointer; float: right;">
-				<i class="icons icons-sm icons-edit" id="edit"></i> <button id="update"class="btn btn-sm custom-btn" disabled>Update</button>
+				<button id="update"class="btn btn-sm custom-btn" onclick="location.href='{% url 'edit-project' project.id %}'"><i class="icons icons-sm icons-edit" id="edit"></i> Edit</button>
 				</span>
 			</div>
-		<div class="panel-body scroll" style="height: 400px; overflow-y: auto;" id="file_container" contenteditable="false"></div>
+		<div class="panel-body scroll" style="width: 100%; height: 400px; overflow-y: auto;" id="file_container" contenteditable="false"></div>
+		{% else %}
+		<div class="sub-panel add-padding" style="text-align: center;">
+			<h4 >No File for this project yet</h4>
+			<button id="update"class="btn btn-sm custom-btn" onclick="location.href='{% url 'edit-project' project.id %}'"><i class="icons icons-sm icons-edit" id="edit"></i> Update Project Now</button>
+		</div>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
 {% block extrajs %}
 <script>
-	var url = "{{project.file.url}}";
+	var url = "{% if project.file %}{{project.file.url}}{% endif %}";
 
 	var jsonFile = new XMLHttpRequest();
-    jsonFile.open("GET",url,true);
-    jsonFile.send();
+    try{
+    	jsonFile.open("GET",url,true);
+    	jsonFile.send();
+    }catch{
+    	break;
+    }
 
     jsonFile.onreadystatechange = function() {
         if (jsonFile.readyState== 4 && jsonFile.status == 200) {

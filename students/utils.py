@@ -3,6 +3,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from result_analytics.utils.excel import ExcelReport
 from .models import Student, UniqueMapper
 from django.db import transaction
+from courses.models import *
+from students.models import Student
+from results.models import Result
 
 
 def export_performance_excel():
@@ -62,3 +65,14 @@ def generate_mapper_excel(excel_file):
     work_book.save(response)
     return response
 
+def has_completed_level(student):
+    results = Result.objects.filter(student=student, level=student.level)
+    reg_courses = CourseRegistration.objects.filter(student=student, level=student.level)
+
+    set_result = set(results)
+    set_registration = set(reg_courses)
+
+    set_differences = set_registration.difference(set_result)
+    if len(set_differences) > 0:
+        return False
+    return False

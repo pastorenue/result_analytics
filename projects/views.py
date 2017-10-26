@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Project
 from django.views.generic import ListView, DetailView
+from .forms import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -93,13 +94,44 @@ def new_project(request):
 	return HttpResponseRedirect(reverse('my_projects'))
 
 
+@login_required
+@user_passes_test(user_is_student)
+@transaction.atomic
+def update_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    context = {}
+    template_name = 'projects/edit_project.html'
+
+    if request.method == "POST":
+        form = ProjectForm(request.POST, request.FILES, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your project was successfully updated")
+            return HttpResponseRedirect(reverse('my_projects'))
+    else:
+        form = ProjectForm(instance=project)
+        form.fields['supervisor'].queryset = Lecturer.objects.filter(institution=request.user.student.institution)
+        context['form'] = form
+    context['project'] = project
+    return render(request, template_name, context)
+
+
 class LecturerSupervisionView(ListView):
     model = Project
     template_name = 'projects/supervision_list.html'
     context_object_name = 'projects'
 
     def get_queryset(self):
-    	return Project.objects.filter(supervisor=self.request.user.lecturer).order_by('-last_modified')
+        queryset = Project.objects.filter(supervisor=self.request.user.lecturer).order_by('-last_modified')
+        params = self.request.GET
+        year = params.get('year', 'all')
+        level = params.get('level', 'all')
+
+        if level != 'all':
+            queryset = queryset.filter(student__level=level)
+        if year != 'all':
+            queryset = queryset.filter(date_created__year=year)
+        return queryset
 
     @method_decorator(login_required)
     @method_decorator(user_passes_test(lambda u:u.lecturer))

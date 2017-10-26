@@ -1,0 +1,29 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Make Changes to: {{ project.name}}</h3>
+</div>
+<div class="col-md-7 center-block">
+	<div class="panel panel-default">
+		<form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
+			<div class="panel-body">
+				<div class="sub-panel">
+					<h5>Update Project</h5>
+				</div>
+				<div class="sub-panel add-padding" style="padding-right: 5px;">
+					{% for field in form %}
+					<div class="form-group">
+						<label>{{field.label}}</label>
+						{{field}}
+					</div>
+					{% endfor %}	
+				</div>
+			</div>
+			<div class="sub-panel" style="border-bottom: none; padding-left: 10px;">
+				<button class="btn btn-sm custom-btn" type="submit">Commit Changes</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

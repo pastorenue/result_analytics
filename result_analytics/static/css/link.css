@@ -9,7 +9,7 @@
 	position: fixed; 
 	width: 100%; 
 	top: 0; 
-	z-index: 550; 
+	z-index: 350; 
 	padding-top: 8px; background-color: #fff; 
 	border-bottom: 2px solid #c16;
 }
@@ -287,6 +287,6 @@
 }
 .forum-search {
 	position: absolute;
-	right: 40px; 
-	top: 144px;
+	right: 36px; 
+	top: 133px;
 }

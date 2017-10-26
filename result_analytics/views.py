@@ -30,8 +30,6 @@ def register_user(request):
         user_type = request.POST.get('type')
         s_form = StudentCreationForm(request.POST)
         l_form = LecturerCreationForm(request.POST)
-        import pdb
-        pdb.set_trace()
         if l_form.is_valid() and user_type == 'staff':
             try:
                 institution_id = request.POST.get('institution')

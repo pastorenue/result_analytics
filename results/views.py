@@ -39,6 +39,24 @@ class StaffBasedResultView(ListView):
 
     def get_queryset(self, **kwargs):
         queryset = Result.objects.get_staff_results(self.request)
+        params = self.request.GET
+
+        #filter the results pages on the query parameters
+        reg_number = params.get('reg_number','')
+        dept_id = params.get('dept_id','all')
+        course_id = params.get('course_id','all')
+        level = params.get('level','all')
+        
+        if reg_number !='':
+            queryset = queryset.filter(student__reg_number__icontains=reg_number)
+        if dept_id !='all':
+            department = get_object_or_404(Department, pk=dept_id)
+            queryset = queryset.filter(department=department)
+        if course_id !='all':
+            course = get_object_or_404(Course, pk=course_id)
+            queryset = queryset.filter(course=course)
+        if level != 'all':
+            queryset = queryset.filter(level=level)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -55,6 +73,7 @@ class StaffBasedResultView(ListView):
         except EmptyPage:
             results = paginator.page(paginator.num_pages)
         context['results'] = results
+        context['courses'] = Course.objects.filter(lecturers=self.request.user.lecturer)
         return context
 
 @login_required
@@ -143,6 +162,7 @@ def edit_result(request):
         result.save()
         messages.success(request, "The result was successfully updated by %s" % (request.user.lecturer))
     return HttpResponseRedirect(reverse('results:staff_result'))
+
 @login_required
 def result_by_student(request, student_slug):
     '''
@@ -236,7 +256,7 @@ def upload_csv(request):
         else:
             messages.info(request, "It appears you do not have any new records to import.\r\n Total Records: %s" % (response))
     except Exception as e:
-        messages.error(request, e)
+            messages.error(request, e)
     return HttpResponseRedirect(reverse("results:students_results"))   
 
 @login_required
@@ -244,11 +264,9 @@ def upload_csv(request):
 @user_passes_test(lambda u: u.lecturer.is_admin)
 def grading_setting(request):
     initial_data = Grading.objects.filter(institution=request.user.lecturer.institution)
-    extra=0
+    extra=1
     if len(initial_data) > 0:
         extra = 0
-    else:
-        extra = 1
     GradingFormset = modelformset_factory(Grading, form=BatchGradingForm, extra=extra)
     if request.method == "POST":
         params = request.POST

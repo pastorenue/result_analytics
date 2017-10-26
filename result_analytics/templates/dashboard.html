@@ -8,7 +8,6 @@
         <title>Grade-X | {% block title%}{% endblock %}</title>
         {% load staticfiles %}
         {% load thumbnail %}
-        {% load record_filters %}
         
         <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
         
@@ -120,76 +119,8 @@
       <div class="col-md-2 scroll" style="background: #ecf0f1; padding-left:7px; text-align: center; height: 100vh; overflow-y: scroll;">
         {% block side %}
         <h5 style="font-size: 1.1em; border-radius: 2px; background: #2c3e50; color: #ecf0f1; padding: 5px;"><strong>LATEST</strong></h5>
-        {% if not user.is_staff %}
-        <div style="margin-top: 5px;"><!--overall average performance-->
-          <div class="panel panel-default scroll" style="height: 35vh; overflow-y: auto;">
-            <div class="sub-panel add-padding">
-              <h5 class="panel-title text-center"><strong>Trending Performances</strong></h5>
-            </div>
-            <div>
-              <table class="table table-condensed table-hover" style="text-align: left;">
-                <tr>
-                  <th style="width: 70%;">Name</th>
-                  <th style="width: 30%, float: right;">CGPA</th>
-                </tr>
-                {% if trending_performances %}
-                  {% for record in trending_performances %}
-                  <tr style="{% if record|get_dict_values:'user' == request.user %} background: #1abc9c; color: #fff;{% endif %}">
-                    <td>{{record|get_dict_values:"name"}}</td>
-                    <td>{{record|get_dict_values:"cgpa"}}</td>
-                  </tr>
-                  {% endfor %}
-                  <tr><small>These are the first 5</small></tr>
-                {% endif %}
-              </table>
-            </div>  
-            </div>
-          </div>
-          {% endif %} 
-        <div style="margin-top: 5px;"><!--Ranking-->
-          <div class="panel panel-default">
-            <div class="sub-panel add-padding" style="margin-bottom: 0px;">
-              <h5 class="panel-title text-center"> {% if user.is_staff %} Trending Students {% else %} Recommendations {% endif %}</h5>
-            </div>
-            <div style="width: 100%;">
-              {% if not user.is_staff %}
-              {% if recommendations %}
-                <div style="border-bottom: 1px solid #f1f1f1; margin-bottom: 3px;">
-                  <small>It appears your grades are dwindling. We have recommendations for you to help in improving your grades.</small>
-                </div>
-                {% for r in recommendations|get_dict_values:'match' %}
-                  <div class="recommend">
-                    <img src="{% static 'images/avatar.png' %}" alt="">
-                    {% for i in r|slice:'1' %}
-                    <div>                  
-                     {% if i.department %} 
-                     <a href="{% url 'students:student_account' i.slug %}"><h4>{{i.first_name}}, {{i.last_name}}</h4></a>
-                      <p>{{i.department}}</p>
-                      {% endif %}
-                    </div>        
-                    {% endfor %}       
-                  </div>
-                  {% endfor %}
-                  {% else %}
-                  <div style="padding: 10px;">
-                    <p><span style="color: #2c3e50; font-weight: 600;">No Recommentations.</span><br> Remember to support others in NEED!!. Use the Forum and share your ideas and study tips.</p>
-                  </div>
-              {% endif %}
-            {% else %}
-              <h4>List of Trending Students in Department</h4>
-            {% endif %}
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="sub-panel add-padding">
-            {% if request.user.student %}
-            <button class="btn btn-sm custom-btn"><i class="icons icons-sm icons-vcard"></i> Connect with an Adviser</button>
-            {% elif request.user.is_staff %}
-             <button class="btn btn-sm custom-btn"><i class="icons icons-sm icons-vcard"></i> Connect with a Staff</button>
-             {% endif %}
-          </div>
-        </div>
+        {% include '_trending.html' %}
+        {% include '_connect.html' %}
         {% endblock side %}
       </div>
     </div>

@@ -1,0 +1,89 @@
+{% extends 'dashboard.html' %}
+{% load record_filters %}
+{% block breadcrumbs %}
+    <a> Registered Courses</a> &raquo;
+{% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 30px;">
+        <h3 class="page-header">Your Registered Courses <span style="float: right;"><button class="btn btn-sm custom-btn" onclick="location.href='{% url 'courses:reg_course' %}'">Register New Courses</button></span> </h3>
+    </div>
+<div class='container-fluid '>
+    {% if reg_courses %}
+    <table class='table table-condensed'>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th scope="col" style="width: 7%">S/N</th>
+                <th style="width: 30%;">Course</th>
+                <th>Semester</th>
+                <th>Level</th>
+                <th>Carried Over</th>
+                <th style="width: 15%;">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in reg_courses %}
+                <tr class="{% ifchanged course.level %} section-group{% endifchanged %}">
+                <td style="font-size: 1.4em; padding-top: 0px;"><strong>
+                {% ifchanged %}{{ course.level }}{% endifchanged %}</strong>
+                </td>
+               <td>{{forloop.counter}}</td>
+                <td style="width: 40%;">{{ course }}</td>
+                <td>{{ course.semester }}</td>
+                <td>{{ course.level }}</td>
+                <td>{{ course.carried_over }}</td>
+                <td style="width: 7%; text-align: left;">{{ course.date_created }}</td>
+            </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+    {% else %}
+    <div style="text-align: center; color: #2c3e50; margin: 10% auto;">
+        <i class="icons icons-x-lg icons-table"></i><br>
+        <h3>No Registered Courses Yet. It appears {% if user.lecturer %}this is {% else %} you're {% endif %} a Rookie</h3>
+        <h5>You can explore other features of grade-X <a href=""><u>HERE</u></a></h5>
+    </div>
+    {% endif %}
+    <div>
+      {% render_paginator reg_courses %}  
+    </div>
+</div>
+{% endblock %}
+
+{% block side %}
+<div class="panel panel-default" style="min-height: 200px; margin-top: 5px;">
+    <div class="panel-body">
+        <div class="sub-panel">
+            <h4><strong>Query Filter</strong></h4>
+        </div>
+        <form action="">
+            <div class="form-group">
+                <label for="id_level">By Level:</label>
+                <select name="level" class="form-control input-sm" id="id_level">
+                <option value="all">Select Level</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+                <option value="500">500 Level</option>
+                <option value="600">600 Level</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_category">By Semester:</label>
+                <select name="semester" id="id_semester" class="form-control input-sm">
+                    <option value="all">Select Semester</option>
+                    <option value="1">First Semester</option>
+                    <option value="2">Second Semester</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-sm custom-btn" type="search">Filter Queryset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% include '_trending.html' %}
+{% endblock %}

@@ -14,8 +14,9 @@
 	<table class='table table-condensed'>
 	    <thead>
 	        <tr>
-	            <th style="width: 25%;">Student</th>
-	            <th style="width: 25%;">Department</th>
+	        	<th>S/N</th>
+	            <th style="width: 22%;">Student</th>
+	            <th style="width: 23%;">Department</th>
 	            <th style="width: 18%;">File</th>
 	            <th>Level</th>
 	            <th style="width: 14%;">Date Created</th>
@@ -25,12 +26,13 @@
 	    <tbody>
 	    	{% for project in projects %}
     		<tr>
+    			<td>{{forloop.counter}}</td>
     			<td>{{project.student}}</td>
     			<td>{{project.student.department}}</td>
-    			<td><a href="{{project.file.url}}" target="_blank"><i class="icons icons-sm icons-file"></i></a></td>
+    			<td>{% if project.file %}<a href="{{project.file.url}}" target="_blank"><i class="icons icons-sm icons-file"></i></a> {% else %} No File {% endif %}</td>
     			<td>{{project.student.level}}</td>
     			<td>{{project.date_created}}</td>
-    			<td>{{project.date_modified}}</td>
+    			<td>{{project.last_modified}}</td>
     		</tr>
     		{% include 'assignments/assignment_detail.html' %}
 	    	{% endfor %}
@@ -67,7 +69,7 @@
 			</div>
 			<div class="form-group">
 				<label for="id_category">By Year:</label>
-				<select name="category" id="id_category" class="form-control input-sm">
+				<select name="year" id="id_year" class="form-control input-sm">
 				<option value="all">Select Year</option>
 				{% for year in year_list %}
 				<option value="{{year}}">{{year}}</option>

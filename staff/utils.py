@@ -2,7 +2,8 @@ from results.models import Result
 from students.models import Student
 from .models import Lecturer
 from django.db import transaction
-from courses.models import Course
+from courses.models import Course 
+from assignments.models import AssignmentScore
 def user_is_staff(user):
 	return user.is_staff
 
@@ -107,7 +108,7 @@ def import_all_from_csv(csv_file, lecturer):
         # Let's do an extra check to make sure the row is not empty.
         if row:
             student = Student.objects.get(reg_number=row[0])
-            course = Course.objects.get(course_code = str(row[1]).upper(), lecturer=lecturer)
+            course = Course.objects.get(course_code = str(row[1]).upper(), lecturers=lecturer)
             exiting = Result.objects.filter(student=student, course=course,level=row[5],semester=row[6])
             if exiting.count() > 0:
                 if existing[0].quiz_score == 0.0:
@@ -160,18 +161,21 @@ def import_assignment_from_csv(csv_file, lecturer):
 
     for row in csv_data:
         # Let's do an extra check to make sure the row is not empty.
-        if row:
-            student = Student.objects.get(reg_number=row[0])
-            course = Course.objects.get(course_code = str(row[1]).upper(), lecturer=lecturer)
-            assignment = AssignmentScore.objects.get(student=student)
-            if assignment:
-                if assignment.status == 'M':
-                	pass
-                elif assignment.status == 'S':
-                	assignment.score = row[2]
-                	assignment.status = 'M'
-                	assignment.save()
-	                count_value+=1		
+        try:
+            if row:
+                student = Student.objects.get(reg_number=row[0])
+                course = Course.objects.get(course_code = str(row[1]).upper(), lecturers=lecturer)
+                assignment = AssignmentScore.objects.filter(student=student, assignment__course=course)[0]
+                if assignment:
+                    if assignment.status == 'M':
+                    	pass
+                    elif assignment.status == 'S':
+                    	assignment.score = row[2]
+                    	assignment.status = 'M'
+                    	assignment.save()
+    	                count_value+=1	
+        except Exception as e:
+            pass	
     return count_value
 
 def generate_mapper():

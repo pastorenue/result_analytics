@@ -34,8 +34,10 @@
     <li><a href="{% url 'results:add_result' %}"><i class="icons icons-sm icons-plus"></i> Add Exam Results in Singleton </a></li>
 {% endif %}
 {% if request.user.student %}
+    <li><a href="#"><i class="icons icons-sm icons-laptop"></i> Transcript Lite</a></li>
     <li><a href="{% url 'results:personal_results' request.user.student.slug %}"><i class="icons icons-sm icons-table"></i> Result information</a></li>
     <li><a href="{% url 'collaborate:friend-zone' %}"><i class="icons icons-sm icons-group"></i> Add a Friend</a></li>
+    <li><a href="{% url 'courses:course-registered' %}"><i class="icons icons-sm icons-table"></i> Registered Courses</a></li>
     <h4><i class="icons icons-sm icons-area-chart"></i> Analysis</h4>
     <li><a href="{% url 'analyzer:all_results_plot' request.user.student.slug %}"><i class="icons icons-sm icons-area-chart"></i> Comparative Analysis</a></li>
     <li><a href="{% url 'analyzer:cgpa_by_level' request.user.student.slug %}"><i class="icons icons-sm icons-line-chart"></i> CGPA Analysis</a></li>

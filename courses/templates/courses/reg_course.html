@@ -1,25 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    <div>
-        <h1>Course Registration Form</h1>
-        <div>
-            <form method="post" action="">{% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        <div>
-            <p>
-                <a href="#">Update Courses</a>
-            </p>
-            <a href="#">Register New Course</a>
-        </div>
+{% extends 'dashboard.html' %}
+{% load staticfiles %}
 
+{% block extra_css %}
+<style>
+    select, input[type=text] {
+        height: 25px !important;
+        font-size: 13px !important;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+{% block breadcrumbs %}
+Course Reg &raquo;
+{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+   <h3 class="page-header">Course Registration</h3>
+</div>
+
+<div class="col-md-9 center-block">
+    <div class="panel panel-default">
+        <form method="post">{% csrf_token %}
+            <div class="panel-body">
+                <div class="sub-panel">
+                    <h5>Course Registration</h5>
+                </div>
+                <div class="sub-panel add-padding">
+                    <div class="form-group">
+                        {{static_form}}
+                    </div>
+                </div>
+                <div class="sub-panel add-padding">
+                    {{batch_formset.management_form}}
+                    {% for batch_form in batch_formset %}
+                    <div class="form-group batch_formset" style="border-radius: 4px; border: 1px solid #e5e5e5; padding:5px;">
+                        <div class="col-md-5">
+                            <span><strong>Course</strong> {{batch_form.course}}</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span><strong>Semester</strong> {{batch_form.semester}}</span>
+                        </div>
+                        <div class="col-md-3">
+                           <strong>Carried Over?</strong> <span><small class="text-muted"> {{batch_form.carried_over}}</small></span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sub-panel" style="border-bottom: none; padding-left: 10px;">
+                <button class="btn btn-sm custom-btn" type="submit">Register</button>
+            </div>
+        </form>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.0/jquery.formset.js"></script>
+<script>
+    $('.batch_formset').formset({
+        addText: 'Add',
+        deleteText: 'Remove',
+    });
+</script>
+{% endblock %}

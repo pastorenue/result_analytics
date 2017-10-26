@@ -17,10 +17,18 @@ New Assignment &raquo;
 				<div class="sub-panel">
 					<h5>Assignment</h5>
 				</div>
-				<div class="sub-panel add-padding">
-					{% for field in form %}
+				<div class="col-md-6 sub-panel add-padding" style="padding-right: 5px;">
+					{% for field in form|slice:":5" %}
 					<div class="form-group">
 						<label>{{field.label}}</label>
+						{{field}}
+					</div>
+					{% endfor %}	
+				</div>
+				<div class=" col-md-6 sub-panel add-padding" style="padding-left: 5px;">
+					{% for field in form|slice:"5:" %}
+					<div class="form-group">
+						<label>{{field.label}}</label><br>
 						{{field}}
 					</div>
 					{% endfor %}	

@@ -702,7 +702,7 @@ p a {
     box-shadow: 5x 5px 13px rgba(0,212,0,1);
     position: absolute;
     width: 25vw;
-    z-index: 300;
+    z-index: 700;
     top: 5px;
     right: 5px;
     padding: 15px;

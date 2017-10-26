@@ -18,11 +18,37 @@ class CourseForm(forms.ModelForm):
         model = Course
         exclude = ['added_by',]
 
-class CourseRegistrationForm(forms.ModelForm):
-    
+class BatchCourseForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(BatchCourseForm, self).__init__(*args, **kwargs)
+        self.fields['course'].widget.attrs = {'class': 'form-control',}
+        self.fields['semester'].widget.attrs = {'class': 'form-control'}
+        self.fields['carried_over'].widget.attrs = {'class': 'form-control'}
+
     class Meta:
         model = CourseRegistration
-        fields = '__all__'
+        fields = (
+        	'course',
+            'semester',
+            'carried_over'
+        )
+
+class CourseRegistrationForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CourseRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['department'].widget.attrs = {'class': 'form-control'}
+        self.fields['level'].widget.attrs = {'class': 'form-control'}
+        self.fields['session'].widget.attrs = {'class': 'form-control'}
+       
+    class Meta:
+        model = CourseRegistration
+        fields = (
+        	'department',
+        	'level',
+        	'session',
+        )
 
 class CourseCreationForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):

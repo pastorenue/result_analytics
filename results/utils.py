@@ -79,7 +79,7 @@ def import_result_from_csv(csv_file, lecturer):
         # Let's do an extra check to make sure the row is not empty.
         if row:
             student = Student.objects.get(reg_number=row[0])
-            course = Course.objects.get(course_code = str(row[1]).upper(), lecturer=lecturer)
+            course = Course.objects.get(course_code = str(row[1]).upper(), lecturers=lecturer)
             exiting = Result.objects.filter(student=student, course=course, exam_score=row[2],level=row[3],semester=row[4])
             if exiting.count() > 0:
                 if existing[0].exam_score == 0.0:

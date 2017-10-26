@@ -5,7 +5,13 @@ rassignments/migrations
 massignments/templates/assignments
 mcollaborations
 mcollaborations/templates/collaborations
+mcore
+mcore/__pycache__
+mcourses
+mcourses/__pycache__
 rcourses/migrations
+mcourses/templates/courses
+mforum/templates/forum
 mprojects
 rprojects/templates/projects
 rresult_analytics/static/bootstrap-3.3.4-dist/css
@@ -13,6 +19,7 @@ rresult_analytics/static/bootstrap-3.3.4-dist/fonts
 rresult_analytics/static/bootstrap-3.3.4-dist/js
 mresult_analytics/static/css
 rresult_analytics/static/images
+mresult_analytics/static/js
 mresult_analytics/templates
 mresults
 mresults/__pycache__

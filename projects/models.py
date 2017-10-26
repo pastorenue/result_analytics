@@ -19,7 +19,7 @@ class Project(models.Model):
     tag = models.CharField(max_length=150, blank=True, null=True)
     slug = models.SlugField(blank=True, unique=True)
     date_created = models.DateField(auto_now_add=True)
-    last_modified = models.DateField(auto_now=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _(u'Student Project')

@@ -43,7 +43,7 @@ class CourseRegistration(models.Model):
     level = models.PositiveIntegerField(choices=settings.LEVEL_CHOICES, null=True)
     semester = models.PositiveIntegerField(choices=SEMESTER_CHOICES, null=True)
     session = models.CharField(max_length=15, null=True)
-    course = models.ManyToManyField(Course)
+    course = models.ForeignKey(Course, null=True)
     carried_over = models.NullBooleanField(default=False)
     department = models.ForeignKey(Department, null=True)
     date_created = models.DateField(auto_now_add=True, null=True)
@@ -54,7 +54,7 @@ class CourseRegistration(models.Model):
         ordering = ('level',)
 
     def __str__(self):
-        return self.student
+        return "%s" % (self.course)
 
 
 

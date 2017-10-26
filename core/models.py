@@ -31,6 +31,16 @@ class StaffSetup(SetupMixin):
 		return "%s's  Setup" % (self.user)
 
 
+class StudentSetup(SetupMixin):
+	allow_my_result_for_analysis = models.BooleanField(default=True)
+	target_cgpa = models.DecimalField(decimal_places=2, default=0.0, max_digits=4, null=True, blank=True)
+	recommend_my_help_to_students = models.BooleanField(default=True)
+	recommend_me_to_students = models.BooleanField(default=True)
+
+	def __str__(self):
+		return "%s's Setup" % (self.user)
+
+
 class Activation(models.Model):
 	user = models.OneToOneField(User)
 	accept_usage_policy = models.BooleanField(default=False)
@@ -46,16 +56,6 @@ class Activation(models.Model):
 
 	def __str__(self):
 		return "%s" % (self.activated)
-
-
-class StudentSetup(SetupMixin):
-	allow_my_result_for_analysis = models.BooleanField(default=True)
-	target_cgpa = models.DecimalField(decimal_places=2, default=0.0, max_digits=4, null=True, blank=True)
-	recommend_my_help_to_students = models.BooleanField(default=True)
-	recommend_me_to_students = models.BooleanField(default=True)
-
-	def __str__(self):
-		return "%s's Setup" % (self.user)
 
 		
 			

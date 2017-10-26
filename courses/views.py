@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.db import transaction
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from courses.models import Course
-from courses.forms import CourseForm, CourseCreationForm, CourseRegistrationForm
+from .forms import *
+from django.forms.models import modelformset_factory
+from django.forms.formsets import formset_factory
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -49,6 +51,43 @@ class CourseListView(ListView):
         context['courses'] = queryset
         return context
 
+
+class RegisteredCourseView(ListView):
+    model = CourseRegistration
+    template_name = 'courses/registered_courses.html'
+    context_object_name = 'reg_courses'
+    paginated_by = settings.PAGE_SIZE
+
+    def get_queryset(self):
+        queryset = CourseRegistration.objects.filter(student=self.request.user.student).order_by('level', 'semester')
+        params = self.request.GET
+        level = params.get('level', 'all')
+        semester = params.get('semester', 'all')
+
+        if level != 'all':
+            queryset = queryset.filter(level=level)
+        if semester != 'all':
+            queryset = queryset.filter(semester=semester)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(RegisteredCourseView, self).get_context_data(**kwargs)
+        queryset = self.get_queryset()
+        paginator = Paginator(queryset, self.paginated_by)
+
+        page = self.request.GET.get('page')
+
+        try:
+            queryset = paginator.page(page)
+        except PageNotAnInteger:
+            queryset = paginator.page(1)
+        except EmptyPage:
+            queryset = paginator.page(paginator.num_pages)
+
+        context['reg_courses'] = queryset
+        return context
+        
+
 @transaction.atomic
 @login_required
 def new_course(request):
@@ -85,16 +124,43 @@ def new_course(request):
             messages.error(request, e)
     return HttpResponseRedirect(reverse('courses:course-list'))
 
-
+@login_required
+@user_passes_test(lambda u: hasattr(u, 'student'))
+@transaction.atomic
 def reg_course(request):
+    extra = 1
+    CourseRegFormset = formset_factory(BatchCourseForm, extra=extra)
     if request.method == 'POST':
-        form = CourseRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        batch_formset = CourseRegFormset(request.POST)
+        static_form = CourseRegistrationForm(request.POST)
+        if static_form.is_valid() and batch_formset.is_valid():
+            try:
+                existing = 0
+                saved = 0
+                for form in batch_formset:
+                    course = form.save(commit=False)
+                    course.student = request.user.student
+                    course.level = static_form.cleaned_data['level']
+                    course.department = request.user.student.department
+                    if CourseRegistration.objects.filter(course=course.course, student=course.student, session=course.session).exists() and not course.carried_over:
+                        existing += 1
+                    else:
+                        course.save()
+                        saved += 1
+                messages.success(request, "You successfully registered %s courses.\
+                                 %s failed because they already exist" % (saved, existing))
+                return HttpResponseRedirect(reverse('courses:reg_course'))
+            except Exception as e:
+                messages.error(request, e)
     else:
-        form = CourseRegistrationForm()
-    return render(request, 'courses/reg_course.html', {'form': form,})
+        batch_formset = CourseRegFormset()
+        static_form = CourseRegistrationForm()
+    context = {
+            'static_form': static_form,
+            'batch_formset': batch_formset
+        }
 
+    return render(request, 'courses/reg_course.html', context)
 @login_required
 def edit_course(request, course_id):
     template_name = 'courses/edit_course.html'

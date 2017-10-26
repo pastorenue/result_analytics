@@ -5,18 +5,20 @@ from .models import Assignment, AssignmentScore, Submitted
 import datetime
 from students.models import Student
 from django.db import transaction
+from courses.models import Course
 
 class AssignmentForm(forms.ModelForm):
-	due_date = forms.DateTimeField(widget = SelectDateWidget(years=range(1990, datetime.date.today().year+20), attrs=({'class': 'form-control', 'style': 'width: 20%; display: inline-block;'})))
+	due_date = forms.DateTimeField(widget = SelectDateWidget(years=range(1990, datetime.date.today().year+20), attrs=({'class': 'form-control', 'style': 'width: 30%; display: inline-block; text-align: left;'})))
 	
 	class Meta:
 		model = Assignment
 		exclude = ('lecturer','status')
 
-	def __init__(self, *args, **kwargs):
-		self.request = kwargs.pop('request', None)
+	def __init__(self, request, *args, **kwargs):
+		#self.request = kwargs.pop('request')
 		super(AssignmentForm, self).__init__(*args, **kwargs)
 		self.fields['course'].widget.attrs = {'class':'form-control'}
+		self.fields['course'].queryset = Course.objects.filter(lecturers=request.user.lecturer)
 		self.fields['possible_points'].widget.attrs = {'class':'form-control'}
 		self.fields['question_or_instructions'].widget.attrs = {'class': 'form-control', 'rows': '3', 'placeholder':'Enter a question or description of the attached if any'}
 		self.fields['level'].widget.attrs = {'class':'form-control'}

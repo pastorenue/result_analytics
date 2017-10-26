@@ -133,8 +133,8 @@ def create_assignment(request):
 			except ValueError as e:
 				messages.error(request, e)
 	else:
-		form = AssignmentForm()
-	return render(request, 'assignments/create_assignment.html', {'form':form})
+		form = AssignmentForm(request)
+	return render(request, 'assignments/create_assignment.html', {'form':list(form)})
 
 
 @user_passes_test(user_is_student)
@@ -162,7 +162,8 @@ def submit_assignment(request, assignment_code):
 		form = AssignmentSubmitForm()
 	return render(request, 'assignments/submit_assignments.html', {'form':form, 'assignment': assignment})
 
-
+@login_required
+@user_passes_test(user_is_staff)
 def deactivate(request, assignment_id):
 	assignment = get_object_or_404(Assignment, pk=assignment_id)
 	ass_score = AssignmentScore.objects.filter(assignment=assignment)

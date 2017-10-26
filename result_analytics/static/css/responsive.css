@@ -5,6 +5,9 @@
 		width: 100%;
 		overflow-x: hidden;
 	}
+	.icons-x-lg {
+		font-size: 3.5em !important;
+	}
 	.mobile-pad {
 		padding: 0;
 	}
@@ -69,8 +72,11 @@
 		margin-right: auto;
 		margin-left: auto;
 	}
+	#notification {
+		width: 45%;
+	}
 	.modal.fade.in {
-		top: 50%;
+		top: 30%;
 	}
 	.friend span {
 		position: absolute;

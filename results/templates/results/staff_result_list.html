@@ -1,6 +1,15 @@
 {% extends 'dashboard.html' %}
 {% load record_filters %}
 
+{% block extra_css %}
+<style>
+    input[type=text] {
+        height: 26px;
+        font-size: 13px;
+    }
+</style>
+{% endblock %}
+
 {% block title %}Results{% endblock %}
 {% block breadcrumbs %}
     All results
@@ -46,5 +55,63 @@
 </div>
 <div>
     {% render_paginator results %}
+</div>
+{% endblock %}
+
+{% block side %}
+<div class="panel panel-default" style="min-height: 200px; margin-top: 5px;">
+    <div class="panel-body">
+        <div class="sub-panel">
+            <h4><strong>Query Filter</strong></h4>
+        </div>
+        <form action="">
+            <div class="form-group">
+                <label for="id_reg">Reg Number:</label>
+                <input type="text" name="reg_number" class="form-control" placeholder="Reg number">
+            </div>
+            <div class="form-group">
+                <label for="id_level">By Level:</label>
+                <select name="level" class="form-control input-sm" id="id_level">
+                <option value="all">Select Level</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+                <option value="500">500 Level</option>
+                <option value="600">600 Level</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_course">By Course:</label>
+                <select id="id_course" name="course_id" class="form-control input-sm">
+                <option value="all">Select Course</option>
+                {% for course in courses %}
+                <option value="{{course.id}}">{{course}}</option>
+                {% endfor %}
+                </select>
+                <small class="text-muted">[Showing courses that you lecture only]</small>
+            </div>
+            <div class="form-group">
+                <label for="id_category">By Department:</label>
+                <select name="dept_id" id="" class="form-control input-sm">
+                <option value="all">Select Department</option>
+                {% for department in departments %}
+                <option value="{{department.id}}">{{department}}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-sm custom-btn" type="search">Filter Queryset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="sub-panel add-padding">
+    {% if request.user.is_staff %}
+     <button class="btn btn-sm custom-btn"><i class="icons icons-sm icons-vcard"></i> Connect with a Staff</button>
+     {% endif %}
+  </div>
 </div>
 {% endblock %}

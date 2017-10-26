@@ -11,7 +11,7 @@
 <div>
 	{% for project in projects %}
 	<a href="{{ project.get_absolute_url }}">
-		<div class="col-md-2 project">
+		<div class="col-md-2 col-sm-4 col-xs-4 project">
 			<span><i class="icons icons-x-lg icons-file-archive"></i></span>
 			<h4>{{project.name|truncatechars:22}}</h4>
 			<p>{{project.category}}</p>
@@ -20,7 +20,7 @@
 	</a>
 	{% endfor %}
 	<a href="#modal-project" data-toggle="modal">
-		<div class="col-md-2 project">
+		<div class="col-md-2 col-sm-4 col-xs-4 project">
 			<div style="margin: 30px auto;">
 				<i class="icons icons-x-lg icons-plus"></i>
 			</div>

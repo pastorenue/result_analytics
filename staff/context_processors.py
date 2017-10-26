@@ -94,12 +94,16 @@ def performances(request):
 
   
 def course_recommendation(request):
+    try:
+        own_student = request.user.student
+    except:
+        pass
     courses = {}
     data = {}
     is_new = True
     if request.user.is_authenticated() and  hasattr(request.user, 'student'):
         for result in Result.objects.filter(student=request.user.student):
-            if result.total_score < 62.5:
+            if result.total_score < 62.5 and cgpaData.get_fcgpa(own_student.id) < float(max(cp.get_grades(own_student.institution)) * 0.8):
                 courses[result.course] = result.total_score
         #get the recommendation for each poorly performed course
         for course in courses:
