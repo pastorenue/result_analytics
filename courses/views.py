@@ -90,6 +90,7 @@ class RegisteredCourseView(ListView):
 
 @transaction.atomic
 @login_required
+@user_passes_test(lambda u: hasattr(u, 'lecturer') and u.lecturer.is_admin, login_url='/login/')
 def new_course(request):
     if request.method == 'POST':
         params = request.POST
@@ -161,7 +162,9 @@ def reg_course(request):
         }
 
     return render(request, 'courses/reg_course.html', context)
+
 @login_required
+@user_passes_test(lambda u: hasattr(u, 'lecturer') and u.lecturer.is_admin, login_url='/login/')
 def edit_course(request, course_id):
     template_name = 'courses/edit_course.html'
     course = Course.objects.get(pk=course_id)

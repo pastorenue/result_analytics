@@ -80,7 +80,7 @@ def new_project(request):
 		name = params.get('name', '')
 		description = params.get('desc', '')
 		category = params.get('category', '')
-		file = request.FILES['file']
+		file = request.FILES['file'] or None
 		tag = params.get('tag', '')
 		lecturer_id = params.get('lecturer', '')
 		supervisor = ''
@@ -126,6 +126,8 @@ class LecturerSupervisionView(ListView):
         params = self.request.GET
         year = params.get('year', 'all')
         level = params.get('level', 'all')
+        import pdb
+        pdb.set_trace()
 
         if level != 'all':
             queryset = queryset.filter(student__level=level)
@@ -134,7 +136,7 @@ class LecturerSupervisionView(ListView):
         return queryset
 
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(lambda u:u.lecturer))
+    @method_decorator(user_passes_test(lambda u: hasattr(u, 'lecturer'), login_url='/login/'))
     def dispatch(self, request, *args, **kwargs):
     	return super(LecturerSupervisionView, self).dispatch(request, *args, **kwargs)
 

@@ -16,7 +16,7 @@
 	        <tr>
 	        	<th>S/N</th>
 	            <th style="width: 22%;">Student</th>
-	            <th style="width: 23%;">Department</th>
+	            <th style="width: 23%;">Project Title</th>
 	            <th style="width: 18%;">File</th>
 	            <th>Level</th>
 	            <th style="width: 14%;">Date Created</th>
@@ -28,7 +28,7 @@
     		<tr>
     			<td>{{forloop.counter}}</td>
     			<td>{{project.student}}</td>
-    			<td>{{project.student.department}}</td>
+    			<td>{{project.name}}</td>
     			<td>{% if project.file %}<a href="{{project.file.url}}" target="_blank"><i class="icons icons-sm icons-file"></i></a> {% else %} No File {% endif %}</td>
     			<td>{{project.student.level}}</td>
     			<td>{{project.date_created}}</td>
