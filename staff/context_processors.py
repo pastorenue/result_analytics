@@ -16,10 +16,18 @@ from django.contrib import auth
 
 def home_context(request): 
     all_greetings = [
-                    'Hi', 'Ekabo', 'Sannu', 
-                    'Bonjour', 'Mavo', 'Ado', 'Ibaate', 
-                    'Koyo', 'Bawo ni',
-                    'Abole', 'Kedu', 'Ola']
+                    {'tribe':'English', 'greeting':'Hi'}, 
+                    {'tribe':'Urhobo', 'greeting':'Mavo'},
+                    {'tribe':'Efik/Ibibio', 'greeting':'Mesiere'},
+                    {'tribe':'Benue', 'greeting':'Abole'},
+                    {'tribe':'Yoruba', 'greeting':'Bawo ni'},
+                    {'tribe':'Bini', 'greeting':'Koyo'},
+                    {'tribe':'Igbo', 'greeting':'Kedu'},
+                    {'tribe':'Hausa', 'greeting':'Sannu'},
+                    {'tribe':'French', 'greeting':'Bonjour'},
+                    {'tribe':'Ijaw', 'greeting':'Ado'},
+                    {'tribe':'Izere/Plateau', 'greeting':'Shou'},
+                    ]
     greeting = all_greetings[random.randint(0, len(all_greetings)-1)]  
     all_students = []
     lecturers = []
