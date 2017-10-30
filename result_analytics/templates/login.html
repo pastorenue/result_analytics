@@ -1,12 +1,6 @@
 {% extends 'base.html' %}
 {% load static record_filters %}
 
-{% block slide %}
-<div class="i_gt">
-    <h2 style="color: #EC2FFA;"><strong>We greet you in {{greet|get_dict_values:"tribe"}}: <em>{{greet|get_dict_values:"greeting"}}!</em></h2>
-    <h3><strong>This is Grade-X </strong><span style="font-size: 25px;">-#TIG</span></h3>
-</div>
-{% endblock %}
 {% block content %}
     {% include '_login.html' %}
 {% endblock %}

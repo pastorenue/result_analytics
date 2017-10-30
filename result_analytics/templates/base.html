@@ -6,7 +6,7 @@
         <meta name="description" content="Students' Result- Collaboration Platform (Grade-X)">
 
         <title>Grade-X | {% block title %}{% endblock %}</title>
-        {% load staticfiles notifications_tags %}
+        {% load staticfiles notifications_tags record_filters %}
 
         <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
 
@@ -59,8 +59,8 @@
 		      </nav>
 	    	{% block slide %}
             <div class="i_gt">
-	            <h1><strong><em>{{greet}}!</em> This is Grade-X </strong><span style="font-size: 25px;">-#TIG</span></h1>
-	            <h4>Glad you made it here today</h4>
+	            <h2 style="color: #EC2FFA;"><strong>We greet you in {{greet|get_dict_values:"tribe"}}: <em>{{greet|get_dict_values:"greeting"}}!</em></h2>
+            <h3><strong>This is Grade-X </strong><span style="font-size: 25px;">-#TIG</span></h3>
 	        </div>
             {% endblock %}
 	    </div>
