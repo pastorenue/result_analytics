@@ -24,6 +24,9 @@
 	    background: transparent !important;
 	    border: none; /* make scrollbar transparent */
 	}
+	.login {
+		top: 65%;
+	}
 	.mobile-hide {
 		display: none;
 	}
@@ -110,6 +113,9 @@
 	.signup-main {
 		top: 70%;
 		margin-top: 50%;
+	}
+	.feature-set span {
+		font-size: 15px !important;
 	}
 }
 @media screen and (max-width: 768px) {

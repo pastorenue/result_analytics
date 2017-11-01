@@ -778,9 +778,20 @@ p a {
     margin-left: 3px;
     font-weight: 600;
 }
-.custom-btn:hover, .custom-btn:focus {
+.custom-btn:hover {
     color: #fff;
     background: #2a5298;
+}
+.custom-btn-2 {
+    background: #004a7c;
+    color: #fff;
+    transition: all .45s ease-in-out;
+    margin-left: 3px;
+    font-weight: 600;
+}
+.custom-btn-2:hover {
+    color: #fff;
+    background: #28658e;
 }
 
 .svg-icon {

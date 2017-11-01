@@ -6,6 +6,12 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_text
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
@@ -13,6 +19,8 @@ from students.forms import StudentCreationForm
 from staff.forms import LecturerCreationForm
 from django.db import transaction
 from institutions.models import Institution
+from core.tokens import account_activation_token
+from django.contrib.sites.shortcuts import get_current_site
 
 def index(request):
     context = {}
@@ -37,12 +45,7 @@ def register_user(request):
                 lecturer = l_form.save(commit=False)
                 lecturer.institution = institution
                 lecturer.save()
-                user = authenticate(username=request.POST.get('email'), 
-                        password=request.POST.get('email'))
-                login(request, user)
-                messages.success(request, "Welcome to Grade-X. Your WORKSPACE has \
-                    been created. Ensure to change your password")
-                return redirect('dashboard')
+                notify(request, lecturer.user)
             except Exception as e:
                 messages.error(request, e)
                 return redirect('result_signup')
@@ -54,13 +57,7 @@ def register_user(request):
                 student = s_form.save(commit=False)
                 student.institution = institution
                 student.save()
-                user = authenticate(username=request.POST.get('reg_number'), 
-                        password=request.POST.get('reg_number'))
-                login(request, user)
-                messages.success(request, "Welcome to Grade-X. Your WORKSPACE of\
-                    has been successfully created. Explore the endless possibilities\
-                    of academics.")
-                return redirect('dashboard')
+                notify(request, student.user)
             except Exception as e:
                 messages.error(request, e)
                 return redirect('result_signup')
@@ -72,7 +69,7 @@ def register_user(request):
     else:
         s_form = StudentCreationForm()
         l_form = LecturerCreationForm()
-        return render(request, 'signup.html', {'s_form': list(s_form), 'l_form': list(l_form)})
+    return render(request, 'signup.html', {'s_form': list(s_form), 'l_form': list(l_form)})
  
    
 @login_required
@@ -100,3 +97,54 @@ def change_password(request):
         'form': form
     })
 
+def notify(request, user):
+    current_site = get_current_site(request)
+    context_dict = {
+        'name': '{0} {1}'.format(user.last_name, user.first_name),
+        'user': user,
+        'domain': current_site.domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+    }
+    txt_message = render_to_string('account_activation_email.txt', context_dict)
+    html_message = render_to_string('account_activation_email.html', context_dict)
+    subject, from_email, to = 'Grade-X: Verification Required', 'gradex.hq@gmail.com', user.email
+    msg = EmailMultiAlternatives(subject, txt_message, from_email, [to])
+    msg.attach_alternative(html_message, "text/html")
+    try:
+        msg.send()
+        messages.info(request, 'Check your email for a link to activate your account.')
+        return HttpResponseRedirect(reverse('account_activation_sent'))
+    except:#I activate the user if I can't send email and log.
+        user.is_active = True
+        user.save()
+        if user is not None:
+            login(request, user)
+        messages.success(request, 'Your account is now active')
+        return HttpResponseRedirect(reverse('dashboard'))
+
+def alternative_notify(request):
+    user.is_active = True
+    user.save()
+    login(request, user)
+    messages.success(request, 'Your account is now active')
+
+
+def activation_sent(request):
+    return render(request, 'account_activation_sent.html', {})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            user = User.objects.get(pk=uid)
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, user)
+            messages.success(request, "Welcome to thebossoffice. Your account has been activated successfully")
+            return redirect('dashboard')
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        messages.error(request, "Sorry! an error occured")
+    return HttpResponseRedirect(reverse('dashboard'))

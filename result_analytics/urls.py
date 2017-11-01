@@ -8,7 +8,7 @@ from django.conf import settings
 from django.views.generic import TemplateView 
 from result_analytics.views import index, home, register_user, register_success
 from django.views.static import serve
-from .views import home, change_password
+from .views import home, change_password, activation_sent, activate
 
 urlpatterns = [ 
     url(r'^admin/', include(admin.site.urls)),
@@ -51,6 +51,9 @@ urlpatterns+=patterns('',
         url(r'^howitworks$', TemplateView.as_view(template_name= 'how.html'), name='how-it-works'),
         url(r'^who-we-are/$', TemplateView.as_view(template_name='about.html'), name='about'),
         url(r'^pricing$', TemplateView.as_view(template_name='pricing.html'), name='pricing'),
+        url(r'^account_activation_sent/$', activation_sent, name='account_activation_sent'),
+        url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        activate, name='activate'),
 )
 
 urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

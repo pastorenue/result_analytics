@@ -80,7 +80,7 @@
 	margin-top: 10px;
 }
 .sign-up-btn>a {
-	background: #243b55; 
+	background: #10ADE4; 
 	padding: 5px 20px !important; 
 	border-radius: 25px; 
 	color: #fff;
@@ -88,12 +88,20 @@
 	transition: all .34s ease-in-out;
 }
 .sign-up-btn>a:hover {
-	background: #fff;
-	color: #243b55;
-
-	border: 1px solid #243b55;
+	background: transparent !important;
+	color: #10ADE4 !important;
+	border: 2px solid #10ADE4 !important;
 }
 .i_gt {
 	padding: 20px; 
 	color: #f5f5f5 !important;
+}
+.feature-set {
+	text-align: center; 
+	padding: 15px; 
+	margin: 10px auto; 
+	background: #004a7c; 
+	color: #fff; 
+	min-height: 150px; 
+	line-height: 150px;
 }

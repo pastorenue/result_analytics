@@ -1,0 +1,24 @@
+<div style="border-radius: 4px; border: 2px solid #243b55; width: 60%; margin-left: auto; margin-right: auto; background: #f7f7f7;">
+	<div style="background: #004a7c; color: #fff; width: 100%; text-align: center; min-height: 70px; position: relative; top: -20px;">
+		<h2 style="color: #00bcd4; line-height: 70px;">Account Verification</h2>
+	</div>
+	{% autoescape off %}
+	<h2 style="padding: 5px 10px;">Hi {{ user.last_name }},</h2>
+	<div style="margin-left: auto; margin-right: auto; width: 100%; text-align: center; background: #fff; padding: 20px 0;">
+		<div style="padding: 10px;">
+			<p>Thank you for creating a Grade-X account</p>
+			<p>Verify your email below to authenticate your profile</p>
+		</div>
+		<hr style="border: 1px dashed #f5f5f5;">
+		<div style="padding: 10px;">
+			<a style="border-radius: 25px; padding: 10px 20px; background:  #004a7c; color: #fff; text-decoration: none; " href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">VERIFY ACCOUNT</a>
+		</div>
+	</div>
+	<div style="padding: 10px;">
+		<h3>The Grade-X Team</h3>
+	</div>
+	{% endautoescape %}
+	<div style="background: #00bcd4; color: #fff; width: 100%; text-align: center; min-height: 70px; position: relative; bottom: -22px;">
+		<h1 style="font-family: sans-serif; line-height: 70px;">#TIG</h1>
+	</div>
+</div>

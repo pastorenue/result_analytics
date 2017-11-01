@@ -14,6 +14,8 @@ mcourses/templates/courses
 mforum/templates/forum
 mprojects
 rprojects/templates/projects
+mresult_analytics
+mresult_analytics/__pycache__
 rresult_analytics/static/bootstrap-3.3.4-dist/css
 rresult_analytics/static/bootstrap-3.3.4-dist/fonts
 rresult_analytics/static/bootstrap-3.3.4-dist/js

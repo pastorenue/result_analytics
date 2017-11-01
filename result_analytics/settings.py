@@ -60,7 +60,8 @@ INSTALLED_APPS = (
     'collaborations',
     'rest_framework',
     'django_social_share',
-    'notifications'
+    'notifications',
+    'anymail'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -178,3 +179,15 @@ LOGIN_REDIRECT_URL = 'dashboard'
 
 PAGE_SIZE = 50
 PAGE_ORPHANS = 10
+
+ANYMAIL = {
+    # (exact settings here depend on your ESP...)
+    "MAILGUN_API_KEY": os.environ.get("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": 'sandbox7373036bb12e480998e2fa37856e5d0b.mailgun.org',  # your Mailgun domain, if needed
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@sandbox7373036bb12e480998e2fa37856e5d0b.mailgun.org'
+EMAIL_HOST_PASSWORD = 'd27474638e25b795b750173855724bed'
+EMAIL_USE_TLS = True
