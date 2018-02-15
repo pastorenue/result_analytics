@@ -2,16 +2,16 @@
 {% load thumbnail notifications_tags %}
 {% notifications_unread as unread_count %}
 <div class="fixed-nav hide-nav" id="collapse_fixed">
-  <div class="container"> 
+  <div class="container">
     <div style="display: inline-block;">
-      <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><img src="{% static 'svg/gx-logo-3.svg' %}" alt="GRADE-X" style="width: 35px; height: 34px;"></a>
+      <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><img src="{% static 'images/logo.jpg' %}" alt="GRADE-X" style="width: 35px; height: 34px;"></a>
     </div>
-    <div style="display: inline-block; float: right; margin-right: 20px; font-size: 25px;"> 
+    <div style="display: inline-block; float: right; margin-right: 20px; font-size: 25px;">
       <i class="icons icons-list-alt" onclick="showNav()"></i>
     </div>
   </div>
 </div>
-<div id="mobile_menu" class="left-menu hide-nav" style=" width: 80%; position: fixed; z-index: 570; height: 100vh;"> 
+<div id="mobile_menu" class="left-menu hide-nav" style=" width: 80%; position: fixed; z-index: 570; height: 100vh;">
   <div class="scroll" style="height: 100vh; padding-right: 5px; color: #fff; background: linear-gradient(to bottom, #141E30, #243B55); height: 100; overflow: auto; padding-top: 20px;">
       <div class="side-menu-left">
         {% if user.student and user.student.photo %}
@@ -29,7 +29,7 @@
             <div class="sub-menu">
               <ul>
                 {% block menu %}
-                {% include '_added_menu.html' %}          
+                {% include '_added_menu.html' %}
               {% endblock %}
               </ul>
             </div>
@@ -40,12 +40,12 @@
 <div id="main_fixed" class="fixed-nav"><!--top nav container-->
     <div class="row" style="padding: 0 30px;">
       <div class="col-md-6" style="padding-left: 40px;">
-          
-          <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><img src="{% static 'svg/gx-logo.svg' %}" alt="GRADE-X" width="25" height="30"></a>{% block breadcrumbs %}{% endblock %}
-          
+
+          <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #c16;"><img src="{% static 'images/logo.jpg' %}" alt="GRADE-X" width="30" height="30"></a>{% block breadcrumbs %}{% endblock %}
+
           <!--Main breadcrumb Section-->
       </div>
-      
+
       <div class="col-md-6" style="padding-left: 20px;">
           <a href="" style="color: #bbc; text-decoration: none; "><i class="icons icons-sm icons-cloud-download"></i> Download</a>
           <a href="{% url 'user-settings' %}" style="color: #bbc; text-decoration: none; padding-left: 20px;"><span><i class="icons icons-sm icons-settings"></i> Settings</a>
@@ -65,7 +65,7 @@
                   <h5>No recent notifications available</h5>
                 </div>
                 {% endfor %}
-              </div>    
+              </div>
           </div>
           <label class="dropdown pull-right" style="padding-left: 30px; padding-right: 20px;">
               <a href="#" data-toggle="dropdown" style="text-decoration: none; color: #bbc;">

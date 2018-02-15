@@ -21,14 +21,14 @@
           <tr><small>These are the first 5</small></tr>
         {% endif %}
       </table>
-    </div>  
+    </div>
     </div>
   </div>
-{% endif %} 
+{% endif %}
 <div style="margin-top: 5px;"><!--Ranking-->
   <div class="panel panel-default">
     <div class="sub-panel add-padding" style="margin-bottom: 0px;">
-      <h5 class="panel-title text-center"> {% if user.is_staff %} Trending Students {% else %} Recommendations {% endif %}</h5>
+      <h5 class="panel-title text-center"> {% if user.is_staff %} News {% else %} Recommendations {% endif %}</h5>
     </div>
     <div style="width: 100%;">
       {% if not user.is_staff %}
@@ -40,13 +40,13 @@
           <div class="recommend">
             <img src="{% static 'images/avatar.png' %}" alt="">
             {% for i in r|slice:'1' %}
-            <div>                  
-             {% if i.department %} 
+            <div>
+             {% if i.department %}
              <a href="{% url 'students:student_account' i.slug %}"><h4>{{i.first_name}}, {{i.last_name}}</h4></a>
               <p>{{i.department}}</p>
               {% endif %}
-            </div>        
-            {% endfor %}       
+            </div>
+            {% endfor %}
           </div>
           {% endfor %}
           {% else %}
@@ -55,7 +55,7 @@
           </div>
       {% endif %}
     {% else %}
-      <h4>List of Trending Students in Department</h4>
+      <h5 style="color: #65b3c7;">List of Trending Students in Department</h4>
     {% endif %}
     </div>
   </div>

@@ -1,10 +1,10 @@
 {% load staticfiles %}
-    
+
     <h4><i class="icons icons-md icons-dashboard"></i> Dashboard</h4>
 {% if user.lecturer.is_admin %}
     <li><a href="{% url 'students:students_list' %}"><i class="icons icons-sm icons-group"></i> All Students <span class="badge"> {{ all_students.count }}</span></a></li>
     <li><a href="{% url 'students:create_student' %}"><i class="icons icons-sm icons-new-user"></i> New Student </a></li>
-    <li><a href="#"><i class="icons icons-sm icons-new-user"></i> Bulk Student Upload </a></li>
+    <li><a href="{% url 'students:student-import' %}"><i class="icons icons-sm icons-new-user"></i> Bulk Student Upload </a></li>
     <li><a href="{% url 'results:students_results' %}">All Students Results <span class="badge"> {{ all_results.count }}</span></a></li>
     <li><a href="{% url 'staff-list' %}">Employee List <span class="badge"> {{lecturers.count}}</span></a></li>
     <li><a href="{% url 'new-staff' %}"><i class="icons icons-sm icons-new-user"></i> New Staff </a></li>

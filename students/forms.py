@@ -14,18 +14,11 @@ from django.forms.extras.widgets import SelectDateWidget
 from django.utils.text import slugify
 from core.models import Activation, StudentSetup
 import uuid
-
-
-def create_user(email, first_name, last_name):
-    """Creates a user with a username generated from the supplied `first_name` and `last_name`."""
-
-    user = None
-    user = User.objects.create(email=email, first_name=first_name, last_name=last_name)
-    return user
+from .utils import create_user
 
 
 # class ScholarshipForm(forms.ModelForm):
-    
+
 #     class Meta:
 #         model = Scholarhip
 #         fields = (
@@ -34,10 +27,10 @@ def create_user(email, first_name, last_name):
 #             'location',
 #             'website',
 #         )
-        
+
 
 class DocumentForm(forms.ModelForm):
-    
+
     class Meta:
         model = Document
         fields = (
@@ -45,9 +38,9 @@ class DocumentForm(forms.ModelForm):
             'attached_file',
             'description'
         )
-        
-        
-        
+
+
+
 class BasicProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
          super(BasicProfileForm, self).__init__(*args, **kwargs)
@@ -57,7 +50,7 @@ class BasicProfileForm(forms.ModelForm):
          self.fields['middle_name'].widget.attrs = {'placeholder' : 'Other Name', 'class': 'form-control'}
          self.fields['birth_date'].widget.attrs = {'class': 'form-control'}
          self.fields['phone_number'].widget.attrs = {'class': 'form-control'}
-    
+
     class Meta:
         model = Student
         fields = (
@@ -68,7 +61,7 @@ class BasicProfileForm(forms.ModelForm):
             'birth_date',
             'phone_number'
         )
-    
+
     def save(self, commit=True):
         if self.instance.pk:
             user = self.instance.user
@@ -77,7 +70,7 @@ class BasicProfileForm(forms.ModelForm):
             user.email = self.cleaned_data['email']
             user.save()
         return super(BasicProfileForm, self).save(commit=commit)
-    
+
 
 class PersonalInformationForm(forms.ModelForm):
     """Edit an student's personal information."""
@@ -90,7 +83,7 @@ class PersonalInformationForm(forms.ModelForm):
          self.fields['state_of_origin'].widget.attrs = {'class': 'form-control'}
          self.fields['country'].widget.attrs = {'class': 'form-control'}
          self.fields['religion'].widget.attrs = {'class': 'form-control'}
-    
+
     class Meta:
         model = Student
         fields = (
@@ -101,7 +94,7 @@ class PersonalInformationForm(forms.ModelForm):
             'state_of_origin',
             'country',
             'religion',
-        )    
+        )
 
 
 class SchoolForm(forms.ModelForm):
@@ -117,7 +110,7 @@ class SchoolForm(forms.ModelForm):
          self.fields['level'].widget.attrs = {'class': 'form-control'}
          self.fields['course_duration'].widget.attrs = {'max_length': 1, 'class': 'form-control'}
 
-    
+
     class Meta:
         model = Student
         fields = (
@@ -131,9 +124,9 @@ class SchoolForm(forms.ModelForm):
             'level',
             'course_duration'
         )
-        
+
 class BankForm(forms.ModelForm):
-    
+
     class Meta:
         model = Student
         fields = (
@@ -172,10 +165,10 @@ class StudentCreationForm(forms.ModelForm):
             'course_duration'
         )
 
- 
+
     @transaction.atomic
     def save(self, commit=True):
-        user = create_user(self.cleaned_data['email'], self.cleaned_data['last_name'], self.cleaned_data['first_name'])
+        user = create_user(self.cleaned_data['last_name'], self.cleaned_data['first_name'])
         # Set default password to this user's username and birth date (if provided):
         # password = pin_generator()
         user.username = self.cleaned_data['reg_number']

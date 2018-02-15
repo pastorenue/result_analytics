@@ -32,8 +32,8 @@
            </div>
            {% if student.institution %}
            <div style="text-align: center;">
-               <img src="{{ student.institution.logo.url }}" alt="Uniport" style="width: 90px; height: 100px;">
-           
+               {% if student.institution.logo %}<img src="{{ student.institution.logo.url }}" alt="{{student.institution}}" style="width: 90px; height: 100px;">{% endif %}
+
                <h4><strong>{{student.institution.name}}</strong></h4>
                <h5>{{student.institution.location}}</h5>
            </div>
@@ -45,5 +45,5 @@
         </div>
     </div>
 </div>
- 
+
 {% endblock %}

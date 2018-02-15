@@ -130,7 +130,7 @@ class Student(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     #clearance_status = StateField(editable=False, default=None)
-    slug = models.SlugField(blank=True, unique=True)
+    slug = models.SlugField(max_length=255, blank=True, unique=True)
     objects = StudentManager()
 
 
@@ -138,8 +138,8 @@ class Student(models.Model):
         verbose_name = _(u'Student')
         verbose_name_plural = _(u'Students')
         ordering = ('last_name',)
-        
-        
+
+
 
     def __str__(self):
         names = [self.last_name]
@@ -157,7 +157,7 @@ class Student(models.Model):
             names.append(self.middle_name)
         names.append(self.first_name)
         return u' '.join(names)
-    
+
     @property
     def get_program_type(self):
         program_type = {1: 'Regular', 2: 'Sandwich', 3: 'CEP', 4: 'Diploma', 5: 'Others'}
@@ -169,12 +169,12 @@ class Student(models.Model):
         marital_status = {1: 'Single', 2: 'Married', 3: 'Widowed', 4: 'Divorces'}
         if self.marital_status:
             return marital_status[self.marital_status]
-        
+
     @property
     def year_of_graduation(self):
         if self.year_of_admission:
             return (self.year_of_admission.year + self.course_duration)
-    
+
     def get_absolute_url(self):
         return reverse('students:student_account', kwargs={'student_slug':self.slug})
 
@@ -198,7 +198,7 @@ class Document(models.Model):
     def delete(self, **kwargs):
         self.file.delete()
         return super(Document, self).delete(**kwargs)
-    
+
     def current_level(self):
         level = (self.level+100)
         return level
@@ -226,7 +226,7 @@ class UniqueMapper(models.Model):
     reg_number = models.CharField(max_length=30)
     short_institution_name = models.CharField(max_length=5, null=True)
     unique_map = models.CharField(max_length=50, blank=True)
-    created = models.DateTimeField(auto_now_add=True) 
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _(u'Unique Mapper')
@@ -245,5 +245,3 @@ class UniqueMapper(models.Model):
             if not UniqueMapper.objects.filter(unique_map=self.unique_map).exists():
                 uuid_found = False
         super(UniqueMapper, self).save(**kwargs)
-
-

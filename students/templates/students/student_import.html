@@ -1,0 +1,27 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+{% block breadcrumbs %} Import Result &raquo; {% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+    <h3 class="page-header">Students Upload</h3>
+</div>
+<div class="col-md-8 center-block panel panel-default" style="margin-bottom: 30px; padding: 15px; background: #f9f9f9;">
+    <form method="POST" action="{% url 'students:student-upload' %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="form-group">
+            {{ form }}
+            <div style="margin-top: 30px; width: 40%;">
+                <button id="import" disabled="disabled" class="btn custom-btn btn-sm btn-block" type="submit">Upload</button> </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    $('#id_file').change(function() {
+        $('#import').attr('disabled', false);
+    });
+</script>
+{% endblock %}

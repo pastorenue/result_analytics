@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 from .forms import *
-from .views import (StudentListView, student_profile, request_help, 
-                    export_excel, create_student, update_photo, student_chart_json,  
-                    mapper_excel_generator, generate, generate_mapper_json, 
-                    edit_profile, StudentAnalyticsView)
+from .views import (StudentListView, student_profile, request_help,
+                    export_excel, create_student, update_photo, student_chart_json,
+                    mapper_excel_generator, generate, generate_mapper_json,
+                    edit_profile, StudentAnalyticsView, import_student_data, upload_student_csv)
 urlpatterns = patterns('',
     url(r'^$', StudentListView.as_view(), name='students_list'),
     url(r'^analysis/$', login_required(StudentAnalyticsView.as_view()), name='student_analytics'),
@@ -18,4 +18,7 @@ urlpatterns = patterns('',
     url(r'^student-json/$', student_chart_json, name='student_chart_json'),
     url(r'^mapper-json/$', generate_mapper_json, name='mapper-json'),
     url(r'^ineed/assistance/(?P<student_id>\d+)/$', request_help , name='help'),
+    url(r'^bulk-upload/$', import_student_data , name='student-import'),
+    url(r'^upload/$', upload_student_csv , name='student-upload'),
+
 )

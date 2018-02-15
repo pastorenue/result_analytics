@@ -28,6 +28,7 @@ from utils.url_dispatcher import get_url
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from results.utils import Computation as cp
+from .utils import import_student_from_csv
 try:
     import json
 except:
@@ -59,7 +60,7 @@ class StudentListView(ListView):
         if status != "status":
             queryset = queryset.filter(user_status=status)
         return queryset
-    
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(StudentListView, self).get_context_data(**kwargs)
@@ -81,7 +82,7 @@ class StudentListView(ListView):
     @method_decorator(login_required)
     @method_decorator(user_passes_test(lambda u: u.lecturer.is_admin))
     def dispatch(self, request, *args, **kwargs):
-        return super(StudentListView, self).dispatch(request, *args, **kwargs)   
+        return super(StudentListView, self).dispatch(request, *args, **kwargs)
 
 @login_required
 @user_passes_test(lambda u: u.lecturer.is_admin)
@@ -90,7 +91,9 @@ def create_student(request):
         form = StudentCreationForm(request.POST)
         if form.is_valid():
             try:
-                new_student = form.save()
+                new_student = form.save(commit=False)
+                new_student.institution = request.user.lecturer.institution
+                new_student.save()
                 messages.success(request, "%s's record has been successfully created." % (new_student))
                 return HttpResponseRedirect(reverse('students:student_account', kwargs={'student_slug': new_student.slug}))
             except Exception as e:
@@ -110,22 +113,22 @@ def student_profile(request, student_slug):
         template_name = 'accounts'
     else:
         template_name = 'student_profile'
-    
+
     context = {'student': student}
     context['my_rank'] = ranking(student)
-    context['documents'] = Document.objects.filter(student=student) 
+    context['documents'] = Document.objects.filter(student=student)
     context['scholarships'] = Scholarship.objects.filter(student=student)
 
 
     documents = student.document_set.all()
-    
+
     return render(request, 'students/%s.html' % (template_name), context)
 
 
 def ranking(student):
     results = Result.objects.all()
     ranking_data = {}
-    
+
     all_students = Student.objects.all()
     for stu in all_students:
         grade = 0
@@ -134,7 +137,7 @@ def ranking(student):
                 grade+=result.credit_load
         ranking_data[stu] = grade
     sort = sorted(ranking_data, key= ranking_data.__getitem__, reverse=True)
-    
+
     return sort.index(student)+1
 
 def export_excel(request):
@@ -164,14 +167,14 @@ def update_photo(request):
 
 
 @login_required
-@user_passes_test(lambda u:u.lecturer.is_admin, login_url="/login/") 
+@user_passes_test(lambda u:u.lecturer.is_admin, login_url="/login/")
 def mapper_excel_generator(request):
     form = ImportForm()
     return render_to_response('students/generate_mapper.html', {'form': form}, context_instance=RequestContext(request),)
 
 
 @login_required
-@user_passes_test(lambda u:u.lecturer.is_admin, login_url="/login/") 
+@user_passes_test(lambda u:u.lecturer.is_admin, login_url="/login/")
 def generate(request):
     if request.method == 'POST':
         try:
@@ -285,3 +288,38 @@ def request_help(request, student_id):
     print(":Done")
     return HttpResponseRedirect(reverse('dashboard'))
 
+
+@login_required
+@user_passes_test(lambda u: u.lecturer.is_admin, login_url="/login/")
+def import_student_data(request):
+    form = ImportForm()
+    template_name = 'students/student_import.html'
+    return render(request, template_name, {'form': form})
+
+
+@login_required
+@user_passes_test(lambda u: u.lecturer.is_admin, login_url="/login/")
+def upload_student_csv(request):
+    if request.method == 'GET':
+        return render(request, 'students/student_import.html', {})
+    try:
+        csv_file = request.FILES["file"]
+        print(csv_file)
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request,'File is not CSV type')
+            return HttpResponseRedirect(reverse("students:student-import"))
+
+        # If the file is too large
+        if csv_file.multiple_chunks():
+            messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
+            return HttpResponseRedirect(reverse("students:student-import"))
+
+        # else continue
+        posted, existed = import_student_from_csv(csv_file, request.user.lecturer)
+        if posted > 0 and existed > 0:
+            messages.success(request, "You successfully imported %s New records, but we found %s already existing ones" % (posted, existed))
+        else:
+            messages.info(request, "It appears you do not have any new records to import. Total Existing Records Found: %s" % (existed))
+    except Exception as e:
+            messages.error(request, e)
+    return HttpResponseRedirect(reverse("students:students_list"))
