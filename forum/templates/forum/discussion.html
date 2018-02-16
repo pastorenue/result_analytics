@@ -1,0 +1,128 @@
+{% extends 'dashboard.html' %}
+{% load staticfiles thumbnail %}
+
+{% block header %}
+<h2>Join The Discussion</h2>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row clearfix" style="margin-left: 10px; margin-bottom: 20px;">
+	<h3 class="page-header">Study Forum</h3>
+	<span>{% include 'forum/search.html' %}</span>
+</div>
+<div class="row">
+	<div class="col-sm-10 center-block" style="padding-left: 0; padding-right: 0;">
+		<div id="id_panel" class="panel panel-default top-margin">
+			<div>
+				<div class="post-base">
+					<div class="prompt" id="id_prompt">
+						<h5 id="id_head">Click to Start a Discussion</h5>
+					</div>
+          {% include 'forum/_post.html' %}
+					<div class="post-btn">
+						<p><i class="fa fa-camera"></i> Illustration</p>
+						<p id="id_post" style="float: right; display: inline;"><i class="icons icons-sm icons-laptop"></i> Post</p>
+						<input type="file" id="id_image" style="display: none;">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default top-margin">
+			<div class="post-head" style="background: #43a3ba;">
+				<h4 style="color: #fff;">POSTS for <span style="font-size: 16px; font-weight: 600;">{{current_channel}}</span></h4>
+			</div>
+			{% for post in posts %}
+			<div class="post" onload="hideDetail({{post.id}})">
+				<div class="l-name">
+					{% thumbnail post.user.expert.photo "50x50" crop="top" as im %}
+					 <img src="{{im.url}}" alt="">
+					 {% endthumbnail %}
+					<h5><strong>{{post.user.first_name}} {{post.user.last_name}}</strong><br>
+					<span>{{post.date_created}}</span></h5>
+
+				</div>
+				<p>{{post.content}}</p>
+				<!-- <img src="{% static 'images/about.jpg' %}" alt="" style="width: 100%; height: 200px;"> -->
+				<div style="margin-top: 5px;">
+					<a><i class="fa fa-heart-o"></i> Like</a>
+					<a style="cursor: pointer;" data-toggle="modal" data-target="#{{post.id}}"><i class="fa fa-comment-o"> {{post.comment_set.count}}</i> Comment{{post.comment_set.count|pluralize}}</a>
+					<div class="modal fade" id="{{post.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+					</div>
+				</div>
+			</div>
+			{% empty %}
+			<h4 style="text-align: center; color: #3b5998; margin: 30px auto; font-size: 14px;">No Posts yet for {{current_channel}}</h4>
+			{% endfor %}
+		</div>
+	</div>
+
+</div>
+{% endblock %}
+
+{% block side %}
+<div class="panel panel-default">
+	<div class="sub-panel" style="margin-bottom: 0px;">
+		<h4 style="font-weight: 600; letter-spacing: 2px;"><i class="icons icons-sm icons-category"></i> CATEGORIES </h4>
+	</div>
+	<div class="sub-panel scroll" style="height: 100%; overflow-y: auto; padding-top: 7px;">
+		{% include 'forum/categories.html' %}
+	</div>
+</div>
+{% include '_trending.html' %}
+{% include '_connect.html' %}
+
+{% endblock %}
+
+
+{% block extrajs %}
+<script>
+	$('.inner-post').hide();
+	isVisible = false;
+	var container = document.getElementById('id_container');
+	$('#id_prompt').click(function() {
+		if (isVisible) {
+			container.style.display = 'none';
+			isVisible = false;
+			$('id_head').val('');
+			$('#id_panel').removeClass('blur');
+			$('#id_head').html('Click to Start a Discussion');
+		} else {
+			container.style.display = 'block';
+			$('#id_panel').addClass('blur');
+			isVisible = true;
+			$('#id_head').html('Click to Collapse');
+		}
+	})
+
+	function toggleDetail(item_id) {
+		var f_id = '#frm_comment'+item_id;
+		$(f_id).slideToggle('fade');
+	}
+</script>
+<script>
+	$('#id_post').click(function() {
+		$('#id_btn_submit').click();
+	})
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    function alignModal(){
+        var modalDialog = $(this).find(".modal-dialog");
+        /* Applying the top margin on modal dialog to align it vertically center */
+        modalDialog.css("margin-top", Math.max(0, ($(window).height() - modalDialog.height()) / 2));
+    }
+    // Align modal when it is displayed
+    $(".modal").on("shown.bs.modal", alignModal);
+
+    // Align modal when user resize the window
+    $(window).on("resize", function(){
+        $(".modal:visible").each(alignModal);
+    });
+});
+</script>
+{% endblock %}
