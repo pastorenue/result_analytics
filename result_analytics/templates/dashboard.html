@@ -97,11 +97,12 @@
               <img src="{% static 'images/logo.jpg' %}" alt="" width="100">
               <h4 style="font-size: 2em;">Welcome to Your workspace</h4>
               <p style="font-size: 1.3em;">
-                We are pleased you could make it here today.
-                Have you checked the trends?<br>
+                So glad you could make it here today.
+                Have you checked the latest trends?<br>
                 {% if request.user.student %}See how you're doing by viewing the latest students performance trend for the Semester {% endif %}
                 {% if request.user.lecturer %}Check out the students who would want your help. Remember, "Education is golden"{% endif %}
               </p>
+              {% if user.student %}
               <div class="col-md-7 center-block">
                 <div class="panel panel-default">
                   <div class="panel-body">
@@ -116,6 +117,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             </div>
           {% endblock %}
       </div>
