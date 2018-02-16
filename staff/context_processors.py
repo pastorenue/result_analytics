@@ -14,9 +14,9 @@ from results.utils import Computation as cp
 import random
 from django.contrib import auth
 
-def home_context(request): 
+def home_context(request):
     all_greetings = [
-                    {'tribe':'English', 'greeting':'Hi'}, 
+                    {'tribe':'English', 'greeting':'Hi'},
                     {'tribe':'Urhobo', 'greeting':'Mavo'},
                     {'tribe':'Efik/Ibibio', 'greeting':'Mesiere'},
                     {'tribe':'Benue', 'greeting':'Abole'},
@@ -28,7 +28,7 @@ def home_context(request):
                     {'tribe':'Ijaw', 'greeting':'Ado'},
                     {'tribe':'Izere/Plateau', 'greeting':'Shou'},
                     ]
-    greeting = all_greetings[random.randint(0, len(all_greetings)-1)]  
+    greeting = all_greetings[random.randint(0, len(all_greetings)-1)]
     all_students = []
     lecturers = []
     all_results = []
@@ -45,8 +45,8 @@ def home_context(request):
     avg_performance = Result.objects.aggregate(avg = Avg('exam_score'))['avg'] or 0
 
     ranking = int(avg_performance*0.1) or 0
-    
-    
+
+
     return {
         'departments': departments,
         'faculties': Faculty.objects.all(),
@@ -58,7 +58,8 @@ def home_context(request):
         'all_results': all_results,
         'topics': topics,
         'lecturers': lecturers,
-        'greet': greeting
+        'greet': greeting,
+        'categories': Category.objects.all()
 
     }
 
@@ -84,7 +85,7 @@ def performances(request):
         else:
             tmp_dict['cgpa'] = float(max(cp.get_grades(student.institution)))
         performance_list[student] = tmp_dict
-    
+
     key_list = sorted(performance_list.keys(), key=lambda x: performance_list[x]['cgpa'], reverse=True)
     trending_performances = []
     current_student_rank = None
@@ -100,7 +101,7 @@ def performances(request):
         'student_rank': current_student_rank,
     }
 
-  
+
 def course_recommendation(request):
     try:
         own_student = request.user.student
@@ -128,7 +129,5 @@ def performance_recommendation(request):
         dataset = get_dataset(request)
         matches = top_matches(dataset, request.user.student, length=5, algorithm=euclidean_distance_score)
         return dict(matches)
-    else: 
+    else:
         return {}
-
-    

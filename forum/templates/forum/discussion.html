@@ -1,5 +1,5 @@
 {% extends 'dashboard.html' %}
-{% load staticfiles thumbnail %}
+{% load staticfiles thumbnail record_filters %}
 
 {% block header %}
 <h2>Join The Discussion</h2>
@@ -33,7 +33,7 @@
 		</div>
 		<div class="panel panel-default top-margin">
 			<div class="post-head" style="background: #43a3ba;">
-				<h4 style="color: #fff;">POSTS for <span style="font-size: 16px; font-weight: 600;">{{current_channel}}</span></h4>
+				<h4 style="color: #fff;">POSTS {% if request.GET.category %} for <strong>{{request.GET.category}}</strong>{% endif %}</h4>
 			</div>
 			{% for post in posts %}
 			<div class="post" onload="hideDetail({{post.id}})">
@@ -56,7 +56,37 @@
 				</div>
 			</div>
 			{% empty %}
-			<h4 style="text-align: center; color: #3b5998; margin: 30px auto; font-size: 14px;">No Posts yet for {{current_channel}}</h4>
+
+      {% if queryset %}
+    	<div class="sub-panel" style="padding: 0 10px;">
+    		{% for item in queryset %}
+    		{% if item.post.id %}
+    		<a href="{% url 'post' item.post.id %}">
+    			<div class="search-result">
+    				<h4>{{item.title}} </h4><span> posted {{item.post.created}} by {{item.user.student}}</span>
+    			</div>
+    		</a>
+    		{% else %}
+    		<a href="{% url 'post' item.id %}">
+    			<div class="search-result">
+    				<h4><strong>{{item.title}}</strong> </h4><span> posted {{item.created}} by {{item.user.student}}</span>
+    			</div>
+    		</a>
+    		{% endif %}
+    		{% endfor %}
+    	</div>
+    	<div>
+    		{% render_paginator queryset %}
+    	</div>
+    	{% else %}
+    	<div class="sub-panel add-padding">
+    		<div style="margin: 50px auto; text-align: center;">
+    			<i class="icons icons-x-lg icons-book"></i><br>
+    			<h4>No Posts yet {% if request.GET.category %} for {{request.GET.category}}{% endif %}</h4>
+    			<h5>You can start a discussion NOW</h5>
+    		</div>
+    	</div>
+    	{% endif %}
 			{% endfor %}
 		</div>
 	</div>
