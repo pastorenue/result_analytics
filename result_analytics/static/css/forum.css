@@ -1,0 +1,131 @@
+body {
+	color: #43a3ba;
+}
+.comment {
+	border-top: 1px solid #f5f5f5;
+	margin-top: 10px;
+	text-align: left;
+}
+.modal.fade .modal-dialog {
+    -webkit-transform: scale(0.1);
+    -moz-transform: scale(0.1);
+    -ms-transform: scale(0.1);
+    transform: scale(0.1);
+    top: 500px;
+    opacity: 0;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.modal.fade.in .modal-dialog {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform: translate3d(0, -300px, 0);
+    transform: translate3d(0, -500px, 0);
+    opacity: 1;
+}
+.post-base {
+	min-height: 30px;
+}
+.post-base .prompt {
+	background: #f5f5f5;
+	padding: 5px;
+	border: 1px solid #e5e5e5;
+	cursor: pointer;
+}
+select, input[type=text], input[type=password] {
+	height: 33px !important;
+	color: #000 !important;
+	border-color: #d5d5d5 !important;
+}
+textarea {
+	min-height: 70px !important;
+	color: #000 !important;
+	border-color: #d5d5d5 !important;
+}
+.post-base p {
+	padding: 3px 20px;
+	cursor: pointer;
+	margin: 10px 7px;
+	border-radius: 15px;
+	text-align: center;
+	display: inline-block;
+	font-size: 13px;
+	border: 1px solid #f5f5f5;
+	transition: all .45s ease-in-out;
+}
+.post-base p:hover {
+	border: 1px solid #3b5998;
+	color: #3b5998;
+}
+#id_container {
+	padding: 10px;
+	transition: all .44s ease-in-out;
+	display: none;
+}
+.post-btn {
+	border-top: 1px solid #e5e5e5;
+}
+.blur {
+	box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 12px 18px 1px rgba(0,0,0,.2) !important;
+}
+.post-head {
+	padding: 5px 10px;
+	border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 10px;
+}
+.post {
+	padding: 5px 10px;
+	border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 5px;
+}
+.post h5 {
+	margin-top: 0;
+	font-size: 15px;
+}
+.post a {
+	display: inline-block;
+	padding: 5px 10px;
+}
+.post img {
+	border-radius: 50%;
+	float: left;
+}
+.l-name {
+	margin-bottom: 10px;
+	padding-left: 0;
+}
+.l-name img {
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	padding: 5px;
+}
+.l-name p {
+	margin-bottom: 0;
+	padding-left: 10px;
+}
+.comment {
+	background: #fafafa;
+}
+.channel-link {
+	padding: 5px 10px;
+}
+.channel-link ul {
+	padding: 0;
+}
+.channel-link ul li {
+	list-style: none;
+	border-bottom: 1px solid #f5f5f5;
+	padding: 10px 10px;
+	font-size: 14px;
+	transition: all .43s ease-in-out;
+}
+.channel-link ul li:hover {
+	box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 4px 6px 1px rgba(0,0,0,.2);
+	transform: translateY(-3px);
+	transform: translateX(5px);
+}
