@@ -23,7 +23,7 @@ def user_is_student(user):
 @login_required
 @transaction.atomic
 def forum_index(request):
-	template_name = 'forum/forum.html'
+	template_name = 'forum/discussion.html'
 	queryset = Q()
 
 	if request.method == "POST":
@@ -33,7 +33,7 @@ def forum_index(request):
 			body = form.question_or_idea
 			profane_words = ProfaneWord.objects.all()
 			bad_words = [w for w in profane_words if w.word in body.lower()]
-			
+
 			if bad_words:
 				messages.error(request, "Bad words like '%s' are not allowed in posts." % (reduce(lambda x,y: "%s,%s" % (x.word,y.word), bad_words)))
 				return HttpResponseRedirect(reverse('forum'))
@@ -42,7 +42,7 @@ def forum_index(request):
 				form.save()
 				messages.success(request, "You have successfully started the discussion-'%s'" % (form.title))
 			return HttpResponseRedirect(reverse('post', args=(form.id,)))
-	else:	
+	else:
 		search = request.GET.get('search_query', 'invalid_search')
 		category = request.GET.get('category')
 		comment_qs = Q(comment__icontains=search)
@@ -71,7 +71,7 @@ def forum_index(request):
 @user_passes_test(user_is_student, login_url='/login/')
 @login_required
 def post(request, post_id):
-	post = get_object_or_404(Post, pk=post_id) 
+	post = get_object_or_404(Post, pk=post_id)
 
 	return render(request, 'forum/post.html', {'post': post})
 

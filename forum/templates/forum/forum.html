@@ -19,13 +19,13 @@
 	<div class="sub-panel" style="padding: 0 10px;">
 		{% for item in queryset %}
 		{% if item.post.id %}
-		<a href="{% url 'post' item.post.id %}"> 
+		<a href="{% url 'post' item.post.id %}">
 			<div class="search-result">
 				<h4>{{item.title}} </h4><span> posted {{item.post.created}} by {{item.user.student}}</span>
 			</div>
 		</a>
 		{% else %}
-		<a href="{% url 'post' item.id %}"> 
+		<a href="{% url 'post' item.id %}">
 			<div class="search-result">
 				<h4><strong>{{item.title}}</strong> </h4><span> posted {{item.created}} by {{item.user.student}}</span>
 			</div>
