@@ -1,0 +1,5 @@
+reg_number,surname,first_name,sex,level,department,year_of_admission,course_duration
+Q12345,Fredrick,Suleman,M,100,CSC,2017-1-1,4
+Q12555,Brainty,Jayle,M,100,MCB,2017-1-1,4
+Q12157,Astela,Funmilayo,F,100,CSC,2017-1-1,4
+Q22445,Pastor,Matilda,F,100,MCB,2017-1-1,4
