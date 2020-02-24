@@ -1,7 +1,7 @@
 astroid==1.4.9
 backports-abc==0.5
 beautifulsoup4==4.6.0
-bleach==2.0.0
+bleach==3.1.1
 certifi==2017.4.17
 chardet==3.0.3
 cobble==0.1.3
